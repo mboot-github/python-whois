@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: whois
+Version: 0.1
+Summary: Python module/library for retrieving WHOIS information of domains.
+Home-page: http://code.google.com/p/python-whois/
+Author: DDarko.org
+Author-email: ddarko@ddarko.org
+License: MIT
+Description: Python module/library for retrieving WHOIS information of domains.
+Platform: Linux
