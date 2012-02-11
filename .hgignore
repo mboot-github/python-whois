@@ -2,3 +2,6 @@ syntax: glob
 
 __pycache__
 *.pyc
+
+build
+dist

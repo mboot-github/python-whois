@@ -3,7 +3,7 @@ from pprint import pprint
 
 keys = ['creation_date','updated_date','expiration_date','registrar']
 
-domsins = ['www.google.com','www.google.org','www.fsdfsdfsdfsd.google.com']
+domsins = ['www.google.com','www.google.org','www.fsdfsdfsdfsd.google.com','google.net','google.pl']
 
 
 for d in domsins:

@@ -14,6 +14,7 @@ def get_tld_re(tld):
 		TLD_RE[tld] = v
 
 	if 'extend' in TLD_RE[tld]: del TLD_RE[tld]['extend']
+	return TLD_RE[tld]
 
 
 [get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != '_']
