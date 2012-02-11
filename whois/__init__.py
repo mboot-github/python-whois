@@ -27,8 +27,7 @@ import subprocess
 
 def _do_whois_query(dl):
 	r = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE).stdout.read()
-	if PYTHON_VERSION == 3: return r.decode()
-	else: return r
+	return r.decode() if PYTHON_VERSION == 3 else r
 
 
 
