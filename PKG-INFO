@@ -1,10 +1,20 @@
-Metadata-Version: 1.0
+Metadata-Version: 1.1
 Name: whois
 Version: 0.1
-Summary: Python module/library for retrieving WHOIS information of domains.
-Home-page: http://code.google.com/p/python-whois/
 Author: DDarko.org
-Author-email: ddarko@ddarko.org
+Author-email: ddarko at ddarko org
+Home-page: http://code.google.com/p/python-whois/
+Summary: Python module/library for retrieving WHOIS information of domains.
 License: MIT
 Description: Python module/library for retrieving WHOIS information of domains.
+Keywords: Python, WHOIS, TLD, domain, expiration, registrar
 Platform: Linux
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 2.5
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.0
+Classifier: Programming Language :: Python :: 3.1
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

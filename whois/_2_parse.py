@@ -26,8 +26,11 @@ def get_tld_re(tld):
 #from pprint import pprint
 
 
-def _do_parse(whois_str, tld):
+def do_parse(whois_str, tld):
 	r = {}
+
+	if whois_str.count('\n') < 5:
+		raise Exception(whois_str)
 
 	sn = re.findall(r'Server Name:\s?(.+)', whois_str, re.IGNORECASE)
 	if sn:

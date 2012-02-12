@@ -23,17 +23,18 @@ google.co.uk
 google.jp
 www.google.co.jp
 
+google.co
 google.de
 yandex.ru
-
-google.name
 google.us
-google.me
 google.eu
+google.me
+google.be
 google.biz
 google.info
-google.co
-google.be
+google.name
+
+
 google.es
 google.it
 google.cz
@@ -42,8 +43,7 @@ google.fr
 dfsdfsfsdf
 '''
 
-
-#domsins = 'google.jp'
+#domsins = ''
 
 
 for d in domsins.split('\n'):

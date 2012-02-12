@@ -3,5 +3,6 @@ syntax: glob
 __pycache__
 *.pyc
 
+upload.sh
 build
 dist

@@ -18,8 +18,8 @@
 	2020-09-14 00:00:00
 
 """
-from ._1_query import _do_whois_query
-from ._2_parse import _do_parse
+from ._1_query import do_query
+from ._2_parse import do_parse
 from ._3_adjust import Domain
 
 
@@ -30,7 +30,7 @@ def query(domain):
 	d = domain.split('.')
 	if d[0] == 'www': d = d[1:]
 	while 1:
-		pd = _do_parse(_do_whois_query(d), d[-1])
+		pd = do_parse(do_query(d), d[-1])
 		if not pd['domain_name'][0] and len(d) > 2: d = d[1:]
 		else: break
 

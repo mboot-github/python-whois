@@ -41,6 +41,7 @@ pl = {
 'updated_date':				r'\nlast modified:\s*(.+)\n',
 
 'name_servers':				r'\nnameservers:\s?(.+)',
+'status':					r'\nStatus:\n\s*(.+)',
 }
 
 ru = {
@@ -53,7 +54,6 @@ ru = {
 
 'name_servers':				r'\nnserver:\s*(.+)',
 'status':					r'\nstate:\s*(.+)',
-'emails':					r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
 
 jp = {
@@ -79,25 +79,70 @@ de = {
 'updated_date':				r'\nChanged:\s?(.+)',
 }
 
-"""
-NOT Tested:
+eu = {
+'extend': 'com',
 
-
-name = {
-'domain_name_id':  'Domain Name ID:\s*(.+)',
-'domain_name':     'Domain Name:\s*(.+)',
-'registrar_id':    'Sponsoring Registrar ID:\s*(.+)',
-'registrar':       'Sponsoring Registrar:\s*(.+)',
-'registrant_id':   'Registrant ID:\s*(.+)',
-'admin_id':        'Admin ID:\s*(.+)',
-'technical_id':    'Tech ID:\s*(.+)',
-'billing_id':      'Billing ID:\s*(.+)',
-'creation_date':   'Created On:\s*(.+)',
-'expiration_date': 'Expires On:\s*(.+)',
-'updated_date':    'Updated On:\s*(.+)',
-'name_server_ids': 'Name Server ID:\s*(.+)',
-'name_servers':    'Name Server:\s*(.+)',
-'status':          'Domain Status:\s*(.+)',
+'domain_name':				r'\ndomain:\s*(.+)',
+'registrar':				r'Name:\s?(.+)',
 }
 
-"""
+biz = {
+'extend': 'com',
+
+'registrar':				r'Sponsoring Registrar:\s?(.+)',
+'registrant':				r'Registrant Organization:\s?(.+)',
+
+'creation_date':			r'Domain Registration Date:\s?(.+)',
+'expiration_date':			r'Domain Expiration Date:\s?(.+)',
+'updated_date':				r'Domain Last Updated Date:\s?(.+)',
+
+'status':					None,
+}
+
+info = {
+'extend': 'biz',
+
+'creation_date':			r'Created On:\s?(.+)',
+'expiration_date':			r'Expiration Date:\s?(.+)',
+'updated_date':				r'Last Updated On:\s?(.+)',
+
+'status':					r'Status:\s?(.+)',
+}
+
+name = {
+'extend': 'com',
+
+'status':					r'Domain Status:\s?(.+)',
+}
+
+us = {
+'extend': 'name',
+}
+
+co = {
+'extend': 'biz',
+
+'status':					r'Status:\s?(.+)',
+}
+
+me = {
+'extend': 'biz',
+
+'creation_date':			r'Domain Create Date:\s?(.+)',
+'expiration_date':			r'Domain Expiration Date:\s?(.+)',
+'updated_date':				r'Domain Last Updated Date:\s?(.+)',
+
+'name_servers':				r'Nameservers:\s?(.+)',
+'status':					r'Domain Status:\s?(.+)',
+}
+
+be = {
+'extend': 'pl',
+
+'domain_name':				r'\nDomain:\s*(.+)',
+'registrar':				r'Company Name:\n?(.+)',
+
+'creation_date':			r'Registered:\s*(.+)\n',
+
+'status':					r'Status:\s?(.+)',
+}
