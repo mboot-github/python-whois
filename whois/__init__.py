@@ -1,9 +1,26 @@
-import sys
-import re
+"""
+	Python module/library for retrieving WHOIS information of domains.
 
+	By DDarko.org  ddarko@ddarko.org  http://ddarko.org/
+	License MIT  http://www.opensource.org/licenses/mit-license.php
 
-PYTHON_VERSION = sys.version_info[0]
+	Usage example
+	>>> import whois
+	>>> domain = whois.query('google.com')
 
+	>>> print(domain.__dict__)
+	{'expiration_date': datetime.datetime(2020, 9, 14, 0, 0), 'last_updated': datetime.datetime(2011, 7, 20, 0, 0), 'registrar': 'MARKMONITOR INC.', 'name': 'google.com', 'creation_date': datetime.datetime(1997, 9, 15, 0, 0)}
+
+	>>> print(domain.name)
+	google.com
+
+	>>> print(domain.expiration_date)
+	2020-09-14 00:00:00
+
+"""
+from ._1_query import _do_whois_query
+from ._2_parse import _do_parse
+from ._3_adjust import Domain
 
 
 
@@ -12,59 +29,11 @@ def query(domain):
 	domain = domain.lower().strip()
 	d = domain.split('.')
 	if d[0] == 'www': d = d[1:]
-	#print(d)
-
-	r = _do_whois_query(d)
-	return _do_parse(r, d[-1])
-
-
-
-
-#----------------------------------------------------------------------------------------------------
-
-
-import subprocess
-
-def _do_whois_query(dl):
-	r = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE).stdout.read()
-	return r.decode() if PYTHON_VERSION == 3 else r
-
-
-
-"""
-import socket
-
-def _do_whois_query(dl):
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect((('%s.whois-servers.net' % dl[-1], 43)))
-	s.send(("%s\r\n" % '.'.join(dl)).encode())
-
-	response = []
 	while 1:
-		t = s.recv(4096)
-		response.append(t)
-		if t == b'': break
+		pd = _do_parse(_do_whois_query(d), d[-1])
+		if not pd['domain_name'][0] and len(d) > 2: d = d[1:]
+		else: break
 
-	s.close()
-	return b''.join(response).decode()
-"""
-
-#----------------------------------------------------------------------------------------------------
-
-from .tld import TLD_RE
-
-def _do_parse(whois_str, tld):
-	r = {}
-
-	sn = re.findall(r'Server Name:\s?(.+)', whois_str, re.IGNORECASE)
-	if sn:
-		whois_str = whois_str[whois_str.find('Domain Name:'):]
-
-	for k, v in TLD_RE.get(tld, TLD_RE['com']).items():
-		r[k] = re.findall(v, whois_str, re.IGNORECASE)
-
-	return r
-
-
+	return Domain(pd) if pd['domain_name'][0] else None
 
 
