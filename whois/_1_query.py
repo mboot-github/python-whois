@@ -7,8 +7,14 @@ PYTHON_VERSION = sys.version_info[0]
 CACHE = {}
 CACHE_MAX_AGE = 60*60*48	# 48h
 
+if PYTHON_VERSION >= 3:
+	import json
 
-import json
+else:
+	import simplejson as json
+
+
+
 
 def cache_load(cf):
 	if not os.path.isfile(cf): return
