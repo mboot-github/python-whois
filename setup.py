@@ -7,7 +7,7 @@ setup(
 	long_description = open('README').read(),
 	author='DDarko.org',
 	author_email='ddarko@ddarko.org',
-	license='MIT',
+	license='MIT http://www.opensource.org/licenses/mit-license.php',
 	url='http://code.google.com/p/python-whois/',
 	platforms = ['any'],
 	packages=['whois'],

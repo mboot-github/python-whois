@@ -31,7 +31,7 @@ def query(domain, force=0, cache_file=None, slow_down=0):
 	"""
 		force=1				<bool>		Don't use cache.
 		cache_file=<path>	<str>		Use file to store cache not only memory.
-		slow_down=0			<int>		Time [s] I will wait after you query the WHOIS database. This is useful when there is a limit to the number of requests at a time.
+		slow_down=0			<int>		Time [s] it will wait after you query WHOIS database. This is useful when there is a limit to the number of requests at a time.
 	"""
 	assert isinstance(domain, str), Exception('`domain` - must be <str>')
 	cache_file = cache_file or CACHE_FILE
@@ -42,7 +42,7 @@ def query(domain, force=0, cache_file=None, slow_down=0):
 
 	while 1:
 		pd = do_parse(do_query(d, force, cache_file, slow_down), d[-1])
-		if not pd['domain_name'][0] and len(d) > 2: d = d[1:]
+		if (not pd or not pd['domain_name'][0]) and len(d) > 2: d = d[1:]
 		else: break
 
 	return Domain(pd) if pd['domain_name'][0] else None
