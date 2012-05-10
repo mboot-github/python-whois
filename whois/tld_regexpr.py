@@ -56,6 +56,15 @@ ru = {
 'status':					r'\nstate:\s*(.+)',
 }
 
+lv = {
+'extend': 'ru',
+
+'creation_date':			r'Registered:\s*(.+)\n',
+'updated_date':				r'Changed:\s*(.+)\n',
+
+'status':					r'Status:\s?(.+)',
+}
+
 jp = {
 'domain_name':				r'\[Domain Name\]\s?(.+)',
 'registrar':				None,

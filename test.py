@@ -41,6 +41,7 @@ google.cz
 google.fr
 
 dfsdfsfsdf
+test.ez.lv
 '''
 
 #domsins = ''

@@ -37,6 +37,7 @@ DATE_FORMATS = [
 	'%a %b %d %Y',					# Tue Dec 12 2000
 	'%Y-%m-%dT%H:%M:%SZ',			# 2007-01-26T19:10:31Z
 	'%Y-%m-%dT%H:%M:%S%z',			# 2011-03-30T19:36:27+0200
+	'%Y-%m-%dT%H:%M:%S.%f%z',		# 2011-09-08T14:44:51.622265+03:00
 ]
 
 
@@ -46,6 +47,7 @@ def str_to_date(s):
 
 	# TODO: beznadziejne wyjatki !
 	if s.endswith('+02:00'): s = s.replace('+02:00', '+0200')
+	elif s.endswith('+03:00'): s = s.replace('+03:00', '+0300')
 	s = s.replace('(JST)', '(+0900)')
 
 	for format in DATE_FORMATS:

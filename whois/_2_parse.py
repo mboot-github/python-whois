@@ -30,7 +30,9 @@ def do_parse(whois_str, tld):
 	r = {}
 
 	if whois_str.count('\n') < 5:
-		if whois_str.strip().lower() == 'not found': return
+		s = whois_str.strip().lower()
+		if s == 'not found': return
+		if s.count('error'): return
 		raise Exception(whois_str)
 
 	sn = re.findall(r'Server Name:\s?(.+)', whois_str, re.IGNORECASE)
