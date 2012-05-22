@@ -38,8 +38,8 @@ def query(domain, force=0, cache_file=None, slow_down=0):
 	slow_down = slow_down or SLOW_DOWN
 	domain = domain.lower().strip()
 	d = domain.split('.')
-	if len(d) == 1: return None
 	if d[0] == 'www': d = d[1:]
+	if len(d) == 1: return None
 
 	while 1:
 		pd = do_parse(do_query(d, force, cache_file, slow_down), d[-1])
