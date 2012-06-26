@@ -7,6 +7,7 @@ class Domain:
 		self.creation_date		= str_to_date(data['creation_date'][0])
 		self.expiration_date	= str_to_date(data['expiration_date'][0])
 		self.last_updated		= str_to_date(data['updated_date'][0])
+		#self.name_servers		= data['name_servers']
 
 
 
@@ -48,6 +49,8 @@ def str_to_date(s):
 	# TODO: beznadziejne wyjatki !
 	if s.endswith('+02:00'): s = s.replace('+02:00', '+0200')
 	elif s.endswith('+03:00'): s = s.replace('+03:00', '+0300')
+	elif s.endswith('+12:00'): s = s.replace('+12:00', '+1200')
+	elif s.endswith('+13:00'): s = s.replace('+13:00', '+1300')
 	s = s.replace('(JST)', '(+0900)')
 
 	for format in DATE_FORMATS:

@@ -44,7 +44,7 @@ dfsdfsfsdf
 test.ez.lv
 '''
 
-#domsins = 'mails.m-6.5pl'
+#domsins = ''
 
 
 for d in domsins.split('\n'):
