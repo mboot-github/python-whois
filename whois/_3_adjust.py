@@ -1,3 +1,9 @@
+import sys
+import datetime
+
+PYTHON_VERSION = sys.version_info[0]
+
+
 
 class Domain:
 
@@ -19,10 +25,6 @@ class Domain:
 
 
 
-
-import datetime
-
-
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [
 	'%d-%b-%Y',						# 02-jan-2000
@@ -36,6 +38,7 @@ DATE_FORMATS = [
 	'%Y/%m/%d %H:%M:%S (%z)',		# 2011/06/01 01:05:01 (JST)
 	'%a %b %d %H:%M:%S %Z %Y',		# Tue Jun 21 23:59:59 GMT 2011
 	'%a %b %d %Y',					# Tue Dec 12 2000
+	'%Y-%m-%dT%H:%M:%S',			# 2007-01-26T19:10:31
 	'%Y-%m-%dT%H:%M:%SZ',			# 2007-01-26T19:10:31Z
 	'%Y-%m-%dT%H:%M:%S%z',			# 2011-03-30T19:36:27+0200
 	'%Y-%m-%dT%H:%M:%S.%f%z',		# 2011-09-08T14:44:51.622265+03:00
@@ -45,6 +48,8 @@ DATE_FORMATS = [
 def str_to_date(s):
 	s = s.strip()
 	if not s: return
+
+	if PYTHON_VERSION < 3: return str_to_date_py2(s)
 
 	# TODO: beznadziejne wyjatki !
 	if s.endswith('+02:00'): s = s.replace('+02:00', '+0200')
@@ -57,4 +62,21 @@ def str_to_date(s):
 		try: return datetime.datetime.strptime(s, format)
 		except ValueError as e: pass
 
-	raise ValueError("Unknown date format: '" + s + "'")
+	raise ValueError("Unknown date format: '%s'" % s)
+
+
+def str_to_date_py2(s):
+
+	# TODO: beznadziejne wyjatki !
+	tz = 0
+	if s.endswith('+02:00'): s = s.replace('+02:00', ''); tz = 2
+	elif s.endswith('+03:00'): s = s.replace('+03:00', ''); tz = 3
+	elif s.endswith('+12:00'): s = s.replace('+12:00', ''); tz = 12
+	elif s.endswith('+13:00'): s = s.replace('+13:00', ''); tz = 13
+
+	for format in DATE_FORMATS:
+		try: return datetime.datetime.strptime(s, format) + datetime.timedelta(hours=tz)
+		except ValueError as e: pass
+
+	raise ValueError("Unknown date format: '%s'" % s)
+
