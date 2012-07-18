@@ -14,6 +14,10 @@ com = {
 'emails':					r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
 
+net = {
+'extend': 'com',
+}
+
 org = {
 'extend': 'com',
 

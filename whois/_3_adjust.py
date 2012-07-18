@@ -46,8 +46,8 @@ DATE_FORMATS = [
 
 
 def str_to_date(s):
-	s = s.strip()
-	if not s: return
+	s = s.strip().lower()
+	if not s or s == 'not defined': return
 
 	if PYTHON_VERSION < 3: return str_to_date_py2(s)
 
@@ -56,7 +56,7 @@ def str_to_date(s):
 	elif s.endswith('+03:00'): s = s.replace('+03:00', '+0300')
 	elif s.endswith('+12:00'): s = s.replace('+12:00', '+1200')
 	elif s.endswith('+13:00'): s = s.replace('+13:00', '+1300')
-	s = s.replace('(JST)', '(+0900)')
+	s = s.replace('(jst)', '(+0900)')
 
 	for format in DATE_FORMATS:
 		try: return datetime.datetime.strptime(s, format)
