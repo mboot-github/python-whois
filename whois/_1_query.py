@@ -7,10 +7,10 @@ PYTHON_VERSION = sys.version_info[0]
 CACHE = {}
 CACHE_MAX_AGE = 60*60*48	# 48h
 
-if PYTHON_VERSION >= 3:
+try:
 	import json
 
-else:
+except:
 	import simplejson as json
 
 
