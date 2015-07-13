@@ -8,7 +8,7 @@ PYTHON_VERSION = sys.version_info[0]
 class Domain:
 
 	def __init__(self, data):
-		self.name				= data['domain_name'][0].strip().lower()
+		self.name = data['domain_name'][0].strip().lower()
 		self.registrar			= data['registrar'][0].strip()
 		self.creation_date		= str_to_date(data['creation_date'][0])
 		self.expiration_date	= str_to_date(data['expiration_date'][0])
