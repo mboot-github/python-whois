@@ -5,7 +5,6 @@ import datetime
 PYTHON_VERSION = sys.version_info[0]
 
 
-
 class Domain:
 
 	def __init__(self, data):
@@ -34,17 +33,6 @@ class Domain:
 				self.name_servers.add(x.lower())
 
 		#----------------------------------
-
-
-
-
-
-
-
-
-
-
-
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [
