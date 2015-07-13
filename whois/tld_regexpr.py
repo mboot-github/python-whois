@@ -237,13 +237,13 @@ fr = {
 
 br = {
     'extend': 'com',
-'domain_name':              r'domain:\s?(.+)',
-'registrar':                'nic.br',
-'registrant':               None,
-'owner':                    r'owner:\s?(.+)',
-'creation_date':            r'created:\s?(.+)',
-'expiration_date':          r'expires:\s?(.+)',
-'updated_date':             r'changed:\s?(.+)',
-'name_servers':             r'nserver:\s*(.+)',
-'status':                   r'status:\s?(.+)',
+    'domain_name':              r'domain:\s?(.+)',
+    'registrar':                'nic.br',
+    'registrant':               None,
+    'owner':                    r'owner:\s?(.+)',
+    'creation_date':            r'created:\s?(.+)',
+    'expiration_date':          r'expires:\s?(.+)',
+    'updated_date':             r'changed:\s?(.+)',
+    'name_servers':             r'nserver:\s*(.+)',
+    'status':                   r'status:\s?(.+)',
 }
