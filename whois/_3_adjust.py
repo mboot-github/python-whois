@@ -70,7 +70,6 @@ DATE_FORMATS = [
 	'%Y-%m-%dT%H:%M:%S.%f%z',		# 2011-09-08T14:44:51.622265+03:00
 	'%Y-%m-%dt%H:%M:%S.%f',			# 2011-09-08t14:44:51.622265
 	'%Y%m%d',						# 20110908
-	'%Y%m%d #%H%M%S'				# 20110908 #144451
 ]
 
 
@@ -80,6 +79,7 @@ def str_to_date(s):
 
 	s = s.replace('(jst)', '(+0900)')
 	s = re.sub('(\+[0-9]{2}):([0-9]{2})', '\\1\\2', s)
+	s = re.sub('(\ #.*)', '', s)
 
 	if PYTHON_VERSION < 3: return str_to_date_py2(s)
 
