@@ -62,6 +62,18 @@ ru = {
 'status':					r'\nstate:\s*(.+)',
 }
 
+ru_rf = {
+'extend': 'com',
+
+'domain_name':				r'\ndomain:\s*(.+)',
+
+'creation_date':			r'\ncreated:\s*(.+)',
+'expiration_date':			r'\npaid-till:\s*(.+)',
+
+'name_servers':				r'\nnserver:\s*(.+)',
+'status':					r'\nstate:\s*(.+)',
+}
+
 lv = {
 'extend': 'ru',
 
