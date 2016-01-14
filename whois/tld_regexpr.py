@@ -27,6 +27,11 @@ org = {
 'name_servers':				r'Name Server:\s?(.+)\s*',
 }
 
+pro = {
+'extend': 'org',
+}
+
+
 uk = {
 'extend': 'com',
 
