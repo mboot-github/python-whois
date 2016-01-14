@@ -3,6 +3,7 @@ from pprint import pprint
 
 
 domains = '''
+idone.su
 itsb.pro
 www.google.com
 www.fsdfsdfsdfsd.google.com

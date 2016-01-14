@@ -31,7 +31,6 @@ pro = {
 'extend': 'org',
 }
 
-
 uk = {
 'extend': 'com',
 
@@ -65,6 +64,10 @@ ru = {
 
 'name_servers':				r'\nnserver:\s*(.+)',
 'status':					r'\nstate:\s*(.+)',
+}
+
+su = {
+'extend': 'ru',
 }
 
 lv = {
