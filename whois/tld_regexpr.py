@@ -235,3 +235,8 @@ fr = {
 'name_servers':				r'nserver:\s*(.+)',
 'status':					r'status:\s?(.+)',
 }
+
+io = {
+'extend': 'com',
+'expiration_date':			r'\nRegistry Expiry Date:\s?(.+)',
+}
