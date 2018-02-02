@@ -36,6 +36,12 @@ google.com
 >>> print(domain.expiration_date)
 2020-09-14 00:00:00
 
+Support
+=============
+Dillinger requires 
+join the conversation on [Gitter](https://gitter.im/python-whois/Lobby/) 
+Raise an [issue](https://github.com/DannyCork/python-whois/issues/new)
+
 TLD & ccTLD support
 =============
 .com
