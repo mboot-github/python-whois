@@ -1,10 +1,8 @@
 python-whois
 =============
-
 Python module/library for retrieving WHOIS information of domains.
 
 By DDarko  http://ddarko.org/
-Maintained by DannyCork
 
 Features
 =============
@@ -38,33 +36,36 @@ google.com
 
 Support
 =============
-Dillinger requires 
-join the conversation on [Gitter](https://gitter.im/python-whois/Lobby/) 
-Raise an [issue](https://github.com/DannyCork/python-whois/issues/new)
+join the conversation on Gitter https://gitter.im/python-whois/Lobby
+Raise an issue https://github.com/DannyCork/python-whois/issues/new
 
-TLD & ccTLD support
-=============
-.com
-.net
-.org
-.uk
-.pl
-.ru
-.lv
-.jp
-.co.jp
-.de
-.at
-.eu
-.biz
-.name
-.info
-.us
-.co
-.me
-.be
-.nz
-.cz
-.it
-.fr
-.br
+
+ccTLD & TLD support
+===================
+ccTLD
+- at
+- be
+- br
+- co
+- co.jp
+- cz
+- de
+- eu
+- fr
+- it
+- jp
+- lv
+- nz
+- pl
+- ru
+- uk
+- us
+
+TLD
+- biz
+- com
+- info
+- me
+- name
+- net
+- org
