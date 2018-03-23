@@ -24,6 +24,7 @@ google.co.uk
 google.jp
 www.google.co.jp
 
+google.io
 google.co
 google.de
 yandex.ru
