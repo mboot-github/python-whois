@@ -63,6 +63,18 @@ ru = {
 'status':					r'\nstate:\s*(.+)',
 }
 
+ru_rf = {
+'extend': 'com',
+
+'domain_name':				r'\ndomain:\s*(.+)',
+
+'creation_date':			r'\ncreated:\s*(.+)',
+'expiration_date':			r'\npaid-till:\s*(.+)',
+
+'name_servers':				r'\nnserver:\s*(.+)',
+'status':					r'\nstate:\s*(.+)',
+}
+
 lv = {
 'extend': 'ru',
 
@@ -239,4 +251,17 @@ fr = {
 io = {
 'extend': 'com',
 'expiration_date':			r'\nRegistry Expiry Date:\s?(.+)',
+}
+
+br = {
+    'extend': 'com',
+    'domain_name':              r'domain:\s?(.+)',
+    'registrar':                'nic.br',
+    'registrant':               None,
+    'owner':                    r'owner:\s?(.+)',
+    'creation_date':            r'created:\s?(.+)',
+    'expiration_date':          r'expires:\s?(.+)',
+    'updated_date':             r'changed:\s?(.+)',
+    'name_servers':             r'nserver:\s*(.+)',
+    'status':                   r'status:\s?(.+)',
 }
