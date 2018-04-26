@@ -1,14 +1,18 @@
-WHOIS
-=============
+whois
+=====
 
-Python module/library for retrieving WHOIS information of domains.
+     	 | |         (_)    
+__      _| |__   ___  _ ___ 
+\ \ /\ / / '_ \ / _ \| / __|
+ \ V  V /| | | | (_) | \__ \
+  \_/\_/ |_| |_|\___/|_|___/
+                                                        		    
+A Python module/library for retrieving WHOIS information of domains.
 
 By DDarko  http://ddarko.org/
 
-
 Features
 =============
-
  * Python wrapper for Linux "whois" command
  * simple interface to access parsed WHOIS data for a given domain
  * able to extract data for all the popular TLDs (com, org, net, biz, info, pl, jp, uk, nz,  ...)
@@ -16,10 +20,11 @@ Features
  * works with Python 2.4+ and Python 3.x
  * all dates as datetime objects
  * possibility to cache results
-
-
+ 
 Usage example
 =============
+
+$pip install whois
 
 >>> import whois
 >>> domain = whois.query('google.com')
@@ -38,3 +43,39 @@ google.com
 
 >>> print(domain.expiration_date)
 2020-09-14 00:00:00
+
+Support
+=============
+join the conversation on Gitter https://gitter.im/python-whois/Lobby
+Raise an issue https://github.com/DannyCork/python-whois/issues/new
+
+
+ccTLD & TLD support
+===================
+ccTLD
+- at
+- be
+- br
+- co
+- co.jp
+- cz
+- de
+- eu
+- fr
+- it
+- jp
+- lv
+- nz
+- pl
+- ru
+- uk
+- us
+
+TLD
+- biz
+- com
+- info
+- me
+- name
+- net
+- org
