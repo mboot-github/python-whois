@@ -259,3 +259,13 @@ br = {
     'name_servers':             r'nserver:\s*(.+)',
     'status':                   r'status:\s?(.+)',
 }
+
+mx = {
+'domain_name':              r'Domain Name:\s?(.+)',
+'registrant':               r'Registrant:\n\s*(.+)',
+'registrar':                r'Registrar:\s?(.+)',
+'creation_date':            r'Created On:\s?(.+)',
+'expiration_date':          r'Expiration Date:\s?(.+)',
+'updated_date':             r'Last Updated On:\s?(.+)',
+'name_servers':             r'\sDNS:\s*(.+)',
+}
