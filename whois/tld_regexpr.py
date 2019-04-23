@@ -259,3 +259,17 @@ br = {
     'name_servers':             r'nserver:\s*(.+)',
     'status':                   r'status:\s?(.+)',
 }
+
+sh = {
+    'extend': 'com',
+    'expiration_date':         r'\nRegistry Expiry Date:\s*(.+)',
+    'registrant':              r'\nRegistrant Organization:\s?(.+)',
+    'status':                  r'\nDomain Status:\s?(.+)',
+}
+
+space = {
+    'extend': 'com',
+    'expiration_date':         r'\nRegistry Expiry Date:\s*(.+)',
+    'registrant':              r'\nRegistrant Organization:\s?(.+)',
+    'status':                  r'\nDomain Status:\s?(.+)',
+}
