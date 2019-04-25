@@ -7,7 +7,7 @@ com = {
 
 'creation_date':			r'Creation Date:\s?(.+)',
 'expiration_date':			r'Expiration Date:\s?(.+)',
-'updated_date':				r'Updated Date:\s?(.+)',
+'updated_date':				r'Updated Date:\s?(.+)$',
 
 'name_servers':				r'Name Server:\s*(.+)\s*',
 'status':					r'Status:\s?(.+)',
@@ -22,6 +22,7 @@ org = {
 'extend': 'com',
 
 'creation_date':			r'\nCreated On:\s?(.+)',
+'expiration_date':			r'\nRegistry Expiry Date:\s?(.+)',
 'updated_date':				r'\nLast Updated On:\s?(.+)',
 
 'name_servers':				r'Name Server:\s?(.+)\s*',
@@ -143,8 +144,8 @@ info = {
 'extend': 'biz',
 
 'creation_date':			r'Created On:\s?(.+)',
-'expiration_date':			r'Expiration Date:\s?(.+)',
-'updated_date':				r'Last Updated On:\s?(.+)',
+'expiration_date':			r'Expiration Date:\s?(.+)$',
+'updated_date':				r'Last Updated On:\s?(.+)$',
 
 'status':					r'Status:\s?(.+)',
 }
@@ -247,6 +248,11 @@ fr = {
 'status':					r'status:\s?(.+)',
 }
 
+io = {
+'extend': 'com',
+'expiration_date':			r'\nRegistry Expiry Date:\s?(.+)',
+}
+
 ca = {
 'extend': 'com',
 
@@ -292,4 +298,3 @@ sh = {
     'registrant':              r'\nRegistrant Organization:\s?(.+)',
     'status':                  r'\nDomain Status:\s?(.+)',
 }
-
