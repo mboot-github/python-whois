@@ -31,6 +31,22 @@ def do_parse(whois_str, tld):
 
 	if whois_str.count('\n') < 5:
 		s = whois_str.strip().lower()
+	if 'extend' in tmp: del tmp['extend']
+	TLD_RE[tld] = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
+	return TLD_RE[tld]
+
+
+[get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != '_']
+
+
+#from pprint import pprint
+
+
+def do_parse(whois_str, tld):
+	r = {}
+
+	if whois_str.count('\n') < 5:
+		s = whois_str.strip().lower()
 		if s == 'not found': return
 		if s.count('error'): return
 		raise Exception(whois_str)
