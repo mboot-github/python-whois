@@ -70,6 +70,9 @@ ccTLD
 - ru
 - uk
 - us
+- mx
+- br
+- sh
 
 TLD
 - biz
@@ -79,3 +82,4 @@ TLD
 - name
 - net
 - org
+- io
