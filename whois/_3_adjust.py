@@ -32,6 +32,7 @@ class Domain:
 
 				self.name_servers.add(x.lower())
 
+
 		#----------------------------------
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
@@ -53,13 +54,17 @@ DATE_FORMATS = [
 	'%a %b %d %H:%M:%S %Z %Y',		# Tue Jun 21 23:59:59 GMT 2011
 	'%a %b %d %Y',					# Tue Dec 12 2000
 	'%Y-%m-%dT%H:%M:%S',			# 2007-01-26T19:10:31
+	'%Y-%m-%dT%H:%M:%SZ',			# 2007-01-26T19:10:31Z
 	'%Y-%m-%dt%H:%M:%S.%fz',		# 2007-01-26t19:10:31.00z
 	'%Y-%m-%dT%H:%M:%S%z',			# 2011-03-30T19:36:27+0200
-	'%Y-%m-%dt%H:%M:%S%z',			# 2011-03-30t19:36:27+0200
 	'%Y-%m-%dT%H:%M:%S.%f%z',		# 2011-09-08T14:44:51.622265+03:00
 	'%Y-%m-%dt%H:%M:%S.%f',			# 2011-09-08t14:44:51.622265
 	'%Y%m%d',						# 20110908
 ]
+
+
+
+
 
 
 def str_to_date(s):
@@ -81,16 +86,12 @@ def str_to_date(s):
 
 def str_to_date_py2(s):
 	tmp = re.findall('\+([0-9]{2})00', s)
-	if tmp: 
-		dstr=s[:-5]
-		tz = int(tmp[0])
-	else: 
-		dstr=s
-		tz = 0
+	if tmp: tz = int(tmp[0])
+	else: tz = 0
 
 	for format in DATE_FORMATS:
-		try: return datetime.datetime.strptime(dstr, format) + datetime.timedelta(hours=tz)
+		try: return datetime.datetime.strptime(s, format) + datetime.timedelta(hours=tz)
 		except ValueError as e: pass
 
-	raise ValueError("Unknown date format: '%s' (Origin %s)" % (dstr,s))
+	raise ValueError("Unknown date format: '%s'" % s)
 
