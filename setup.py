@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
 	name='whois',
-	version='0.6.5',
+	version='0.7.1',
 	description='Python module/library for retrieving WHOIS information of domains.',
 	long_description = open('README').read(),
 	author='DDarko.org',

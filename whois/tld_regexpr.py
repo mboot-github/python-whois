@@ -63,6 +63,18 @@ ru = {
 'status':					r'\nstate:\s*(.+)',
 }
 
+ru_rf = {
+'extend': 'com',
+
+'domain_name':				r'\ndomain:\s*(.+)',
+
+'creation_date':			r'\ncreated:\s*(.+)',
+'expiration_date':			r'\npaid-till:\s*(.+)',
+
+'name_servers':				r'\nnserver:\s*(.+)',
+'status':					r'\nstate:\s*(.+)',
+}
+
 lv = {
 'extend': 'ru',
 
@@ -239,4 +251,50 @@ fr = {
 io = {
 'extend': 'com',
 'expiration_date':			r'\nRegistry Expiry Date:\s?(.+)',
+}
+
+ca = {
+'extend': 'com',
+
+'domain_name':				r'domain:\s?(.+)',
+'registrar':				r'registrar:\s*(.+)',
+'registrant':				r'contact:\s?(.+)',
+
+'creation_date':			r'created:\s?(.+)',
+'expiration_date':			None,
+'updated_date':				r'last-update:\s?(.+)',
+
+'name_servers':				r'nserver:\s*(.+)',
+'status':					r'status:\s?(.+)',
+}
+
+br = {
+    'extend': 'com',
+    'domain_name':              r'domain:\s?(.+)',
+    'registrar':                'nic.br',
+    'registrant':               None,
+    'owner':                    r'owner:\s?(.+)',
+    'creation_date':            r'created:\s?(.+)',
+    'expiration_date':          r'expires:\s?(.+)',
+    'updated_date':             r'changed:\s?(.+)',
+    'name_servers':             r'nserver:\s*(.+)',
+    'status':                   r'status:\s?(.+)',
+}
+
+
+mx = {
+'domain_name':              r'Domain Name:\s?(.+)',
+'registrant':               r'Registrant:\n\s*(.+)',
+'registrar':                r'Registrar:\s?(.+)',
+'creation_date':            r'Created On:\s?(.+)',
+'expiration_date':          r'Expiration Date:\s?(.+)',
+'updated_date':             r'Last Updated On:\s?(.+)',
+'name_servers':             r'\sDNS:\s*(.+)',
+}
+
+sh = {
+    'extend': 'com',
+    'expiration_date':         r'\nRegistry Expiry Date:\s*(.+)',
+    'registrant':              r'\nRegistrant Organization:\s?(.+)',
+    'status':                  r'\nDomain Status:\s?(.+)',
 }
