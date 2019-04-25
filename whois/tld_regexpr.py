@@ -247,6 +247,21 @@ fr = {
 'status':					r'status:\s?(.+)',
 }
 
+ca = {
+'extend': 'com',
+
+'domain_name':				r'domain:\s?(.+)',
+'registrar':				r'registrar:\s*(.+)',
+'registrant':				r'contact:\s?(.+)',
+
+'creation_date':			r'created:\s?(.+)',
+'expiration_date':			None,
+'updated_date':				r'last-update:\s?(.+)',
+
+'name_servers':				r'nserver:\s*(.+)',
+'status':					r'status:\s?(.+)',
+}
+
 br = {
     'extend': 'com',
     'domain_name':              r'domain:\s?(.+)',
@@ -260,6 +275,7 @@ br = {
     'status':                   r'status:\s?(.+)',
 }
 
+
 mx = {
 'domain_name':              r'Domain Name:\s?(.+)',
 'registrant':               r'Registrant:\n\s*(.+)',
@@ -269,3 +285,11 @@ mx = {
 'updated_date':             r'Last Updated On:\s?(.+)',
 'name_servers':             r'\sDNS:\s*(.+)',
 }
+
+sh = {
+    'extend': 'com',
+    'expiration_date':         r'\nRegistry Expiry Date:\s*(.+)',
+    'registrant':              r'\nRegistrant Organization:\s?(.+)',
+    'status':                  r'\nDomain Status:\s?(.+)',
+}
+
