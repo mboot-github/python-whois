@@ -44,10 +44,6 @@ google.com
 >>> print(domain.expiration_date)
 2020-09-14 00:00:00
 
-Support
-=============
-Raise an issue https://github.com/DannyCork/python-whois/issues/new
-
 
 ccTLD & TLD support
 ===================
@@ -82,3 +78,16 @@ TLD
 - net
 - org
 - io
+
+
+Issues
+=============
+Raise an issue https://github.com/DannyCork/python-whois/issues/new
+Important: use the template below
+
+-Issue template-
+1. What steps will reproduce the problem?
+2. # python
+3. What is the expected output? What do you see instead?
+4. What version of the product are you using? On what operating system?
+5. Please provide any additional information below.
