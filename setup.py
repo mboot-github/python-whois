@@ -12,7 +12,7 @@ setup(
     url='https://github.com/DannyCork/python-whois/',
     platforms=['any'],
     packages=['whois'],
-    keywords=['Python', 'WHOIS', 'TLD', 'domain', 'expiration', 'registrar'],
+    keywords=['Python', 'whois', 'tld', 'domain', 'expiration', 'cctld', 'domainer', '.com', 'registrar'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',
