@@ -16,8 +16,10 @@ except:
 def cache_load(cf):
     if not os.path.isfile(cf):
         return
+
     global CACHE
     f = open(cf, 'r')
+
     try:
         CACHE = json.load(f)
     except:
@@ -34,7 +36,8 @@ def cache_save(cf):
 
 def do_query(dl, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
     k = '.'.join(dl)
-    if cache_file: cache_load(cache_file)
+    if cache_file:
+        cache_load(cache_file)
     if force or k not in CACHE or CACHE[k][0] < time.time() - CACHE_MAX_AGE:
         CACHE[k] = (
             int(time.time()),

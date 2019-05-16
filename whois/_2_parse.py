@@ -5,18 +5,20 @@ TLD_RE = {}
 
 
 def get_tld_re(tld):
-    if tld in TLD_RE: return TLD_RE[tld]
+    if tld in TLD_RE:
+        return TLD_RE[tld]
     v = getattr(tld_regexpr, tld)
     extend = v.get('extend')
+
     if extend:
         e = get_tld_re(extend)
         tmp = e.copy()
         tmp.update(v)
-
     else:
         tmp = v
 
-    if 'extend' in tmp: del tmp['extend']
+    if 'extend' in tmp:
+        del tmp['extend']
     TLD_RE[tld] = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
     return TLD_RE[tld]
 

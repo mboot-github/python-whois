@@ -1,37 +1,37 @@
 import whois
 
 domains = '''
-google.com.br
-www.google.com
-www.fsdfsdfsdfsd.google.com
-digg.com
-imdb.com
-microsoft.com
-www.google.org
-ddarko.org
-google.net
-www.asp.net
-google.pl
-www.ddarko.pl
-google.co.uk
-google.jp
-www.google.co.jp
-google.io
-google.co
-google.de
-yandex.ru
-google.us
-google.eu
-google.me
-google.be
-google.biz
-google.info
-google.name
-google.it
-google.cz
-google.fr
-dfsdfsfsdf
-test.ez.lv
+    google.com.br
+    www.google.com
+    www.fsdfsdfsdfsd.google.com
+    digg.com
+    imdb.com
+    microsoft.com
+    www.google.org
+    ddarko.org
+    google.net
+    www.asp.net
+    google.pl
+    www.ddarko.pl
+    google.co.uk
+    google.jp
+    www.google.co.jp
+    google.io
+    google.co
+    google.de
+    yandex.ru
+    google.us
+    google.eu
+    google.me
+    google.be
+    google.biz
+    google.info
+    google.name
+    google.it
+    google.cz
+    google.fr
+    dfsdfsfsdf
+    test.ez.lv
 '''
 
 # domains = ''

@@ -78,11 +78,8 @@ TLD
 Issues
 =============
 Raise an issue https://github.com/DannyCork/python-whois/issues/new
-Important: use the template below
 
--Issue template-
-- 1. What steps will reproduce the problem?
-- 2. # python
-- 3. What is the expected output? What do you see instead?
-- 4. What version of the product are you using? On what operating system?
-- 5. Please provide any additional information below.
+
+Support
+=======
+Python 3.x supported. Should work on Python 2.x but not supported.

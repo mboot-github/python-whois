@@ -157,7 +157,7 @@ name = {
 }
 
 us = {
-'extend': 'name',
+    'extend': 'name',
 }
 
 co = {

@@ -9,18 +9,19 @@ class Domain:
 
     def __init__(self, data):
         self.name = data['domain_name'][0].strip().lower()
-        self.registrar          = data['registrar'][0].strip()
-        self.creation_date      = str_to_date(data['creation_date'][0])
-        self.expiration_date    = str_to_date(data['expiration_date'][0])
-        self.last_updated       = str_to_date(data['updated_date'][0])
+        self.registrar = data['registrar'][0].strip()
+        self.creation_date = str_to_date(data['creation_date'][0])
+        self.expiration_date = str_to_date(data['expiration_date'][0])
+        self.last_updated = str_to_date(data['updated_date'][0])
 
-        #----------------------------------
         # name_servers
         tmp = []
         for x in data['name_servers']:
-            if isinstance(x, str): tmp.append(x)
+            if isinstance(x, str):
+                tmp.append(x)
             else:
-                for y in x: tmp.append(y)
+                for y in x:
+                    tmp.append(y)
 
         self.name_servers = set()
         for x in tmp:
@@ -32,8 +33,6 @@ class Domain:
 
                 self.name_servers.add(x.lower())
 
-
-        #----------------------------------
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [
@@ -77,12 +76,13 @@ def str_to_date(s):
     s = re.sub('(\+[0-9]{2}):([0-9]{2})', '\\1\\2', s)
     s = re.sub('(\ #.*)', '', s)
 
-    if PYTHON_VERSION < 3: return str_to_date_py2(s)
+    if PYTHON_VERSION < 3:
+        return str_to_date_py2(s)
 
     for format in DATE_FORMATS:
         try:
             return datetime.datetime.strptime(s, format)
-        except ValueError as e:
+        except ValueError:
             pass
 
     raise ValueError("Unknown date format: '%s'" % s)
@@ -98,7 +98,7 @@ def str_to_date_py2(s):
     for format in DATE_FORMATS:
         try:
             return datetime.datetime.strptime(s, format) + datetime.timedelta(hours=tz)
-        except ValueError as e:
+        except ValueError:
             pass
 
     raise ValueError("Unknown date format: '%s'" % s)
