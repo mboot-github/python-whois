@@ -45,6 +45,7 @@ pl = {
     'extend': 'uk',
 
     'creation_date':			r'\ncreated:\s*(.+)\n',
+    'expiration_date':          r'Renewal date:|Expiration Date:\s*(.+)',
     'updated_date':				r'\nlast modified:\s*(.+)\n',
 
     'name_servers':				r'\nnameservers:\s*(.+)\n\s*(.+)\n',
