@@ -36,6 +36,9 @@ domains = '''
 
 # domains = ''
 
+invalidTld = '''
+    bit.ly
+'''
 
 for d in domains.split('\n'):
     if d:
@@ -46,3 +49,13 @@ for d in domains.split('\n'):
             wd = w.__dict__
             for k, v in wd.items():
                 print('%20s\t"%s"' % (k, v))
+
+for d in invalidTld.split('\n'):
+    if d:
+        print('-'*80)
+        print(d)
+        try:
+            w = whois.query(d, ignore_returncode=1)
+        except whois.UnknownTld as e:
+            print('Caught UnknownTld Exception')
+            print(e)

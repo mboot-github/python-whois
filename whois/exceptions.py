@@ -1,0 +1,2 @@
+class UnknownTld(Exception):
+    pass
