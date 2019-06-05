@@ -8,3 +8,7 @@ class FailedParsingWhoisOutput(Exception):
 
 class UnknownDateFormat(Exception):
     pass
+
+
+class WhoisCommandFailed(Exception):
+    pass

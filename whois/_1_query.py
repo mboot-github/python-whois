@@ -1,3 +1,4 @@
+from .exceptions import WhoisCommandFailed
 import subprocess
 import time
 import sys
@@ -59,7 +60,7 @@ def _do_whois_query(dl, ignore_returncode):
     r = p.communicate()[0]
     r = r.decode() if PYTHON_VERSION == 3 else r
     if not ignore_returncode and p.returncode != 0 and p.returncode != 1:
-        raise Exception(r)
+        raise WhoisCommandFailed(r)
     return r
 
 
