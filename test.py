@@ -40,6 +40,9 @@ invalidTld = '''
     bit.ly
 '''
 
+failedParsing = '''
+'''
+
 for d in domains.split('\n'):
     if d:
         print('-'*80)
@@ -58,4 +61,14 @@ for d in invalidTld.split('\n'):
             w = whois.query(d, ignore_returncode=1)
         except whois.UnknownTld as e:
             print('Caught UnknownTld Exception')
+            print(e)
+
+for d in failedParsing.split('\n'):
+    if d:
+        print('-'*80)
+        print(d)
+        try:
+            w = whois.query(d, ignore_returncode=1)
+        except whois.FailedParsingWhoisOutput as e:
+            print('Caught FailedParsingWhoisOutput Exception')
             print(e)
