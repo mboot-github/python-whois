@@ -21,7 +21,7 @@
 from ._1_query import do_query
 from ._2_parse import do_parse, TLD_RE
 from ._3_adjust import Domain
-from .exceptions import UnknownTld, FailedParsingWhoisOutput
+from .exceptions import UnknownTld, FailedParsingWhoisOutput, UnknownDateFormat
 
 
 CACHE_FILE = None

@@ -4,3 +4,7 @@ class UnknownTld(Exception):
 
 class FailedParsingWhoisOutput(Exception):
     pass
+
+
+class UnknownDateFormat(Exception):
+    pass

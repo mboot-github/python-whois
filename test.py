@@ -43,6 +43,10 @@ invalidTld = '''
 failedParsing = '''
 '''
 
+unknownDateFormat = '''
+    gopro.com
+'''
+
 for d in domains.split('\n'):
     if d:
         print('-'*80)
@@ -71,4 +75,14 @@ for d in failedParsing.split('\n'):
             w = whois.query(d, ignore_returncode=1)
         except whois.FailedParsingWhoisOutput as e:
             print('Caught FailedParsingWhoisOutput Exception')
+            print(e)
+
+for d in unknownDateFormat.split('\n'):
+    if d:
+        print('-'*80)
+        print(d)
+        try:
+            w = whois.query(d, ignore_returncode=1)
+        except whois.UnknownDateFormat as e:
+            print('Caught UnknownDateFormat Exception')
             print(e)
