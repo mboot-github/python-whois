@@ -1,3 +1,4 @@
+from .exceptions import FailedParsingWhoisOutput
 from . import tld_regexpr
 import re
 
@@ -49,7 +50,7 @@ def do_parse(whois_str, tld):
             return
         if s.count('error'):
             return
-        raise Exception(whois_str)
+        raise FailedParsingWhoisOutput(whois_str)
 
     sn = re.findall(r'Server Name:\s?(.+)', whois_str, re.IGNORECASE)
     if sn:

@@ -1,3 +1,4 @@
+from .exceptions import UnknownDateFormat
 import re
 import sys
 import datetime
@@ -85,7 +86,7 @@ def str_to_date(s):
         except ValueError:
             pass
 
-    raise ValueError("Unknown date format: '%s'" % s)
+    raise UnknownDateFormat("Unknown date format: '%s'" % s)
 
 
 def str_to_date_py2(s):
@@ -101,4 +102,4 @@ def str_to_date_py2(s):
         except ValueError:
             pass
 
-    raise ValueError("Unknown date format: '%s'" % s)
+    raise UnknownDateFormat("Unknown date format: '%s'" % s)
