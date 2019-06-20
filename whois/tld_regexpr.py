@@ -21,7 +21,6 @@ net = {
 org = {
     'extend': 'com',
 
-    'creation_date':			r'\nCreated On:\s?(.+)',
     'expiration_date':			r'\nRegistry Expiry Date:\s?(.+)',
     'updated_date':				r'\nLast Updated On:\s?(.+)',
 
