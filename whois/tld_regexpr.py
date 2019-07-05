@@ -296,3 +296,15 @@ sh = {
     'registrant':              r'\nRegistrant Organization:\s?(.+)',
     'status':                  r'\nDomain Status:\s?(.+)',
 }
+
+video = {
+    'extend': 'com',
+    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
+    'updated_date':             r'\nUpdated Date:\s?(.+)',
+}
+
+mobi = {
+    'extend': 'com',
+    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
+    'updated_date':             r'\nUpdated Date:\s?(.+)',
+}
