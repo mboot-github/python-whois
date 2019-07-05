@@ -6,7 +6,7 @@ com = {
     'registrant':				None,
 
     'creation_date':			r'Creation Date:\s?(.+)',
-    'expiration_date':			r'Expiration Date:\s?(.+)',
+    'expiration_date':			r'Registry Expiry Date:\s?(.+)',
     'updated_date':				r'Updated Date:\s?(.+)$',
 
     'name_servers':				r'Name Server:\s*(.+)\s*',
@@ -295,4 +295,16 @@ sh = {
     'expiration_date':         r'\nRegistry Expiry Date:\s*(.+)',
     'registrant':              r'\nRegistrant Organization:\s?(.+)',
     'status':                  r'\nDomain Status:\s?(.+)',
+}
+
+video = {
+    'extend': 'com',
+    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
+    'updated_date':             r'\nUpdated Date:\s?(.+)',
+}
+
+mobi = {
+    'extend': 'com',
+    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
+    'updated_date':             r'\nUpdated Date:\s?(.+)',
 }
