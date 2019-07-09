@@ -140,13 +140,7 @@ biz = {
 }
 
 info = {
-    'extend': 'biz',
-
-    'creation_date':			r'Created On:\s?(.+)',
-    'expiration_date':			r'Expiration Date:\s?(.+)$',
-    'updated_date':				r'Last Updated On:\s?(.+)$',
-
-    'status':					r'Status:\s?(.+)',
+    'extend': 'com'
 }
 
 name = {
