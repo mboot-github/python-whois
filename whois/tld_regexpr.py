@@ -312,3 +312,13 @@ uz = {
     'updated_date':             r'Updated Date:\s?(.+)',
     'status':                   r'Status:\s?(.+)',
 }
+
+id = {
+    'extend': 'com',
+
+    'registrant':				r'Sponsoring Registrar Organization:\s?(.+)',
+
+    'creation_date':			r'Created On:\s?(.+)',
+    'expiration_date':			r'Expiration Date:\s?(.+)',
+    'updated_date':				r'Last Updated On:\s?(.+)$',
+}
