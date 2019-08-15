@@ -322,3 +322,7 @@ id = {
     'expiration_date':			r'Expiration Date:\s?(.+)',
     'updated_date':				r'Last Updated On:\s?(.+)$',
 }
+
+xyz = {
+    'extend': 'com',
+}
