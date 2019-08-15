@@ -38,6 +38,7 @@ domains = '''
     google.cc
     google.nyc
     google.pw
+    google.online
 '''
 
 # domains = ''
