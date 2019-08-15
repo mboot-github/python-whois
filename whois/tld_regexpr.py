@@ -323,6 +323,6 @@ id = {
     'updated_date':				r'Last Updated On:\s?(.+)$',
 }
 
-net = {
+xyz = {
     'extend': 'com',
 }
