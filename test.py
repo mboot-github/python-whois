@@ -36,6 +36,7 @@ domains = '''
     google.tel
     google.tv
     google.cc
+    google.nyc
 '''
 
 # domains = ''
