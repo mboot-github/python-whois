@@ -40,6 +40,7 @@ domains = '''
     google.pw
     google.online
     google.wiki
+    google.press
 '''
 
 # domains = ''
