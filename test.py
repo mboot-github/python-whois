@@ -32,6 +32,15 @@ domains = '''
     google.fr
     dfsdfsfsdf
     test.ez.lv
+    google.xyz
+    google.tel
+    google.tv
+    google.cc
+    google.nyc
+    google.pw
+    google.online
+    google.wiki
+    google.press
 '''
 
 # domains = ''
