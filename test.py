@@ -39,6 +39,7 @@ domains = '''
     google.nyc
     google.pw
     google.online
+    google.wiki
 '''
 
 # domains = ''
