@@ -34,6 +34,7 @@ domains = '''
     test.ez.lv
     google.xyz
     google.tel
+    google.tv
 '''
 
 # domains = ''
