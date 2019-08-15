@@ -33,6 +33,7 @@ domains = '''
     dfsdfsfsdf
     test.ez.lv
     google.xyz
+    google.tel
 '''
 
 # domains = ''

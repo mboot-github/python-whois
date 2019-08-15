@@ -332,3 +332,13 @@ xyz = {
     'updated_date':             r'Updated Date:\s?(.+)',
     'status':                   r'Status:\s?(.+)',
 }
+
+tel = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
