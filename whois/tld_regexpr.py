@@ -316,7 +316,7 @@ uz = {
 id = {
     'extend': 'com',
 
-    'registrant':				r'Sponsoring Registrar Organization:\s?(.+)',
+    'registrar':				r'Sponsoring Registrar Organization:\s?(.+)',
 
     'creation_date':			r'Created On:\s?(.+)',
     'expiration_date':			r'Expiration Date:\s?(.+)',
