@@ -322,3 +322,48 @@ id = {
     'expiration_date':			r'Expiration Date:\s?(.+)',
     'updated_date':				r'Last Updated On:\s?(.+)$',
 }
+
+
+store = {
+    'extend': 'com',
+    'registrar':				r'Registrar:\s?(.+)',
+    'registrant':               r'Registrant Organization:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'creation_date':			r'Creation Date:\s?(.+)',
+    'expiration_date':			r'Registry Expiry Date:\s?(.+)',
+    'name_servers':             r'Name Server:\s*(.+)',
+    'status':                   r'Domain Status:\s*(.+)'
+}
+
+rest = {
+    'extend': 'store',
+    'status':                   r'Domain Status:\s*(.+)'
+}
+
+security = {
+    'extend': 'store'
+}
+
+site = {
+    'extend' : 'store'
+}
+
+website = {
+    'extend' : 'store'
+}
+
+tickets = {
+    'extend': 'store'
+}
+
+theatre = {
+    'extend': 'store'
+}
+
+tech = {
+    'extend': 'store'
+}
+
+space = {
+    'extend' : 'store'
+}
