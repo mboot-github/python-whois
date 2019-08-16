@@ -60,6 +60,15 @@ domains = '''
     livechat.website
     google.tickets
     google.theatre
+    google.xyz
+    google.tel
+    google.tv
+    google.cc
+    google.nyc
+    google.pw
+    google.online
+    google.wiki
+    google.press
 '''
 
 failure = list()
