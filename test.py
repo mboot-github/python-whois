@@ -1,8 +1,6 @@
 import whois
 
 domains = '''
-    google.xyz
-    google.id
     google.com.br
     www.google.com
     www.fsdfsdfsdfsd.google.com
@@ -34,6 +32,15 @@ domains = '''
     google.fr
     dfsdfsfsdf
     test.ez.lv
+    google.xyz
+    google.tel
+    google.tv
+    google.cc
+    google.nyc
+    google.pw
+    google.online
+    google.wiki
+    google.press
 '''
 
 # domains = ''
