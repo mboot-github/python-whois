@@ -3,7 +3,6 @@ import sys
 import datetime
 from .exceptions import UnknownDateFormat
 
-
 PYTHON_VERSION = sys.version_info[0]
 
 
@@ -72,30 +71,30 @@ DATE_FORMATS = [
 ]
 
 
-def str_to_date(s):
-    s = s.strip().lower()
+def str_to_date(text):
+    text = text.strip().lower()
 
-    if not s or s == 'not defined':
+    if not text or text == 'not defined':
         return
 
-    s = s.replace('(jst)', '(+0900)')
-    s = re.sub('(\+[0-9]{2}):([0-9]{2})', '\\1\\2', s)
-    s = re.sub('(\ #.*)', '', s)
+    text = text.replace('(jst)', '(+0900)')
+    text = re.sub('(\+[0-9]{2}):([0-9]{2})', '\\1\\2', text)
+    text = re.sub('(\ #.*)', '', text)
 
     if PYTHON_VERSION < 3:
-        return str_to_date_py2(s)
+        return str_to_date_py2(text)
 
     for format in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(s, format)
+            return datetime.datetime.strptime(text, format)
         except ValueError:
             pass
 
-    raise UnknownDateFormat("Unknown date format: '%s'" % s)
+    raise UnknownDateFormat("Unknown date format: '%s'" % text)
 
 
-def str_to_date_py2(s):
-    tmp = re.findall('\+([0-9]{2})00', s)
+def str_to_date_py2(text):
+    tmp = re.findall('\+([0-9]{2})00', text)
     time_zone = 0
 
     if tmp:
@@ -105,8 +104,8 @@ def str_to_date_py2(s):
 
     for format in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(s, format) + datetime.timedelta(hours=time_zone)
+            return datetime.datetime.strptime(text, format) + datetime.timedelta(hours=time_zone)
         except ValueError:
             pass
 
-    raise UnknownDateFormat("Unknown date format: '%s'" % s)
+    raise UnknownDateFormat("Unknown date format: '%s'" % text)
