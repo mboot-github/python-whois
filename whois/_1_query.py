@@ -1,8 +1,9 @@
-from .exceptions import WhoisCommandFailed
 import subprocess
 import time
 import sys
 import os
+from .exceptions import WhoisCommandFailed
+
 
 PYTHON_VERSION = sys.version_info[0]
 CACHE = {}
@@ -62,22 +63,3 @@ def _do_whois_query(dl, ignore_returncode):
     if not ignore_returncode and p.returncode != 0 and p.returncode != 1:
         raise WhoisCommandFailed(r)
     return r
-
-
-"""
-import socket
-
-def _do_whois_query(dl):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((('%s.whois-servers.net' % dl[-1], 43)))
-    s.send(("%s\r\n" % '.'.join(dl)).encode())
-
-    response = []
-    while 1:
-        t = s.recv(4096)
-        response.append(t)
-        if t == b'': break
-
-    s.close()
-    return b''.join(response).decode()
-"""
