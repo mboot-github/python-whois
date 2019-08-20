@@ -316,9 +316,143 @@ uz = {
 id = {
     'extend': 'com',
 
-    'registrant':				r'Sponsoring Registrar Organization:\s?(.+)',
+    'registrar':				r'Sponsoring Registrar Organization:\s?(.+)',
 
     'creation_date':			r'Created On:\s?(.+)',
     'expiration_date':			r'Expiration Date:\s?(.+)',
     'updated_date':				r'Last Updated On:\s?(.+)$',
+}
+
+
+store = {
+    'extend': 'com',
+    'registrar':				r'Registrar:\s?(.+)',
+    'registrant':               r'Registrant Organization:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'creation_date':			r'Creation Date:\s?(.+)',
+    'expiration_date':			r'Registry Expiry Date:\s?(.+)',
+    'name_servers':             r'Name Server:\s*(.+)',
+    'status':                   r'Domain Status:\s*(.+)'
+}
+
+rest = {
+    'extend': 'store',
+    'status':                   r'Domain Status:\s*(.+)'
+}
+
+security = {
+    'extend': 'store'
+}
+
+site = {
+    'extend' : 'store'
+}
+
+website = {
+    'extend' : 'store'
+}
+
+tickets = {
+    'extend': 'store'
+}
+
+theatre = {
+    'extend': 'store'
+}
+
+tech = {
+    'extend': 'store'
+}
+
+space = {
+    'extend' : 'store'
+}
+xyz = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+tel = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+tv = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+cc = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+nyc = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+pw = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+online = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+wiki = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+}
+
+press = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
 }
