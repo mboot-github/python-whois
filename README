@@ -65,6 +65,10 @@ ccTLD
 - br
 - sh
 - id
+- tv
+- cc
+- nyc
+- pw
 
 TLD
 - biz
@@ -75,7 +79,11 @@ TLD
 - net
 - org
 - io
-
+- xyz
+- tel
+- online
+- wiki
+- press
 
 Issues
 =============

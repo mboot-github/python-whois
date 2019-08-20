@@ -48,6 +48,9 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
         tld = 'co_jp'
     elif domain.endswith('.xn--p1ai'):
         tld = 'ru_rf'
+    elif domain.endswith('.name'):
+        d[0] = 'domain=' + d[0]
+        tld = d[-1]
     else:
         tld = d[-1]
 
