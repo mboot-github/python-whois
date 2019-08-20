@@ -27,6 +27,7 @@ class Domain:
                     tmp.append(y)
 
         self.name_servers = set()
+
         for x in tmp:
             x = x.strip(' .')
 
@@ -95,16 +96,16 @@ def str_to_date(s):
 
 def str_to_date_py2(s):
     tmp = re.findall('\+([0-9]{2})00', s)
-    tz = 0
+    time_zone = 0
 
     if tmp:
-        tz = int(tmp[0])
+        time_zone = int(tmp[0])
     else:
-        tz = 0
+        time_zone = 0
 
     for format in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(s, format) + datetime.timedelta(hours=tz)
+            return datetime.datetime.strptime(s, format) + datetime.timedelta(hours=time_zone)
         except ValueError:
             pass
 
