@@ -46,8 +46,42 @@ Usage example
 
 ccTLD & TLD support
 ===================
-ccTLD
 
+
+global top level domains (GTLD)
+
+.tv
+.cc
+.nyc
+.pw
+* biz
+* com
+* info
+* me
+* name
+* net
+* org
+* io
+.xyz
+.tel
+.online
+.wiki
+.press
+.rest
+.security
+.site
+.website
+.tickets
+.theatre
+.tech
+.store
+.space
+
+Country code top leve domains (ccTLD)
+.tv
+.cc
+.nyc
+.pw
 * uz
 * at
 * be
@@ -70,18 +104,6 @@ ccTLD
 * br
 * sh
 * id
-
-TLD
-
-* biz
-* com
-* info
-* me
-* name
-* net
-* org
-* io
-
 
 Issues
 =============
