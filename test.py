@@ -1,7 +1,6 @@
 import whois
-from time import sleep
 
-domains = '''
+DOMAINS = '''
     google.pl
     google.com.br
     www.google.com
@@ -87,7 +86,7 @@ unknownDateFormat = '''
     gopro.com
 '''
 
-for d in domains.split('\n'):
+for d in DOMAINS.split('\n'):
     if d:
         print('-'*80)
         print(d)

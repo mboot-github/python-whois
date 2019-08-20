@@ -1,7 +1,8 @@
-from .exceptions import UnknownDateFormat
 import re
 import sys
 import datetime
+from .exceptions import UnknownDateFormat
+
 
 PYTHON_VERSION = sys.version_info[0]
 
@@ -17,6 +18,7 @@ class Domain:
 
         # name_servers
         tmp = []
+
         for x in data['name_servers']:
             if isinstance(x, str):
                 tmp.append(x)
@@ -27,10 +29,11 @@ class Domain:
         self.name_servers = set()
         for x in tmp:
             x = x.strip(' .')
-            if x:
-                if ' ' in x:
-                    x, _ = x.split(' ', 1)
-                    x = x.strip(' .')
+
+        if x:
+            if ' ' in x:
+                x, _ = x.split(' ', 1)
+                x = x.strip(' .')
 
                 self.name_servers.add(x.lower())
 
@@ -70,6 +73,7 @@ DATE_FORMATS = [
 
 def str_to_date(s):
     s = s.strip().lower()
+
     if not s or s == 'not defined':
         return
 
@@ -91,6 +95,8 @@ def str_to_date(s):
 
 def str_to_date_py2(s):
     tmp = re.findall('\+([0-9]{2})00', s)
+    tz = 0
+
     if tmp:
         tz = int(tmp[0])
     else:
