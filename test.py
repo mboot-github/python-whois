@@ -1,6 +1,7 @@
 import whois
 
 domains = '''
+    google.pl
     google.com.br
     www.google.com
     www.fsdfsdfsdfsd.google.com

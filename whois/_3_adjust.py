@@ -94,7 +94,7 @@ def str_to_date_py2(s):
     if tmp:
         tz = int(tmp[0])
     else:
-        z = 0
+        tz = 0
 
     for format in DATE_FORMATS:
         try:

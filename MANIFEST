@@ -5,4 +5,5 @@ whois/_1_query.py
 whois/_2_parse.py
 whois/_3_adjust.py
 whois/__init__.py
+whois/exceptions.py
 whois/tld_regexpr.py
