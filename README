@@ -19,6 +19,8 @@ You contributions are welcome , look for the Help wanted tag https://github.com/
 Usage example
 =============
 
+Install `whois` package from your distribution (e.g apt install whois)
+
 $pip install whois
 
 >>> import whois
