@@ -466,3 +466,22 @@ pharmacy = {
     'updated_date':             r'Updated Date:\s?(.+)',
     'status':                   r'status:\s?(.+)',
 }
+
+kr = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name\s*:\s?(.+)',
+    'registrar':                r'Authorized Agency\s*:\s*(.+)',
+    'registrant':				r'Registrant\s*:\s*(.+)',
+    'creation_date':            r'Registered Date\s*:\s?(.+)',
+    'expiration_date':          r'Expiration Date\s*:\s?(.+)',
+    'updated_date':             r'Last Updated Date\s*:\s?(.+)',
+    'status':                   r'status\s*:\s?(.+)',
+}
+
+cn = {
+    'extend': 'com',
+    'registrar':                r'Sponsoring Registrar:\s?(.+)',
+    'registrant':				r'Registrant:\s?(.+)',
+    'creation_date':			r'Registration Time:\s?(.+)',
+    'expiration_date':			r'Expiration Time:\s?(.+)'
+}
