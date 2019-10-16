@@ -129,12 +129,12 @@ eu = {
 biz = {
     'extend': 'com',
 
-    'registrar':				r'Sponsoring Registrar:\s?(.+)',
+    'registrar':				r'Registrar:\s?(.+)',
     'registrant':				r'Registrant Organization:\s?(.+)',
 
-    'creation_date':			r'Domain Registration Date:\s?(.+)',
-    'expiration_date':			r'Domain Expiration Date:\s?(.+)',
-    'updated_date':				r'Domain Last Updated Date:\s?(.+)',
+    'creation_date':			r'Creation Date:\s?(.+)',
+    'expiration_date':			r'Registry Expiry Date:\s?(.+)',
+    'updated_date':				r'Updated Date:\s?(.+)',
 
     'status':					None,
 }
