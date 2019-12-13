@@ -24,21 +24,6 @@ def get_tld_re(tld):
     TLD_RE[tld] = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
     return TLD_RE[tld]
 
-[get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != '_']
-
-
-def do_parse(whois_str, tld):
-    r = {}
-
-    if whois_str.count('\n') < 5:
-        s = whois_str.strip().lower()
-
-    if 'extend' in tmp:
-        del tmp['extend']
-
-    TLD_RE[tld] = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
-    return TLD_RE[tld]
-
 
 [get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != '_']
 
@@ -53,6 +38,11 @@ def do_parse(whois_str, tld):
         if s.count('error'):
             return
         raise FailedParsingWhoisOutput(whois_str)
+
+    # split whois_str to remove first IANA part showing info for TLD only
+    whois_splitted = whois_str.split("source:       IANA")
+    if len(whois_splitted) == 2:
+        whois_str = whois_splitted[1]
 
     sn = re.findall(r'Server Name:\s?(.+)', whois_str, re.IGNORECASE)
     if sn:
