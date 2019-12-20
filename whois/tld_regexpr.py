@@ -40,6 +40,22 @@ uk = {
     'status':					r'Registration status:\n\s*(.+)',
 }
 
+ac_uk = {
+    'extend': 'uk',
+
+    'domain_name':				r'Domain:\n\s?(.+)',
+    'owner':				r'Domain Owner:\n\s?(.+)',
+    'registrar':				r'Registered By:\n\s?(.+)',
+    'registrant':				r'Registered Contact:\n\s*(.+)',
+
+    'creation_date':			r'Registered on:\n\s*(.+)',
+    'expiration_date':			r'Renewal date:\n\s*(.+)',
+    'updated_date':				r'Entry updated:\n\s*(.+)',
+
+    'name_servers':				r'Servers:\n\s*(.+)\s*',
+    'creation_date':			r'Entry created:\n\s?(.+)',
+}
+
 pl = {
     'extend': 'uk',
 

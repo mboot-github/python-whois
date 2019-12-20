@@ -69,6 +69,8 @@ DATE_FORMATS = [
     '%Y-%m-%dt%H:%M:%S.%f%z',       # 2011-09-08T14:44:51.622265+03:00
     '%Y%m%d',                       # 20110908
     '%Y. %m. %d.',                  # 2020. 01. 12.
+    'before %b-%Y',                 # before aug-1996
+    '%A %d %b %Y',                  # Tue 21 Jun 2011
 ]
 
 
@@ -103,6 +105,10 @@ def str_to_date_py2(text):
     else:
         time_zone = 0
 
+    #nasty hack for 1st 2nd 3rd 4th etc
+    # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
+    text = re.sub(r"(st|nd|rd|th) ", " ", text)
+    
     for format in DATE_FORMATS:
         try:
             return datetime.datetime.strptime(text, format) + datetime.timedelta(hours=time_zone)
