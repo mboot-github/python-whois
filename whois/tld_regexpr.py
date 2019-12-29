@@ -485,3 +485,12 @@ cn = {
     'creation_date':			r'Registration Time:\s?(.+)',
     'expiration_date':			r'Expiration Time:\s?(.+)'
 }
+
+edu = {
+    'extend': 'com',
+    'registrant':               r'Registrant:\s*(.+)',
+    'creation_date':            r'Domain record activated:\s?(.+)',
+    'updated_date':             r'Domain record last updated:\s?(.+)',
+    'expiration_date':          r'Domain expires:\s?(.+)',
+    'name_servers':             r'Name Servers:\s?\t(.+)\n\t(.+)\n'
+}
