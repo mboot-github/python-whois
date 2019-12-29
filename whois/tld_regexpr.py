@@ -494,3 +494,24 @@ edu = {
     'expiration_date':          r'Domain expires:\s?(.+)',
     'name_servers':             r'Name Servers:\s?\t(.+)\n\t(.+)\n'
 }
+
+cl = {
+    'extend': 'com',
+    'registrar':				'nic.cl',
+    'creation_date':			r'Creation Date:\s?(.+)',
+    'expiration_date':			r'Expiration Date:\s?(.+)',
+    'name_servers':				r'Name Server:\s*(.+)\s*',
+}
+
+ar = {
+    'extend': 'com',
+    'domain_name':              r'domain\s*:\s?(.+)',
+    'registrar':				r'registrar:\s?(.+)',
+    'creation_date':			r'registered:\s?(.+)',
+    'expiration_date':			r'expire:\s?(.+)',
+    'updated_date':             r'changed\s*:\s?(.+)',
+    'name_servers':				r'nserver:\s*(.+)\s*',
+}
+
+
+

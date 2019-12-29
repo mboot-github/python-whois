@@ -1,6 +1,9 @@
 import whois
 
 DOMAINS = '''
+    google.cl
+    google.com.ar
+    google.com.co
     google.pl
     google.com.br
     www.google.com
