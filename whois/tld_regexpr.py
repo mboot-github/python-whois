@@ -495,6 +495,7 @@ edu = {
     'name_servers':             r'Name Servers:\s?\t(.+)\n\t(.+)\n'
 }
 
+
 kz = {
     'extend': None,
     'domain_name':              r'Domain name\.+:\s(.+)',
@@ -503,4 +504,22 @@ kz = {
     'name_servers':             r'server.*:\s(.+)',
     'creation_date':            r'Domain created:\s(.+)',
     'updated_date':             r'Last modified :\s(.+)'
+}
+
+cl = {
+    'extend': 'com',
+    'registrar':				'nic.cl',
+    'creation_date':			r'Creation Date:\s?(.+)',
+    'expiration_date':			r'Expiration Date:\s?(.+)',
+    'name_servers':				r'Name Server:\s*(.+)\s*',
+}
+
+ar = {
+    'extend': 'com',
+    'domain_name':              r'domain\s*:\s?(.+)',
+    'registrar':				r'registrar:\s?(.+)',
+    'creation_date':			r'registered:\s?(.+)',
+    'expiration_date':			r'expire:\s?(.+)',
+    'updated_date':             r'changed\s*:\s?(.+)',
+    'name_servers':				r'nserver:\s*(.+)\s*',
 }
