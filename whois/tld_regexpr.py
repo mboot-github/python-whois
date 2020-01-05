@@ -33,7 +33,9 @@ uk = {
     'registrant':				r'Registrant:\n\s*(.+)',
 
     'creation_date':			r'Registered on:\s*(.+)',
-    'expiration_date':			r'Renewal date:\s*(.+)',
+    
+    'expiration_date':			r'Expiry date:\s*(.+)',
+
     'updated_date':				r'Last updated:\s*(.+)',
 
     'name_servers':				r'Name Servers:\s*(.+)\s*',
