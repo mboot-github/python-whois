@@ -1,6 +1,7 @@
 import whois
 
 DOMAINS = '''
+    doramy.club
     google.cl
     google.com.ar
     google.com.co

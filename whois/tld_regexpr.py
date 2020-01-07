@@ -525,3 +525,7 @@ ar = {
     'updated_date':             r'changed\s*:\s?(.+)',
     'name_servers':				r'nserver:\s*(.+)\s*',
 }
+
+club = {
+    'extend': 'com'
+}
