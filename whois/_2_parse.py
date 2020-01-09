@@ -35,6 +35,9 @@ def do_parse(whois_str, tld):
         s = whois_str.strip().lower()
         if s == 'not found':
             return
+        if s.startswith('no such domain'):
+            # could feed startswith a tuple of strings of expected reponses
+            return
         if s.count('error'):
             return
         raise FailedParsingWhoisOutput(whois_str)
