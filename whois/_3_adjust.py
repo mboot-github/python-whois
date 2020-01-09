@@ -37,6 +37,10 @@ class Domain:
 
                 self.name_servers.add(x.lower())
 
+        if data['owner']:
+            self.owner = data['owner'][0].strip()
+
+
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [
@@ -70,7 +74,10 @@ DATE_FORMATS = [
     '%Y%m%d',                       # 20110908
     '%Y. %m. %d.',                  # 2020. 01. 12.
     'before %b-%Y',                 # before aug-1996
-    '%A %d %b %Y',                  # Tue 21 Jun 2011
+    '%a %d %b %Y',                  # Tue 21 Jun 2011
+    '%A %d %b %Y',                  # Tuesday 21 Jun 2011
+    '%a %d %B %Y',                  # Tue 21 June 2011
+    '%A %d %B %Y',                  # Tuesday 21 June 2011
 ]
 
 
@@ -105,9 +112,9 @@ def str_to_date_py2(text):
     else:
         time_zone = 0
 
-    #nasty hack for 1st 2nd 3rd 4th etc
+    #hack for 1st 2nd 3rd 4th etc
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
-    text = re.sub(r"(st|nd|rd|th) ", " ", text)
+    text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
     
     for format in DATE_FORMATS:
         try:
