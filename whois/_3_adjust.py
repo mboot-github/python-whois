@@ -37,9 +37,8 @@ class Domain:
 
                 self.name_servers.add(x.lower())
 
-        if data['owner']:
+        if 'owner' in data:
             self.owner = data['owner'][0].strip()
-
 
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
