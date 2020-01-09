@@ -46,11 +46,13 @@ ccTLD & TLD support
 ===================
 ccTLD
 - uz
+- ar
 - at
 - be
 - br
 - co
 - co.jp
+- cl
 - cz
 - de
 - eu
@@ -89,6 +91,7 @@ TLD
 - pharmacy
 - kr
 - cn
+- club
 
 Issues
 =============

@@ -33,7 +33,9 @@ uk = {
     'registrant':				r'Registrant:\n\s*(.+)',
 
     'creation_date':			r'Registered on:\s*(.+)',
-    'expiration_date':			r'Renewal date:\s*(.+)',
+    
+    'expiration_date':			r'Expiry date:\s*(.+)',
+
     'updated_date':				r'Last updated:\s*(.+)',
 
     'name_servers':				r'Name Servers:\s*(.+)\s*',
@@ -500,4 +502,46 @@ cn = {
     'registrant':				r'Registrant:\s?(.+)',
     'creation_date':			r'Registration Time:\s?(.+)',
     'expiration_date':			r'Expiration Time:\s?(.+)'
+}
+
+edu = {
+    'extend': 'com',
+    'registrant':               r'Registrant:\s*(.+)',
+    'creation_date':            r'Domain record activated:\s?(.+)',
+    'updated_date':             r'Domain record last updated:\s?(.+)',
+    'expiration_date':          r'Domain expires:\s?(.+)',
+    'name_servers':             r'Name Servers:\s?\t(.+)\n\t(.+)\n'
+}
+
+
+kz = {
+    'extend': None,
+    'domain_name':              r'Domain name\.+:\s(.+)',
+    'registrar':                r'Current Registar:\s(.+)',
+    'expiration_date':          None,
+    'name_servers':             r'server.*:\s(.+)',
+    'creation_date':            r'Domain created:\s(.+)',
+    'updated_date':             r'Last modified :\s(.+)'
+}
+
+cl = {
+    'extend': 'com',
+    'registrar':				'nic.cl',
+    'creation_date':			r'Creation Date:\s?(.+)',
+    'expiration_date':			r'Expiration Date:\s?(.+)',
+    'name_servers':				r'Name Server:\s*(.+)\s*',
+}
+
+ar = {
+    'extend': 'com',
+    'domain_name':              r'domain\s*:\s?(.+)',
+    'registrar':				r'registrar:\s?(.+)',
+    'creation_date':			r'registered:\s?(.+)',
+    'expiration_date':			r'expire:\s?(.+)',
+    'updated_date':             r'changed\s*:\s?(.+)',
+    'name_servers':				r'nserver:\s*(.+)\s*',
+}
+
+club = {
+    'extend': 'com'
 }
