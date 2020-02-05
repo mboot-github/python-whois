@@ -28,6 +28,7 @@ DOMAINS = '''
     google.eu
     google.me
     google.be
+    google.lt
     google.biz
     google.info
     google.name
