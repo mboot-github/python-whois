@@ -545,3 +545,15 @@ ar = {
 club = {
     'extend': 'com'
 }
+
+education = {
+    # GANDI SAS
+    'extend': 'com',
+    'registrant':               r'Registrant Organization:\s?(.+)',
+    'expiration_date':          r'Registrar Registration Expiration Date:\s?(.+)',
+    'status':					r'Domain Status:\s?(.+)',
+}
+
+ninja = {
+    'extend': 'education'
+}

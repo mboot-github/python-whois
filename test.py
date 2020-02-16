@@ -1,6 +1,8 @@
 import whois
 
 DOMAINS = '''
+    netsec.ninja
+    test.education
     doramy.club
     google.cl
     google.com.ar
