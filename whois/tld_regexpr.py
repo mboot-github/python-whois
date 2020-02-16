@@ -92,6 +92,16 @@ ru_rf = {
     'status':					r'\nstate:\s*(.+)',
 }
 
+lt = {
+    'extend': 'com',
+
+    'status':                   r'\nStatus:\s?(.+)',
+    'domain_name':				r'Domain:\s?(.+)',
+    'creation_date':			r'Registered:\s?(.+)',
+    'expiration_date':			r'Expires:\s?(.+)',  
+    'name_servers':				r'Nameserver:\s*(.+)\s*',
+}
+
 lv = {
     'extend': 'ru',
 
