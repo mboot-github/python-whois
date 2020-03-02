@@ -567,3 +567,15 @@ education = {
 ninja = {
     'extend': 'education'
 }
+
+is_is = {
+    'domain_name':                         r'domain:\s?(.+)',
+    'registrar':                           None,
+    'registrant':                          r'registrant:\s?(.+)',
+    'creation_date':                       r'created:\s?(.+)',
+    'expiration_date':                     r'expires:\s?(.+)',
+    'updated_date':                        None,
+    'name_servers':                        r'nserver:\s?(.+)',
+    'status':                              None,
+    'emails':                              r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
+}

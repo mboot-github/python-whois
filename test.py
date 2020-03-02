@@ -76,6 +76,7 @@ DOMAINS = '''
     google.online
     google.wiki
     google.press
+    google.is
 '''
 
 failure = list()

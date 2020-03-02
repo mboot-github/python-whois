@@ -81,6 +81,7 @@ DATE_FORMATS = [
     '%a %d %B %Y',                  # Tue 21 June 2011
     '%A %d %B %Y',                  # Tuesday 21 June 2011
     '%Y-%m-%d %H:%M:%S (%Z+0:00)',  # 2007-12-24 10:24:32 (gmt+0:00)
+    '%B %d %Y',                     # January 01 2000
 ]
 
 
