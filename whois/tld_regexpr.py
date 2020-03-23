@@ -567,3 +567,17 @@ education = {
 ninja = {
     'extend': 'education'
 }
+
+ir = {
+    'extend': None,
+    'registrar': 'nic.ir',
+    'creation_date': None,
+    'status': None,
+
+    'domain_name':                      r'domain:\s?(.+)',
+
+    'expiration_date':                  r'expire-date:\s?(.+)',
+    'updated_date':                     r'last-updated:\s?(.+)',
+
+    'name_servers':                     r'nserver:\s*(.+)\s*',
+}
