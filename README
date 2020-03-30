@@ -46,21 +46,27 @@ ccTLD & TLD support
 ===================
 ccTLD
 - uz
+- ac.uk
 - ar
 - at
 - be
 - br
+- ca
 - co
 - co.jp
 - cl
+- cn
 - cz
 - de
 - eu
 - fr
 - it
+- ir
 - jp
+- kr
 - lv
 - lt
+- mx
 - nz
 - pl
 - ru
@@ -74,14 +80,22 @@ ccTLD
 - cc
 - nyc
 - pw
+- рф (xn--p1ai)
 
 TLD
 - biz
+- edu
+- education
 - com
+- download
 - info
 - me
+- mobi
 - name
 - net
+- ninja
+- nyc
+- online
 - org
 - io
 - xyz
@@ -90,8 +104,17 @@ TLD
 - wiki
 - press
 - pharmacy
-- kr
-- cn
+- rest
+- security
+- site
+- space
+- store
+- tech
+- tel
+- theatre
+- tickets
+- video
+- website
 - club
 
 Issues
