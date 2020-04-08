@@ -581,3 +581,7 @@ ir = {
 
     'name_servers':                     r'nserver:\s*(.+)\s*',
 }
+
+in_ = {
+    'extend': 'com'
+}
