@@ -5,6 +5,7 @@ DOMAINS = '''
     test.education
     doramy.club
     google.cl
+    google.in
     google.com.ar
     google.com.co
     google.pl
