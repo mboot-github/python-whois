@@ -8,6 +8,8 @@ TLD_RE = {}
 def get_tld_re(tld):
     if tld in TLD_RE:
         return TLD_RE[tld]
+    elif tld == "in":
+        return "in_"
     v = getattr(tld_regexpr, tld)
     extend = v.get('extend')
 
