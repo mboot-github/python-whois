@@ -575,6 +575,18 @@ ninja = {
     'extend': 'education'
 }
 
+is_is = {
+    'domain_name':                         r'domain:\s?(.+)',
+    'registrar':                           None,
+    'registrant':                          r'registrant:\s?(.+)',
+    'creation_date':                       r'created:\s?(.+)',
+    'expiration_date':                     r'expires:\s?(.+)',
+    'updated_date':                        None,
+    'name_servers':                        r'nserver:\s?(.+)',
+    'status':                              None,
+    'emails':                              r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
+}
+
 ir = {
     'extend': None,
     'registrar': 'nic.ir',
@@ -587,4 +599,33 @@ ir = {
     'updated_date':                     r'last-updated:\s?(.+)',
 
     'name_servers':                     r'nserver:\s*(.+)\s*',
+}
+
+se = {
+    'extend': None,
+    'domain_name':              r'domain:\s?(.+)',
+    'registrar':                r'registrar:\s?(.+)',
+    'creation_date':            r'created:\s?(.+)',
+    'expiration_date':          r'expires:\s?(.+)',
+    'updated_date':             r'modified:\s?(.+)',
+    'name_servers':             r'nserver:\s*(.+)',
+    'status':                   r'status:\s?(.+)',
+}
+
+nu = {
+    'extend': 'se'
+}
+
+fi = {
+    'extend': None,
+    'domain_name':              r'domain\.+:\s?(.+)',
+    'registrar':                r'registrar\.+:\s?(.+)',
+    'creation_date':            r'created\.+:\s?(.+)',
+    'expiration_date':          r'expires\.+:\s?(.+)',
+    'updated_date':             r'modified\.+:\s?(.+)',
+    'name_servers':             r'nserver\.+:\s*(.+)',
+    'status':                   r'status\.+:\s?(.+)',
+}
+in_ = {
+    'extend': 'com'
 }

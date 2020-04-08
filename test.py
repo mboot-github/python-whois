@@ -5,6 +5,7 @@ DOMAINS = '''
     test.education
     doramy.club
     google.cl
+    google.in
     google.com.ar
     google.com.co
     google.pl
@@ -76,6 +77,10 @@ DOMAINS = '''
     google.online
     google.wiki
     google.press
+    google.se
+    google.nu
+    google.fi
+    google.is
 '''
 
 failure = list()
