@@ -77,6 +77,9 @@ DOMAINS = '''
     google.online
     google.wiki
     google.press
+    google.se
+    google.nu
+    google.fi
     google.is
 '''
 

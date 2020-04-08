@@ -594,6 +594,31 @@ ir = {
     'name_servers':                     r'nserver:\s*(.+)\s*',
 }
 
+se = {
+    'extend': None,
+    'domain_name':              r'domain:\s?(.+)',
+    'registrar':                r'registrar:\s?(.+)',
+    'creation_date':            r'created:\s?(.+)',
+    'expiration_date':          r'expires:\s?(.+)',
+    'updated_date':             r'modified:\s?(.+)',
+    'name_servers':             r'nserver:\s*(.+)',
+    'status':                   r'status:\s?(.+)',
+}
+
+nu = {
+    'extend': 'se'
+}
+
+fi = {
+    'extend': None,
+    'domain_name':              r'domain\.+:\s?(.+)',
+    'registrar':                r'registrar\.+:\s?(.+)',
+    'creation_date':            r'created\.+:\s?(.+)',
+    'expiration_date':          r'expires\.+:\s?(.+)',
+    'updated_date':             r'modified\.+:\s?(.+)',
+    'name_servers':             r'nserver\.+:\s*(.+)',
+    'status':                   r'status\.+:\s?(.+)',
+}
 in_ = {
     'extend': 'com'
 }
