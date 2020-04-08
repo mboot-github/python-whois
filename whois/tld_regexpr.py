@@ -393,8 +393,15 @@ tech = {
 }
 
 space = {
-    'extend' : 'store'
+    'extend': 'store'
 }
+
+download = {
+    'extend': 'store',
+    'name_servers':             r'Name Server:\s*(.+)\r',
+    'status':                   r'Domain Status:\s*([a-zA-z]+)'
+}
+
 xyz = {
     'extend': 'com',
     'domain_name':              r'Domain Name:\s?(.+)',
