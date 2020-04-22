@@ -15,6 +15,7 @@ class Domain:
         self.expiration_date = str_to_date(data['expiration_date'][0])
         self.last_updated = str_to_date(data['updated_date'][0])
         self.status = data['status'][0].strip()
+        self.statuses = list(set([s.strip() for s in data['status']])) # list(set(...))) to deduplicate
 
         # name_servers
         tmp = []
