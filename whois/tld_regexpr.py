@@ -14,6 +14,13 @@ com = {
     'emails':					r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
 
+nl = {
+    'extend': 'com',
+    'domain_name':				r'Domain name:\s?(.+)',
+    'updated_date':				r'Updated Date:\s?(.+)',
+    'name_servers':				r'Domain nameservers:(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?\n?',
+}
+
 net = {
     'extend': 'com',
 }
