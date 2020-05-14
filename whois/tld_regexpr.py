@@ -629,3 +629,9 @@ fi = {
 in_ = {
     'extend': 'com'
 }
+
+au = {
+    'extend': 'com',
+    'registrar':				r'Registrar Name:\s?(.+)',
+    'updated_date':				r'Last Modified:\s?(.+)'
+}
