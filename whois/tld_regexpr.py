@@ -7,7 +7,7 @@ com = {
 
     'creation_date':			r'Creation Date:\s?(.+)',
     'expiration_date':			r'Registry Expiry Date:\s?(.+)',
-    'updated_date':				r'Updated Date:\s?(.+)$',
+    'updated_date':				r'Updated Date:\s?(.+)',
 
     'name_servers':				r'Name Server:\s*(.+)\s*',
     'status':					r'Status:\s?(.+)',
