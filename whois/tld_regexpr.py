@@ -33,7 +33,7 @@ uk = {
     'registrant':				r'Registrant:\n\s*(.+)',
 
     'creation_date':			r'Registered on:\s*(.+)',
-    
+
     'expiration_date':			r'Expiry date:\s*(.+)',
 
     'updated_date':				r'Last updated:\s*(.+)',
@@ -60,9 +60,10 @@ ac_uk = {
 
 pl = {
     'extend': 'uk',
-
+    'registrar':                r'\nREGISTRAR:\s*(.+)\n',
     'creation_date':			r'\ncreated:\s*(.+)\n',
     'updated_date':				r'\nlast modified:\s*(.+)\n',
+    'expiration_date':          r'\noption expiration date:\s*(.+)\n',
 
     'name_servers':				r'\nnameservers:\s*(.+)\n\s*(.+)\n',
     'status':					r'\nStatus:\n\s*(.+)',
@@ -98,7 +99,7 @@ lt = {
     'status':                   r'\nStatus:\s?(.+)',
     'domain_name':				r'Domain:\s?(.+)',
     'creation_date':			r'Registered:\s?(.+)',
-    'expiration_date':			r'Expires:\s?(.+)',  
+    'expiration_date':			r'Expires:\s?(.+)',
     'name_servers':				r'Nameserver:\s*(.+)\s*',
 }
 
