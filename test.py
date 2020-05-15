@@ -81,6 +81,7 @@ DOMAINS = '''
     google.nu
     google.fi
     google.is
+    afilias.com.au
 '''
 
 failure = list()

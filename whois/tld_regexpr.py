@@ -8,7 +8,7 @@ com = {
 
     'creation_date':			r'Creation Date:\s?(.+)',
     'expiration_date':			r'Registry Expiry Date:\s?(.+)',
-    'updated_date':				r'Updated Date:\s?(.+)$',
+    'updated_date':				r'Updated Date:\s?(.+)',
 
     'name_servers':				r'Name Server:\s*(.+)\s*',
     'status':					r'Status:\s?(.+)',
@@ -637,4 +637,10 @@ fi = {
 }
 in_ = {
     'extend': 'com'
+}
+
+au = {
+    'extend': 'com',
+    'registrar':				r'Registrar Name:\s?(.+)',
+    'updated_date':				r'Last Modified:\s?(.+)'
 }
