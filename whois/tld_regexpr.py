@@ -58,12 +58,11 @@ ac_uk = {
     'registrar':				r'Registered By:\n\s?(.+)',
     'registrant':				r'Registered Contact:\n\s*(.+)',
 
-    'creation_date':			r'Registered on:\n\s*(.+)',
     'expiration_date':			r'Renewal date:\n\s*(.+)',
     'updated_date':				r'Entry updated:\n\s*(.+)',
 
-    'name_servers':				r'Servers:\n\s*(.+)\s*',
-    'creation_date':			r'Entry created:\n\s?(.+)',
+    'name_servers':				r'Servers:\s*(.+)\t\n\s*(.+)\t\n',
+    'creation_date':			r'Entry created:\n\s?(.+)'
 }
 
 pl = {
@@ -635,6 +634,7 @@ fi = {
     'name_servers':             r'nserver\.+:\s*(.+)',
     'status':                   r'status\.+:\s?(.+)',
 }
+
 in_ = {
     'extend': 'com'
 }
