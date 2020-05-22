@@ -96,7 +96,10 @@ def str_to_date(text):
     text = text.replace('(jst)', '(+0900)')
     text = re.sub('(\+[0-9]{2}):([0-9]{2})', '\\1\\2', text)
     text = re.sub('(\ #.*)', '', text)
-
+    # hack for 1st 2nd 3rd 4th etc
+    # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
+    text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
+    
     if PYTHON_VERSION < 3:
         return str_to_date_py2(text)
 
@@ -118,9 +121,7 @@ def str_to_date_py2(text):
     else:
         time_zone = 0
 
-    #hack for 1st 2nd 3rd 4th etc
-    # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
-    text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
+
     
     for format in DATE_FORMATS:
         try:
