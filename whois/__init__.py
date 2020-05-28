@@ -57,6 +57,8 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
         tld = d[-1]
     elif domain.endswith('.in'):
         tld = 'in_'
+    elif domain.endswith('.com.au'):
+        tld = 'com_au'
     else:
         tld = d[-1]
 
