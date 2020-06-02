@@ -3,7 +3,7 @@ com = {
 
     'domain_name':				r'Domain Name:\s?(.+)',
     'registrar':				r'Registrar:\s?(.+)',
-    'registrant':				None,
+    'registrant':				r'Registrant\s*Organi(?:s|z)ation:\s?(.+)',
     'registrant_country':       r'Registrant Country:\s?(.+)',
 
     'creation_date':			r'Creation Date:\s?(.+)',
