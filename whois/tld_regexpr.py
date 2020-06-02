@@ -645,6 +645,10 @@ au = {
     'updated_date':				r'Last Modified:\s?(.+)'
 }
 
+com_au = {
+    'extend': 'au'
+}
+
 work = {
     'extend': 'com',
     'domain_name':              r'Domain Name:\s?(.+)',
