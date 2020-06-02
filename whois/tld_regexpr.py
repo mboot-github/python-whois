@@ -657,3 +657,12 @@ work = {
     'expiration_date':          r'Registry Expiry Date:\s?(.+)',
     'updated_date':             r'Updated Date:\s?(.+)',
 }
+
+bank = {
+    'extend': 'com',
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'registrar':                r'Registrar:\s*(.+)',
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+}
