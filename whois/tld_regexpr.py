@@ -284,17 +284,6 @@ io = {
 
 ca = {
     'extend': 'com',
-
-    'domain_name':				r'domain:\s?(.+)',
-    'registrar':				r'registrar:\s*(.+)',
-    'registrant':				r'contact:\s?(.+)',
-
-    'creation_date':			r'created:\s?(.+)',
-    'expiration_date':			None,
-    'updated_date':				r'last-update:\s?(.+)',
-
-    'name_servers':				r'nserver:\s*(.+)',
-    'status':					r'status:\s?(.+)',
 }
 
 br = {
