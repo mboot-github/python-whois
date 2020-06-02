@@ -83,6 +83,7 @@ DOMAINS = '''
     google.is
     afilias.com.au
     jisc.ac.uk
+    register.bank
 '''
 
 failure = list()
