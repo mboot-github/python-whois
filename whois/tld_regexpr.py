@@ -270,7 +270,7 @@ fr = {
     'registrant':				r'contact:\s?(.+)',
 
     'creation_date':			r'created:\s?(.+)',
-    'expiration_date':			None,
+    'expiration_date':			r'Expiry Date:\s?(.+)',
     'updated_date':				r'last-update:\s?(.+)',
 
     'name_servers':				r'nserver:\s*(.+)',
