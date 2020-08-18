@@ -44,6 +44,14 @@ def do_parse(whois_str, tld):
             return
         raise FailedParsingWhoisOutput(whois_str)
 
+    # check the status of DNSSEC
+    r['DNSSEC'] = False
+    whois_dnssec = whois_str.split("DNSSEC:")
+    if len(whois_dnssec) >= 2:
+        whois_dnssec = whois_dnssec[1].split("\n")[0]
+        if whois_dnssec.strip() == "signedDelegation":
+            r['DNSSEC'] = True
+
     # split whois_str to remove first IANA part showing info for TLD only
     whois_splitted = whois_str.split("source:       IANA")
     if len(whois_splitted) == 2:

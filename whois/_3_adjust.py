@@ -17,7 +17,8 @@ class Domain:
         self.last_updated = str_to_date(data['updated_date'][0])
         self.status = data['status'][0].strip()
         self.statuses = list(set([s.strip() for s in data['status']])) # list(set(...))) to deduplicate
-
+        self.dnssec = data['DNSSEC']
+        
         # name_servers
         tmp = []
 
