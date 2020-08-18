@@ -124,21 +124,22 @@ jp = {
     'registrar':				None,
     'registrant':				r'\[Registrant\]\s?(.+)',
 
-    'creation_date':			r'\[Created on\]\s?(.+)',
-    'expiration_date':			r'\[Expires on\]\s?(.+)',
-    'updated_date':				r'\[Last Updated\]\s?(.+)',
+    'creation_date':			r'\[登録年月日\]\s?(.+)',
+    'expiration_date':			r'\[有効期限\]\s?(.+)',
+    'updated_date':				r'\[最終更新\]\s?(.+)',
 
     'name_servers':				r'\[Name Server\]\s*(.+)',
-    'status':					r'\[Status\]\s?(.+)',
+    'status':					r'\[状態\]\s?(.+)',
     'emails':					r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
 
 co_jp = {
     'extend': 'jp',
 
-    'creation_date':			r'\[Registered Date\]\s?(.+)',
-    'expiration_date':			r'\[State\].+\((.+)\)',
-    'updated_date':				r'\[Last Update\]\s?(.+)',
+    'domain_name':				r'\[ドメイン名\]\s?(.+)',
+    'creation_date':			r'\[登録年月\]\s?(.+)',
+    'expiration_date':			r'\[状態\].+\((.+)\)',
+    'updated_date':				r'\[最終更新\]\s?(.+)',
 }
 
 de = {
