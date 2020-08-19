@@ -57,7 +57,7 @@ def _do_whois_query(dl, ignore_returncode):
     """
         Linux 'whois' command wrapper
     """
-    p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env={"LANG": "ja"})
     r = p.communicate()[0]
     r = r.decode() if PYTHON_VERSION == 3 else r
     if not ignore_returncode and p.returncode != 0 and p.returncode != 1:
