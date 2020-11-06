@@ -85,6 +85,7 @@ DOMAINS = '''
     jisc.ac.uk
     google.com.au
     register.bank
+    yandex.ua
 '''
 
 failure = list()
