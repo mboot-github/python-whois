@@ -656,3 +656,6 @@ bank = {
     'expiration_date':          r'Registry Expiry Date:\s?(.+)',
     'updated_date':             r'Updated Date:\s?(.+)',
 }
+
+# Multiple initialization
+ca = rw = mu = bank
