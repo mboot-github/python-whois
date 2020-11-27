@@ -4,7 +4,7 @@ setup(
     name='whois',
     version='0.9.7',
     description='Python package for retrieving WHOIS information of domains.',
-    long_description=open('README').read(),
+    long_description=open('README',encoding='utf8').read(),
     author='DannyCork',
     author_email='ddarko@ddarko.org',
     license='MIT http://www.opensource.org/licenses/mit-license.php',
