@@ -86,6 +86,9 @@ DOMAINS = '''
     google.com.au
     register.bank
     yandex.ua
+    google.ca
+    google.mu
+    google.rw
 '''
 
 failure = list()
