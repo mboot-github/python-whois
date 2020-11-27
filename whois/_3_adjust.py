@@ -57,6 +57,7 @@ DATE_FORMATS = [
     '%Y.%m.%d %H:%M:%S',            # 2002.09.19 13:00:00
     '%Y%m%d %H:%M:%S',              # 20110908 14:44:51
     '%Y-%m-%d %H:%M:%S',            # 2011-09-08 14:44:51
+    '%Y-%m-%d %H:%M:%S%z',          # 2025-04-27 02:54:19+03:00
     '%Y-%m-%d %H:%M:%S CLST',       # 2011-09-08 14:44:51 CLST CL
     '%Y-%m-%d %H:%M:%S.%f',       # 2011-09-08 14:44:51 CLST CL
     '%d.%m.%Y  %H:%M:%S',           # 19.09.2002 13:00:00
@@ -96,6 +97,7 @@ def str_to_date(text):
 
     text = text.replace('(jst)', '(+0900)')
     text = re.sub('(\+[0-9]{2}):([0-9]{2})', '\\1\\2', text)
+    text = re.sub('(\+[0-9]{2})$', '\\1:00', text)
     text = re.sub('(\ #.*)', '', text)
     # hack for 1st 2nd 3rd 4th etc
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
@@ -106,7 +108,7 @@ def str_to_date(text):
 
     for format in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(text, format)
+            return datetime.datetime.strptime(text, format).astimezone().replace(tzinfo=None)
         except ValueError:
             pass
 
@@ -121,8 +123,15 @@ def str_to_date_py2(text):
         time_zone = int(tmp[0])
     else:
         time_zone = 0
+    
+    del tmp
+    tmp = re.findall('\+([0-9]{2})$', text)
 
-
+    if tmp:
+        time_zone = int(tmp[0])
+        text = re.sub('(.*)(\+[0-9]{2})$', '\\1', text)
+    else:
+        time_zone = 0
     
     for format in DATE_FORMATS:
         try:

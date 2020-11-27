@@ -100,6 +100,20 @@ ru_rf = {
     'status':					r'\nstate:\s*(.+)',
 }
 
+ua = {
+    'extend': 'com',
+
+    'domain_name':				r'\ndomain:\s*(.+)',
+    'registrar':				r'\nregistrar:\s*(.+)',
+    'registrant_country':       r'\ncountry:\s*(.+)',
+
+    'creation_date':			r'\ncreated:\s*(.+)',
+    'expiration_date':			r'\nexpires:\s*(.+)',
+    'updated_date':				r'\nmodified:\s*(.+)',
+    'name_servers':				r'\nnserver:\s*(.+)',
+    'status':					r'\nstatus:\s*(.+)',
+}
+
 lt = {
     'extend': 'com',
 
