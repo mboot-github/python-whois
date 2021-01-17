@@ -547,10 +547,12 @@ kz = {
     'extend': None,
     'domain_name':              r'Domain name\.+:\s(.+)',
     'registrar':                r'Current Registar:\s(.+)',
+    'registrant_country':       r'Country\.+:\s?(.+)',
     'expiration_date':          None,
     'name_servers':             r'server.*:\s(.+)',
     'creation_date':            r'Domain created:\s(.+)',
-    'updated_date':             r'Last modified :\s(.+)'
+    'updated_date':             r'Last modified :\s(.+)',
+    'status':                   r'Domain status :\s?(.+)'
 }
 
 cl = {
