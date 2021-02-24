@@ -2,6 +2,7 @@ import subprocess
 import time
 import sys
 import os
+import platform
 from .exceptions import WhoisCommandFailed
 
 
@@ -54,10 +55,24 @@ def do_query(dl, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
 
 
 def _do_whois_query(dl, ignore_returncode):
-    """
-        Linux 'whois' command wrapper
-    """
-    p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env={"LANG": "ja"})
+    if(platform.system() == 'Windows'):
+        """
+            Windows 'whois' command wrapper
+        """
+        print("downloading dependencies")
+        folder = os.getcwd()
+        copy_command = r"copy \\live.sysinternals.com\tools\whois.exe "+folder
+        print(copy_command)
+        p = subprocess.call(copy_command,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,shell=True)
+        # print(p.stdout.read()+' '+p.stderr.read())
+        p = subprocess.Popen(['.\whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    else:
+        """
+            Linux 'whois' command wrapper
+        """
+        p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
     r = p.communicate()[0]
     r = r.decode() if PYTHON_VERSION == 3 else r
     if not ignore_returncode and p.returncode != 0 and p.returncode != 1:
