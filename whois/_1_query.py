@@ -59,11 +59,12 @@ def _do_whois_query(dl, ignore_returncode):
         """
             Windows 'whois' command wrapper
         """
-        print("downloading dependencies")
-        folder = os.getcwd()
-        copy_command = r"copy \\live.sysinternals.com\tools\whois.exe "+folder
-        print(copy_command)
-        p = subprocess.call(copy_command,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,shell=True)
+        if not os.path.exists('whois.exe'):
+            print("downloading dependencies")
+            folder = os.getcwd()
+            copy_command = r"copy \\live.sysinternals.com\tools\whois.exe "+folder
+            print(copy_command)
+            p = subprocess.call(copy_command,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,shell=True)
         # print(p.stdout.read()+' '+p.stderr.read())
         p = subprocess.Popen(['.\whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
