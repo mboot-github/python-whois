@@ -22,6 +22,10 @@ nl = {
     'name_servers':				r'Domain nameservers:(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?\n?',
 }
 
+za = {
+    'extend': 'com',
+}
+
 net = {
     'extend': 'com',
 }
