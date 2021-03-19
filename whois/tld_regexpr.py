@@ -114,6 +114,19 @@ ua = {
     'status':					r'\nstatus:\s*(.+)',
 }
 
+by = {
+    'extend': 'com',
+
+    'domain_name':				r'Domain Name:\s*(.+)',
+    'registrar':				r'\nRegistrar:\s*(.+)',
+    'registrant':				r'\nOrg:\s*(.+)',
+    'registrant_country':       r'\nCountry:\s*(.+)',
+    'creation_date':			r'\nCreation Date:\s*(.+)',
+    'expiration_date':			r'\nExpiration Date:\s*(.+)',
+    'updated_date':				r'\nUpdated Date:\s*(.+)',
+    'name_servers':				r'\nName Server:\s*(.+)',
+}
+
 lt = {
     'extend': 'com',
 
