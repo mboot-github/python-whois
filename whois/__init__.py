@@ -8,7 +8,7 @@
     >>> import whois
     >>> domain = whois.query('google.com')
     >>> print(domain.__dict__)
-    
+
     {'expiration_date': datetime.datetime(2020, 9, 14, 0, 0), 'last_updated': datetime.datetime(2011, 7, 20, 0, 0), 'registrar': 'MARKMONITOR INC.', 'name': 'google.com', 'creation_date': datetime.datetime(1997, 9, 15, 0, 0)}
 
     >>> print(domain.name)
@@ -27,6 +27,7 @@ from .exceptions import UnknownTld, FailedParsingWhoisOutput, UnknownDateFormat,
 CACHE_FILE = None
 SLOW_DOWN = 0
 
+import sys
 
 def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
     """
@@ -39,6 +40,7 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
     slow_down = slow_down or SLOW_DOWN
     domain = domain.lower().strip()
     d = domain.split('.')
+
     if d[0] == 'www':
         d = d[1:]
     if len(d) == 1:
@@ -63,7 +65,10 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
         tld = d[-1]
 
     if tld not in TLD_RE.keys():
-        raise UnknownTld('Unknown TLD: %s\n(all known TLD: %s)' % (tld, list(TLD_RE.keys())))
+        print(f'Unknown TLD: .{tld}\nValid TLDs: ', end ="")
+        for tld in sorted(list(TLD_RE.keys())):
+            print(f'.{tld}', end =" ")
+        sys.exit(1)
 
     while 1:
         pd = do_parse(do_query(d, force, cache_file, slow_down, ignore_returncode), tld)
