@@ -89,6 +89,7 @@ DOMAINS = '''
     google.ca
     google.mu
     google.rw
+    tut.by
 '''
 
 failure = list()
