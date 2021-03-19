@@ -283,14 +283,14 @@ it = {
     'extend': 'com',
 
     'domain_name':				r'Domain:\s?(.+)',
-    'registrar':				r'Registrar:\s*Organization:\s*(.+)',
-    'registrant':				r'Registrant:\s?Name:\s?(.+)',
+    'registrar':                r'Registrar\s*Organization:\s*(.+)',
+    'registrant':               r'Registrant\s*Organization:\s*(.+)',
 
     'creation_date':			r'Created:\s?(.+)',
     'expiration_date':			r'Expire Date:\s?(.+)',
     'updated_date':				r'Last Update:\s?(.+)',
 
-    'name_servers':				r'Nameservers:\s?(.+)\s?(.+)\s?(.+)\s?(.+)',
+    'name_servers':             r'Nameservers\s?(.+)\s?(.+)\s?(.+)\s?(.+)',
     'status':					r'Status:\s?(.+)',
 }
 
