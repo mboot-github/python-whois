@@ -597,6 +597,10 @@ press = {
     'status':                   r'Status:\s?(.+)',
 }
 
+pro = {
+    'extend': 'com',
+}
+
 pw = {
     'extend': 'com',
 
