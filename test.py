@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import whois
 
 DOMAINS = '''
@@ -90,6 +91,7 @@ DOMAINS = '''
     google.mu
     google.rw
     tut.by
+    guinness.ie
 '''
 
 failure = list()

@@ -44,91 +44,86 @@ google.com
 
 ccTLD & TLD support
 ===================
-ccTLD
-- uz
-- ac.uk
-- ar
-- at
-- be
-- br
-- ca
-- co
-- co.jp
-- com.au
-- cl
-- cn
-- cz
-- de
-- eu
-- fr
-- it
-- ir
-- jp
-- kr
-- lv
-- lt
-- mx
-- nz
-- pl
-- ru
-- uk
-- us
-- mx
-- br
-- sh
-- id
-- tv
-- cc
-- nyc
-- pw
-- рф (xn--p1ai)
-- in
-- ua
-- co.za
-- by
-- kz
-
-
-TLD
-- download
-- biz
-- edu
-- education
-- com
-- download
-- info
-- me
-- mobi
-- name
-- net
-- ninja
-- nyc
-- online
-- org
-- io
-- xyz
-- tel
-- online
-- wiki
-- press
-- pharmacy
-- rest
-- security
-- site
-- space
-- store
-- tech
-- tel
-- theatre
-- tickets
-- video
-- website
-- club
-- work
-- bank
-- ca
-- mu
-- rw
+.ac_uk
+.ar
+.at
+.au
+.bank
+.be
+.biz
+.br
+.by
+.ca
+.cc
+.cl
+.club
+.cn
+.co
+.co_jp
+.com
+.com_au
+.cz
+.de
+.download
+.edu
+.education
+.eu
+.fi
+.fr
+.id
+.in_
+.info
+.io
+.ir
+.is_is
+.it
+.jp
+.kr
+.kz
+.lt
+.lv
+.me
+.mobi
+.mu
+.mx
+.name
+.net
+.ninja
+.nl
+.nu
+.nyc
+.nz
+.online
+.org
+.pharmacy
+.pl
+.press
+.pw
+.rest
+.ru
+.ru_rf
+.rw
+.se
+.security
+.sh
+.site
+.space
+.store
+.tech
+.tel
+.theatre
+.tickets
+.tv
+.ua
+.uk
+.us
+.uz
+.video
+.website
+.wiki
+.work
+.xyz
+.za
 
 Issues
 =============
