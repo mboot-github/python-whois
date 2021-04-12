@@ -21,7 +21,7 @@ ac_uk = {
 
     'domain_name':              r'Domain:\n\s?(.+)',
 
-    'owner':                r'Domain Owner:\n\s?(.+)',
+    'owner':                    r'Domain Owner:\n\s?(.+)',
     'registrar':                r'Registered By:\n\s?(.+)',
     'registrant':               r'Registered Contact:\n\s*(.+)',
     'expiration_date':          r'Renewal date:\n\s*(.+)',
@@ -487,11 +487,13 @@ ninja = {
 nl = {
     'extend': 'com',
 
+    'expiration_date':          None,
+    'registrant_country':       None,
+
     'domain_name':              r'Domain name:\s?(.+)',
-
-    'updated_date':             r'Updated Date:\s?(.+)',
-
     'name_servers':             r'Domain nameservers:(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?\n?',
+    'reseller':                 r'Reseller:\s?(.+)',
+    'abuse_contact':            r'Abuse Contact:\s?(.+)',
 }
 
 

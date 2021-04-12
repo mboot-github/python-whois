@@ -124,7 +124,7 @@ for d in DOMAINS.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e),d)
+            """.format(str(e), d)
 
 for d in invalidTld.split('\n'):
     if d:
@@ -137,7 +137,7 @@ for d in invalidTld.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e),d)
+            """.format(str(e), d)
             print('Caught UnknownTld Exception')
             print(e)
 
@@ -152,7 +152,7 @@ for d in failedParsing.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e),d)
+            """.format(str(e), d)
             print('Caught FailedParsingWhoisOutput Exception')
             print(e)
 
@@ -167,7 +167,7 @@ for d in unknownDateFormat.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e),d)
+            """.format(str(e), d)
             print('Caught UnknownDateFormat Exception')
             print(e)
 
@@ -175,6 +175,6 @@ for d in unknownDateFormat.split('\n'):
 report_str = """
 Failure during test : {}
 Domains : {}
-""".format(len(failure),failure)
+""".format(len(failure), failure)
 message = '\033[91m' + report_str + '\x1b[0m'
 print(message)

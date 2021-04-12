@@ -43,6 +43,10 @@ class Domain:
 
         if 'owner' in data:
             self.owner = data['owner'][0].strip()
+        if 'abuse_contact' in data:
+            self.abuse_contact = data['abuse_contact'][0].strip()
+        if 'reseller' in data:
+            self.reseller = data['reseller'][0].strip()
 
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
@@ -96,9 +100,9 @@ def str_to_date(text):
         return
 
     text = text.replace('(jst)', '(+0900)')
-    text = re.sub('(\+[0-9]{2}):([0-9]{2})', '\\1\\2', text)
-    text = re.sub('(\+[0-9]{2})$', '\\1:00', text)
-    text = re.sub('(\ #.*)', '', text)
+    text = re.sub(r'(\+[0-9]{2}):([0-9]{2})', '\\1\\2', text)
+    text = re.sub(r'(\+[0-9]{2})$', '\\1:00', text)
+    text = re.sub(r'(\ #.*)', '', text)
     # hack for 1st 2nd 3rd 4th etc
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
     text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
@@ -116,7 +120,7 @@ def str_to_date(text):
 
 
 def str_to_date_py2(text):
-    tmp = re.findall('\+([0-9]{2})00', text)
+    tmp = re.findall(r'\+([0-9]{2})00', text)
     time_zone = 0
 
     if tmp:
@@ -125,17 +129,17 @@ def str_to_date_py2(text):
         time_zone = 0
     
     del tmp
-    tmp = re.findall('\+([0-9]{2})$', text)
+    tmp = re.findall(r'\+([0-9]{2})$', text)
 
     if tmp:
         time_zone = int(tmp[0])
-        text = re.sub('(.*)(\+[0-9]{2})$', '\\1', text)
+        text = re.sub(r'(.*)(\+[0-9]{2})$', '\\1', text)
     else:
         time_zone = 0
     
-    for format in DATE_FORMATS:
+    for date_format in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(text, format) + datetime.timedelta(hours=time_zone)
+            return datetime.datetime.strptime(text, date_format) + datetime.timedelta(hours=time_zone)
         except ValueError:
             pass
 

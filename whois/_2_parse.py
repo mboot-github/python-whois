@@ -38,7 +38,7 @@ def do_parse(whois_str, tld):
         if s == 'not found':
             return
         if s.startswith('no such domain'):
-            # could feed startswith a tuple of strings of expected reponses
+            # could feed startswith a tuple of strings of expected responses
             return
         if s.count('error'):
             return
@@ -49,7 +49,7 @@ def do_parse(whois_str, tld):
     whois_dnssec = whois_str.split("DNSSEC:")
     if len(whois_dnssec) >= 2:
         whois_dnssec = whois_dnssec[1].split("\n")[0]
-        if whois_dnssec.strip() == "signedDelegation":
+        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
             r['DNSSEC'] = True
 
     # split whois_str to remove first IANA part showing info for TLD only
