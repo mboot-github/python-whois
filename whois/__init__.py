@@ -27,7 +27,6 @@ from .exceptions import UnknownTld, FailedParsingWhoisOutput, UnknownDateFormat,
 CACHE_FILE = None
 SLOW_DOWN = 0
 
-import sys
 
 def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
     """
@@ -65,10 +64,10 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
         tld = d[-1]
 
     if tld not in TLD_RE.keys():
-        print(f'Unknown TLD: .{tld}\nValid TLDs: ', end ="")
+        print(f'Unknown TLD: .{tld}\nValid TLDs: ', end="")
         for tld in sorted(list(TLD_RE.keys())):
-            print(f'.{tld}', end =" ")
-        sys.exit(1)
+            print(f'.{tld}', end=" ")
+        raise UnknownTld
 
     while 1:
         pd = do_parse(do_query(d, force, cache_file, slow_down, ignore_returncode), tld)

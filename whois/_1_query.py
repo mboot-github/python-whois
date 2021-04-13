@@ -55,7 +55,7 @@ def do_query(dl, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
 
 
 def _do_whois_query(dl, ignore_returncode):
-    if(platform.system() == 'Windows'):
+    if platform.system() == 'Windows':
         """
             Windows 'whois' command wrapper
         """
@@ -64,9 +64,9 @@ def _do_whois_query(dl, ignore_returncode):
             folder = os.getcwd()
             copy_command = r"copy \\live.sysinternals.com\tools\whois.exe "+folder
             print(copy_command)
-            p = subprocess.call(copy_command,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,shell=True)
+            p = subprocess.call(copy_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         # print(p.stdout.read()+' '+p.stderr.read())
-        p = subprocess.Popen(['.\whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        p = subprocess.Popen([r'.\whois.exe ', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     else:
         """
