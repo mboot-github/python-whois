@@ -39,6 +39,7 @@ DOMAINS = '''
     google.it
     google.cz
     google.fr
+    google.nl
     dfsdfsfsdf
     test.ez.lv
     google.store
@@ -125,6 +126,7 @@ for d in DOMAINS.split('\n'):
             Error : {},
             On Domain: {}
             """.format(str(e), d)
+            print(message)
 
 for d in invalidTld.split('\n'):
     if d:

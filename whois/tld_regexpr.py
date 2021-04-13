@@ -267,6 +267,8 @@ fi = {
 
     'registrar':                r'registrar\.+:\s?(.+)',
 
+    'registrant_country':       None,
+
     'creation_date':            r'created\.+:\s?(.+)',
     'expiration_date':          r'expires\.+:\s?(.+)',
     'updated_date':             r'modified\.+:\s?(.+)',
@@ -324,16 +326,18 @@ io = {
 ir = {
     'extend': None,
 
-    'domain_name':                      r'domain:\s?(.+)',
-    'registrar': 'nic.ir',
+    'domain_name':              r'domain:\s?(.+)',
+    'registrar':                'nic.ir',
 
-    'creation_date': None,
-    'status': None,
+    'registrant_country':       None,
 
-    'expiration_date':                  r'expire-date:\s?(.+)',
-    'updated_date':                     r'last-updated:\s?(.+)',
+    'creation_date':            None,
+    'status':                   None,
 
-    'name_servers':                     r'nserver:\s*(.+)\s*',
+    'expiration_date':          r'expire-date:\s?(.+)',
+    'updated_date':             r'last-updated:\s?(.+)',
+
+    'name_servers':             r'nserver:\s*(.+)\s*',
 }
 
 
@@ -342,6 +346,7 @@ is_is = {
 
     'registrar':                None,
     'registrant':               r'registrant:\s?(.+)',
+    'registrant_country':       None,
 
     'creation_date':            r'created:\s?(.+)',
     'expiration_date':          r'expires:\s?(.+)',
@@ -373,8 +378,9 @@ jp = {
 
     'registrar':                None,
     'registrant':               r'\[Registrant\]\s?(.+)',
-    'creation_date':            r'\[登録年月日\]\s?(.+)',
+    'registrant_country':       None,
 
+    'creation_date':            r'\[登録年月日\]\s?(.+)',
     'expiration_date':          r'\[有効期限\]\s?(.+)',
     'updated_date':             r'\[最終更新\]\s?(.+)',
 
@@ -523,6 +529,7 @@ nz = {
     'domain_name':              r'domain_name:\s?(.+)',
     'registrar':                r'registrar_name:\s?(.+)',
     'registrant':               r'registrant_contact_name:\s?(.+)',
+    'registrant_country':       None,
 
     'creation_date':            r'domain_dateregistered:\s?(.+)',
     'expiration_date':          r'domain_datebilleduntil:\s?(.+)',
@@ -662,7 +669,7 @@ sh = {
 }
 
 site = {
-    'extend' : 'store'
+    'extend': 'store'
 }
 
 se = {
@@ -671,6 +678,8 @@ se = {
     'domain_name':              r'domain:\s?(.+)',
 
     'registrar':                r'registrar:\s?(.+)',
+
+    'registrant_country':       None,
 
     'creation_date':            r'created:\s?(.+)',
     'expiration_date':          r'expires:\s?(.+)',
@@ -794,7 +803,7 @@ video = {
 }
 
 website = {
-    'extend' : 'store'
+    'extend': 'store'
 }
 
 wiki = {
