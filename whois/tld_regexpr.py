@@ -32,6 +32,21 @@ ac_uk = {
 
 }
 
+am = {
+    'domain_name':              r'Domain name:\s+(.+)',
+    'status':                   r'Status:\s(.+)',
+
+    'registrar':                r'Registrar:\s+(.+)',
+    'registrant':               r'Registrant:\s+(.+)',
+    'registrant_country':       r'Registrant:\n.+\n.+\n.+\n\s+(.+)',
+
+    'creation_date':            r'Registered:\s+(.+)',
+    'expiration_date':          r'Expires:\s+(.+)',
+    'updated_date':             r'Last modified:\s+(.+)',
+
+    'name_servers':             r'DNS servers.*:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?',
+}
+
 ar = {
     'extend': 'com',
 
@@ -181,7 +196,40 @@ co = {
 }
 
 com_au = {
-    'extend': 'au'
+    'extend': 'au',
+}
+
+com_tr = {
+    'extend': 'com',
+
+    'domain_name':          r'\*\* Domain Name:\s?(.+)',
+
+    'registrar':            r'Organization Name\s+:\s?(.+)',
+    'registrant':           r'\*\* Registrant:\s+?(.+)',
+    'registrant_country':   None,
+
+    'creation_date':        r'Created on..............:\s?(.+).',
+    'expiration_date':      r'Expires on..............:\s?(.+).',
+    'updated_date':         '',
+
+    'name_servers':         r'\*\* Domain Servers:\n(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)\n?',
+    'status':               None,
+}
+
+co_il = {
+    'extend': 'com',
+
+    'domain_name':              r'domain:\s*(.+)',
+    'registrar':                r'registrar name:\s*(.+)',
+    'registrant':               None,
+    'registrant_country':       None,
+
+    'creation_date':            None,
+    'expiration_date':          r'validity:\s*(.+)',
+    'updated_date':             None,
+
+    'name_servers':             r'nserver:\s*(.+)',
+    'status':                   r'status:\s*(.+)',
 }
 
 co_jp = {
@@ -194,18 +242,24 @@ co_jp = {
     'updated_date':             r'\[最終更新\]\s?(.+)',
 }
 
+cr = {
+    'extend': 'cz',
+}
+
 cz = {
     'extend': 'com',
 
-    'domain_name':              r'Domain:\s?(.+)',
+    'domain_name':              r'domain:\s?(.+)',
     'registrar':                r'registrar:\s?(.+)',
     'registrant':               r'registrant:\s?(.+)',
+    'registrant_country':       None,
 
     'creation_date':            r'registered:\s?(.+)',
     'expiration_date':          r'expire:\s?(.+)',
     'updated_date':             r'changed:\s?(.+)',
 
     'name_servers':             r'nserver:\s*(.+) ',
+    'status':                   r'status:\s*(.+)',
 }
 
 de = {
@@ -277,6 +331,10 @@ fi = {
     'status':                   r'status\.+:\s?(.+)',
 }
 
+fm = {
+    'extend': 'com',
+}
+
 
 fr = {
     'extend': 'com',
@@ -293,8 +351,34 @@ fr = {
     'status':                   r'status:\s?(.+)',
 }
 
+game = {
+    'extend': 'store'
+}
 
-id = {
+global_ = {
+    'extend': 'store',
+
+    'name_servers': r'Name Server: (.+)',
+}
+
+hk = {
+    'extend': 'com',
+
+    'domain_name':				r'Domain Name:\s+(.+)',
+
+    'registrar':				r'Registrar Name:\s?(.+)',
+    'registrant':				r'Company English Name.*:\s?(.+)',
+    'registrant_country':       None,
+
+    'creation_date':			r'Domain Name Commencement Date:\s?(.+)',
+    'expiration_date':			r'Expiry Date:\s?(.+)',
+    'updated_date':				None,
+
+    'name_servers':				r'Name Servers Information:\n\n(?:(\S+)\n)(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?\n?',
+    'status':					None,
+}
+
+id_ = {
     'extend': 'com',
 
     'registrar':                r'Sponsoring Registrar Organization:\s?(.+)',
@@ -302,6 +386,24 @@ id = {
     'creation_date':            r'Created On:\s?(.+)',
     'expiration_date':          r'Expiration Date:\s?(.+)',
     'updated_date':             r'Last Updated On:\s?(.+)$',
+}
+
+ie = {
+    'extend': 'com'
+}
+
+im = {
+    'domain_name':              r'Domain Name:\s+(.+)',
+    'status':                   None,
+
+    'registrar':                None,
+    'registrant_country':       None,
+
+    'creation_date':            '',
+    'expiration_date':          r'Expiry Date:\s?(.+)',
+    'updated_date':             '',
+
+    'name_servers':             r'Name Server:(.+)',
 }
 
 in_ = {
@@ -312,8 +414,8 @@ info = {
     'extend': 'com'
 }
 
-ie = {
-    'extend': 'com'
+ink = {
+    'extend': 'store'
 }
 
 io = {
@@ -341,7 +443,7 @@ ir = {
 }
 
 
-is_is = {
+is_ = {
     'domain_name':              r'domain:\s?(.+)',
 
     'registrar':                None,
@@ -419,6 +521,10 @@ kz = {
 
     'name_servers':             r'server.*:\s(.+)',
     'status':                   r'Domain status :\s?(.+)'
+}
+
+link = {
+    'extend': 'store'
 }
 
 lt = {
@@ -610,6 +716,25 @@ pro = {
     'extend': 'com',
 }
 
+pt = {
+    'extend': 'com',
+
+    'domain_name':              r'Domain:\s?(.+)',
+
+    'registrar':                None,
+
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Expiration Date:\s?(.+)',
+    'updated_date':             None,
+
+    'name_servers':             r'Name Server:\s*(.+)',
+    'status':                   r'Domain Status:\s?(.+)',
+}
+
+pub = {
+    'extend': 'store'
+}
+
 pw = {
     'extend': 'com',
 
@@ -652,6 +777,10 @@ ru_rf = {
 
     'name_servers':             r'\nnserver:\s*(.+)',
     'status':                   r'\nstate:\s*(.+)',
+}
+
+sale = {
+    'extend': 'store'
 }
 
 security = {
@@ -731,6 +860,10 @@ theatre = {
 }
 
 tickets = {
+    'extend': 'store'
+}
+
+trade = {
     'extend': 'store'
 }
 

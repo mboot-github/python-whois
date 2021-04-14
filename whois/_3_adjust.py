@@ -41,17 +41,23 @@ class Domain:
 
                 self.name_servers.add(x.lower())
 
+        if not self.name_servers:
+            self.name_servers = None
+
         if 'owner' in data:
             self.owner = data['owner'][0].strip()
         if 'abuse_contact' in data:
             self.abuse_contact = data['abuse_contact'][0].strip()
         if 'reseller' in data:
             self.reseller = data['reseller'][0].strip()
+        if 'registrant' in data:
+            self.registrant = data['registrant'][0].strip()
 
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [
     '%d-%b-%Y',                     # 02-jan-2000
+    '%d-%m-%Y',                     # 02-01-2000
     '%d.%m.%Y',                     # 02.02.2000
     '%d/%m/%Y',                     # 01/06/2011
     '%Y-%m-%d',                     # 2000-01-02
@@ -63,7 +69,7 @@ DATE_FORMATS = [
     '%Y-%m-%d %H:%M:%S',            # 2011-09-08 14:44:51
     '%Y-%m-%d %H:%M:%S%z',          # 2025-04-27 02:54:19+03:00
     '%Y-%m-%d %H:%M:%S CLST',       # 2011-09-08 14:44:51 CLST CL
-    '%Y-%m-%d %H:%M:%S.%f',       # 2011-09-08 14:44:51 CLST CL
+    '%Y-%m-%d %H:%M:%S.%f',         # 2011-09-08 14:44:51 CLST CL
     '%d.%m.%Y  %H:%M:%S',           # 19.09.2002 13:00:00
     '%d-%b-%Y %H:%M:%S %Z',         # 24-Jul-2009 13:20:03 UTC
     '%Y/%m/%d %H:%M:%S (%z)',       # 2011/06/01 01:05:01 (+0900)
@@ -90,13 +96,15 @@ DATE_FORMATS = [
     '%A %d %B %Y',                  # Tuesday 21 June 2011
     '%Y-%m-%d %H:%M:%S (%Z+0:00)',  # 2007-12-24 10:24:32 (gmt+0:00)
     '%B %d %Y',                     # January 01 2000
+    '%Y-%b-%d',                     # 2021-Oct-18
+    '%d/%m/%Y %H:%M:%S',            # 08/09/2011 14:44:51
 ]
 
 
 def str_to_date(text):
     text = text.strip().lower()
 
-    if not text or text == 'not defined':
+    if not text or text == 'not defined' or text == 'n/a':
         return
 
     text = text.replace('(jst)', '(+0900)')

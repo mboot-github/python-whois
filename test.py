@@ -93,6 +93,21 @@ DOMAINS = '''
     google.rw
     tut.by
     guinness.ie
+    google.com.tr
+    google.sale
+    google.link
+    google.game
+    google.trade
+    google.ink
+    google.pub
+    google.im
+    google.am
+    google.fm
+    google.hk
+    google.cr
+    google.global
+    google.co.il
+    google.pt
 '''
 
 failure = list()

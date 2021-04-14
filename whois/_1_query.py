@@ -75,7 +75,7 @@ def _do_whois_query(dl, ignore_returncode):
         p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     r = p.communicate()[0]
-    r = r.decode() if PYTHON_VERSION == 3 else r
+    r = r.decode(errors='ignore') if PYTHON_VERSION == 3 else r
     if not ignore_returncode and p.returncode != 0 and p.returncode != 1:
         raise WhoisCommandFailed(r)
     return r

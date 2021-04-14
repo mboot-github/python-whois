@@ -45,21 +45,29 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
     if len(d) == 1:
         return None
 
-    if domain.endswith('.co.jp'):
-        tld = 'co_jp'
-    elif domain.endswith('.is'):
-        tld = 'is_is'
-    elif domain.endswith('.xn--p1ai'):
-        tld = 'ru_rf'
-    elif domain.endswith('.ac.uk') and len(d) > 2:
+    if domain.endswith('.ac.uk') and len(d) > 2:
         tld = 'ac_uk'
+    elif domain.endswith('co.il') and len(d) > 2:
+        tld = 'co_il'
+    elif domain.endswith('.co.jp') and len(d) > 2:
+        tld = 'co_jp'
+    elif domain.endswith('.com.au') and len(d) > 2:
+        tld = 'com_au'
+    elif domain.endswith('com.tr') and len(d) > 2:
+        tld = 'com_tr'
+    elif domain.endswith('global'):
+        tld = 'global_'
+    elif domain.endswith('.id'):
+        tld = 'id_'
+    elif domain.endswith('.in'):
+        tld = 'in_'
+    elif domain.endswith('.is'):
+        tld = 'is_'
     elif domain.endswith('.name'):
         d[0] = 'domain=' + d[0]
         tld = d[-1]
-    elif domain.endswith('.in'):
-        tld = 'in_'
-    elif domain.endswith('.com.au'):
-        tld = 'com_au'
+    elif domain.endswith('.xn--p1ai'):
+        tld = 'ru_rf'
     else:
         tld = d[-1]
 

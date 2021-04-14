@@ -44,7 +44,8 @@ google.com
 
 ccTLD & TLD support
 ===================
-.ac_uk
+.ac.uk
+.am
 .ar
 .at
 .au
@@ -59,9 +60,12 @@ ccTLD & TLD support
 .club
 .cn
 .co
-.co_jp
+.co.il
+.co.jp
 .com
-.com_au
+.com.au
+.com.tr
+.cr
 .cz
 .de
 .download
@@ -69,17 +73,25 @@ ccTLD & TLD support
 .education
 .eu
 .fi
+.fm
 .fr
+.game
+.global
+.hk
 .id
-.in_
+.ie
+.im
+.in
 .info
+.ink
 .io
 .ir
-.is_is
+.is
 .it
 .jp
 .kr
 .kz
+.link
 .lt
 .lv
 .me
@@ -98,11 +110,14 @@ ccTLD & TLD support
 .pharmacy
 .pl
 .press
+.pt
+.pub
 .pw
 .rest
 .ru
-.ru_rf
+.ru.rf
 .rw
+.sale
 .se
 .security
 .sh
@@ -113,6 +128,7 @@ ccTLD & TLD support
 .tel
 .theatre
 .tickets
+.trade
 .tv
 .ua
 .uk
