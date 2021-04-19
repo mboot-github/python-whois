@@ -37,7 +37,7 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
     assert isinstance(domain, str), Exception('`domain` - must be <str>')
     cache_file = cache_file or CACHE_FILE
     slow_down = slow_down or SLOW_DOWN
-    domain = domain.lower().strip()
+    domain = domain.lower().strip().rstrip('.')  # Remove the trailing dot to support FQDN.
     d = domain.split('.')
 
     if d[0] == 'www':
@@ -73,9 +73,9 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
 
     if tld not in TLD_RE.keys():
         print(f'Unknown TLD: .{tld}\nValid TLDs: ', end="")
-        for tld in sorted(list(TLD_RE.keys())):
-            print(f'.{tld}', end=" ")
-        raise UnknownTld
+        for valid_tld in sorted(list(TLD_RE.keys())):
+            print(f'.{valid_tld}', end=" ")
+        raise UnknownTld(f"The TLD .{tld} is currently not supported by this package.")
 
     while 1:
         pd = do_parse(do_query(d, force, cache_file, slow_down, ignore_returncode), tld)

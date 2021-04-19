@@ -47,6 +47,10 @@ am = {
     'name_servers':             r'DNS servers.*:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?',
 }
 
+amsterdam = {
+    'extend':   'store',
+}
+
 ar = {
     'extend': 'com',
 
@@ -176,7 +180,7 @@ cl = {
 }
 
 club = {
-    'extend': 'com'
+    'extend': 'com',
 }
 
 cn = {
@@ -186,11 +190,11 @@ cn = {
     'registrant':               r'Registrant:\s?(.+)',
 
     'creation_date':            r'Registration Time:\s?(.+)',
-    'expiration_date':          r'Expiration Time:\s?(.+)'
+    'expiration_date':          r'Expiration Time:\s?(.+)',
 }
 
 co = {
-    'extend': 'biz',
+    'extend':                   'biz',
 
     'status':                   r'Status:\s?(.+)',
 }
@@ -276,7 +280,7 @@ download = {
     'extend': 'store',
 
     'name_servers':             r'Name Server:\s*(.+)\r',
-    'status':                   r'Domain Status:\s*([a-zA-z]+)'
+    'status':                   r'Domain Status:\s*([a-zA-z]+)',
 }
 
 
@@ -289,7 +293,7 @@ edu = {
     'updated_date':             r'Domain record last updated:\s?(.+)',
     'expiration_date':          r'Domain expires:\s?(.+)',
 
-    'name_servers':             r'Name Servers:\s?\t(.+)\n\t(.+)\n'
+    'name_servers':             r'Name Servers:\s?\t(.+)\n\t(.+)\n',
 }
 
 
@@ -310,7 +314,9 @@ eu = {
 
     'registrar':                r'Name:\s?(.+)',
 
-    'domain_name':              r'\ndomain:\s*(.+)',
+    'domain_name':              r'\nDomain:\s*(.+)',
+
+    'name_servers':             r'Name servers:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?',
 }
 
 
@@ -351,8 +357,12 @@ fr = {
     'status':                   r'status:\s?(.+)',
 }
 
+frl = {
+    'extend':   'store',
+}
+
 game = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 global_ = {
@@ -389,7 +399,7 @@ id_ = {
 }
 
 ie = {
-    'extend': 'com'
+    'extend': 'com',
 }
 
 im = {
@@ -407,15 +417,15 @@ im = {
 }
 
 in_ = {
-    'extend': 'com'
+    'extend': 'com',
 }
 
 info = {
-    'extend': 'com'
+    'extend': 'com',
 }
 
 ink = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 io = {
@@ -520,11 +530,11 @@ kz = {
     'updated_date':             r'Last modified :\s(.+)',
 
     'name_servers':             r'server.*:\s(.+)',
-    'status':                   r'Domain status :\s?(.+)'
+    'status':                   r'Domain status :\s?(.+)',
 }
 
 link = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 lt = {
@@ -582,7 +592,7 @@ mx = {
 
 
 name = {
-    'extend': 'com',
+    'extend':                   'com',
 
     'status':                   r'Domain Status:\s?(.+)',
 }
@@ -593,7 +603,7 @@ net = {
 
 
 ninja = {
-    'extend': 'education'
+    'extend': 'education',
 }
 
 nl = {
@@ -610,7 +620,7 @@ nl = {
 
 
 nu = {
-    'extend': 'se'
+    'extend': 'se',
 }
 
 
@@ -732,7 +742,7 @@ pt = {
 }
 
 pub = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 pw = {
@@ -750,9 +760,9 @@ pw = {
 }
 
 rest = {
-    'extend': 'store',
+    'extend':                   'store',
 
-    'status':                   r'Domain Status:\s*(.+)'
+    'status':                   r'Domain Status:\s*(.+)',
 }
 
 ru = {
@@ -780,11 +790,11 @@ ru_rf = {
 }
 
 sale = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 security = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 sh = {
@@ -798,7 +808,7 @@ sh = {
 }
 
 site = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 se = {
@@ -819,7 +829,7 @@ se = {
 }
 
 space = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 store = {
@@ -833,11 +843,11 @@ store = {
     'expiration_date':          r'Registry Expiry Date:\s?(.+)',
 
     'name_servers':             r'Name Server:\s*(.+)',
-    'status':                   r'Domain Status:\s*(.+)'
+    'status':                   r'Domain Status:\s*(.+)',
 }
 
 tech = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 
@@ -856,15 +866,15 @@ tel = {
 }
 
 theatre = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 tickets = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 trade = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 tv = {
@@ -936,7 +946,7 @@ video = {
 }
 
 website = {
-    'extend': 'store'
+    'extend': 'store',
 }
 
 wiki = {
