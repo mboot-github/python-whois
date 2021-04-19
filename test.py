@@ -108,6 +108,8 @@ DOMAINS = '''
     google.global
     google.co.il
     google.pt
+    elcomercio.pe
+    terra.com.pe
 '''
 
 failure = list()

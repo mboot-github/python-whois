@@ -52,6 +52,8 @@ class Domain:
             self.reseller = data['reseller'][0].strip()
         if 'registrant' in data:
             self.registrant = data['registrant'][0].strip()
+        if 'admin' in data:
+            self.admin = data['admin'][0].strip()
 
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior

@@ -680,6 +680,14 @@ org = {
     'name_servers':             r'Name Server:\s?(.+)\s*',
 }
 
+pe = {
+    'extend': 'com',
+
+    'registrant':				r'Registrant Name:\s?(.+)',
+
+    'admin':                    r'Admin Name:\s?(.+)',
+}
+
 pharmacy = {
     'extend': 'com',
 
