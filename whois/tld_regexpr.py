@@ -569,6 +569,23 @@ me = {
     'status':                   r'Domain Status:\s?(.+)',
 }
 
+ml = {
+    'extend': 'com',
+
+    'domain_name':              r'Domain name:\s*([^(i|\n)]+)',
+
+    'registrar':                r'(?<=Owner contact:\s)[\s\S]*?Organization:(.*)',
+    'registrant_country':       r'(?<=Owner contact:\s)[\s\S]*?Country:(.*)',
+    'registrant':               r'(?<=Owner contact:\s)[\s\S]*?Name:(.*)',
+
+    'creation_date':            r'Domain registered: *(.+)',
+    'expiration_date':          r'Record will expire on: *(.+)',
+
+    'name_servers':             r'Domain Nameservers:\s*(.+)\n\s*(.+)\n',
+
+    'emails':                   r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
+}
+
 mobi = {
     'extend': 'com',
 
