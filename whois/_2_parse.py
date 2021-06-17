@@ -32,6 +32,7 @@ def get_tld_re(tld):
 
 def do_parse(whois_str, tld):
     r = {}
+    r['tld'] = tld
 
     if whois_str.count('\n') < 5:
         s = whois_str.strip().lower()
