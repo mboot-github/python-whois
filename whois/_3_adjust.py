@@ -10,15 +10,15 @@ class Domain:
 
     def __init__(self, data):
         self.name = data['domain_name'][0].strip().lower()
+        self.tld = data['tld']
         self.registrar = data['registrar'][0].strip()
         self.registrant_country = data['registrant_country'][0].strip()
-        self.creation_date = str_to_date(data['creation_date'][0])
-        self.expiration_date = str_to_date(data['expiration_date'][0])
-        self.last_updated = str_to_date(data['updated_date'][0])
+        self.creation_date = str_to_date(data['creation_date'][0], self.tld.lower())
+        self.expiration_date = str_to_date(data['expiration_date'][0], self.tld.lower())
+        self.last_updated = str_to_date(data['updated_date'][0], self.tld.lower())
         self.status = data['status'][0].strip()
         self.statuses = list(set([s.strip() for s in data['status']])) # list(set(...))) to deduplicate
         self.dnssec = data['DNSSEC']
-        
         # name_servers
         tmp = []
 
@@ -100,10 +100,15 @@ DATE_FORMATS = [
     '%B %d %Y',                     # January 01 2000
     '%Y-%b-%d',                     # 2021-Oct-18
     '%d/%m/%Y %H:%M:%S',            # 08/09/2011 14:44:51
+    '%m/%d/%Y',                     # 03/28/2013
 ]
 
+CUSTOM_DATE_FORMATS = {
+    'ml' : '%m/%d/%Y',
+}
 
-def str_to_date(text):
+
+def str_to_date(text, tld=None):
     text = text.strip().lower()
 
     if not text or text == 'not defined' or text == 'n/a':
@@ -118,7 +123,10 @@ def str_to_date(text):
     text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
     
     if PYTHON_VERSION < 3:
-        return str_to_date_py2(text)
+        return str_to_date_py2(text, tld)
+
+    if tld != None and tld in CUSTOM_DATE_FORMATS:
+        return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]).astimezone().replace(tzinfo=None)
 
     for format in DATE_FORMATS:
         try:
@@ -129,7 +137,7 @@ def str_to_date(text):
     raise UnknownDateFormat("Unknown date format: '%s'" % text)
 
 
-def str_to_date_py2(text):
+def str_to_date_py2(text, tld=None):
     tmp = re.findall(r'\+([0-9]{2})00', text)
     time_zone = 0
 
@@ -147,6 +155,9 @@ def str_to_date_py2(text):
     else:
         time_zone = 0
     
+    if tld != None and tld in CUSTOM_DATE_FORMATS:
+        return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]) + datetime.timedelta(hours=time_zone)
+
     for date_format in DATE_FORMATS:
         try:
             return datetime.datetime.strptime(text, date_format) + datetime.timedelta(hours=time_zone)

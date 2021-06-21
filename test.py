@@ -2,6 +2,7 @@
 import whois
 
 DOMAINS = '''
+    dot.ml
     netsec.ninja
     test.education
     doramy.club
