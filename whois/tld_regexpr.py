@@ -246,6 +246,10 @@ co_jp = {
     'updated_date':             r'\[最終更新\]\s?(.+)',
 }
 
+courses = {
+    'extend': 'com'
+}
+
 cr = {
     'extend': 'cz',
 }
@@ -865,6 +869,10 @@ store = {
 
     'name_servers':             r'Name Server:\s*(.+)',
     'status':                   r'Domain Status:\s*(.+)',
+}
+
+study = {
+    'extend': 'com'
 }
 
 tech = {
