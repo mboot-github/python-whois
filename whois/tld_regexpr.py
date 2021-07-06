@@ -83,6 +83,10 @@ au = {
     'updated_date':             r'Last Modified:\s?(.+)'
 }
 
+aw = {
+    'extend': 'nl',
+}
+
 bank = {
     'extend': 'com',
 
