@@ -113,6 +113,7 @@ DOMAINS = '''
     terra.com.pe
     amazon.study
     amazon.courses
+    google.aw
 '''
 
 failure = list()
