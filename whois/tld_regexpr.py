@@ -32,6 +32,14 @@ ac_uk = {
 
 }
 
+aero = {
+    'extend': 'store',
+}
+
+ai = {
+    'extend': 'com',
+}
+
 am = {
     'domain_name':              r'Domain name:\s+(.+)',
     'status':                   r'Status:\s(.+)',
@@ -110,6 +118,22 @@ be = {
     'status':                   r'Status:\s?(.+)',
 }
 
+bg = {
+    'domain_name':              r'DOMAIN NAME:\s?(.+)',
+
+    'registrar':                None,
+    'registrant':               None,
+    'registrant_country':       None,
+
+    'creation_date':            None,
+    'expiration_date':          None,
+    'updated_date':             None,
+
+    'name_servers':             r'NAME SERVER INFORMATION:\s*(.+)\n(.+)*\n(.+)*\n(.+)*',
+    'status':                   r'registration status:\s?(.+)',
+
+}
+
 biz = {
     'extend': 'com',
 
@@ -172,6 +196,22 @@ cc = {
     'status':                   r'Status:\s?(.+)',
 }
 
+ch = {
+    'domain_name':              r'Domain name:\s?(.+)',
+
+    'registrar':                r'Registrar:\s*(.+)',
+    'registrant':               None,
+    'registrant_country':       None,
+
+    'creation_date':            r'First registration date:\s?(.+)',
+    'expiration_date':          None,
+    'updated_date':             None,
+
+    'name_servers':             r'Name servers:\s*(.+)\n(.+)*\n(.+)*\n(.+)*',
+    'status':                   None,
+
+}
+
 cl = {
     'extend': 'com',
 
@@ -201,6 +241,10 @@ co = {
     'extend':                   'biz',
 
     'status':                   r'Status:\s?(.+)',
+}
+
+community = {
+    'extend': 'store',
 }
 
 com_au = {
@@ -316,6 +360,9 @@ education = {
     'status':                   r'Domain Status:\s?(.+)',
 }
 
+energy = {
+    'extend': 'store',
+}
 
 eu = {
     'extend': 'com',
@@ -327,6 +374,9 @@ eu = {
     'name_servers':             r'Name servers:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?',
 }
 
+events = {
+    'extend': 'store',
+}
 
 fi = {
     'extend': None,
@@ -369,14 +419,40 @@ frl = {
     'extend':   'store',
 }
 
+fund = {
+    'extend':   'store',
+}
+
 game = {
     'extend': 'store',
+}
+
+gle = {
+    'extend': 'google',
 }
 
 global_ = {
     'extend': 'store',
 
     'name_servers': r'Name Server: (.+)',
+}
+
+google = {
+    'extend': 'store'
+}
+
+gov = {
+    'domain_name':              r'Domain Name:\s?(.+)',
+    'status':                   r'Status:\s?(.+)',
+
+    'registrar': None,
+    'registrant': None,
+    'registrant_country': 'US',
+
+    'creation_date': None,
+    'updated_date': None,
+    'expiration_date': None,
+    'name_servers': None,
 }
 
 hk = {
@@ -394,6 +470,14 @@ hk = {
 
     'name_servers':				r'Name Servers Information:\n\n(?:(\S+)\n)(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?\n?',
     'status':					None,
+}
+
+hr = {
+    'extend': 'com',
+
+    'registrant':               r'Registrant Name:\s?(.+)',
+    'registrant_country':       r'Registrant State/Province:\s?(.+)',
+    'expiration_date':          r'Registrar Registration Expiration Date:\s?(.+)',
 }
 
 id_ = {
@@ -477,6 +561,17 @@ is_ = {
     'emails':                   r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
 
+int = {
+    'extend': 'com',
+    'domain_name':              r'domain:\s?(.+)',
+
+    'registrant':               r'organisation:\s?(.+)',
+
+    'creation_date':            r'created:\s?(.+)',
+    'updated_date':             r'changed:\s?(.+)',
+
+    'name_servers':             r'nserver:\s*(.+)',
+}
 
 it = {
     'extend': 'com',
@@ -566,6 +661,10 @@ lv = {
     'status':                   r'Status:\s?(.+)',
 }
 
+ly = {
+    'extend': 'store',
+}
+
 me = {
     'extend': 'biz',
 
@@ -626,6 +725,9 @@ net = {
     'extend': 'com',
 }
 
+ng = {
+    'extend': 'com',
+}
 
 ninja = {
     'extend': 'education',
@@ -656,6 +758,22 @@ nl = {
     'abuse_contact':            r'Abuse Contact:\s?(.+)',
 }
 
+no = {
+    'extend': 'com',
+
+    'domain_name':              r'Domain Name................:\s?(.+)',
+    'registrar':                r'Registrar Handle...........:\s?(.+)',
+
+    'name_servers':             r'Name Server Handle.........:\s?(.+)',
+
+    'creation_date': r'Created:\s?(.+)',
+    'expiration_date': None,
+    'updated_date': r'Last updated:\s?(.+)',
+}
+
+nrw = {
+    'extend': 'com',
+}
 
 nu = {
     'extend': 'se',
@@ -805,6 +923,10 @@ pw = {
     'status':                   r'Status:\s?(.+)',
 }
 
+report = {
+    'extend': 'store',
+}
+
 rest = {
     'extend':                   'store',
 
@@ -839,6 +961,23 @@ sale = {
     'extend': 'store',
 }
 
+se = {
+    'extend': None,
+
+    'domain_name':              r'domain:\s?(.+)',
+
+    'registrar':                r'registrar:\s?(.+)',
+
+    'registrant_country':       None,
+
+    'creation_date':            r'created:\s?(.+)',
+    'expiration_date':          r'expires:\s?(.+)',
+    'updated_date':             r'modified:\s?(.+)',
+
+    'name_servers':             r'nserver:\s*(.+)',
+    'status':                   r'status:\s?(.+)',
+}
+
 security = {
     'extend': 'store',
 }
@@ -857,21 +996,18 @@ site = {
     'extend': 'store',
 }
 
-se = {
-    'extend': None,
-
-    'domain_name':              r'domain:\s?(.+)',
-
-    'registrar':                r'registrar:\s?(.+)',
-
+sk = {
+    'domain_name':              r'Domain:\s?(.+)',
+    'registrant':               r'Registrant:\s?(.+)',
     'registrant_country':       None,
+    'registrar':                r'Registrar:\s?(.+)',
 
-    'creation_date':            r'created:\s?(.+)',
-    'expiration_date':          r'expires:\s?(.+)',
-    'updated_date':             r'modified:\s?(.+)',
+    'creation_date':            r'Created:\s?(.+)',
+    'updated_date':             r'Updated:\s?(.+)',
+    'expiration_date':          r'Valid Until:\s?(.+)',
 
-    'name_servers':             r'nserver:\s*(.+)',
-    'status':                   r'status:\s?(.+)',
+    'name_servers':             r'Nameserver:\s?(.+)',
+    'status':                   r'EPP Status:\s?(.+)',
 }
 
 space = {
@@ -921,6 +1057,10 @@ theatre = {
 
 tickets = {
     'extend': 'store',
+}
+
+tl = {
+    'extend': 'com',
 }
 
 trade = {

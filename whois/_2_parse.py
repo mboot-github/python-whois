@@ -43,19 +43,19 @@ def do_parse(whois_str, tld):
             return
         if s.count('error'):
             return
-        raise FailedParsingWhoisOutput(whois_str)
+        raise FailedParsingWhoisOutput("Could not interpret WHOIS string. Validate if the domain is registered.")
 
     # check the status of DNSSEC
     r['DNSSEC'] = False
     whois_dnssec = whois_str.split("DNSSEC:")
     if len(whois_dnssec) >= 2:
         whois_dnssec = whois_dnssec[1].split("\n")[0]
-        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
+        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes" or whois_dnssec.strip() == "Y":
             r['DNSSEC'] = True
 
     # split whois_str to remove first IANA part showing info for TLD only
     whois_splitted = whois_str.split("source:       IANA")
-    if len(whois_splitted) == 2:
+    if len(whois_splitted) == 2 and whois_splitted[1].count('\n') > 3:  # except if only IANA is returned
         whois_str = whois_splitted[1]
 
     sn = re.findall(r'Server Name:\s?(.+)', whois_str, re.IGNORECASE)

@@ -45,6 +45,8 @@ google.com
 ccTLD & TLD support
 ===================
 .ac.uk
+.aero
+.ai
 .am
 .amsterdam
 .ar
@@ -53,11 +55,13 @@ ccTLD & TLD support
 .aw
 .bank
 .be
+.bg
 .biz
 .br
 .by
 .ca
 .cc
+.ch
 .cl
 .club
 .cn
@@ -67,6 +71,7 @@ ccTLD & TLD support
 .com
 .com.au
 .com.tr
+.community
 .courses
 .cr
 .cz
@@ -74,18 +79,26 @@ ccTLD & TLD support
 .download
 .edu
 .education
+.energy
 .eu
+.events
 .fi
 .fm
 .fr
 .frl
+.fund
 .game
+.gle
 .global
+.google
+.gov
 .hk
+.hr
 .id
 .ie
 .im
 .in
+.int
 .info
 .ink
 .io
@@ -98,6 +111,7 @@ ccTLD & TLD support
 .link
 .lt
 .lv
+.ly
 .me
 .ml
 .mobi
@@ -105,8 +119,11 @@ ccTLD & TLD support
 .mx
 .name
 .net
+.ng
 .ninja
 .nl
+.no
+.nrw
 .nu
 .nyc
 .nz
@@ -119,6 +136,7 @@ ccTLD & TLD support
 .pt
 .pub
 .pw
+.report
 .rest
 .ru
 .ru.rf
@@ -128,6 +146,7 @@ ccTLD & TLD support
 .security
 .sh
 .site
+.sk
 .space
 .store
 .study
@@ -135,6 +154,7 @@ ccTLD & TLD support
 .tel
 .theatre
 .tickets
+.tl
 .trade
 .tv
 .ua

@@ -114,6 +114,26 @@ DOMAINS = '''
     amazon.study
     amazon.courses
     google.aw
+    esa.int
+    google.ai
+    nic.fund
+    bit.ly
+    google.hr
+    google.ng
+    nic.events
+    nic.gov
+    nic.nrw
+    nic.aero
+    nic.report
+    google.ch
+    nic.google
+    nic.gle
+    nic.energy
+    google.sk
+    google.no
+    google.tl
+    nic.community
+    google.bg
 '''
 
 failure = list()
@@ -121,7 +141,7 @@ failure = list()
 # domains = ''
 
 invalidTld = '''
-    bit.ly
+    google.sr
 '''
 
 failedParsing = '''
@@ -144,9 +164,10 @@ for d in DOMAINS.split('\n'):
         except Exception as e:
             failure.append(d)
             message = """
+            Exception Class: {},
             Error : {},
             On Domain: {}
-            """.format(str(e), d)
+            """.format(type(e).__name__, str(e), d)
             print(message)
 
 for d in invalidTld.split('\n'):

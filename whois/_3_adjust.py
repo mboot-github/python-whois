@@ -92,6 +92,8 @@ DATE_FORMATS = [
     '%Y%m%d',                       # 20110908
     '%Y. %m. %d.',                  # 2020. 01. 12.
     'before %b-%Y',                 # before aug-1996
+    'before %Y-%m-%d',              # before 1996-01-01
+    'before %Y%m%d',                # before 19950101
     '%a %d %b %Y',                  # Tue 21 Jun 2011
     '%A %d %b %Y',                  # Tuesday 21 Jun 2011
     '%a %d %B %Y',                  # Tue 21 June 2011
