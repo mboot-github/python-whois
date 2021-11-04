@@ -941,6 +941,18 @@ tv = {
     'status':                   r'Status:\s?(.+)',
 }
 
+tz = {
+    'domain_name':              r'\ndomain:\s*(.+)', 
+    'registrar':                r'\nregistrar:\s?(.+)',
+    'registrant':               r'\nregistrant:\s*(.+)',
+    'registrant_country':       None,
+    'creation_date':            r'\ncreated:\s*(.+)',
+    'expiration_date':          r'expire:\s?(.+)',
+    'updated_date':             r'\nchanged:\s*(.+)',
+    'status':                   None,
+    'name_servers':             r'\nnserver:\s*(.+)',
+}
+
 ua = {
     'extend': 'com',
 
