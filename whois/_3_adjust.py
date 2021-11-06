@@ -3,12 +3,14 @@ import sys
 import datetime
 from .exceptions import UnknownDateFormat
 
+from typing import Any, Dict, Optional
+
 PYTHON_VERSION = sys.version_info[0]
 
 
 class Domain:
 
-    def __init__(self, data):
+    def __init__(self, data: Dict[str, Any]):
         self.name = data['domain_name'][0].strip().lower()
         self.tld = data['tld']
         self.registrar = data['registrar'][0].strip()
@@ -40,9 +42,6 @@ class Domain:
                     x = x.strip(' .')
 
                 self.name_servers.add(x.lower())
-
-        if not self.name_servers:
-            self.name_servers = None
 
         if 'owner' in data:
             self.owner = data['owner'][0].strip()
@@ -108,11 +107,11 @@ CUSTOM_DATE_FORMATS = {
 }
 
 
-def str_to_date(text, tld=None):
+def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datetime]:
     text = text.strip().lower()
 
     if not text or text == 'not defined' or text == 'n/a':
-        return
+        return None
 
     text = text.replace('(jst)', '(+0900)')
     text = re.sub(r'(\+[0-9]{2}):([0-9]{2})', '\\1\\2', text)
@@ -122,7 +121,7 @@ def str_to_date(text, tld=None):
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
     text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
 
-    if tld != None and tld in CUSTOM_DATE_FORMATS:
+    if tld and tld in CUSTOM_DATE_FORMATS:
         return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]).astimezone().replace(tzinfo=None)
 
     for format in DATE_FORMATS:
