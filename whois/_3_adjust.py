@@ -121,9 +121,6 @@ def str_to_date(text, tld=None):
     # hack for 1st 2nd 3rd 4th etc
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
     text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
-    
-    if PYTHON_VERSION < 3:
-        return str_to_date_py2(text, tld)
 
     if tld != None and tld in CUSTOM_DATE_FORMATS:
         return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]).astimezone().replace(tzinfo=None)
@@ -131,36 +128,6 @@ def str_to_date(text, tld=None):
     for format in DATE_FORMATS:
         try:
             return datetime.datetime.strptime(text, format).astimezone().replace(tzinfo=None)
-        except ValueError:
-            pass
-
-    raise UnknownDateFormat("Unknown date format: '%s'" % text)
-
-
-def str_to_date_py2(text, tld=None):
-    tmp = re.findall(r'\+([0-9]{2})00', text)
-    time_zone = 0
-
-    if tmp:
-        time_zone = int(tmp[0])
-    else:
-        time_zone = 0
-    
-    del tmp
-    tmp = re.findall(r'\+([0-9]{2})$', text)
-
-    if tmp:
-        time_zone = int(tmp[0])
-        text = re.sub(r'(.*)(\+[0-9]{2})$', '\\1', text)
-    else:
-        time_zone = 0
-    
-    if tld != None and tld in CUSTOM_DATE_FORMATS:
-        return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]) + datetime.timedelta(hours=time_zone)
-
-    for date_format in DATE_FORMATS:
-        try:
-            return datetime.datetime.strptime(text, date_format) + datetime.timedelta(hours=time_zone)
         except ValueError:
             pass
 

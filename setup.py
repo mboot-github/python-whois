@@ -17,7 +17,6 @@ setup(
         'Intended Audience :: Developers',
         'Environment :: Console',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 3.7',
         'Topic :: Internet',
         'Topic :: Software Development :: Libraries :: Python Modules',
