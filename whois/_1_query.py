@@ -3,20 +3,18 @@ import time
 import sys
 import os
 import platform
+import json
 from .exceptions import WhoisCommandFailed
+
+from typing import Dict, List, Optional, Tuple
 
 
 PYTHON_VERSION = sys.version_info[0]
-CACHE = {}
+CACHE: Dict[str, Tuple[int, str]] = {}
 CACHE_MAX_AGE = 60*60*48    # 48h
 
-try:
-    import json
-except:
-    import simplejson as json
 
-
-def cache_load(cf):
+def cache_load(cf: str) -> None:
     if not os.path.isfile(cf):
         return
 
@@ -30,14 +28,15 @@ def cache_load(cf):
     f.close()
 
 
-def cache_save(cf):
+def cache_save(cf: str) -> None:
     global CACHE
     f = open(cf, 'w')
     json.dump(CACHE, f)
     f.close()
 
 
-def do_query(dl, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
+def do_query(dl: List[str], force: bool = False, cache_file: Optional[str] = None, slow_down: int = 0,
+             ignore_returncode: bool = False) -> str:
     k = '.'.join(dl)
     if cache_file:
         cache_load(cache_file)
@@ -54,7 +53,7 @@ def do_query(dl, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
     return CACHE[k][1]
 
 
-def _do_whois_query(dl, ignore_returncode):
+def _do_whois_query(dl: List[str], ignore_returncode: bool) -> str:
     if platform.system() == 'Windows':
         """
             Windows 'whois' command wrapper
@@ -64,7 +63,7 @@ def _do_whois_query(dl, ignore_returncode):
             folder = os.getcwd()
             copy_command = r"copy \\live.sysinternals.com\tools\whois.exe "+folder
             print(copy_command)
-            p = subprocess.call(copy_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+            subprocess.call(copy_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         # print(p.stdout.read()+' '+p.stderr.read())
         p = subprocess.Popen([r'.\whois.exe ', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
@@ -74,8 +73,7 @@ def _do_whois_query(dl, ignore_returncode):
         """
         p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-    r = p.communicate()[0]
-    r = r.decode(errors='ignore') if PYTHON_VERSION == 3 else r
+    r = p.communicate()[0].decode(errors='ignore')
     if not ignore_returncode and p.returncode != 0 and p.returncode != 1:
         raise WhoisCommandFailed(r)
     return r

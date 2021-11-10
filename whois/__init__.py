@@ -23,16 +23,19 @@ from ._2_parse import do_parse, TLD_RE
 from ._3_adjust import Domain
 from .exceptions import UnknownTld, FailedParsingWhoisOutput, UnknownDateFormat, WhoisCommandFailed
 
+from typing import Optional
+
 
 CACHE_FILE = None
 SLOW_DOWN = 0
 
 
-def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
+def query(domain: str, force: bool = False, cache_file: Optional[str] = None, slow_down: int = 0,
+          ignore_returncode: bool = False) -> Optional[Domain]:
     """
-        force=1             <bool>      Don't use cache.
-        cache_file=<path>   <str>       Use file to store cache not only memory.
-        slow_down=0         <int>       Time [s] it will wait after you query WHOIS database. This is useful when there is a limit to the number of requests at a time.
+        force=1             Don't use cache.
+        cache_file=<path>   Use file to store cache not only memory.
+        slow_down=0         Time [s] it will wait after you query WHOIS database. This is useful when there is a limit to the number of requests at a time.
     """
     assert isinstance(domain, str), Exception('`domain` - must be <str>')
     cache_file = cache_file or CACHE_FILE
@@ -84,4 +87,7 @@ def query(domain, force=0, cache_file=None, slow_down=0, ignore_returncode=0):
         else:
             break
 
-    return Domain(pd) if pd['domain_name'][0] else None
+    if pd and pd['domain_name'][0]:
+        return Domain(pd)
+    else:
+        return None
