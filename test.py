@@ -3,6 +3,9 @@ import whois
 
 DOMAINS = '''
     dot.ml
+    example.com
+    mphimmoitv.com
+    phimchill.tv
     netsec.ninja
     test.education
     doramy.club
@@ -17,6 +20,8 @@ DOMAINS = '''
     digg.com
     imdb.com
     microsoft.com
+    office.com
+    python.org
     www.google.org
     ddarko.org
     google.net
@@ -41,7 +46,8 @@ DOMAINS = '''
     google.cz
     google.fr
     google.nl
-    dfsdfsfsdf
+    google.cat
+    google.com.vn
     test.ez.lv
     google.store
     kono.store
@@ -109,6 +115,10 @@ DOMAINS = '''
     google.global
     google.co.il
     google.pt
+    youtube.com
+    youtu.be
+    belgium.com
+    america.com
     elcomercio.pe
     terra.com.pe
     amazon.study
