@@ -54,10 +54,32 @@ def query(domain: str, force: bool = False, cache_file: Optional[str] = None, sl
         tld = 'co_il'
     elif domain.endswith('.co.jp') and len(d) > 2:
         tld = 'co_jp'
+    elif domain.endswith('.ne.jp') and len(d) > 2:
+        tld = 'ne_jp'
+    elif domain.endswith('.or.jp') and len(d) > 2:
+        tld = 'or_jp'
+    elif domain.endswith('.go.jp') and len(d) > 2:
+        tld = 'go_jp'
+    elif domain.endswith('.ac.jp') and len(d) > 2:
+        tld = 'ac_jp'
+    elif domain.endswith('.ad.jp') and len(d) > 2:
+        tld = 'ad_jp'
+    elif domain.endswith('.ed.jp') and len(d) > 2:
+        tld = 'ed_jp'
+    elif domain.endswith('.gr.jp') and len(d) > 2:
+        tld = 'gr_jp'
+    elif domain.endswith('.lg.jp') and len(d) > 2:
+        tld = 'lg_jp'
+    elif domain.endswith('.geo.jp') and len(d) > 2:
+        tld = 'geo_jp'
     elif domain.endswith('.com.au') and len(d) > 2:
         tld = 'com_au'
+    elif domain.endswith('co.th') and len(d) > 2:
+        tld = 'co_th'
     elif domain.endswith('com.tr') and len(d) > 2:
         tld = 'com_tr'
+    elif domain.endswith('com.sg') and len(d) > 2:
+        tld = 'com_sg'
     elif domain.endswith('global'):
         tld = 'global_'
     elif domain.endswith('.id'):

@@ -68,5 +68,6 @@ def do_parse(whois_str: str, tld: str) -> Optional[Dict[str, Any]]:
             r[k] = ['']
         else:
             r[k] = v.findall(whois_str) or ['']
+#            print("DEBUG: Keyval = " + str(r[k]))
 
     return r
