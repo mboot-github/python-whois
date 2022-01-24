@@ -1,21 +1,24 @@
+# Commercial TLD - Original Big 7
 com = {
     'extend': None,
 
-    'domain_name':				r'Domain Name:\s?(.+)',
+    'domain_name':		r'Domain Name:\s?(.+)',
 
-    'registrar':				r'Registrar:\s?(.+)',
-    'registrant':				r'Registrant\s*Organi(?:s|z)ation:\s?(.+)',
+    'registrar':		r'Registrar:\s?(.+)',
+    'registrant':		r'Registrant\s*Organi(?:s|z)ation:\s?(.+)',
     'registrant_country':       r'Registrant Country:\s?(.+)',
 
-    'creation_date':			r'Creation Date:\s?(.+)',
-    'expiration_date':			r'Registry Expiry Date:\s?(.+)',
-    'updated_date':				r'Updated Date:\s?(.+)',
+    'creation_date':		r'Creation Date:\s?(.+)',
+    'expiration_date':		r'Registry Expiry Date:\s?(.+)',
+    'updated_date':		r'Updated Date:\s?(.+)',
 
-    'name_servers':				r'Name Server:\s*(.+)\s*',
-    'status':					r'Status:\s?(.+)',
-    'emails':					r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
+    'name_servers':		r'Name Server:\s*(.+)\s*',
+    'status':			r'Status:\s?(.+)',
+    'emails':			r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
 
+
+# United Kingdom - academic sub-domain
 ac_uk = {
     'extend': 'uk',
 
@@ -32,7 +35,23 @@ ac_uk = {
 
 }
 
+
+# United Arab Emirates
+ae = {
+    'extend': 'ar',
+}
+
+
+# Anguilla
+ai = {
+    'extend': 'com',
+}
+
+
+# Armenia
 am = {
+    'extend':                   None,
+
     'domain_name':              r'Domain name:\s+(.+)',
     'status':                   r'Status:\s(.+)',
 
@@ -47,10 +66,13 @@ am = {
     'name_servers':             r'DNS servers.*:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?',
 }
 
+
+# Amsterdam
 amsterdam = {
     'extend':   'store',
 }
 
+# Argentina
 ar = {
     'extend': 'com',
 
@@ -65,6 +87,8 @@ ar = {
     'name_servers':             r'nserver:\s*(.+)\s*',
 }
 
+
+# Austria
 at = {
     'extend': 'com',
 
@@ -73,8 +97,13 @@ at = {
     'updated_date':             r'changed:\s?(.+)',
 
     'name_servers':             r'nserver:\s*(.+)',
+
+    'registrar':		r'registrar:\s?(.+)',
+    'registrant':		r'registrant:\s?(.+)',
 }
 
+
+# Australia
 au = {
     'extend': 'com',
 
@@ -87,6 +116,7 @@ aw = {
     'extend': 'nl',
 }
 
+# Banking TLD - ICANN
 bank = {
     'extend': 'com',
 
@@ -97,6 +127,7 @@ bank = {
     'expiration_date':          r'Registry Expiry Date:\s?(.+)',
     'updated_date':             r'Updated Date:\s?(.+)',
 }
+
 
 be = {
     'extend': 'pl',
@@ -274,6 +305,9 @@ cz = {
     'status':                   r'status:\s*(.+)',
 }
 
+
+# The .de NIC whois servers no longer provide any PII data for domains in the TLD.
+# To obtains "personal" data, one must use the web interface: http://www.denic.de/en/domains/whois-service/web-whois.html
 de = {
     'extend': 'com',
 
@@ -283,6 +317,27 @@ de = {
 
     'name_servers':             r'Nserver:\s*(.+)',
 }
+
+# Denmark
+dk = {
+    'extend': None,
+
+    'domain_name':		r'Domain:\s?(.+)',
+
+    'registrar':                None,
+    'registrant':		r'Registrant\s*Handle:\s*\w*\s*Name:\s?(.+)',
+    'registrant_country':       r'Country:\s?(.+)',
+
+    'creation_date':		r'Registered:\s?(.+)',
+    'expiration_date':		r'Expires:\s?(.+)',
+    'updated_date':		None,
+
+    'name_servers':		r'Hostname:\s*(.+)\s*',
+    'status':			r'Status:\s?(.+)',
+    'emails':			None,
+}
+
+
 
 download = {
     'extend': 'store',
@@ -379,6 +434,14 @@ global_ = {
     'name_servers': r'Name Server: (.+)',
 }
 
+
+# Honduras
+hn = {
+    'extend': 'com',
+}
+
+
+# Hong Kong
 hk = {
     'extend': 'com',
 
@@ -406,6 +469,7 @@ id_ = {
     'updated_date':             r'Last Updated On:\s?(.+)$',
 }
 
+# Ireland
 ie = {
     'extend': 'com',
 }
@@ -493,21 +557,91 @@ it = {
     'status':                   r'Status:\s?(.+)',
 }
 
+# The Japanese whois servers always return English unless a Japanese locale is specified in the user's LANG environmental variable.
+# See: https://www.computerhope.com/unix/uwhois.htm
+# Additionally, whois qeuries can explicitly request english:
+# 	To suppress Japanese output, add'/e' at the end of command, e.g. 'whois -h whois.jprs.jp xxx/e'.
+#
 jp = {
     'domain_name':              r'\[Domain Name\]\s?(.+)',
 
-    'registrar':                None,
+#    'registrar':                None,
+    'registrar':                r'\[ (.+) database provides information on network administration. Its use is    \]',
     'registrant':               r'\[Registrant\]\s?(.+)',
     'registrant_country':       None,
 
-    'creation_date':            r'\[登録年月日\]\s?(.+)',
-    'expiration_date':          r'\[有効期限\]\s?(.+)',
-    'updated_date':             r'\[最終更新\]\s?(.+)',
+#    'creation_date':            r'\[登録年月日\]\s?(.+)',
+#    'expiration_date':          r'\[有効期限\]\s?(.+)',
+#    'updated_date':             r'\[最終更新\]\s?(.+)',
+    'creation_date':            r'\[Created on\]\s?(.+)',
+    'expiration_date':          r'\[Expires on\]\s?(.+)',
+    'updated_date':             r'\[Last Updated\]\s?(.+)',
 
     'name_servers':             r'\[Name Server\]\s*(.+)',
-    'status':                   r'\[状態\]\s?(.+)',
+#    'status':                   r'\[状態\]\s?(.+)',
+    'status':                   r'\[Status\]\s?(.+)',
     'emails':                   r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
+
+# The Japanese whois servers always return English unless a Japanese locale is specified in the user's LANG environmental variable.
+# See: https://www.computerhope.com/unix/uwhois.htm
+# Additionally, whois qeuries can explicitly request english:
+# 	To suppress Japanese output, add'/e' at the end of command, e.g. 'whois -h whois.jprs.jp xxx/e'.
+#
+co_jp = {
+    'extend': 'jp',
+
+#    'domain_name':              r'\[ドメイン名\]\s?(.+)',
+    'domain_name':              r'\[Domain Name\]\s?(.+)',
+
+#    'creation_date':            r'\[登録年月\]\s?(.+)',
+#    'expiration_date':          r'\[状態\].+\((.+)\)',
+#    'updated_date':             r'\[最終更新\]\s?(.+)',
+    'creation_date':            r'\[Registered Date\]\s?(.+)',
+    'expiration_date':          None,
+    'updated_date':             r'\[Last Update\]\s?(.+)',
+
+    'status':                   r'\[State\]\s?(.+)',
+}
+
+# All Japanese Sub-TLDs. See: https://jprs.co.jp/en/jpdomain.html
+ne_jp = {
+    'extend': 'co_jp'
+}
+
+or_jp = {
+    'extend': 'co_jp'
+}
+
+go_jp = {
+    'extend': 'co_jp'
+}
+
+ac_jp = {
+    'extend': 'co_jp'
+}
+
+ad_jp = {
+    'extend': 'co_jp'
+}
+
+ed_jp = {
+    'extend': 'co_jp'
+}
+
+gr_jp = {
+    'extend': 'co_jp'
+}
+
+lg_jp = {
+    'extend': 'co_jp'
+}
+
+geo_jp = {
+    'extend': 'co_jp'
+}
+
+
 
 kr = {
     'extend': 'com',
@@ -656,6 +790,25 @@ nl = {
     'abuse_contact':            r'Abuse Contact:\s?(.+)',
 }
 
+# Norway
+no = {
+    'extend': None,
+
+    'domain_name':		r'Domain Name\.+:\s?(.+)',
+
+    'registrar':		r'Registrar Handle\.+:\s?(.+)',
+    'registrant':		None,
+    'registrant_country':       None,
+
+    'creation_date':		r'Created:\s?(.+)',
+    'expiration_date':		None,
+    'updated_date':		r'Last Updated:\s?(.+)',
+
+    'name_servers':		r'Name Server Handle\.+:\s*(.+)\s*',
+    'status':			None,
+    'emails':			None,
+}
+
 
 nu = {
     'extend': 'se',
@@ -708,6 +861,8 @@ online = {
 
     'status':                   r'Status:\s?(.+)',
 }
+
+
 
 org = {
     'extend': 'com',
@@ -845,7 +1000,7 @@ security = {
 
 sh = {
     'extend': 'com',
-    
+
     'registrant':              r'\nRegistrant Organization:\s?(.+)',
 
     'expiration_date':         r'\nRegistry Expiry Date:\s*(.+)',
@@ -873,6 +1028,28 @@ se = {
     'name_servers':             r'nserver:\s*(.+)',
     'status':                   r'status:\s?(.+)',
 }
+
+
+# Singapore - Commercial sub-domain
+com_sg = {
+    'extend': None,
+
+    'domain_name':		r'Domain Name:\s?(.+)',
+
+    'registrar':		r'Registrar:\s?(.+)',
+    'registrant':		r'Registrant:\n\n\s?Name:\s?(.+)',
+    'registrant_country':       None,
+
+    'creation_date':		r'Creation Date:\s?(.+)',
+    'expiration_date':		r'Expiration Date:\s?(.+)',
+    'updated_date':		r'Modified Date:\s?(.+)',
+
+    'name_servers':		r'Name Servers:\s*(.+)\s*',
+    'status':			None,
+
+    'emails':			r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
+}
+
 
 space = {
     'extend': 'store',
@@ -914,6 +1091,20 @@ tel = {
 
     'status':                   r'Status:\s?(.+)',
 }
+
+
+# Thailand - Commercial sub-domain
+co_th = {
+    'extend': 'com',
+
+    'registrant':		r'Domain Holder Organization:\s?(.+)',
+    'registrant_country':       r'Domain Holder Country:\s?(.+)',
+
+    'creation_date':		r'Created date:\s?(.+)',
+    'expiration_date':		r'Exp date:\s?(.+)',
+    'updated_date':		r'Updated date:\s?(.+)',
+}
+
 
 theatre = {
     'extend': 'store',
