@@ -1255,5 +1255,9 @@ ax = {
     'updated_date':             r'Information Updated:\s?(.+)',
 }
 
+gy = {
+     'extend': 'com',
+}
+
 # Multiple initialization
 ca = rw = mu = bank
