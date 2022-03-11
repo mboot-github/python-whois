@@ -115,6 +115,7 @@ DOMAINS = '''
     google.global
     google.co.il
     google.pt
+    google.sk
     youtube.com
     youtu.be
     belgium.com
