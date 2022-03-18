@@ -1051,6 +1051,22 @@ com_sg = {
 }
 
 
+# Slovakia
+sk = {
+    'extend': 'com',
+
+    'domain_name':				r'Domain:\s?(.+)',
+
+    'creation_date':			r'Created:\s?(.+)',
+    'expiration_date':			r'Valid Until:\s?(.+)',
+    'updated_date':				r'Updated:\s?(.+)',
+
+    'name_servers':				r'Nameserver:\s*(.+)\r',
+    'registrant':				r'Contact:\s?(.+)',
+    'registrant_country':       r'Country Code:\s?(.+)\nRegistrar:'
+}
+
+
 space = {
     'extend': 'store',
 }

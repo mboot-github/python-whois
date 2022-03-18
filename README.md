@@ -124,6 +124,7 @@ google.com
 .se
 .security
 .sh
+.sk
 .site
 .space
 .store
