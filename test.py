@@ -126,6 +126,7 @@ DOMAINS = '''
     amazon.courses
     google.aw
     karibu.tz
+    google.dev
 '''
 
 failure = list()
