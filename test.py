@@ -126,6 +126,8 @@ DOMAINS = '''
     amazon.courses
     google.aw
     karibu.tz
+    bretagne.bzh
+    congres.nc
 '''
 
 failure = list()

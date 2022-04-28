@@ -53,6 +53,7 @@ google.com
 .biz
 .br
 .by
+.bzh
 .ca
 .cc
 .cl
@@ -101,6 +102,7 @@ google.com
 .mu
 .mx
 .name
+.nc
 .net
 .ninja
 .nl
