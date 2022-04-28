@@ -128,6 +128,7 @@ DOMAINS = '''
     karibu.tz
     bretagne.bzh
     congres.nc
+    google.dev
 '''
 
 failure = list()

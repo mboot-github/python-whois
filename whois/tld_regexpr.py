@@ -336,6 +336,11 @@ de = {
     'name_servers':             r'Nserver:\s*(.+)',
 }
 
+# Developer
+dev = {
+    'extend': 'com',
+}
+
 # Denmark
 dk = {
     'extend': None,
@@ -1294,6 +1299,21 @@ xyz = {
 
 za = {
     'extend': 'com',
+}
+
+ax = {
+    'extend': 'com',
+    'domain_name':              r'domain...............:\s?(.+)',
+
+    'registrar':                r'registrar............:\s?(.+)',
+
+    'creation_date':            r'created..............:\s?(.+)',
+    'expiration_date':          r'expires..............:\s?(.+)',
+    'updated_date':             r'Information Updated:\s?(.+)',
+}
+
+gy = {
+     'extend': 'com',
 }
 
 # Multiple initialization

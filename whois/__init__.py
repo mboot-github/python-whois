@@ -97,10 +97,10 @@ def query(domain: str, force: bool = False, cache_file: Optional[str] = None, sl
         tld = d[-1]
 
     if tld not in TLD_RE.keys():
-        print(f'Unknown TLD: .{tld}\nValid TLDs: ', end="")
+        errmsg = ""
         for valid_tld in sorted(list(TLD_RE.keys())):
-            print(f'.{valid_tld}', end=" ")
-        raise UnknownTld(f"The TLD .{tld} is currently not supported by this package.")
+            errmsg+=" ." + valid_tld
+        raise UnknownTld(f"The TLD .%s is currently not supported by this package. Valid TLDs: %s" % (tld, errmsg))
 
     while 1:
         pd = do_parse(do_query(d, force, cache_file, slow_down, ignore_returncode), tld)

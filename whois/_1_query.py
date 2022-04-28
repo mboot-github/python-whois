@@ -65,13 +65,14 @@ def _do_whois_query(dl: List[str], ignore_returncode: bool) -> str:
             print(copy_command)
             subprocess.call(copy_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         # print(p.stdout.read()+' '+p.stderr.read())
-        p = subprocess.Popen([r'.\whois.exe ', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        p = subprocess.Popen([r'.\whois.exe ', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env={"LANG": "en"})
 
     else:
         """
             Linux 'whois' command wrapper
         """
-        p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        # LANG=en is added to make the ".jp" output consist across all environments
+        p = subprocess.Popen(['whois', '.'.join(dl)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env={"LANG": "en"})
 
     r = p.communicate()[0].decode(errors='ignore')
     if not ignore_returncode and p.returncode != 0 and p.returncode != 1:
