@@ -68,6 +68,7 @@ google.com
 .cr
 .cz
 .de
+.dev
 .download
 .edu
 .education

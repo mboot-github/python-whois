@@ -318,6 +318,11 @@ de = {
     'name_servers':             r'Nserver:\s*(.+)',
 }
 
+# Developer
+dev = {
+    'extend': 'com',
+}
+
 # Denmark
 dk = {
     'extend': None,
