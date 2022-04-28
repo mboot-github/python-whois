@@ -186,6 +186,24 @@ by = {
     'name_servers':             r'\nName Server:\s*(.+)',
 }
 
+# Brittany (French Territory)
+# Some personal data could be obfuscated at request from the registrant
+bzh = {
+    'extend': 'fr',
+
+    'domain_name':          r'Domain Name:\s*(.+)',
+    'registrar':            r'Registrar:\s*(.+)',
+    'registrant':           r'Registrant Organization:\s*(.+)',
+    'registrant_country':   r'Registrant Country:\s*(.*)',
+
+    'creation_date':        r'Creation Date:\s*(.*)',
+    'expiration_date':      r'Registry Expiry Date:\s*(.*)',
+    'updated_date':         r'Updated Date:\s*(.*)',
+
+    'name_servers':         r'Name Server:\s*(.*)',
+    'status':               r'Domain Status:\s*(.*)',
+}
+
 ca = {
     'extend': 'com',
 }
@@ -759,6 +777,24 @@ name = {
     'extend':                   'com',
 
     'status':                   r'Domain Status:\s?(.+)',
+}
+
+
+# New-Caledonia (French Territory)
+nc = {
+    'extend': 'fr',
+
+    'domain_name':          r'Domain\s*:\s(.+)',
+    'registrar':            r'Registrar\s*:\s(.+)',
+    'registrant':           r'Registrant name\s*:\s(.+)',
+    'registrant_country':   None,
+
+    'creation_date':        r'Created on\s*:\s(.*)',
+    'expiration_date':      r'Expires on\s*:\s(.*)',
+    'updated_date':         r'Last updated on\s*:\s(.*)',
+
+    'name_servers':         r'Domain server [0-9]{1,}\s*:\s(.*)',
+    'status':               None,
 }
 
 net = {
