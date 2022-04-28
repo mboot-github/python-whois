@@ -1260,5 +1260,20 @@ za = {
     'extend': 'com',
 }
 
+ax = {
+    'extend': 'com',
+    'domain_name':              r'domain...............:\s?(.+)',
+
+    'registrar':                r'registrar............:\s?(.+)',
+
+    'creation_date':            r'created..............:\s?(.+)',
+    'expiration_date':          r'expires..............:\s?(.+)',
+    'updated_date':             r'Information Updated:\s?(.+)',
+}
+
+gy = {
+     'extend': 'com',
+}
+
 # Multiple initialization
 ca = rw = mu = bank
