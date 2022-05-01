@@ -383,18 +383,6 @@ edu = {
 }
 
 
-education = {
-    # GANDI SAS
-    'extend': 'com',
-
-    'registrant':               r'Registrant Organization:\s?(.+)',
-
-    'expiration_date':          r'Registrar Registration Expiration Date:\s?(.+)',
-
-    'status':                   r'Domain Status:\s?(.+)',
-}
-
-
 eu = {
     'extend': 'com',
 
@@ -802,10 +790,6 @@ net = {
 }
 
 
-ninja = {
-    'extend': 'education',
-}
-
 nl = {
     'extend': 'com',
 
@@ -983,9 +967,6 @@ pt = {
     'status':                   r'Domain Status:\s?(.+)',
 }
 
-pub = {
-    'extend': 'store',
-}
 
 pw = {
     'extend': 'com',
@@ -1031,9 +1012,6 @@ ru_rf = {
     'status':                   r'\nstate:\s*(.+)',
 }
 
-sale = {
-    'extend': 'store',
-}
 
 security = {
     'extend': 'store',
@@ -1248,13 +1226,6 @@ uz = {
     'status':                   r'Status:\s?(.+)',
 }
 
-video = {
-    'extend': 'com',
-
-    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
-    'updated_date':             r'\nUpdated Date:\s?(.+)',
-}
-
 website = {
     'extend': 'store',
 }
@@ -1318,3 +1289,253 @@ gy = {
 
 # Multiple initialization
 ca = rw = mu = bank
+
+
+# Registry operator: donuts.domains
+# WHOIS server: whois.donuts.co
+_donuts = {
+    'extend': 'com',
+
+    'registrant':               r'Registrant Organization:\s?(.+)',
+
+    'status':                   r'Domain Status:\s?(.+)',
+}
+
+academy = {'extend': '_donuts'}
+accountants = {'extend': '_donuts'}
+actor = {'extend': '_donuts'}
+agency = {'extend': '_donuts'}
+airforce = {'extend': '_donuts'}
+apartments = {'extend': '_donuts'}
+army = {'extend': '_donuts'}
+associates = {'extend': '_donuts'}
+attorney = {'extend': '_donuts'}
+auction = {'extend': '_donuts'}
+band = {'extend': '_donuts'}
+bargains = {'extend': '_donuts'}
+bike = {'extend': '_donuts'}
+bingo = {'extend': '_donuts'}
+boutique = {'extend': '_donuts'}
+builders = {'extend': '_donuts'}
+business = {'extend': '_donuts'}
+cab = {'extend': '_donuts'}
+cafe = {'extend': '_donuts'}
+camera = {'extend': '_donuts'}
+camp = {'extend': '_donuts'}
+capital = {'extend': '_donuts'}
+cards = {'extend': '_donuts'}
+care = {'extend': '_donuts'}
+careers = {'extend': '_donuts'}
+cash = {'extend': '_donuts'}
+casino = {'extend': '_donuts'}
+catering = {'extend': '_donuts'}
+center = {'extend': '_donuts'}
+charity = {'extend': '_donuts'}
+chat = {'extend': '_donuts'}
+cheap = {'extend': '_donuts'}
+church = {'extend': '_donuts'}
+city = {'extend': '_donuts'}
+claims = {'extend': '_donuts'}
+cleaning = {'extend': '_donuts'}
+clinic = {'extend': '_donuts'}
+clothing = {'extend': '_donuts'}
+coach = {'extend': '_donuts'}
+codes = {'extend': '_donuts'}
+coffee = {'extend': '_donuts'}
+community = {'extend': '_donuts'}
+company = {'extend': '_donuts'}
+computer = {'extend': '_donuts'}
+condos = {'extend': '_donuts'}
+construction = {'extend': '_donuts'}
+consulting = {'extend': '_donuts'}
+contact = {'extend': '_donuts'}
+contractors = {'extend': '_donuts'}
+cool = {'extend': '_donuts'}
+coupons = {'extend': '_donuts'}
+credit = {'extend': '_donuts'}
+creditcard = {'extend': '_donuts'}
+cruises = {'extend': '_donuts'}
+dance = {'extend': '_donuts'}
+dating = {'extend': '_donuts'}
+deals = {'extend': '_donuts'}
+degree = {'extend': '_donuts'}
+delivery = {'extend': '_donuts'}
+democrat = {'extend': '_donuts'}
+dental = {'extend': '_donuts'}
+dentist = {'extend': '_donuts'}
+diamonds = {'extend': '_donuts'}
+digital = {'extend': '_donuts'}
+direct = {'extend': '_donuts'}
+directory = {'extend': '_donuts'}
+discount = {'extend': '_donuts'}
+doctor = {'extend': '_donuts'}
+dog = {'extend': '_donuts'}
+domains = {'extend': '_donuts'}
+education = {'extend': '_donuts'}
+email = {'extend': '_donuts'}
+energy = {'extend': '_donuts'}
+engineer = {'extend': '_donuts'}
+engineering = {'extend': '_donuts'}
+enterprises = {'extend': '_donuts'}
+equipment = {'extend': '_donuts'}
+estate = {'extend': '_donuts'}
+events = {'extend': '_donuts'}
+exchange = {'extend': '_donuts'}
+expert = {'extend': '_donuts'}
+exposed = {'extend': '_donuts'}
+express = {'extend': '_donuts'}
+fail = {'extend': '_donuts'}
+family = {'extend': '_donuts'}
+fan = {'extend': '_donuts'}
+farm = {'extend': '_donuts'}
+finance = {'extend': '_donuts'}
+financial = {'extend': '_donuts'}
+fish = {'extend': '_donuts'}
+fitness = {'extend': '_donuts'}
+flights = {'extend': '_donuts'}
+florist = {'extend': '_donuts'}
+football = {'extend': '_donuts'}
+forsale = {'extend': '_donuts'}
+foundation = {'extend': '_donuts'}
+fund = {'extend': '_donuts'}
+furniture = {'extend': '_donuts'}
+futbol = {'extend': '_donuts'}
+fyi = {'extend': '_donuts'}
+gallery = {'extend': '_donuts'}
+games = {'extend': '_donuts'}
+gifts = {'extend': '_donuts'}
+gives = {'extend': '_donuts'}
+glass = {'extend': '_donuts'}
+gmbh = {'extend': '_donuts'}
+gold = {'extend': '_donuts'}
+golf = {'extend': '_donuts'}
+graphics = {'extend': '_donuts'}
+gratis = {'extend': '_donuts'}
+gripe = {'extend': '_donuts'}
+group = {'extend': '_donuts'}
+guide = {'extend': '_donuts'}
+guru = {'extend': '_donuts'}
+haus = {'extend': '_donuts'}
+healthcare = {'extend': '_donuts'}
+hockey = {'extend': '_donuts'}
+holdings = {'extend': '_donuts'}
+holiday = {'extend': '_donuts'}
+hospital = {'extend': '_donuts'}
+house = {'extend': '_donuts'}
+immo = {'extend': '_donuts'}
+immobilien = {'extend': '_donuts'}
+industries = {'extend': '_donuts'}
+institute = {'extend': '_donuts'}
+insure = {'extend': '_donuts'}
+international = {'extend': '_donuts'}
+investments = {'extend': '_donuts'}
+irish = {'extend': '_donuts'}
+jetzt = {'extend': '_donuts'}
+jewelry = {'extend': '_donuts'}
+kaufen = {'extend': '_donuts'}
+kitchen = {'extend': '_donuts'}
+land = {'extend': '_donuts'}
+lawyer = {'extend': '_donuts'}
+lease = {'extend': '_donuts'}
+legal = {'extend': '_donuts'}
+life = {'extend': '_donuts'}
+lighting = {'extend': '_donuts'}
+limited = {'extend': '_donuts'}
+limo = {'extend': '_donuts'}
+live = {'extend': '_donuts'}
+loans = {'extend': '_donuts'}
+ltd = {'extend': '_donuts'}
+maison = {'extend': '_donuts'}
+management = {'extend': '_donuts'}
+market = {'extend': '_donuts'}
+marketing = {'extend': '_donuts'}
+mba = {'extend': '_donuts'}
+media = {'extend': '_donuts'}
+memorial = {'extend': '_donuts'}
+moda = {'extend': '_donuts'}
+money = {'extend': '_donuts'}
+mortgage = {'extend': '_donuts'}
+movie = {'extend': '_donuts'}
+navy = {'extend': '_donuts'}
+network = {'extend': '_donuts'}
+news = {'extend': '_donuts'}
+ninja = {'extend': '_donuts'}
+partners = {'extend': '_donuts'}
+parts = {'extend': '_donuts'}
+photography = {'extend': '_donuts'}
+photos = {'extend': '_donuts'}
+pictures = {'extend': '_donuts'}
+pizza = {'extend': '_donuts'}
+place = {'extend': '_donuts'}
+plumbing = {'extend': '_donuts'}
+plus = {'extend': '_donuts'}
+productions = {'extend': '_donuts'}
+properties = {'extend': '_donuts'}
+pub = {'extend': '_donuts'}
+recipes = {'extend': '_donuts'}
+rehab = {'extend': '_donuts'}
+reise = {'extend': '_donuts'}
+reisen = {'extend': '_donuts'}
+rentals = {'extend': '_donuts'}
+repair = {'extend': '_donuts'}
+report = {'extend': '_donuts'}
+republican = {'extend': '_donuts'}
+restaurant = {'extend': '_donuts'}
+reviews = {'extend': '_donuts'}
+rip = {'extend': '_donuts'}
+rocks = {'extend': '_donuts'}
+run = {'extend': '_donuts'}
+sale = {'extend': '_donuts'}
+salon = {'extend': '_donuts'}
+sarl = {'extend': '_donuts'}
+school = {'extend': '_donuts'}
+schule = {'extend': '_donuts'}
+services = {'extend': '_donuts'}
+shoes = {'extend': '_donuts'}
+shopping = {'extend': '_donuts'}
+show = {'extend': '_donuts'}
+singles = {'extend': '_donuts'}
+soccer = {'extend': '_donuts'}
+social = {'extend': '_donuts'}
+software = {'extend': '_donuts'}
+solar = {'extend': '_donuts'}
+solutions = {'extend': '_donuts'}
+studio = {'extend': '_donuts'}
+style = {'extend': '_donuts'}
+supplies = {'extend': '_donuts'}
+supply = {'extend': '_donuts'}
+support = {'extend': '_donuts'}
+surgery = {'extend': '_donuts'}
+systems = {'extend': '_donuts'}
+tax = {'extend': '_donuts'}
+taxi = {'extend': '_donuts'}
+team = {'extend': '_donuts'}
+technology = {'extend': '_donuts'}
+tennis = {'extend': '_donuts'}
+theater = {'extend': '_donuts'}
+tienda = {'extend': '_donuts'}
+tips = {'extend': '_donuts'}
+tires = {'extend': '_donuts'}
+today = {'extend': '_donuts'}
+tools = {'extend': '_donuts'}
+tours = {'extend': '_donuts'}
+town = {'extend': '_donuts'}
+toys = {'extend': '_donuts'}
+training = {'extend': '_donuts'}
+travel = {'extend': '_donuts'}
+university = {'extend': '_donuts'}
+vacations = {'extend': '_donuts'}
+ventures = {'extend': '_donuts'}
+vet = {'extend': '_donuts'}
+viajes = {'extend': '_donuts'}
+video = {'extend': '_donuts'}
+villas = {'extend': '_donuts'}
+vin = {'extend': '_donuts'}
+vision = {'extend': '_donuts'}
+voyage = {'extend': '_donuts'}
+watch = {'extend': '_donuts'}
+wine = {'extend': '_donuts'}
+works = {'extend': '_donuts'}
+world = {'extend': '_donuts'}
+wtf = {'extend': '_donuts'}
+zone = {'extend': '_donuts'}

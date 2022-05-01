@@ -25,8 +25,10 @@ def get_tld_re(tld: str) -> Any:
     if 'extend' in tmp:
         del tmp['extend']
 
-    TLD_RE[tld] = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
-    return TLD_RE[tld]
+    tld_re = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
+    if tld[0] != '_':
+        TLD_RE[tld] = tld_re
+    return tld_re
 
 
 [get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != '_']
