@@ -129,6 +129,23 @@ DOMAINS = '''
     bretagne.bzh
     congres.nc
     google.dev
+    colooder.app
+    bellerose.asia
+    minigames.best
+    timphillipsgarage.bond
+    vols.cat
+    edc.click
+    hisd.cloud
+    ghc.fit
+    medicaldata.icu
+    agtaster.kiwi
+    davidetson.ovh
+    curly.red
+    clubclio.shop
+    agodasylumsy.top
+    rans88.vip
+    kubet77.win
+    sylblog.xin
 '''
 
 failure = list()
