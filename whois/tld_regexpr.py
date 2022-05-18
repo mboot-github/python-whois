@@ -410,6 +410,24 @@ edu = {
     'name_servers':             r'Name Servers:\s?\t(.+)\n\t(.+)\n',
 }
 
+# estonian
+ee = {
+    'extend': 'com',
+
+    'domain_name': r'Domain:\nname:\s+(.+\.ee)\n',
+
+    'registrar': r'Registrar:\nname:\s+(.+)\n',
+    'registrant': r'Registrant:\nname:\s+(.+)\n',
+    'registrant_country': r'Registrant:(?:\n+.+\n*)*country:\s+(.+)\n',
+
+    'creation_date': r'Domain:(?:\n+.+\n*)*registered:\s+(.+)\n',
+    'expiration_date': r'Domain:(?:\n+.+\n*)*expire:\s+(.+)\n',
+    'updated_date': r'Domain:(?:\n+.+\n*)*changed:\s+(.+)\n',
+
+    'name_servers': r'nserver:\s*(.+)',
+    'status': r'Domain:(?:\n+.+\n*)*status:\s+(.+)\n',
+    'emails': r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
+}
 
 eu = {
     'extend': 'com',
