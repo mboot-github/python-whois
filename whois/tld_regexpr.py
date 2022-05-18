@@ -72,6 +72,10 @@ amsterdam = {
     'extend':   'store',
 }
 
+app = {
+    'extend': 'com',
+}
+
 # Argentina
 ar = {
     'extend': 'com',
@@ -85,6 +89,10 @@ ar = {
     'updated_date':             r'changed\s*:\s?(.+)',
 
     'name_servers':             r'nserver:\s*(.+)\s*',
+}
+
+asia = {
+    'extend': 'com',
 }
 
 
@@ -141,6 +149,10 @@ be = {
     'status':                   r'Status:\s?(.+)',
 }
 
+best = {
+    'extend': 'com',
+}
+
 biz = {
     'extend': 'com',
 
@@ -152,6 +164,10 @@ biz = {
     'updated_date':             r'Updated Date:\s?(.+)',
 
     'status':                   None,
+}
+
+bond = {
+    'extend': 'com',
 }
 
 br = {
@@ -208,6 +224,10 @@ ca = {
     'extend': 'com',
 }
 
+cat = {
+    'extend': 'com',
+}
+
 cc = {
     'extend': 'com',
 
@@ -230,6 +250,14 @@ cl = {
     'expiration_date':          r'Expiration Date:\s?(.+)',
 
     'name_servers':             r'Name Server:\s*(.+)\s*',
+}
+
+click = {
+    'extend': 'com',
+}
+
+cloud = {
+    'extend': 'com',
 }
 
 club = {
@@ -411,6 +439,10 @@ fi = {
     'status':                   r'status\.+:\s?(.+)',
 }
 
+fit = {
+    'extend': 'com',
+}
+
 fm = {
     'extend': 'com',
 }
@@ -478,6 +510,10 @@ id_ = {
     'creation_date':            r'Created On:\s?(.+)',
     'expiration_date':          r'Expiration Date:\s?(.+)',
     'updated_date':             r'Last Updated On:\s?(.+)$',
+}
+
+icu = {
+    'extend': 'com',
 }
 
 # Ireland
@@ -652,7 +688,9 @@ geo_jp = {
     'extend': 'co_jp'
 }
 
-
+kiwi = {
+    'extend': 'com',
+}
 
 kr = {
     'extend': 'com',
@@ -898,6 +936,10 @@ org = {
     'name_servers':             r'Name Server:\s?(.+)\s*',
 }
 
+ovh = {
+    'extend': 'com',
+}
+
 pe = {
     'extend': 'com',
 
@@ -982,6 +1024,10 @@ pw = {
     'status':                   r'Status:\s?(.+)',
 }
 
+red = {
+    'extend': 'com',
+}
+
 rest = {
     'extend':                   'store',
 
@@ -1025,6 +1071,10 @@ sh = {
     'expiration_date':         r'\nRegistry Expiry Date:\s*(.+)',
 
     'status':                  r'\nDomain Status:\s?(.+)',
+}
+
+shop = {
+    'extend': 'com',
 }
 
 site = {
@@ -1149,6 +1199,10 @@ tickets = {
     'extend': 'store',
 }
 
+top = {
+    'extend': 'com',
+}
+
 trade = {
     'extend': 'store',
 }
@@ -1226,6 +1280,10 @@ uz = {
     'status':                   r'Status:\s?(.+)',
 }
 
+vip = {
+    'extend': 'com',
+}
+
 website = {
     'extend': 'store',
 }
@@ -1244,6 +1302,10 @@ wiki = {
     'status':                   r'Status:\s?(.+)',
 }
 
+win = {
+    'extend': 'com',
+}
+
 work = {
     'extend': 'com',
 
@@ -1254,6 +1316,10 @@ work = {
     'creation_date':            r'Creation Date:\s?(.+)',
     'expiration_date':          r'Registry Expiry Date:\s?(.+)',
     'updated_date':             r'Updated Date:\s?(.+)',
+}
+
+xin = {
+    'extend': 'com',
 }
 
 xyz = {
