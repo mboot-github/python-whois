@@ -1076,6 +1076,20 @@ ru_rf = {
     'status':                   r'\nstate:\s*(.+)',
 }
 
+sa = {
+    'expend': 'com',
+
+    'domain_name':              r'Domain Name:\s*(.+\.sa)\s',
+    'registrant':               r'Registrant:\n*(.+)\n',
+    'name_servers':             r'Name Servers:\s*(.+)\s*(.+)?',
+    'registrant_country':       None,
+    'registrar':                None,
+    'creation_date':            None,
+    'expiration_date':          None,
+    'updated_date':             None,
+    'status':                   None,
+    'emails':                   None,
+}
 
 security = {
     'extend': 'store',
@@ -1215,6 +1229,25 @@ theatre = {
 
 tickets = {
     'extend': 'store',
+}
+
+tn = {
+    'extend': 'com',
+
+    'domain_name':              r'Domain name\.+:(.+)\s*',
+
+    'registrar':                r'Registrar\.+:(.+)\s*',
+    'registrant':               r'Owner Contact\n+Name\.+:\s?(.+)',
+    'registrant_country':       r'Owner Contact\n(?:.+\n)+Country\.+:\s(.+)',
+
+    'creation_date':            r'Creation date\.+:\s?(.+)',
+    'expiration_date':          None,
+    'updated_date':             None,
+
+    'name_servers':             r'DNS servers\s?Name\.+:\s?(.+)\s*Name\.+:\s?(.+)?',
+    'status':                   r'Domain status\.+:(.+)',
+    'emails':                   r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
+
 }
 
 top = {
