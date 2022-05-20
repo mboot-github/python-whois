@@ -147,6 +147,8 @@ DOMAINS = '''
     kubet77.win
     sylblog.xin
     luminor.ee
+    icee.sa
+    vidange.tn
 '''
 
 failure = list()

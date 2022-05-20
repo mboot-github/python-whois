@@ -135,6 +135,7 @@ google.com
 .ru
 .ru.rf
 .rw
+.sa
 .sale
 .se
 .security
@@ -149,6 +150,7 @@ google.com
 .tel
 .theatre
 .tickets
+.tn
 .top
 .trade
 .tv
