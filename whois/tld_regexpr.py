@@ -69,7 +69,17 @@ am = {
 
 # Amsterdam
 amsterdam = {
-    'extend':   'store',
+    'extend': 'com',
+
+    'domain_name':              r'Domain Name:\s?(.+)',
+
+    'registrar':                r'Registrar:\s*(.+)',
+
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+
+    'status':                   r'Domain Status:\s?(.+)',
 }
 
 app = {
@@ -149,9 +159,6 @@ be = {
     'status':                   r'Status:\s?(.+)',
 }
 
-best = {
-    'extend': 'com',
-}
 
 biz = {
     'extend': 'com',
@@ -166,9 +173,6 @@ biz = {
     'status':                   None,
 }
 
-bond = {
-    'extend': 'com',
-}
 
 br = {
     'extend': 'com',
@@ -391,7 +395,7 @@ dk = {
 
 
 download = {
-    'extend': 'store',
+    'extend': 'amsterdam',
 
     'name_servers':             r'Name Server:\s*(.+)\r',
     'status':                   r'Domain Status:\s*([a-zA-z]+)',
@@ -481,16 +485,13 @@ fr = {
     'status':                   r'status:\s?(.+)',
 }
 
-frl = {
-    'extend':   'store',
-}
 
 game = {
-    'extend': 'store',
+    'extend': 'amsterdam',
 }
 
 global_ = {
-    'extend': 'store',
+    'extend': 'amsterdam',
 
     'name_servers': r'Name Server: (.+)',
 }
@@ -530,9 +531,6 @@ id_ = {
     'updated_date':             r'Last Updated On:\s?(.+)$',
 }
 
-icu = {
-    'extend': 'com',
-}
 
 # Ireland
 ie = {
@@ -562,7 +560,7 @@ info = {
 }
 
 ink = {
-    'extend': 'store',
+    'extend': 'amsterdam',
 }
 
 io = {
@@ -743,7 +741,7 @@ kz = {
 }
 
 link = {
-    'extend': 'store',
+    'extend': 'amsterdam',
 }
 
 lt = {
@@ -929,22 +927,6 @@ nz = {
 }
 
 
-online = {
-    'extend': 'com',
-
-    'domain_name':              r'Domain Name:\s?(.+)',
-
-    'registrar':                r'Registrar:\s*(.+)',
-
-    'creation_date':            r'Creation Date:\s?(.+)',
-    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
-    'updated_date':             r'Updated Date:\s?(.+)',
-
-    'status':                   r'Status:\s?(.+)',
-}
-
-
-
 org = {
     'extend': 'com',
 
@@ -994,20 +976,6 @@ pl = {
 }
 
 
-press = {
-    'extend': 'com',
-
-    'domain_name':              r'Domain Name:\s?(.+)',
-
-    'registrar':                r'Registrar:\s*(.+)',
-
-    'creation_date':            r'Creation Date:\s?(.+)',
-    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
-    'updated_date':             r'Updated Date:\s?(.+)',
-
-    'status':                   r'Status:\s?(.+)',
-}
-
 pro = {
     'extend': 'com',
 }
@@ -1046,11 +1014,6 @@ red = {
     'extend': 'com',
 }
 
-rest = {
-    'extend':                   'store',
-
-    'status':                   r'Domain Status:\s*(.+)',
-}
 
 ru = {
     'extend': 'com',
@@ -1091,9 +1054,6 @@ sa = {
     'emails':                   None,
 }
 
-security = {
-    'extend': 'store',
-}
 
 sh = {
     'extend': 'com',
@@ -1109,9 +1069,6 @@ shop = {
     'extend': 'com',
 }
 
-site = {
-    'extend': 'store',
-}
 
 se = {
     'extend': None,
@@ -1168,30 +1125,8 @@ sk = {
 }
 
 
-space = {
-    'extend': 'store',
-}
-
-store = {
-    'extend': 'com',
-
-    'registrar':                r'Registrar:\s?(.+)',
-    'registrant':               r'Registrant Organization:\s?(.+)',
-
-    'updated_date':             r'Updated Date:\s?(.+)',
-    'creation_date':            r'Creation Date:\s?(.+)',
-    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
-
-    'name_servers':             r'Name Server:\s*(.+)',
-    'status':                   r'Domain Status:\s*(.+)',
-}
-
 study = {
     'extend': 'com'
-}
-
-tech = {
-    'extend': 'store',
 }
 
 
@@ -1223,14 +1158,6 @@ co_th = {
 }
 
 
-theatre = {
-    'extend': 'store',
-}
-
-tickets = {
-    'extend': 'store',
-}
-
 tn = {
     'extend': 'com',
 
@@ -1255,7 +1182,7 @@ top = {
 }
 
 trade = {
-    'extend': 'store',
+    'extend': 'amsterdam',
 }
 
 tv = {
@@ -1335,9 +1262,6 @@ vip = {
     'extend': 'com',
 }
 
-website = {
-    'extend': 'store',
-}
 
 wiki = {
     'extend': 'com',
@@ -1373,17 +1297,6 @@ xin = {
     'extend': 'com',
 }
 
-xyz = {
-    'extend': 'com',
-
-    'domain_name':              r'Domain Name:\s?(.+)',
-
-    'registrar':                r'Registrar:\s*(.+)',
-    'creation_date':            r'Creation Date:\s?(.+)',
-    'expiration_date':          r'\nRegistry Expiry Date:\s?(.+)',
-    'updated_date':             r'Updated Date:\s?(.+)',
-    'status':                   r'Status:\s?(.+)',
-}
 
 za = {
     'extend': 'com',
@@ -1656,3 +1569,84 @@ works = {'extend': '_donuts'}
 world = {'extend': '_donuts'}
 wtf = {'extend': '_donuts'}
 zone = {'extend': '_donuts'}
+
+
+# Registry operator: CentralNic
+# WHOIS server: whois.centralnic.com
+_centralnic = {
+    'extend': 'com',
+
+    'domain_name':              r'Domain Name:\s?(.+)',
+
+    'registrar':                r'Registrar:\s*(.+)',
+
+    'creation_date':            r'Creation Date:\s?(.+)',
+    'expiration_date':          r'Registry Expiry Date:\s?(.+)',
+    'updated_date':             r'Updated Date:\s?(.+)',
+
+    'status':                   r'Domain Status:\s?(.+)',
+}
+
+cam = {'extend': '_centralnic'}
+gent = {'extend': '_centralnic'}
+desi = {'extend': '_centralnic'}
+london = {'extend': '_centralnic'}
+tech = {'extend': '_centralnic'}
+coop = {'extend': '_centralnic'}
+host = {'extend': '_centralnic'}
+online = {'extend': '_centralnic'}
+press = {'extend': '_centralnic'}
+site = {'extend': '_centralnic'}
+space = {'extend': '_centralnic'}
+store = {'extend': '_centralnic'}
+website = {'extend': '_centralnic'}
+frl = {'extend': '_centralnic'}
+ooo = {'extend': '_centralnic'}
+dealer = {'extend': '_centralnic'}
+inc = {'extend': '_centralnic'}
+zuerich = {'extend': '_centralnic'}
+blog = {'extend': '_centralnic'}
+luxury = {'extend': '_centralnic'}
+reit = {'extend': '_centralnic'}
+bar = {'extend': '_centralnic'}
+rest = {'extend': '_centralnic'}
+ceo = {'extend': '_centralnic'}
+kred = {'extend': '_centralnic'}
+build = {'extend': '_centralnic'}
+fun = {'extend': '_centralnic'}
+uno = {'extend': '_centralnic'}
+bond = {'extend': '_centralnic'}
+cfd = {'extend': '_centralnic'}
+cyou = {'extend': '_centralnic'}
+icu = {'extend': '_centralnic'}
+sbs = {'extend': '_centralnic'}
+best = {'extend': '_centralnic'}
+feedback = {'extend': '_centralnic'}
+forum = {'extend': '_centralnic'}
+art = {'extend': '_centralnic'}
+auto = {'extend': '_centralnic'}
+autos = {'extend': '_centralnic'}
+baby = {'extend': '_centralnic'}
+beauty = {'extend': '_centralnic'}
+boats = {'extend': '_centralnic'}
+car = {'extend': '_centralnic'}
+cars = {'extend': '_centralnic'}
+college = {'extend': '_centralnic'}
+hair = {'extend': '_centralnic'}
+homes = {'extend': '_centralnic'}
+makeup = {'extend': '_centralnic'}
+monster = {'extend': '_centralnic'}
+motorcycles = {'extend': '_centralnic'}
+protection = {'extend': '_centralnic'}
+quest = {'extend': '_centralnic'}
+rent = {'extend': '_centralnic'}
+security = {'extend': '_centralnic'}
+skin = {'extend': '_centralnic'}
+storage = {'extend': '_centralnic'}
+theatre = {'extend': '_centralnic'}
+tickets = {'extend': '_centralnic'}
+xyz = {'extend': '_centralnic'}
+yachts = {'extend': '_centralnic'}
+fans = {'extend': '_centralnic'}
+qpon = {'extend': '_centralnic'}
+saarland = {'extend': '_centralnic'}
