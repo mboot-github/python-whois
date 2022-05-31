@@ -149,6 +149,69 @@ DOMAINS = '''
     luminor.ee
     icee.sa
     vidange.tn
+    nic.cam
+    nic.gent
+    nic.desi
+    nic.london
+    nic.tech
+    nic.coop
+    nic.host
+    nic.online
+    nic.press
+    nic.site
+    nic.space
+    nic.store
+    nic.website
+    nic.frl
+    nic.ooo
+    nic.dealer
+    nic.inc
+    nic.zuerich
+    nic.blog
+    nic.luxury
+    nic.reit
+    nic.bar
+    nic.rest
+    nic.ceo
+    nic.kred
+    nic.build
+    nic.fun
+    nic.uno
+    nic.bond
+    nic.cfd
+    nic.cyou
+    nic.icu
+    nic.sbs
+    nic.best
+    nic.feedback
+    nic.forum
+    nic.art
+    nic.auto
+    nic.autos
+    nic.baby
+    nic.beauty
+    nic.boats
+    nic.car
+    nic.cars
+    nic.college
+    nic.hair
+    nic.homes
+    nic.makeup
+    nic.monster
+    nic.motorcycles
+    nic.protection
+    nic.quest
+    nic.rent
+    nic.security
+    nic.skin
+    nic.storage
+    nic.theatre
+    nic.tickets
+    nic.xyz
+    nic.yachts
+    nic.fans
+    nic.qpon
+    nic.saarland
 '''
 
 failure = list()
