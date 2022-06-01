@@ -121,6 +121,7 @@ def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datet
     text = re.sub(r"(\+[0-9]{2}):([0-9]{2})", "\\1\\2", text)
     text = re.sub(r"(\+[0-9]{2})$", "\\1:00", text)
     text = re.sub(r"(\ #.*)", "", text)
+
     # hack for 1st 2nd 3rd 4th etc
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
     text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)

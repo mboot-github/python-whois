@@ -98,7 +98,11 @@ at = {
 
 
 # Australia
-au = {"extend": "com", "registrar": r"Registrar Name:\s?(.+)", "updated_date": r"Last Modified:\s?(.+)"}
+au = {
+    "extend": "com",
+    "registrar": r"Registrar Name:\s?(.+)",
+    "updated_date": r"Last Modified:\s?(.+)",
+}
 
 aw = {
     "extend": "nl",
@@ -830,7 +834,7 @@ ru_rf = {
 }
 
 sa = {
-    "expend": "com",
+    "extend": "com",
     "domain_name": r"Domain Name:\s*(.+\.sa)\s",
     "registrant": r"Registrant:\n*(.+)\n",
     "name_servers": r"Name Servers:\s*(.+)\s*(.+)?",
@@ -898,7 +902,9 @@ sk = {
 }
 
 
-study = {"extend": "com"}
+study = {
+    "extend": "com",
+}
 
 
 tel = {

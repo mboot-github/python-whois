@@ -9,7 +9,13 @@
     >>> domain = whois.query('google.com')
     >>> print(domain.__dict__)
 
-    {'expiration_date': datetime.datetime(2020, 9, 14, 0, 0), 'last_updated': datetime.datetime(2011, 7, 20, 0, 0), 'registrar': 'MARKMONITOR INC.', 'name': 'google.com', 'creation_date': datetime.datetime(1997, 9, 15, 0, 0)}
+    {
+        'expiration_date':  datetime.datetime(2020, 9, 14, 0, 0),
+        'last_updated':     datetime.datetime(2011, 7, 20, 0, 0),
+        'registrar':        'MARKMONITOR INC.',
+        'name':             'google.com',
+        'creation_date':    datetime.datetime(1997, 9, 15, 0, 0)
+    }
 
     >>> print(domain.name)
     google.com
@@ -43,13 +49,16 @@ def query(
     slow_down=0         Time [s] it will wait after you query WHOIS database. This is useful when there is a limit to the number of requests at a time.
     """
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
+
     cache_file = cache_file or CACHE_FILE
     slow_down = slow_down or SLOW_DOWN
+
     domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
     d = domain.split(".")
 
     if d[0] == "www":
         d = d[1:]
+
     if len(d) == 1:
         return None
 
@@ -105,10 +114,22 @@ def query(
         errmsg = ""
         for valid_tld in sorted(list(TLD_RE.keys())):
             errmsg += " ." + valid_tld
-        raise UnknownTld(f"The TLD .%s is currently not supported by this package. Valid TLDs: %s" % (tld, errmsg))
+        raise UnknownTld(f"The TLD {tld} is currently not supported by this package. Valid TLDs: {errmsg}")
 
     while 1:
-        pd = do_parse(do_query(d, force, cache_file, slow_down, ignore_returncode), tld)
+        q = do_query(
+            d,
+            force,
+            cache_file,
+            slow_down,
+            ignore_returncode,
+        )
+
+        pd = do_parse(
+            q,
+            tld,
+        )
+
         if (not pd or not pd["domain_name"][0]) and len(d) > 2:
             d = d[1:]
         else:
@@ -116,5 +137,5 @@ def query(
 
     if pd and pd["domain_name"][0]:
         return Domain(pd)
-    else:
-        return None
+
+    return None
