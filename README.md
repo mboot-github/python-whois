@@ -54,6 +54,7 @@ google.com
 .be
 .best
 .biz
+.bj
 .bond
 .br
 .by
