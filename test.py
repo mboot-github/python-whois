@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import whois
 
-DOMAINS = '''
+DOMAINS = """
     dot.ml
     example.com
     mphimmoitv.com
@@ -212,26 +212,26 @@ DOMAINS = '''
     nic.fans
     nic.qpon
     nic.saarland
-'''
+"""
 
 failure = list()
 
 # domains = ''
 
-invalidTld = '''
+invalidTld = """
     bit.ly
-'''
+"""
 
-failedParsing = '''
-'''
+failedParsing = """
+"""
 
-unknownDateFormat = '''
+unknownDateFormat = """
     gopro.com
-'''
+"""
 
-for d in DOMAINS.split('\n'):
+for d in DOMAINS.split("\n"):
     if d:
-        print('-'*80)
+        print("-" * 80)
         print(d)
         try:
             w = whois.query(d, ignore_returncode=1)
@@ -244,12 +244,14 @@ for d in DOMAINS.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e), d)
+            """.format(
+                str(e), d
+            )
             print(message)
 
-for d in invalidTld.split('\n'):
+for d in invalidTld.split("\n"):
     if d:
-        print('-'*80)
+        print("-" * 80)
         print(d)
         try:
             w = whois.query(d, ignore_returncode=1)
@@ -258,13 +260,15 @@ for d in invalidTld.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e), d)
-            print('Caught UnknownTld Exception')
+            """.format(
+                str(e), d
+            )
+            print("Caught UnknownTld Exception")
             print(e)
 
-for d in failedParsing.split('\n'):
+for d in failedParsing.split("\n"):
     if d:
-        print('-'*80)
+        print("-" * 80)
         print(d)
         try:
             w = whois.query(d, ignore_returncode=1)
@@ -273,13 +277,15 @@ for d in failedParsing.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e), d)
-            print('Caught FailedParsingWhoisOutput Exception')
+            """.format(
+                str(e), d
+            )
+            print("Caught FailedParsingWhoisOutput Exception")
             print(e)
 
-for d in unknownDateFormat.split('\n'):
+for d in unknownDateFormat.split("\n"):
     if d:
-        print('-'*80)
+        print("-" * 80)
         print(d)
         try:
             w = whois.query(d, ignore_returncode=1)
@@ -288,14 +294,18 @@ for d in unknownDateFormat.split('\n'):
             message = """
             Error : {},
             On Domain: {}
-            """.format(str(e), d)
-            print('Caught UnknownDateFormat Exception')
+            """.format(
+                str(e), d
+            )
+            print("Caught UnknownDateFormat Exception")
             print(e)
 
 
 report_str = """
 Failure during test : {}
 Domains : {}
-""".format(len(failure), failure)
-message = '\033[91m' + report_str + '\x1b[0m'
+""".format(
+    len(failure), failure
+)
+message = "\033[91m" + report_str + "\x1b[0m"
 print(message)
