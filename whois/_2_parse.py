@@ -15,10 +15,10 @@ def get_tld_re(tld: str) -> Any:
         return "in_"
 
     v = getattr(tld_regexpr, tld)
-    extend = v.get("extend")
 
+    extend = v.get("extend")
     if extend:
-        e = get_tld_re(extend)
+        e = get_tld_re(extend) # call recursive
         tmp = e.copy()
         tmp.update(v)
     else:

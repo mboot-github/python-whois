@@ -790,6 +790,10 @@ ru = {
     "status": r"\nstate:\s*(.+)",
 }
 
+su = {
+    "extend": "ru",
+}
+
 ru_rf = {
     "extend": "com",
     "domain_name": r"\ndomain:\s*(.+)",

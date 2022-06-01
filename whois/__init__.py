@@ -111,10 +111,10 @@ def query(
         tld = d[-1]
 
     if tld not in TLD_RE.keys():
-        errmsg = ""
-        for valid_tld in sorted(list(TLD_RE.keys())):
-            errmsg += " ." + valid_tld
-        raise UnknownTld(f"The TLD {tld} is currently not supported by this package. Valid TLDs: {errmsg}")
+        s = " ."
+        errmsg = s + s.join(sorted(list(TLD_RE.keys())))
+        msg = f"The TLD {tld} is currently not supported by this package. Valid TLDs: {errmsg}"
+        raise UnknownTld(msg)
 
     while 1:
         q = do_query(
