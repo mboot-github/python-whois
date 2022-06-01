@@ -13,7 +13,6 @@ com = {
     "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
 }
 
-
 # United Kingdom - academic sub-domain
 ac_uk = {
     "extend": "uk",
@@ -27,18 +26,15 @@ ac_uk = {
     "name_servers": r"Servers:\s*(.+)\t\n\s*(.+)\t\n",
 }
 
-
 # United Arab Emirates
 ae = {
     "extend": "ar",
 }
 
-
 # Anguilla
 ai = {
     "extend": "com",
 }
-
 
 # Armenia
 am = {
@@ -53,7 +49,6 @@ am = {
     "updated_date": r"Last modified:\s+(.+)",
     "name_servers": r"DNS servers.*:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?",
 }
-
 
 # Amsterdam
 amsterdam = {
@@ -85,7 +80,6 @@ asia = {
     "extend": "com",
 }
 
-
 # Austria
 at = {
     "extend": "com",
@@ -95,7 +89,6 @@ at = {
     "registrar": r"registrar:\s?(.+)",
     "registrant": r"registrant:\s?(.+)",
 }
-
 
 # Australia
 au = {
@@ -118,7 +111,6 @@ bank = {
     "updated_date": r"Updated Date:\s?(.+)",
 }
 
-
 be = {
     "extend": "pl",
     "domain_name": r"\nDomain:\s*(.+)",
@@ -126,7 +118,6 @@ be = {
     "creation_date": r"Registered:\s*(.+)\n",
     "status": r"Status:\s?(.+)",
 }
-
 
 biz = {
     "extend": "com",
@@ -137,7 +128,6 @@ biz = {
     "updated_date": r"Updated Date:\s?(.+)",
     "status": None,
 }
-
 
 br = {
     "extend": "com",
@@ -287,7 +277,6 @@ cz = {
     "status": r"status:\s*(.+)",
 }
 
-
 # The .de NIC whois servers no longer provide any PII data for domains in the TLD.
 # To obtains "personal" data, one must use the web interface: http://www.denic.de/en/domains/whois-service/web-whois.html
 de = {
@@ -317,13 +306,11 @@ dk = {
     "emails": None,
 }
 
-
 download = {
     "extend": "amsterdam",
     "name_servers": r"Name Server:\s*(.+)\r",
     "status": r"Domain Status:\s*([a-zA-z]+)",
 }
-
 
 edu = {
     "extend": "com",
@@ -356,7 +343,6 @@ eu = {
     "name_servers": r"Name servers:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?",
 }
 
-
 fi = {
     "extend": None,
     "domain_name": r"domain\.+:\s?(.+)",
@@ -377,7 +363,6 @@ fm = {
     "extend": "com",
 }
 
-
 fr = {
     "extend": "com",
     "domain_name": r"domain:\s?(.+)",
@@ -390,7 +375,6 @@ fr = {
     "status": r"status:\s?(.+)",
 }
 
-
 game = {
     "extend": "amsterdam",
 }
@@ -400,12 +384,10 @@ global_ = {
     "name_servers": r"Name Server: (.+)",
 }
 
-
 # Honduras
 hn = {
     "extend": "com",
 }
-
 
 # Hong Kong
 hk = {
@@ -428,7 +410,6 @@ id_ = {
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": r"Last Updated On:\s?(.+)$",
 }
-
 
 # Ireland
 ie = {
@@ -463,7 +444,6 @@ io = {
     "expiration_date": r"\nRegistry Expiry Date:\s?(.+)",
 }
 
-
 ir = {
     "extend": None,
     "domain_name": r"domain:\s?(.+)",
@@ -475,7 +455,6 @@ ir = {
     "updated_date": r"last-updated:\s?(.+)",
     "name_servers": r"nserver:\s*(.+)\s*",
 }
-
 
 is_ = {
     "domain_name": r"domain:\s?(.+)",
@@ -489,7 +468,6 @@ is_ = {
     "status": None,
     "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
 }
-
 
 it = {
     "extend": "com",
@@ -578,7 +556,6 @@ kr = {
     "status": r"status\s*:\s?(.+)",
 }
 
-
 kz = {
     "extend": None,
     "domain_name": r"Domain name\.+:\s(.+)",
@@ -638,7 +615,6 @@ mobi = {
     "updated_date": r"\nUpdated Date:\s?(.+)",
 }
 
-
 mx = {
     "domain_name": r"Domain Name:\s?(.+)",
     "registrant": r"Registrant:\n\s*(.+)",
@@ -649,12 +625,10 @@ mx = {
     "name_servers": r"\sDNS:\s*(.+)",
 }
 
-
 name = {
     "extend": "com",
     "status": r"Domain Status:\s?(.+)",
 }
-
 
 # New-Caledonia (French Territory)
 nc = {
@@ -673,7 +647,6 @@ nc = {
 net = {
     "extend": "com",
 }
-
 
 nl = {
     "extend": "com",
@@ -714,11 +687,9 @@ no = {
     "emails": None,
 }
 
-
 nu = {
     "extend": "se",
 }
-
 
 nyc = {
     "extend": "com",
@@ -729,7 +700,6 @@ nyc = {
     "updated_date": r"Updated Date:\s?(.+)",
     "status": r"Status:\s?(.+)",
 }
-
 
 nz = {
     "extend": None,
@@ -744,7 +714,6 @@ nz = {
     "status": r"query_status:\s?(.+)",
     "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
 }
-
 
 org = {
     "extend": "com",
@@ -783,7 +752,6 @@ pl = {
     "status": r"\nStatus:\n\s*(.+)",
 }
 
-
 pro = {
     "extend": "com",
 }
@@ -799,7 +767,6 @@ pt = {
     "status": r"Domain Status:\s?(.+)",
 }
 
-
 pw = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
@@ -813,7 +780,6 @@ pw = {
 red = {
     "extend": "com",
 }
-
 
 ru = {
     "extend": "com",
@@ -847,7 +813,6 @@ sa = {
     "emails": None,
 }
 
-
 sh = {
     "extend": "com",
     "registrant": r"\nRegistrant Organization:\s?(.+)",
@@ -858,7 +823,6 @@ sh = {
 shop = {
     "extend": "com",
 }
-
 
 se = {
     "extend": None,
@@ -871,7 +835,6 @@ se = {
     "name_servers": r"nserver:\s*(.+)",
     "status": r"status:\s?(.+)",
 }
-
 
 # Singapore - Commercial sub-domain
 com_sg = {
@@ -888,7 +851,6 @@ com_sg = {
     "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
 }
 
-
 # Slovakia
 sk = {
     "extend": "com",
@@ -901,11 +863,9 @@ sk = {
     "registrant_country": r"Country Code:\s?(.+)\nRegistrar:",
 }
 
-
 study = {
     "extend": "com",
 }
-
 
 tel = {
     "extend": "com",
@@ -917,7 +877,6 @@ tel = {
     "status": r"Status:\s?(.+)",
 }
 
-
 # Thailand - Commercial sub-domain
 co_th = {
     "extend": "com",
@@ -927,7 +886,6 @@ co_th = {
     "expiration_date": r"Exp date:\s?(.+)",
     "updated_date": r"Updated date:\s?(.+)",
 }
-
 
 tn = {
     "extend": "com",
@@ -1013,7 +971,6 @@ vip = {
     "extend": "com",
 }
 
-
 wiki = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
@@ -1041,7 +998,6 @@ xin = {
     "extend": "com",
 }
 
-
 za = {
     "extend": "com",
 }
@@ -1061,7 +1017,6 @@ gy = {
 
 # Multiple initialization
 ca = rw = mu = bank
-
 
 # Registry operator: donuts.domains
 # WHOIS server: whois.donuts.co
@@ -1310,7 +1265,6 @@ world = {"extend": "_donuts"}
 wtf = {"extend": "_donuts"}
 zone = {"extend": "_donuts"}
 
-
 # Registry operator: CentralNic
 # WHOIS server: whois.centralnic.com
 _centralnic = {
@@ -1386,3 +1340,7 @@ yachts = {"extend": "_centralnic"}
 fans = {"extend": "_centralnic"}
 qpon = {"extend": "_centralnic"}
 saarland = {"extend": "_centralnic"}
+
+# Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
+#  in the Domain Name System of the Internet.
+# In the Domain Name System it has the ASCII DNS name xn--p1ai.
