@@ -34,7 +34,7 @@ doIt()
 
 main()
 {
-    ls *.py >/dev/null 2>/dev/null && doItHere
+    ls *.py >/dev/null 2>/dev/null && doIt
 }
 
 main
