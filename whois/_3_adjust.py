@@ -3,23 +3,49 @@ import sys
 import datetime
 from .exceptions import UnknownDateFormat
 
-from typing import Any, Dict, Optional
+from typing import Any, List, Dict, Optional
 
 PYTHON_VERSION = sys.version_info[0]
 
 
 class Domain:
+    # make sure all fields actually exist allways
+    name: str = None
+    tld = None
+    registrar = None
+    registrant_country = None
+
+    creation_date = None
+    expiration_date = None
+    last_updated = None
+
+    status = None
+    statuses: List = []
+
+    dnssec = None
+    name_servers = set()
+    owner = None
+    abuse_contact = None
+    reseller = None
+    registrant = None
+    admin = None
+
     def __init__(self, data: Dict[str, Any]):
         self.name = data["domain_name"][0].strip().lower()
         self.tld = data["tld"]
+
         self.registrar = data["registrar"][0].strip()
         self.registrant_country = data["registrant_country"][0].strip()
+
         self.creation_date = str_to_date(data["creation_date"][0], self.tld.lower())
         self.expiration_date = str_to_date(data["expiration_date"][0], self.tld.lower())
         self.last_updated = str_to_date(data["updated_date"][0], self.tld.lower())
+
         self.status = data["status"][0].strip()
         self.statuses = list(set([s.strip() for s in data["status"]]))  # list(set(...))) to deduplicate
+
         self.dnssec = data["DNSSEC"]
+
         # name_servers
         tmp = []
 
@@ -44,12 +70,16 @@ class Domain:
 
         if "owner" in data:
             self.owner = data["owner"][0].strip()
+
         if "abuse_contact" in data:
             self.abuse_contact = data["abuse_contact"][0].strip()
+
         if "reseller" in data:
             self.reseller = data["reseller"][0].strip()
+
         if "registrant" in data:
             self.registrant = data["registrant"][0].strip()
+
         if "admin" in data:
             self.admin = data["admin"][0].strip()
 
