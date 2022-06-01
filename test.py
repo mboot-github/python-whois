@@ -2,6 +2,7 @@
 import whois
 
 DOMAINS = '''
+    google.bj
     dot.ml
     example.com
     mphimmoitv.com
