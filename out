@@ -1,0 +1,2465 @@
+--------------------------------------------------------------------------------
+    dot.ml
+                name	"dot.ml"
+                 tld	"ml"
+           registrar	"Mali Dili B.V."
+  registrant_country	"Netherlands"
+       creation_date	"2013-03-28 00:00:00"
+     expiration_date	"2029-12-31 00:00:00"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns02.freenom.com', 'ns01.freenom.com'}"
+          registrant	"Mr Joost Zuurbier"
+--------------------------------------------------------------------------------
+    example.com
+--------------------------------------------------------------------------------
+    mphimmoitv.com
+                name	"mphimmoitv.com"
+                 tld	"com"
+           registrar	"Internet Domain Service BS Corp."
+  registrant_country	"BS"
+       creation_date	"2021-09-14 09:42:20"
+     expiration_date	"None"
+        last_updated	"2021-09-14 09:42:21"
+              status	"ok - http://www.icann.org/epp#ok"
+            statuses	"['ok - http://www.icann.org/epp#ok', 'clientTransferProhibited - http://www.icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'johnny.ns.cloudflare.com\r', 'love.ns.cloudflare.com\r'}"
+          registrant	"Whois Privacy Corp."
+--------------------------------------------------------------------------------
+    phimchill.tv
+                name	"phimchill.tv"
+                 tld	"tv"
+           registrar	"DYNADOT LLC"
+  registrant_country	"US"
+       creation_date	"2021-10-06 03:04:14"
+     expiration_date	"None"
+        last_updated	"2021-10-07 00:03:45"
+              status	"clientTransferProhibited"
+            statuses	"['clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'kara.ns.cloudflare.com', 'salvador.ns.cloudflare.com'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    netsec.ninja
+
+            Error : [Querying whois.unitedtld.com]
+[Unable to connect to remote host]
+,
+            On Domain:     netsec.ninja
+            
+--------------------------------------------------------------------------------
+    test.education
+                name	"test.education"
+                 tld	"education"
+           registrar	"Wild West Domains, LLC"
+  registrant_country	"US"
+       creation_date	"2015-08-22 18:46:11"
+     expiration_date	"2022-08-22 18:46:11"
+        last_updated	"2021-10-06 18:47:00"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'pdns06.domaincontrol.com\r', 'pdns05.domaincontrol.com\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    doramy.club
+                name	"doramy.club"
+                 tld	"club"
+           registrar	"Tucows Domains Inc."
+  registrant_country	"CA"
+       creation_date	"2017-03-27 18:21:24"
+     expiration_date	"2023-03-26 23:59:59"
+        last_updated	"2022-02-01 23:28:25"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'kip.ns.cloudflare.com\r', 'nia.ns.cloudflare.com\r'}"
+          registrant	"Data Protected"
+--------------------------------------------------------------------------------
+    google.cl
+                name	"google.cl"
+                 tld	"cl"
+           registrar	"nic.cl"
+  registrant_country	""
+       creation_date	"2002-10-22 17:48:23"
+     expiration_date	"2022-11-20 14:48:02"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.in
+                name	"google.in"
+                 tld	"in_"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"2005-02-14 20:35:14"
+     expiration_date	"2023-02-14 20:35:14"
+        last_updated	"2022-01-18 09:27:55"
+              status	"clientTransferProhibited http://www.icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited http://www.icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited http://www.icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited http://www.icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.com.ar
+--------------------------------------------------------------------------------
+    google.com.co
+                name	"google.com.co"
+                 tld	"co"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2003-04-21 00:00:00"
+     expiration_date	"2023-04-24 23:59:59"
+        last_updated	"2022-03-28 09:32:53"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.pl
+                name	"google.pl"
+                 tld	"pl"
+           registrar	"Markmonitor, Inc."
+  registrant_country	""
+       creation_date	"2002-09-19 13:00:00"
+     expiration_date	"2023-10-14 09:30:46"
+        last_updated	"2021-08-17 11:43:34"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns2.google.com', 'ns1.google.com'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.com.br
+                name	"google.com.br"
+                 tld	"br"
+           registrar	"Nic.br"
+  registrant_country	""
+       creation_date	"1999-05-18 00:00:00"
+     expiration_date	"2023-05-18 00:00:00"
+        last_updated	"2021-04-23 00:00:00"
+              status	"published"
+            statuses	"['published']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+               owner	"Google Brasil Internet Ltda"
+          registrant	""
+--------------------------------------------------------------------------------
+    www.google.com
+                name	"google.com"
+                 tld	"com"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"1997-09-15 09:00:00"
+     expiration_date	"None"
+        last_updated	"2019-09-09 17:39:04"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    www.fsdfsdfsdfsd.google.com
+                name	"google.com"
+                 tld	"com"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"1997-09-15 09:00:00"
+     expiration_date	"None"
+        last_updated	"2019-09-09 17:39:04"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    digg.com
+                name	"digg.com"
+                 tld	"com"
+           registrar	"NAMECHEAP INC"
+  registrant_country	"IS"
+       creation_date	"2000-02-20 16:55:16"
+     expiration_date	"None"
+        last_updated	"2018-12-29 02:29:44"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'darl.ns.cloudflare.com', 'barbara.ns.cloudflare.com'}"
+          registrant	"Privacy service provided by Withheld for Privacy ehf"
+--------------------------------------------------------------------------------
+    imdb.com
+                name	"imdb.com"
+                 tld	"com"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"1996-01-05 06:00:00"
+     expiration_date	"None"
+        last_updated	"2019-08-26 21:19:56"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'pdns3.ultradns.org', 'ns2.p31.dynect.net', 'pdns6.ultradns.co.uk', 'pdns5.ultradns.info', 'pdns1.ultradns.net', 'ns3.p31.dynect.net', 'pdns4.ultradns.org', 'pdns2.ultradns.net', 'ns4.p31.dynect.net', 'ns1.p31.dynect.net'}"
+          registrant	"IMDb.com, Inc."
+--------------------------------------------------------------------------------
+    microsoft.com
+                name	"microsoft.com"
+                 tld	"com"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"1991-05-02 06:00:00"
+     expiration_date	"None"
+        last_updated	"2022-04-18 21:25:49"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'ns1-39.azure-dns.com', 'ns3-39.azure-dns.org', 'ns2-39.azure-dns.net', 'ns4-39.azure-dns.info'}"
+          registrant	"Microsoft Corporation"
+--------------------------------------------------------------------------------
+    office.com
+                name	"office.com"
+                 tld	"com"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"1999-04-20 06:00:00"
+     expiration_date	"None"
+        last_updated	"2022-03-19 10:44:24"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'nse24.o365filtering.com', 'nse21.o365filtering.com', 'nse12.o365filtering.com', 'nse13.o365filtering.com', 'ns2-32.azure-dns.net', 'ns1-32.azure-dns.com', 'ns4-32.azure-dns.info', 'ns3-32.azure-dns.org'}"
+          registrant	"Microsoft Corporation"
+--------------------------------------------------------------------------------
+    python.org
+                name	"python.org"
+                 tld	"org"
+           registrar	"Gandi SAS"
+  registrant_country	"US"
+       creation_date	"1995-03-27 05:00:00"
+     expiration_date	"2023-03-28 05:00:00"
+        last_updated	"None"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns-981.awsdns-58.net\r', 'ns-2046.awsdns-63.co.uk\r', 'ns-1134.awsdns-13.org\r', 'ns-484.awsdns-60.com\r'}"
+          registrant	"Python Software Foundation"
+--------------------------------------------------------------------------------
+    www.google.org
+                name	"google.org"
+                 tld	"org"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"1998-10-21 04:00:00"
+     expiration_date	"2022-10-20 04:00:00"
+        last_updated	"None"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google Inc."
+--------------------------------------------------------------------------------
+    ddarko.org
+                name	"ddarko.org"
+                 tld	"org"
+           registrar	"OVH"
+  registrant_country	"PL"
+       creation_date	"2005-02-28 14:41:24"
+     expiration_date	"2024-02-28 14:41:24"
+        last_updated	"None"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'dns107.ovh.net\r', 'ns107.ovh.net\r'}"
+          registrant	"Solup.net Lukasz Wroblewski"
+--------------------------------------------------------------------------------
+    google.net
+                name	"google.net"
+                 tld	"net"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"1999-03-15 09:00:00"
+     expiration_date	"None"
+        last_updated	"2022-02-11 10:27:58"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google Inc."
+--------------------------------------------------------------------------------
+    www.asp.net
+                name	"asp.net"
+                 tld	"net"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"1996-01-06 06:00:00"
+     expiration_date	"None"
+        last_updated	"2021-12-04 10:43:40"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)']"
+              dnssec	"False"
+        name_servers	"{'ns2-04.azure-dns.net', 'ns4-04.azure-dns.info', 'ns3-04.azure-dns.org', 'ns1-04.azure-dns.com'}"
+          registrant	"Microsoft Corporation"
+--------------------------------------------------------------------------------
+    www.ddarko.pl
+--------------------------------------------------------------------------------
+    google.co.uk
+                name	""
+                 tld	"uk"
+           registrar	""
+  registrant_country	""
+       creation_date	"1999-02-14 00:00:00"
+     expiration_date	"2023-02-14 00:00:00"
+        last_updated	"2022-01-13 00:00:00"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns1.google.com\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.jp
+                name	"google.jp"
+                 tld	"jp"
+           registrar	"JPRS"
+  registrant_country	""
+       creation_date	"2005-05-30 00:00:00"
+     expiration_date	"2023-05-31 00:00:00"
+        last_updated	"2022-05-31 18:05:07"
+              status	"Active"
+            statuses	"['Active']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    www.google.co.jp
+                name	"google.co.jp"
+                 tld	"co_jp"
+           registrar	"JPRS"
+  registrant_country	""
+       creation_date	"2001-03-22 00:00:00"
+     expiration_date	"None"
+        last_updated	"2022-03-31 18:05:44"
+              status	"Connected (2023/03/31)"
+            statuses	"['Connected (2023/03/31)']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.io
+                name	"google.io"
+                 tld	"io"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"2002-10-01 01:00:00"
+     expiration_date	"2022-09-30 01:00:00"
+        last_updated	"2021-08-29 02:37:35"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.co
+                name	"google.co"
+                 tld	"co"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2010-02-25 01:04:59"
+     expiration_date	"2023-02-24 23:59:59"
+        last_updated	"2022-01-28 09:27:57"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google Inc."
+--------------------------------------------------------------------------------
+    google.de
+                name	"google.de"
+                 tld	"de"
+           registrar	""
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"2018-03-12 21:44:25"
+              status	"connect"
+            statuses	"['connect']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    yandex.ru
+                name	"yandex.ru"
+                 tld	"ru"
+           registrar	"RU-CENTER-RU"
+  registrant_country	""
+       creation_date	"1997-09-23 09:45:07"
+     expiration_date	"2022-09-30 21:00:00"
+        last_updated	"None"
+              status	"REGISTERED, DELEGATED, VERIFIED"
+            statuses	"['REGISTERED, DELEGATED, VERIFIED']"
+              dnssec	"False"
+        name_servers	"{'ns2.yandex.ru', 'ns9.z5h64q92x9.net', 'ns1.yandex.ru'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.us
+                name	"google.us"
+                 tld	"us"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2002-04-19 23:16:01"
+     expiration_date	"2023-04-18 23:59:59"
+        last_updated	"2022-03-22 09:29:27"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.eu
+                name	"google.eu"
+                 tld	"eu"
+           registrar	"MarkMonitor Inc."
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.me
+                name	"google.me"
+                 tld	"me"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"set()"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.be
+                name	"google.be"
+                 tld	"be"
+           registrar	""
+  registrant_country	""
+       creation_date	"2000-12-12 00:00:00"
+     expiration_date	"None"
+        last_updated	"None"
+              status	"NOT AVAILABLE"
+            statuses	"['NOT AVAILABLE']"
+              dnssec	"False"
+        name_servers	"{'ns1.google.com\r', 'ns2.google.com\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.lt
+                name	"google.lt"
+                 tld	"lt"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	""
+       creation_date	"2018-12-07 00:00:00"
+     expiration_date	"2022-12-08 00:00:00"
+        last_updated	"None"
+              status	"registered"
+            statuses	"['registered']"
+              dnssec	"False"
+        name_servers	"{'ns3.google.com\t', 'ns1.google.com\t', 'ns2.google.com\t'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.biz
+                name	"google.biz"
+                 tld	"biz"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2002-03-27 16:03:44"
+     expiration_date	"2023-03-26 23:59:59"
+        last_updated	"2022-02-27 19:32:00"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.info
+                name	"google.info"
+                 tld	"info"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"2001-07-31 23:57:50"
+     expiration_date	"2022-07-31 23:57:50"
+        last_updated	"2021-06-29 09:31:10"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.name
+--------------------------------------------------------------------------------
+    google.it
+                name	"google.it"
+                 tld	"it"
+           registrar	"MarkMonitor International Limited"
+  registrant_country	""
+       creation_date	"1999-12-10 00:00:00"
+     expiration_date	"2023-04-21 00:00:00"
+        last_updated	"2022-05-18 21:29:19"
+              status	"ok"
+            statuses	"['ok']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google Ireland Holdings Unlimited Company"
+--------------------------------------------------------------------------------
+    google.cz
+                name	"google.cz"
+                 tld	"cz"
+           registrar	"REG-MARKMONITOR"
+  registrant_country	""
+       creation_date	"2000-07-21 15:21:00"
+     expiration_date	"2022-07-22 00:00:00"
+        last_updated	"2018-04-23 20:24:01"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"MM1171195"
+--------------------------------------------------------------------------------
+    google.fr
+                name	"google.fr"
+                 tld	"fr"
+           registrar	"MARKMONITOR Inc."
+  registrant_country	""
+       creation_date	"2000-07-26 22:00:00"
+     expiration_date	"2022-12-30 17:16:48"
+        last_updated	"2021-11-28 09:35:51"
+              status	"ACTIVE"
+            statuses	"['not identified', 'ACTIVE', 'ok']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google Ireland Holdings"
+--------------------------------------------------------------------------------
+    google.nl
+                name	"google.nl"
+                 tld	"nl"
+           registrar	""
+  registrant_country	""
+       creation_date	"1999-05-27 00:00:00"
+     expiration_date	"None"
+        last_updated	"2021-11-09 00:00:00"
+              status	"active"
+            statuses	"['active']"
+              dnssec	"False"
+        name_servers	"set()"
+       abuse_contact	""
+            reseller	""
+          registrant	""
+--------------------------------------------------------------------------------
+    google.cat
+
+            Error : [Querying whois.cat]
+[Unable to connect to remote host]
+,
+            On Domain:     google.cat
+            
+--------------------------------------------------------------------------------
+    google.com.vn
+
+            Error : The TLD vn is currently not supported by this package. Valid TLDs: ac_jp .ac_uk .academy .accountants .actor .ad_jp .ae .agency .ai .airforce .am .amsterdam .apartments .app .ar .army .art .asia .associates .at .attorney .au .auction .auto .autos .aw .ax .baby .band .bank .bar .bargains .be .beauty .best .bike .bingo .biz .blog .boats .bond .boutique .br .build .builders .business .by .bzh .ca .cab .cafe .cam .camera .camp .capital .car .cards .care .careers .cars .cash .casino .cat .catering .cc .center .ceo .cfd .charity .chat .cheap .church .city .cl .claims .cleaning .click .clinic .clothing .cloud .club .cn .co .co_il .co_jp .co_th .coach .codes .coffee .college .com .com_au .com_sg .com_tr .community .company .computer .condos .construction .consulting .contact .contractors .cool .coop .coupons .courses .cr .credit .creditcard .cruises .cyou .cz .dance .dating .de .dealer .deals .degree .delivery .democrat .dental .dentist .desi .dev .diamonds .digital .direct .directory .discount .dk .doctor .dog .domains .download .ed_jp .edu .education .ee .email .energy .engineer .engineering .enterprises .equipment .estate .eu .events .exchange .expert .exposed .express .fail .family .fan .fans .farm .feedback .fi .finance .financial .fish .fit .fitness .flights .florist .fm .football .forsale .forum .foundation .fr .frl .fun .fund .furniture .futbol .fyi .gallery .game .games .gent .geo_jp .gifts .gives .glass .global_ .gmbh .go_jp .gold .golf .gr_jp .graphics .gratis .gripe .group .guide .guru .gy .hair .haus .healthcare .hk .hn .hockey .holdings .holiday .homes .hospital .host .house .icu .id_ .ie .im .immo .immobilien .in_ .inc .industries .info .ink .institute .insure .international .investments .io .ir .irish .is_ .it .jetzt .jewelry .jp .kaufen .kitchen .kiwi .kr .kred .kz .land .lawyer .lease .legal .lg_jp .life .lighting .limited .limo .link .live .loans .london .lt .ltd .luxury .lv .maison .makeup .management .market .marketing .mba .me .media .memorial .ml .mobi .moda .money .monster .mortgage .motorcycles .movie .mu .mx .name .navy .nc .ne_jp .net .network .news .ninja .nl .no .nu .nyc .nz .online .ooo .or_jp .org .ovh .partners .parts .pe .pharmacy .photography .photos .pictures .pizza .pl .place .plumbing .plus .press .pro .productions .properties .protection .pt .pub .pw .qpon .quest .recipes .red .rehab .reise .reisen .reit .rent .rentals .repair .report .republican .rest .restaurant .reviews .rip .rocks .ru .ru_rf .run .rw .sa .saarland .sale .salon .sarl .sbs .school .schule .se .security .services .sh .shoes .shop .shopping .show .singles .site .sk .skin .soccer .social .software .solar .solutions .space .storage .store .studio .study .style .supplies .supply .support .surgery .systems .tax .taxi .team .tech .technology .tel .tennis .theater .theatre .tickets .tienda .tips .tires .tn .today .tools .top .tours .town .toys .trade .training .travel .tv .tz .ua .uk .university .uno .us .uz .vacations .ventures .vet .viajes .video .villas .vin .vip .vision .voyage .watch .website .wiki .win .wine .work .works .world .wtf .xin .xyz .yachts .za .zone .zuerich,
+            On Domain:     google.com.vn
+            
+--------------------------------------------------------------------------------
+    test.ez.lv
+                name	"ez.lv"
+                 tld	"lv"
+           registrar	""
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	"active"
+            statuses	"['active']"
+              dnssec	"False"
+        name_servers	"{'ns2.dns.lv', 'ns1.dns.lv'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.store
+--------------------------------------------------------------------------------
+    kono.store
+--------------------------------------------------------------------------------
+    wonder.store
+--------------------------------------------------------------------------------
+    viacom.tech
+                name	"viacom.tech"
+                 tld	"tech"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2015-08-13 23:15:02"
+     expiration_date	"2022-08-13 23:59:59"
+        last_updated	"2021-08-25 01:16:45"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'dns2.p09.nsone.net\r', 'dns4.p09.nsone.net\r', 'ns0004.secondary.cloudflare.com\r', 'dns3.p09.nsone.net\r', 'dns1.p09.nsone.net\r', 'ns0243.secondary.cloudflare.com\r'}"
+          registrant	"Viacom International Inc."
+--------------------------------------------------------------------------------
+    google.tech
+                name	"google.tech"
+                 tld	"tech"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2015-07-29 14:20:05"
+     expiration_date	"2022-07-29 23:59:59"
+        last_updated	"2021-08-25 01:16:43"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.space
+                name	"google.space"
+                 tld	"space"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2015-01-19 11:57:06"
+     expiration_date	"2023-01-19 23:59:59"
+        last_updated	"2022-01-10 15:32:17"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    loop.space
+                name	"loop.space"
+                 tld	"space"
+           registrar	"Namecheap"
+  registrant_country	"IS"
+       creation_date	"2020-06-12 11:45:14"
+     expiration_date	"2023-06-12 23:59:59"
+        last_updated	"2022-05-13 07:05:45"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'dns1.registrar-servers.com\r', 'dns2.registrar-servers.com\r'}"
+          registrant	"Privacy service provided by Withheld for Privacy ehf"
+--------------------------------------------------------------------------------
+    bloom.space
+                name	"bloom.space"
+                 tld	"space"
+           registrar	"Namecheap"
+  registrant_country	"IS"
+       creation_date	"2016-07-06 16:56:46"
+     expiration_date	"2022-07-06 23:59:59"
+        last_updated	"2021-08-05 11:57:45"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'dns1.registrar-servers.com\r', 'dns2.registrar-servers.com\r'}"
+          registrant	"Privacy service provided by Withheld for Privacy ehf"
+--------------------------------------------------------------------------------
+    invr.space
+                name	"invr.space"
+                 tld	"space"
+           registrar	"IONOS SE"
+  registrant_country	"DE"
+       creation_date	"2015-09-04 12:53:35"
+     expiration_date	"2022-09-04 23:59:59"
+        last_updated	"2021-11-02 01:42:33"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns-de.1and1-dns.com\r', 'ns-de.1and1-dns.org\r', 'ns-de.1and1-dns.de\r', 'ns-de.1and1-dns.biz\r'}"
+          registrant	"reallifefilm international GmbH"
+--------------------------------------------------------------------------------
+    buzzi.space
+                name	"buzzi.space"
+                 tld	"space"
+           registrar	"Key-Systems LLC"
+  registrant_country	"BE"
+       creation_date	"2015-03-30 07:42:26"
+     expiration_date	"2023-03-30 23:59:59"
+        last_updated	"2021-06-24 01:31:20"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'ns3.european-server.com\r', 'ns4.european-server.com\r'}"
+          registrant	"Buzzispace nv"
+--------------------------------------------------------------------------------
+    theobservatory.space
+                name	"theobservatory.space"
+                 tld	"space"
+           registrar	"Tucows.com Co."
+  registrant_country	"CA"
+       creation_date	"2016-11-03 01:05:48"
+     expiration_date	"2022-11-03 23:59:59"
+        last_updated	"2021-11-11 12:05:10"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'dns1.p02.nsone.net\r', 'dns2.p02.nsone.net\r', 'dns4.p02.nsone.net\r', 'dns3.p02.nsone.net\r'}"
+          registrant	"Contact Privacy Inc. Customer 0146220895"
+--------------------------------------------------------------------------------
+    google.security
+                name	"google.security"
+                 tld	"security"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2016-01-07 17:34:12"
+     expiration_date	"2023-01-07 23:59:59"
+        last_updated	"2022-01-10 15:32:17"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    pep.security
+                name	"pep.security"
+                 tld	"security"
+           registrar	"101domain GRS Limited"
+  registrant_country	"LU"
+       creation_date	"2016-07-20 20:54:25"
+     expiration_date	"2023-07-20 23:59:59"
+        last_updated	"2022-05-26 01:52:08"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"True"
+        name_servers	"{'ns2.pep.security\r', 'ns1.pep.security\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    token.security
+--------------------------------------------------------------------------------
+    juniper.security
+--------------------------------------------------------------------------------
+    ci.security
+                name	"ci.security"
+                 tld	"security"
+           registrar	"Go Daddy, LLC"
+  registrant_country	"US"
+       creation_date	"2018-03-26 17:38:44"
+     expiration_date	"2023-03-26 23:59:59"
+        last_updated	"2022-03-27 17:22:53"
+              status	"clientRenewProhibited https://icann.org/epp#clientRenewProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns-725.awsdns-26.net\r', 'ns-1822.awsdns-35.co.uk\r', 'ns-1415.awsdns-48.org\r', 'ns-235.awsdns-29.com\r'}"
+          registrant	"Domains By Proxy, LLC"
+--------------------------------------------------------------------------------
+    in.security
+                name	"in.security"
+                 tld	"security"
+           registrar	"NameSilo, LLC"
+  registrant_country	"US"
+       creation_date	"2018-03-23 11:41:21"
+     expiration_date	"2023-03-23 23:59:59"
+        last_updated	"2021-05-15 11:33:29"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'carol.ns.cloudflare.com\r', 'simon.ns.cloudflare.com\r'}"
+          registrant	"See PrivacyGuardian.org"
+--------------------------------------------------------------------------------
+    autobuyer.site
+                name	"autobuyer.site"
+                 tld	"site"
+           registrar	"Go Daddy, LLC"
+  registrant_country	"US"
+       creation_date	"2018-09-28 18:51:31"
+     expiration_date	"2022-09-28 23:59:59"
+        last_updated	"2021-12-23 12:15:22"
+              status	"clientRenewProhibited https://icann.org/epp#clientRenewProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns68.domaincontrol.com\r', 'ns67.domaincontrol.com\r'}"
+          registrant	"Domains By Proxy, LLC"
+--------------------------------------------------------------------------------
+    emeralds.site
+                name	"emeralds.site"
+                 tld	"site"
+           registrar	"GMO"
+  registrant_country	"JP"
+       creation_date	"2021-07-10 00:46:51"
+     expiration_date	"2022-07-10 23:59:59"
+        last_updated	"2021-07-23 16:05:15"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'ns2.xserver.jp\r', 'ns5.xserver.jp\r', 'ns3.xserver.jp\r', 'ns1.xserver.jp\r', 'ns4.xserver.jp\r'}"
+          registrant	"Whois Privacy Protection Service by onamae.com"
+--------------------------------------------------------------------------------
+    darkops.site
+                name	"darkops.site"
+                 tld	"site"
+           registrar	"Tucows.com Co."
+  registrant_country	"CA"
+       creation_date	"2017-12-01 05:25:27"
+     expiration_date	"2022-12-01 23:59:59"
+        last_updated	"2021-12-08 12:05:12"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'dns2.p04.nsone.net\r', 'dns3.p04.nsone.net\r', 'dns4.p04.nsone.net\r', 'dns1.p04.nsone.net\r'}"
+          registrant	"Contact Privacy Inc. Customer 0150020673"
+--------------------------------------------------------------------------------
+    google.site
+                name	"google.site"
+                 tld	"site"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2015-07-08 09:03:40"
+     expiration_date	"2022-07-08 23:59:59"
+        last_updated	"2021-07-10 01:28:37"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    manniswindows.site
+                name	"manniswindows.site"
+                 tld	"site"
+           registrar	"PDR Ltd. d/b/a PublicDomainRegistry.com"
+  registrant_country	"US"
+       creation_date	"2017-06-06 20:47:37"
+     expiration_date	"2022-06-06 23:59:59"
+        last_updated	"2021-06-18 01:31:51"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'wns126.hostgator.com\r', 'wns125.hostgator.com\r'}"
+          registrant	"M. Annis"
+--------------------------------------------------------------------------------
+    google.website
+                name	"google.website"
+                 tld	"website"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2014-08-26 12:52:42"
+     expiration_date	"2022-11-26 23:59:59"
+        last_updated	"2021-11-09 01:30:47"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    discjockey.website
+                name	"discjockey.website"
+                 tld	"website"
+           registrar	"IONOS SE"
+  registrant_country	"DE"
+       creation_date	"2014-09-18 16:01:59"
+     expiration_date	"2022-09-18 23:59:59"
+        last_updated	"2021-12-01 18:08:38"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'ns-de.1and1-dns.com\r', 'ns-de.1and1-dns.org\r', 'ns-de.1and1-dns.de\r', 'ns-de.1and1-dns.biz\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    anthropology.website
+--------------------------------------------------------------------------------
+    livechat.website
+                name	"livechat.website"
+                 tld	"website"
+           registrar	"Porkbun, LLC"
+  registrant_country	"US"
+       creation_date	"2021-12-03 09:47:42"
+     expiration_date	"2022-12-03 23:59:59"
+        last_updated	"2022-01-24 21:08:56"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns1.bodis.com\r', 'ns2.bodis.com\r'}"
+          registrant	"Private by Design, LLC"
+--------------------------------------------------------------------------------
+    google.tickets
+                name	"google.tickets"
+                 tld	"tickets"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2015-07-13 15:08:20"
+     expiration_date	"2022-07-13 23:59:59"
+        last_updated	"2021-07-10 01:28:37"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns2.googledomains.com\r', 'ns1.googledomains.com\r', 'ns3.googledomains.com\r', 'ns4.googledomains.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.theatre
+                name	"google.theatre"
+                 tld	"theatre"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2016-01-07 17:34:11"
+     expiration_date	"2023-01-07 23:59:59"
+        last_updated	"2022-01-10 15:32:17"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.xyz
+                name	"google.xyz"
+                 tld	"xyz"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2014-05-20 12:04:51"
+     expiration_date	"2022-11-26 23:59:59"
+        last_updated	"2021-11-09 01:30:47"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.tel
+                name	"google.tel"
+                 tld	"tel"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2009-01-22 21:06:56"
+     expiration_date	"2023-03-22 23:59:59"
+        last_updated	"2022-02-23 09:27:36"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.tv
+                name	"google.tv"
+                 tld	"tv"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2004-08-02 09:00:00"
+     expiration_date	"None"
+        last_updated	"2022-02-01 08:40:07"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google Inc."
+--------------------------------------------------------------------------------
+    google.cc
+
+            Error : [Querying ccwhois.verisign-grs.com]
+[Redirected to whois.markmonitor.com]
+[Querying whois.markmonitor.com]
+[whois.markmonitor.com]
+,
+            On Domain:     google.cc
+            
+--------------------------------------------------------------------------------
+    google.nyc
+--------------------------------------------------------------------------------
+    google.pw
+                name	"google.pw"
+                 tld	"pw"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	""
+       creation_date	"2012-10-12 10:19:46"
+     expiration_date	"2023-02-10 23:59:59"
+        last_updated	"2022-02-03 12:13:58"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'inactive https://icann.org/epp#inactive', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'dnssec:'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.online
+                name	"google.online"
+                 tld	"online"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2015-08-19 11:27:00"
+     expiration_date	"2022-08-19 23:59:59"
+        last_updated	"2021-08-25 01:16:45"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns2.googledomains.com\r', 'ns1.googledomains.com\r', 'ns3.googledomains.com\r', 'ns4.googledomains.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.wiki
+                name	"google.wiki"
+                 tld	"wiki"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2014-05-07 21:26:55"
+     expiration_date	"2022-11-26 23:59:59"
+        last_updated	"2022-02-28 22:50:38"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns2.googledomains.com\r', 'ns1.googledomains.com\r', 'ns3.googledomains.com\r', 'ns4.googledomains.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.press
+                name	"google.press"
+                 tld	"press"
+           registrar	"MarkMonitor, Inc (TLDs)"
+  registrant_country	"US"
+       creation_date	"2014-08-26 12:42:24"
+     expiration_date	"2022-11-26 23:59:59"
+        last_updated	"2021-11-09 01:30:47"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.se
+                name	"google.se"
+                 tld	"se"
+           registrar	"MarkMonitor Inc"
+  registrant_country	""
+       creation_date	"2003-08-27 00:00:00"
+     expiration_date	"2022-10-20 00:00:00"
+        last_updated	"2021-09-18 00:00:00"
+              status	"serverUpdateProhibited"
+            statuses	"['serverTransferProhibited', 'serverDeleteProhibited', 'serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+--------------------------------------------------------------------------------
+    google.nu
+                name	"google.nu"
+                 tld	"nu"
+           registrar	"MarkMonitor Inc"
+  registrant_country	""
+       creation_date	"1999-06-07 00:00:00"
+     expiration_date	"2023-06-07 00:00:00"
+        last_updated	"2021-05-06 00:00:00"
+              status	"ok"
+            statuses	"['ok']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+--------------------------------------------------------------------------------
+    google.fi
+                name	"google.fi"
+                 tld	"fi"
+           registrar	"MarkMonitor Inc."
+  registrant_country	""
+       creation_date	"2006-06-30 00:00:00"
+     expiration_date	"2022-07-04 10:15:55"
+        last_updated	"2021-06-02 12:34:32"
+              status	"Registered"
+            statuses	"['Registered']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+--------------------------------------------------------------------------------
+    google.is
+                name	"google.is"
+                 tld	"is_"
+           registrar	""
+  registrant_country	""
+       creation_date	"2002-05-22 00:00:00"
+     expiration_date	"2023-05-22 00:00:00"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns2.google.com', 'ns1.google.com'}"
+          registrant	"GL210-IS"
+--------------------------------------------------------------------------------
+    afilias.com.au
+
+            Error : [Querying whois.ausregistry.net.au]
+[Unable to connect to remote host]
+,
+            On Domain:     afilias.com.au
+            
+--------------------------------------------------------------------------------
+    jisc.ac.uk
+                name	"jisc.ac.uk"
+                 tld	"ac_uk"
+           registrar	"Jisc Services Limited"
+  registrant_country	""
+       creation_date	"2003-09-17 00:00:00"
+     expiration_date	"2023-06-17 00:00:00"
+        last_updated	"2021-03-17 00:00:00"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns10.ja.net', 'ns11.ja.net'}"
+               owner	"Jisc"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.com.au
+
+            Error : [Querying whois.ausregistry.net.au]
+[Unable to connect to remote host]
+,
+            On Domain:     google.com.au
+            
+--------------------------------------------------------------------------------
+    register.bank
+                name	"register.bank"
+                 tld	"bank"
+           registrar	"fTLD Registry Services, LLC"
+  registrant_country	"us"
+       creation_date	"2015-04-24 16:44:31"
+     expiration_date	"2022-04-24 16:44:31"
+        last_updated	"2021-06-08 16:44:34"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok', 'autoRenewPeriod https://icann.org/epp#autoRenewPeriod']"
+              dnssec	"True"
+        name_servers	"{'dns3.register.bank\r', 'dns4.register.bank\r'}"
+          registrant	"fTLD Registry Services LLC"
+--------------------------------------------------------------------------------
+    yandex.ua
+                name	"yandex.ua"
+                 tld	"ua"
+           registrar	"ua.imena"
+  registrant_country	"UA"
+       creation_date	"2005-04-27 01:54:19"
+     expiration_date	"2025-04-27 01:54:19"
+        last_updated	"2022-03-01 10:16:56"
+              status	"clientHold"
+            statuses	"['clientHold', 'linked', 'ok']"
+              dnssec	"False"
+        name_servers	"{'ns7.yandex.ru', 'ns8.yandex.ru'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.ca
+                name	"google.ca"
+                 tld	"ca"
+           registrar	"MarkMonitor International Canada Ltd."
+  registrant_country	"US"
+       creation_date	"2000-10-04 02:21:23"
+     expiration_date	"2023-04-28 04:00:00"
+        last_updated	"2022-04-28 04:04:37"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.mu
+                name	"google.mu"
+                 tld	"mu"
+           registrar	"MarkMonitor"
+  registrant_country	""
+       creation_date	"2000-12-20 13:00:00"
+     expiration_date	"2022-12-19 13:00:00"
+        last_updated	"2021-11-17 09:29:09.100000"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.rw
+--------------------------------------------------------------------------------
+    tut.by
+                name	"tut.by"
+                 tld	"by"
+           registrar	"Reliable Software, Ltd"
+  registrant_country	""
+       creation_date	"2002-09-20 00:00:00"
+     expiration_date	"2024-05-19 00:00:00"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'dns2.tut.by\r', 'dns1.tut.by\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    guinness.ie
+                name	"guinness.ie"
+                 tld	"ie"
+           registrar	"CSC Domains Inc"
+  registrant_country	""
+       creation_date	"1998-12-18 00:00:00"
+     expiration_date	"2022-09-30 12:46:32"
+        last_updated	"2021-10-09 14:26:57"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'udns2.cscdns.uk\r', 'udns1.cscdns.net\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.com.tr
+                name	"google.com.tr"
+                 tld	"com_tr"
+           registrar	"ODT GELTRME VAKFI BLG TEKNOLOJLER SAN. VE TC. A.."
+  registrant_country	""
+       creation_date	"2001-08-23 00:00:00"
+     expiration_date	"2023-08-22 00:00:00"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.sale
+
+            Error : [Querying whois.rightside.co]
+[Unable to connect to remote host]
+,
+            On Domain:     google.sale
+            
+--------------------------------------------------------------------------------
+    google.link
+                name	"google.link"
+                 tld	"link"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"2021-05-19 14:09:54.359000"
+     expiration_date	"2023-05-19 14:09:54.359000"
+        last_updated	"2022-04-23 09:34:25.535000"
+              status	"clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns2.googledomains.com\r', 'ns1.googledomains.com\r', 'ns3.googledomains.com\r', 'ns4.googledomains.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.game
+                name	"google.game"
+                 tld	"game"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"2021-05-19 14:05:56.288000"
+     expiration_date	"2023-05-19 14:05:56.288000"
+        last_updated	"2022-04-23 09:34:25.544000"
+              status	"clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns2.googledomains.com\r', 'ns1.googledomains.com\r', 'ns3.googledomains.com\r', 'ns4.googledomains.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.trade
+                name	"google.trade"
+                 tld	"trade"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2014-05-30 14:14:01"
+     expiration_date	"2023-05-29 23:59:59"
+        last_updated	"2022-05-02 09:29:01"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'inactive https://icann.org/epp#inactive', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'dnssec:'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.ink
+                name	"google.ink"
+                 tld	"ink"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2014-06-04 12:01:48"
+     expiration_date	"2022-11-26 23:59:59"
+        last_updated	"2022-02-28 21:10:42"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.pub
+
+            Error : [Querying whois.unitedtld.com]
+[Unable to connect to remote host]
+,
+            On Domain:     google.pub
+            
+--------------------------------------------------------------------------------
+    google.im
+                name	"google.im"
+                 tld	"im"
+           registrar	""
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"2022-08-11 23:59:44"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns1.google.com.\r', 'ns4.google.com.\r', 'ns2.google.com.\r', 'ns3.google.com.\r'}"
+--------------------------------------------------------------------------------
+    google.am
+                name	"google.am"
+                 tld	"am"
+           registrar	"abcdomain (ABCDomain LLC)"
+  registrant_country	"US"
+       creation_date	"1999-06-05 00:00:00"
+     expiration_date	"2023-04-15 00:00:00"
+        last_updated	"2022-03-15 00:00:00"
+              status	"active, registrar locked"
+            statuses	"['active, registrar locked']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.fm
+                name	"google.fm"
+                 tld	"fm"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	""
+       creation_date	"2000-09-05 23:59:59"
+     expiration_date	"2022-09-04 23:59:59"
+        last_updated	"2021-09-11 01:17:56"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns1.google.com\r', 'ns2.google.com\r', 'ns3.google.com\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.hk
+                name	"google.hk"
+                 tld	"hk"
+           registrar	"MARKMONITOR INC."
+  registrant_country	""
+       creation_date	"2004-04-06 00:00:00"
+     expiration_date	"2023-03-31 00:00:00"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"GOOGLE LLC"
+--------------------------------------------------------------------------------
+    google.cr
+                name	"google.cr"
+                 tld	"cr"
+           registrar	"NIC-REG1"
+  registrant_country	""
+       creation_date	"2008-03-02 18:00:00"
+     expiration_date	"2023-03-03 00:00:00"
+        last_updated	"2017-02-28 06:39:43"
+              status	"Deletion forbidden"
+            statuses	"['Update forbidden', 'Registrant change forbidden', 'Administratively blocked', 'Deletion forbidden', 'Sponsoring registrar change forbidden']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"CON-66"
+--------------------------------------------------------------------------------
+    google.global
+                name	"google.global"
+                 tld	"global_"
+           registrar	"MarkMonitor Inc."
+  registrant_country	"US"
+       creation_date	"2015-02-17 15:46:20"
+     expiration_date	"2023-02-17 15:46:20"
+        last_updated	"2022-01-21 09:37:18"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'inactive https://icann.org/epp#inactive', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"set()"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    google.co.il
+                name	"google.co.il"
+                 tld	"co_il"
+           registrar	"Domain The Net Technologies Ltd"
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"2023-06-05 00:00:00"
+        last_updated	"None"
+              status	"Transfer Locked"
+            statuses	"['Transfer Locked']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    google.pt
+
+            Error : [Querying whois.dns.pt]
+[Unable to connect to remote host]
+,
+            On Domain:     google.pt
+            
+--------------------------------------------------------------------------------
+    google.sk
+                name	"google.sk"
+                 tld	"sk"
+           registrar	"MARK-0292"
+  registrant_country	"IE"
+       creation_date	"2003-07-24 00:00:00"
+     expiration_date	"2022-07-24 00:00:00"
+        last_updated	"2021-06-22 00:00:00"
+              status	"clientTransferProhibited, clientUpdateProhibited, clientDeleteProhibited"
+            statuses	"['clientTransferProhibited, clientUpdateProhibited, clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"set()"
+          registrant	"mmr-170347"
+--------------------------------------------------------------------------------
+    youtube.com
+                name	"youtube.com"
+                 tld	"com"
+           registrar	"MarkMonitor, Inc."
+  registrant_country	"US"
+       creation_date	"2005-02-15 06:13:12"
+     expiration_date	"None"
+        last_updated	"2022-01-14 10:38:42"
+              status	"clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)"
+            statuses	"['serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)', 'serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)', 'serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)', 'clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)', 'clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)', 'clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com', 'ns2.google.com', 'ns1.google.com', 'ns3.google.com'}"
+          registrant	"Google LLC"
+--------------------------------------------------------------------------------
+    youtu.be
+                name	"youtu.be"
+                 tld	"be"
+           registrar	""
+  registrant_country	""
+       creation_date	"2007-12-24 00:00:00"
+     expiration_date	"None"
+        last_updated	"None"
+              status	"NOT AVAILABLE"
+            statuses	"['NOT AVAILABLE']"
+              dnssec	"False"
+        name_servers	"{'ns4.google.com\r', 'ns3.google.com\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    belgium.com
+                name	"belgium.com"
+                 tld	"com"
+           registrar	"NAMECHEAP INC"
+  registrant_country	"IS"
+       creation_date	"1995-05-09 04:00:00"
+     expiration_date	"None"
+        last_updated	"2021-03-11 04:39:57.810000"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns1.eftydns.com', 'ns2.eftydns.com'}"
+          registrant	"Privacy service provided by Withheld for Privacy ehf"
+--------------------------------------------------------------------------------
+    america.com
+                name	"america.com"
+                 tld	"com"
+           registrar	"GoDaddy.com, LLC"
+  registrant_country	"US"
+       creation_date	"1994-03-29 00:00:00"
+     expiration_date	"None"
+        last_updated	"2018-12-04 11:29:32"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited', 'clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited']"
+              dnssec	"False"
+        name_servers	"{'bella.ns.cloudflare.com\r', 'jack.ns.cloudflare.com\r'}"
+          registrant	"Domains By Proxy, LLC"
+--------------------------------------------------------------------------------
+    elcomercio.pe
+                name	"elcomercio.pe"
+                 tld	"pe"
+           registrar	"NIC.PE"
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	"ok"
+            statuses	"['ok']"
+              dnssec	"False"
+        name_servers	"{'ns21.constellix.com', 'ns41.constellix.net', 'ns11.constellix.com', 'ns61.constellix.net', 'ns31.constellix.com', 'ns51.constellix.net'}"
+          registrant	"elcomercioperu.com.pe s.a.a."
+               admin	"Carlos Guillen"
+--------------------------------------------------------------------------------
+    terra.com.pe
+                name	"terra.com.pe"
+                 tld	"pe"
+           registrar	"NIC.PE"
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	"ok"
+            statuses	"['ok']"
+              dnssec	"False"
+        name_servers	"{'ns3.terra.com', 'ns5.terra.com', 'ns4.terra.com'}"
+          registrant	"terra networks peru s.a."
+               admin	"Ursula Altet"
+--------------------------------------------------------------------------------
+    amazon.study
+                name	"amazon.study"
+                 tld	"study"
+           registrar	"Nom-iq Ltd. dba COM LAUDE"
+  registrant_country	"US"
+       creation_date	"2015-10-14 23:07:57"
+     expiration_date	"2022-10-14 23:07:57"
+        last_updated	"2021-10-20 10:04:48"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'nssui.comlaude.ch\r', 'nsgbr.comlaude.co.uk\r', 'nsusa.comlaude.net\r'}"
+          registrant	"Amazon Technologies, Inc."
+--------------------------------------------------------------------------------
+    amazon.courses
+
+            Error : [Querying whois.aridnrs.net.au]
+[whois.aridnrs.net.au: Name or service not known]
+[Unable to connect to remote host]
+,
+            On Domain:     amazon.courses
+            
+--------------------------------------------------------------------------------
+    google.aw
+                name	"google.aw"
+                 tld	"aw"
+           registrar	""
+  registrant_country	""
+       creation_date	"2017-09-13 00:00:00"
+     expiration_date	"None"
+        last_updated	"2018-05-21 00:00:00"
+              status	"active"
+            statuses	"['active']"
+              dnssec	"False"
+        name_servers	"set()"
+       abuse_contact	""
+            reseller	""
+          registrant	""
+--------------------------------------------------------------------------------
+    karibu.tz
+                name	"karibu.tz"
+                 tld	"tz"
+           registrar	"REG-TZNIC"
+  registrant_country	""
+       creation_date	"2009-07-22 11:42:00"
+     expiration_date	"2024-07-18 00:00:00"
+        last_updated	"2022-05-23 13:00:34"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'b.ns.tznic.or.tz', 'ns1.tznic.or.tz'}"
+          registrant	"ADMIN-TZNIC"
+--------------------------------------------------------------------------------
+    bretagne.bzh
+
+            Error : [Querying whois-bzh.nic.fr]
+[whois-bzh.nic.fr: Name or service not known]
+[Unable to connect to remote host]
+,
+            On Domain:     bretagne.bzh
+            
+--------------------------------------------------------------------------------
+    congres.nc
+                name	"congres.nc"
+                 tld	"nc"
+           registrar	"DIRECTION DU NUMERIQUE ET DE LA MODERNISATION (DINUM)"
+  registrant_country	""
+       creation_date	"2001-07-06 00:00:00"
+     expiration_date	"2027-05-30 00:00:00"
+        last_updated	"2017-05-17 01:11:02"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns5.gouv.nc', 'ns4.gouv.nc'}"
+          registrant	"CONGRES DE LA NOUVELLE CALEDONIE ()"
+--------------------------------------------------------------------------------
+    google.dev
+
+            Error : [Querying domain-registry-whois.l.google.com]
+[domain-registry-whois.l.google.com: Name or service not known]
+[Unable to connect to remote host]
+,
+            On Domain:     google.dev
+            
+--------------------------------------------------------------------------------
+    colooder.app
+                name	"colooder.app"
+                 tld	"app"
+           registrar	"Gandi SAS"
+  registrant_country	"GB"
+       creation_date	"2018-05-18 08:46:34"
+     expiration_date	"2024-05-18 08:46:34"
+        last_updated	"2021-12-09 16:05:07"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'mary.ns.cloudflare.com\r', 'mark.ns.cloudflare.com\r'}"
+          registrant	"Clock Limited"
+--------------------------------------------------------------------------------
+    bellerose.asia
+                name	"bellerose.asia"
+                 tld	"asia"
+           registrar	"NameWeb BVBA"
+  registrant_country	"BE"
+       creation_date	"2007-11-27 20:00:42"
+     expiration_date	"2023-11-27 20:00:42"
+        last_updated	"2022-04-27 13:35:01"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns.nscluster.eu\r', 'ns.nscluster.uk\r', 'ns.nscluster.gr\r', 'ns.nscluster.us\r', 'ns.nscluster.ee\r'}"
+          registrant	"Bellerose Belgium"
+--------------------------------------------------------------------------------
+    minigames.best
+                name	"minigames.best"
+                 tld	"best"
+           registrar	"NameSilo, LLC"
+  registrant_country	"US"
+       creation_date	"2021-10-09 11:56:11"
+     expiration_date	"2022-10-09 23:59:59"
+        last_updated	"2021-11-05 14:42:14"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'elliott.ns.cloudflare.com\r', 'cheryl.ns.cloudflare.com\r'}"
+          registrant	"See PrivacyGuardian.org"
+--------------------------------------------------------------------------------
+    timphillipsgarage.bond
+                name	"timphillipsgarage.bond"
+                 tld	"bond"
+           registrar	"Namecheap"
+  registrant_country	"IS"
+       creation_date	"2022-04-11 11:04:43"
+     expiration_date	"2023-04-11 23:59:59"
+        last_updated	"2022-05-09 11:24:07"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'dns1.namecheaphosting.com\r', 'dns2.namecheaphosting.com\r'}"
+          registrant	"Privacy service provided by Withheld for Privacy ehf"
+--------------------------------------------------------------------------------
+    vols.cat
+
+            Error : [Querying whois.cat]
+[Unable to connect to remote host]
+,
+            On Domain:     vols.cat
+            
+--------------------------------------------------------------------------------
+    edc.click
+                name	"edc.click"
+                 tld	"click"
+           registrar	"Tucows Domains Inc."
+  registrant_country	"CA"
+       creation_date	"2020-09-18 09:27:30.348000"
+     expiration_date	"2022-09-18 09:27:30.348000"
+        last_updated	"2021-08-12 15:35:25.480000"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns2.systemdns.com\r', 'ns3.systemdns.com\r', 'ns1.systemdns.com\r'}"
+          registrant	"Data Protected"
+--------------------------------------------------------------------------------
+    hisd.cloud
+                name	"hisd.cloud"
+                 tld	"cloud"
+           registrar	"GoDaddy.com, LLC"
+  registrant_country	"US"
+       creation_date	"2019-01-31 05:30:24"
+     expiration_date	"2023-01-31 05:30:24"
+        last_updated	"2022-02-06 11:23:02"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns36.domaincontrol.com\r', 'ns35.domaincontrol.com\r'}"
+          registrant	"Domains By Proxy, LLC"
+--------------------------------------------------------------------------------
+    ghc.fit
+
+            Error : [Querying whois-dub.mm-registry.com]
+[whois-dub.mm-registry.com: Name or service not known]
+[Unable to connect to remote host]
+,
+            On Domain:     ghc.fit
+            
+--------------------------------------------------------------------------------
+    medicaldata.icu
+                name	"medicaldata.icu"
+                 tld	"icu"
+           registrar	"Namecheap"
+  registrant_country	"IS"
+       creation_date	"2020-02-24 20:35:55"
+     expiration_date	"2025-02-24 23:59:59"
+        last_updated	"2022-03-05 10:43:14"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'demi.ns.cloudflare.com\r', 'dylan.ns.cloudflare.com\r'}"
+          registrant	"Privacy service provided by Withheld for Privacy ehf"
+--------------------------------------------------------------------------------
+    agtaster.kiwi
+                name	"agtaster.kiwi"
+                 tld	"kiwi"
+           registrar	"Tucows"
+  registrant_country	"CA"
+       creation_date	"2020-08-21 00:15:59"
+     expiration_date	"2022-08-21 00:15:59"
+        last_updated	"2021-08-11 13:20:24"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns01.squarespacedns.com\r', 'dns2.p04.nsone.net\r', 'ns04.squarespacedns.com\r', 'dns1.p04.nsone.net\r', 'ns03.squarespacedns.com\r', 'dns3.p04.nsone.net\r', 'ns02.squarespacedns.com\r', 'dns4.p04.nsone.net\r'}"
+          registrant	"Contact Privacy Inc. Customer 0159060035"
+--------------------------------------------------------------------------------
+    davidetson.ovh
+
+            Error : [Querying whois-ovh.nic.fr]
+[whois-ovh.nic.fr: Name or service not known]
+[Unable to connect to remote host]
+,
+            On Domain:     davidetson.ovh
+            
+--------------------------------------------------------------------------------
+    curly.red
+                name	"curly.red"
+                 tld	"red"
+           registrar	"GoDaddy.com, LLC"
+  registrant_country	"US"
+       creation_date	"2020-02-13 18:21:23"
+     expiration_date	"2023-02-13 18:21:23"
+        last_updated	"2021-11-18 18:37:24"
+              status	"clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
+            statuses	"['clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited', 'clientRenewProhibited https://icann.org/epp#clientRenewProhibited', 'clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited', 'clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'ns07.domaincontrol.com\r', 'ns08.domaincontrol.com\r'}"
+          registrant	"CurlyRed Inc."
+--------------------------------------------------------------------------------
+    clubclio.shop
+--------------------------------------------------------------------------------
+    agodasylumsy.top
+                name	"agodasylumsy.top"
+                 tld	"top"
+           registrar	"NameSilo,LLC"
+  registrant_country	"US"
+       creation_date	"2022-04-09 14:20:56"
+     expiration_date	"2023-04-09 14:20:56"
+        last_updated	"2022-04-10 15:04:23"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'aspen.ns.cloudflare.com\r', 'miles.ns.cloudflare.com\r'}"
+          registrant	"See PrivacyGuardian.org"
+--------------------------------------------------------------------------------
+    rans88.vip
+
+            Error : [Querying whois-dub.mm-registry.com]
+[whois-dub.mm-registry.com: Name or service not known]
+[Unable to connect to remote host]
+,
+            On Domain:     rans88.vip
+            
+--------------------------------------------------------------------------------
+    kubet77.win
+                name	"kubet77.win"
+                 tld	"win"
+           registrar	"NameCheap, Inc."
+  registrant_country	"IS"
+       creation_date	"2020-07-16 13:21:09"
+     expiration_date	"2023-07-16 13:21:09"
+        last_updated	"2022-05-31 03:30:45"
+              status	"clientTransferProhibited https://icann.org/epp#clientTransferProhibited"
+            statuses	"['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']"
+              dnssec	"False"
+        name_servers	"{'meg.ns.cloudflare.com\r', 'dom.ns.cloudflare.com\r'}"
+          registrant	"Privacy service provided by Withheld for Privacy ehf"
+--------------------------------------------------------------------------------
+    sylblog.xin
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "xin" is not supported
+,
+            On Domain:     sylblog.xin
+            
+--------------------------------------------------------------------------------
+    luminor.ee
+                name	"luminor.ee"
+                 tld	"ee"
+           registrar	"NETIM"
+  registrant_country	"SE"
+       creation_date	"2017-02-28 20:55:05"
+     expiration_date	"2023-03-01 00:00:00"
+        last_updated	"2022-02-21 00:45:48"
+              status	"ok (paid and in zone)"
+            statuses	"['ok (paid and in zone)']"
+              dnssec	"False"
+        name_servers	"{'ns3.hostex.lt', 'ns4.hostex.lt', 'ns2.hostex.lt', 'ns1.hostex.lt'}"
+          registrant	"Luminor Group AB"
+--------------------------------------------------------------------------------
+    icee.sa
+                name	"icee.sa"
+                 tld	"sa"
+           registrar	""
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"{'ns2.efadh.com', 'ns1.efadh.com'}"
+          registrant	"وزارة التعليم"
+--------------------------------------------------------------------------------
+    vidange.tn
+                name	"vidange.tn"
+                 tld	"tn"
+           registrar	"OVH"
+  registrant_country	""
+       creation_date	"2021-04-19 13:56:51"
+     expiration_date	"None"
+        last_updated	"None"
+              status	"Active"
+            statuses	"['Active']"
+              dnssec	"False"
+        name_servers	"{'dns1.tn.ovh.net', 'ns1.tn.ovh.net'}"
+          registrant	"ETL Technology"
+--------------------------------------------------------------------------------
+    nic.cam
+--------------------------------------------------------------------------------
+    nic.gent
+                name	"nic.gent"
+                 tld	"gent"
+           registrar	"Easyhost BV"
+  registrant_country	"BE"
+       creation_date	"2014-04-18 11:42:38"
+     expiration_date	"2024-04-18 23:59:59"
+        last_updated	"2020-03-19 11:24:06"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'a.nic.gent\r', 'b.nic.gent\r', 'd.nic.gent\r', 'c.nic.gent\r'}"
+          registrant	"COMBELL GROUP NV/SA"
+--------------------------------------------------------------------------------
+    nic.desi
+
+            Error : [Querying whois.ksregistry.net]
+[Unable to connect to remote host]
+,
+            On Domain:     nic.desi
+            
+--------------------------------------------------------------------------------
+    nic.london
+
+            Error : [Querying whois-lon.mm-registry.com]
+[whois-lon.mm-registry.com: Name or service not known]
+[Unable to connect to remote host]
+,
+            On Domain:     nic.london
+            
+--------------------------------------------------------------------------------
+    nic.tech
+                name	"nic.tech"
+                 tld	"tech"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2014-11-13 18:14:42"
+     expiration_date	"2022-11-13 23:59:59"
+        last_updated	"2021-11-07 00:11:32"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'b.nic.tech\r', 'f.nic.tech\r', 'a.nic.tech\r', 'e.nic.tech\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.coop
+                name	"nic.coop"
+                 tld	"coop"
+           registrar	"CentralNic Ltd"
+  registrant_country	"US"
+       creation_date	"2015-05-05 10:25:12"
+     expiration_date	"2023-05-05 23:59:59"
+        last_updated	"2022-04-29 00:11:52"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'a.nic.coop\r', 'b.nic.coop\r', 'c.nic.coop\r', 'd.nic.coop\r'}"
+          registrant	"DotCooperation LLC"
+--------------------------------------------------------------------------------
+    nic.host
+                name	"nic.host"
+                 tld	"host"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2014-04-24 11:16:28"
+     expiration_date	"2023-04-24 23:59:59"
+        last_updated	"2022-04-18 00:11:30"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'f.nic.host\r', 'a.nic.host\r', 'b.nic.host\r', 'e.nic.host\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.online
+                name	"nic.online"
+                 tld	"online"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-01-21 14:36:25"
+     expiration_date	"2023-01-21 23:59:59"
+        last_updated	"2022-01-15 00:10:51"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'a.nic.online\r', 'b.nic.online\r', 'e.nic.online\r', 'f.nic.online\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.press
+                name	"nic.press"
+                 tld	"press"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2013-09-11 11:57:35"
+     expiration_date	"2022-09-11 23:59:59"
+        last_updated	"2021-09-05 00:10:44"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'f.nic.press\r', 'a.nic.press\r', 'b.nic.press\r', 'e.nic.press\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.site
+                name	"nic.site"
+                 tld	"site"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2014-11-13 18:15:00"
+     expiration_date	"2022-11-13 23:59:59"
+        last_updated	"2021-11-07 00:11:32"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'f.nic.site\r', 'a.nic.site\r', 'b.nic.site\r', 'e.nic.site\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.space
+                name	"nic.space"
+                 tld	"space"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2014-04-10 09:14:07"
+     expiration_date	"2023-04-10 23:59:59"
+        last_updated	"2022-04-04 00:12:04"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'f.nic.space\r', 'e.nic.space\r', 'b.nic.space\r', 'a.nic.space\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.store
+--------------------------------------------------------------------------------
+    nic.website
+                name	"nic.website"
+                 tld	"website"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2014-04-10 09:14:05"
+     expiration_date	"2023-04-10 23:59:59"
+        last_updated	"2022-04-04 00:12:04"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'e.nic.website\r', 'f.nic.website\r', 'a.nic.website\r', 'b.nic.website\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.frl
+                name	"nic.frl"
+                 tld	"frl"
+           registrar	"FRL Registry BV"
+  registrant_country	"NL"
+       creation_date	"2014-07-06 00:32:06"
+     expiration_date	"2024-07-06 23:59:59"
+        last_updated	"2020-03-19 16:42:21"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'b.nic.frl\r', 'c.nic.frl\r', 'd.nic.frl\r', 'a.nic.frl\r'}"
+          registrant	".frl Registry's Registrar"
+--------------------------------------------------------------------------------
+    nic.ooo
+                name	"nic.ooo"
+                 tld	"ooo"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2018-03-14 16:30:26"
+     expiration_date	"2028-03-14 23:59:59"
+        last_updated	"2021-06-22 10:02:27"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'c.nic.ooo\r', 'd.nic.ooo\r', 'b.nic.ooo\r', 'a.nic.ooo\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.dealer
+--------------------------------------------------------------------------------
+    nic.inc
+--------------------------------------------------------------------------------
+    nic.zuerich
+
+            Error : [Querying whois.ksregistry.net]
+[Unable to connect to remote host]
+,
+            On Domain:     nic.zuerich
+            
+--------------------------------------------------------------------------------
+    nic.blog
+--------------------------------------------------------------------------------
+    nic.luxury
+                name	"nic.luxury"
+                 tld	"luxury"
+           registrar	"CentralNic Ltd"
+  registrant_country	"us"
+       creation_date	"2013-12-23 01:50:44"
+     expiration_date	"2023-12-23 23:59:59"
+        last_updated	"2019-12-16 06:58:05"
+              status	"serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited"
+            statuses	"['serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'d.nic.luxury\r', 'b.nic.luxury\r', 'a.nic.luxury\r', 'c.nic.luxury\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.reit
+                name	"nic.reit"
+                 tld	"reit"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2013-09-11 11:57:55"
+     expiration_date	"2022-09-11 23:59:59"
+        last_updated	"2021-09-05 00:10:44"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'b.nic.reit\r', 'c.nic.reit\r', 'd.nic.reit\r', 'a.nic.reit\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.bar
+                name	"nic.bar"
+                 tld	"bar"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2014-01-13 11:16:00"
+     expiration_date	"2023-01-13 23:59:59"
+        last_updated	"2022-01-07 00:11:20"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'d.nic.bar\r', 'b.nic.bar\r', 'c.nic.bar\r', 'a.nic.bar\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.rest
+                name	"nic.rest"
+                 tld	"rest"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2013-09-11 11:57:37"
+     expiration_date	"2022-09-11 23:59:59"
+        last_updated	"2021-09-05 00:10:44"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'a.nic.rest\r', 'd.nic.rest\r', 'b.nic.rest\r', 'c.nic.rest\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.ceo
+                name	"nic.ceo"
+                 tld	"ceo"
+           registrar	"CentralNic Ltd"
+  registrant_country	"AU"
+       creation_date	"2013-09-16 20:02:58"
+     expiration_date	"2024-09-15 23:59:59"
+        last_updated	"2021-06-22 09:43:26"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'c.nic.ceo\r', 'd.nic.ceo\r', 'a.nic.ceo\r', 'b.nic.ceo\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.kred
+--------------------------------------------------------------------------------
+    nic.build
+                name	"nic.build"
+                 tld	"build"
+           registrar	"Plan Bee LLC"
+  registrant_country	"us"
+       creation_date	"2013-11-19 02:41:04"
+     expiration_date	"2023-11-19 23:59:59"
+        last_updated	"2020-12-01 15:08:58"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'b.nic.build\r', 'a.nic.build\r', 'c.nic.build\r', 'd.nic.build\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.fun
+--------------------------------------------------------------------------------
+    nic.uno
+                name	"nic.uno"
+                 tld	"uno"
+           registrar	"Radix FZC"
+  registrant_country	"AE"
+       creation_date	"2013-08-09 23:09:38"
+     expiration_date	"2024-08-08 23:59:59"
+        last_updated	"2021-06-01 13:45:11"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'d.nic.uno\r', 'c.nic.uno\r', 'a.nic.uno\r', 'b.nic.uno\r'}"
+          registrant	"Radix FZC"
+--------------------------------------------------------------------------------
+    nic.bond
+                name	"nic.bond"
+                 tld	"bond"
+           registrar	"CentralNic Ltd"
+  registrant_country	"au"
+       creation_date	"2015-02-17 01:05:27"
+     expiration_date	"2023-02-17 23:59:59"
+        last_updated	"2022-02-11 00:10:57"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'d.nic.bond\r', 'c.nic.bond\r', 'b.nic.bond\r', 'a.nic.bond\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.cfd
+                name	"nic.cfd"
+                 tld	"cfd"
+           registrar	"Helium TLDs Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-01-15 20:52:07"
+     expiration_date	"2025-01-15 23:59:59"
+        last_updated	"2020-12-02 18:14:11"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'d.nic.cfd\r', 'a.nic.cfd\r', 'c.nic.cfd\r', 'b.nic.cfd\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.cyou
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "cyou" is not supported
+,
+            On Domain:     nic.cyou
+            
+--------------------------------------------------------------------------------
+    nic.icu
+                name	"nic.icu"
+                 tld	"icu"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-02-17 01:17:58"
+     expiration_date	"2023-02-17 23:59:59"
+        last_updated	"2022-02-11 00:10:57"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'a.nic.icu\r', 'c.nic.icu\r', 'd.nic.icu\r', 'b.nic.icu\r'}"
+          registrant	"ShortDot SA"
+--------------------------------------------------------------------------------
+    nic.sbs
+                name	"nic.sbs"
+                 tld	"sbs"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2021-02-03 15:20:54"
+     expiration_date	"2025-02-03 23:59:59"
+        last_updated	"2021-02-03 16:27:55"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"True"
+        name_servers	"{'a.nic.sbs\r', 'c.nic.sbs\r', 'd.nic.sbs\r', 'b.nic.sbs\r'}"
+          registrant	"ShortDot SA"
+--------------------------------------------------------------------------------
+    nic.best
+                name	"nic.best"
+                 tld	"best"
+           registrar	"CentralNic Ltd"
+  registrant_country	"FR"
+       creation_date	"2013-09-16 19:56:06"
+     expiration_date	"2024-09-15 23:59:59"
+        last_updated	"2020-10-20 09:34:04"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'c.nic.best\r', 'b.nic.best\r', 'd.nic.best\r', 'a.nic.best\r'}"
+          registrant	"THE BEST SAS"
+--------------------------------------------------------------------------------
+    nic.feedback
+                name	"nic.feedback"
+                 tld	"feedback"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2013-09-11 11:58:41"
+     expiration_date	"2022-09-11 23:59:59"
+        last_updated	"2021-09-05 00:10:44"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'c.nic.feedback\r', 'a.nic.feedback\r', 'd.nic.feedback\r', 'b.nic.feedback\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.forum
+                name	"nic.forum"
+                 tld	"forum"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-02-27 16:34:42"
+     expiration_date	"2023-02-27 23:59:59"
+        last_updated	"2022-02-21 00:11:17"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'d.nic.forum\r', 'b.nic.forum\r', 'a.nic.forum\r', 'c.nic.forum\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.art
+--------------------------------------------------------------------------------
+    nic.auto
+                name	"nic.auto"
+                 tld	"auto"
+           registrar	""
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"set()"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.autos
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "autos" is not supported
+,
+            On Domain:     nic.autos
+            
+--------------------------------------------------------------------------------
+    nic.baby
+--------------------------------------------------------------------------------
+    nic.beauty
+--------------------------------------------------------------------------------
+    nic.boats
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "boats" is not supported
+,
+            On Domain:     nic.boats
+            
+--------------------------------------------------------------------------------
+    nic.car
+                name	"nic.car"
+                 tld	"car"
+           registrar	""
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"set()"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.cars
+                name	"nic.cars"
+                 tld	"cars"
+           registrar	""
+  registrant_country	""
+       creation_date	"None"
+     expiration_date	"None"
+        last_updated	"None"
+              status	""
+            statuses	"['']"
+              dnssec	"False"
+        name_servers	"set()"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.college
+                name	"nic.college"
+                 tld	"college"
+           registrar	"CentralNic Ltd"
+  registrant_country	"US"
+       creation_date	"2013-09-11 11:58:15"
+     expiration_date	"2022-09-11 23:59:59"
+        last_updated	"2021-09-05 00:10:44"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'b.nic.college\r', 'a.nic.college\r', 'c.nic.college\r', 'd.nic.college\r'}"
+          registrant	"XYZ.COM LLC"
+--------------------------------------------------------------------------------
+    nic.hair
+--------------------------------------------------------------------------------
+    nic.homes
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "homes" is not supported
+,
+            On Domain:     nic.homes
+            
+--------------------------------------------------------------------------------
+    nic.makeup
+--------------------------------------------------------------------------------
+    nic.monster
+--------------------------------------------------------------------------------
+    nic.motorcycles
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "motorcycles" is not supported
+,
+            On Domain:     nic.motorcycles
+            
+--------------------------------------------------------------------------------
+    nic.protection
+                name	"nic.protection"
+                 tld	"protection"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-06-22 12:58:37"
+     expiration_date	"2022-06-22 23:59:59"
+        last_updated	"2021-06-16 00:09:30"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'b.nic.protection\r', 'e.nic.protection\r', 'f.nic.protection\r', 'a.nic.protection\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.quest
+--------------------------------------------------------------------------------
+    nic.rent
+                name	"nic.rent"
+                 tld	"rent"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-01-12 12:55:24"
+     expiration_date	"2023-01-12 23:59:59"
+        last_updated	"2022-01-06 00:10:40"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'d.nic.rent\r', 'b.nic.rent\r', 'c.nic.rent\r', 'a.nic.rent\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.security
+                name	"nic.security"
+                 tld	"security"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-06-22 12:58:59"
+     expiration_date	"2022-06-22 23:59:59"
+        last_updated	"2021-06-16 00:09:30"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'b.nic.security\r', 'a.nic.security\r', 'f.nic.security\r', 'e.nic.security\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.skin
+--------------------------------------------------------------------------------
+    nic.storage
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "storage" is not supported
+,
+            On Domain:     nic.storage
+            
+--------------------------------------------------------------------------------
+    nic.theatre
+                name	"nic.theatre"
+                 tld	"theatre"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2015-06-22 12:59:29"
+     expiration_date	"2022-06-22 23:59:59"
+        last_updated	"2021-06-16 00:09:30"
+              status	"ok https://icann.org/epp#ok"
+            statuses	"['ok https://icann.org/epp#ok']"
+              dnssec	"False"
+        name_servers	"{'b.nic.theatre\r', 'd.nic.theatre\r', 'a.nic.theatre\r', 'c.nic.theatre\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.tickets
+                name	"nic.tickets"
+                 tld	"tickets"
+           registrar	"CentralNic Ltd"
+  registrant_country	"GB"
+       creation_date	"2016-03-21 10:52:24"
+     expiration_date	"2023-03-21 23:59:59"
+        last_updated	"2022-03-15 00:11:36"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'a.nic.tickets\r', 'd.nic.tickets\r', 'b.nic.tickets\r', 'c.nic.tickets\r'}"
+          registrant	"CentralNic Ltd"
+--------------------------------------------------------------------------------
+    nic.xyz
+                name	"nic.xyz"
+                 tld	"xyz"
+           registrar	"CentralNic Ltd"
+  registrant_country	"US"
+       creation_date	"2013-09-11 11:58:06"
+     expiration_date	"2022-09-11 23:59:59"
+        last_updated	"2021-09-05 00:10:44"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'generationxyz.nic.xyz\r', 'x.nic.xyz\r', 'z.nic.xyz\r', 'y.nic.xyz\r'}"
+          registrant	"XYZ.COM LLC"
+--------------------------------------------------------------------------------
+    nic.yachts
+
+            Error : [Querying whois.afilias-srs.net]
+[whois.afilias-srs.net]
+TLD "yachts" is not supported
+,
+            On Domain:     nic.yachts
+            
+--------------------------------------------------------------------------------
+    nic.fans
+                name	"nic.fans"
+                 tld	"fans"
+           registrar	"CentralNic Ltd"
+  registrant_country	"HK"
+       creation_date	"2013-09-11 11:57:57"
+     expiration_date	"2022-09-11 23:59:59"
+        last_updated	"2021-09-05 00:10:44"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"False"
+        name_servers	"{'b.nic.fans\r', 'd.nic.fans\r', 'c.nic.fans\r', 'a.nic.fans\r'}"
+          registrant	"ZDNS INTERNATIONAL LIMITED"
+--------------------------------------------------------------------------------
+    nic.qpon
+                name	"nic.qpon"
+                 tld	"qpon"
+           registrar	"dotCOOL Inc"
+  registrant_country	"US"
+       creation_date	"2013-08-10 00:12:30"
+     expiration_date	"2024-08-09 23:59:59"
+        last_updated	"2021-01-13 14:28:13"
+              status	"serverTransferProhibited https://icann.org/epp#serverTransferProhibited"
+            statuses	"['serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']"
+              dnssec	"True"
+        name_servers	"{'d.nic.qpon\r', 'c.nic.qpon\r', 'a.nic.qpon\r', 'b.nic.qpon\r'}"
+          registrant	""
+--------------------------------------------------------------------------------
+    nic.saarland
+
+            Error : [Querying whois.ksregistry.net]
+[Unable to connect to remote host]
+,
+            On Domain:     nic.saarland
+            
+--------------------------------------------------------------------------------
+    bit.ly
+Caught UnknownTld Exception
+The TLD ly is currently not supported by this package. Valid TLDs: ac_jp .ac_uk .academy .accountants .actor .ad_jp .ae .agency .ai .airforce .am .amsterdam .apartments .app .ar .army .art .asia .associates .at .attorney .au .auction .auto .autos .aw .ax .baby .band .bank .bar .bargains .be .beauty .best .bike .bingo .biz .blog .boats .bond .boutique .br .build .builders .business .by .bzh .ca .cab .cafe .cam .camera .camp .capital .car .cards .care .careers .cars .cash .casino .cat .catering .cc .center .ceo .cfd .charity .chat .cheap .church .city .cl .claims .cleaning .click .clinic .clothing .cloud .club .cn .co .co_il .co_jp .co_th .coach .codes .coffee .college .com .com_au .com_sg .com_tr .community .company .computer .condos .construction .consulting .contact .contractors .cool .coop .coupons .courses .cr .credit .creditcard .cruises .cyou .cz .dance .dating .de .dealer .deals .degree .delivery .democrat .dental .dentist .desi .dev .diamonds .digital .direct .directory .discount .dk .doctor .dog .domains .download .ed_jp .edu .education .ee .email .energy .engineer .engineering .enterprises .equipment .estate .eu .events .exchange .expert .exposed .express .fail .family .fan .fans .farm .feedback .fi .finance .financial .fish .fit .fitness .flights .florist .fm .football .forsale .forum .foundation .fr .frl .fun .fund .furniture .futbol .fyi .gallery .game .games .gent .geo_jp .gifts .gives .glass .global_ .gmbh .go_jp .gold .golf .gr_jp .graphics .gratis .gripe .group .guide .guru .gy .hair .haus .healthcare .hk .hn .hockey .holdings .holiday .homes .hospital .host .house .icu .id_ .ie .im .immo .immobilien .in_ .inc .industries .info .ink .institute .insure .international .investments .io .ir .irish .is_ .it .jetzt .jewelry .jp .kaufen .kitchen .kiwi .kr .kred .kz .land .lawyer .lease .legal .lg_jp .life .lighting .limited .limo .link .live .loans .london .lt .ltd .luxury .lv .maison .makeup .management .market .marketing .mba .me .media .memorial .ml .mobi .moda .money .monster .mortgage .motorcycles .movie .mu .mx .name .navy .nc .ne_jp .net .network .news .ninja .nl .no .nu .nyc .nz .online .ooo .or_jp .org .ovh .partners .parts .pe .pharmacy .photography .photos .pictures .pizza .pl .place .plumbing .plus .press .pro .productions .properties .protection .pt .pub .pw .qpon .quest .recipes .red .rehab .reise .reisen .reit .rent .rentals .repair .report .republican .rest .restaurant .reviews .rip .rocks .ru .ru_rf .run .rw .sa .saarland .sale .salon .sarl .sbs .school .schule .se .security .services .sh .shoes .shop .shopping .show .singles .site .sk .skin .soccer .social .software .solar .solutions .space .storage .store .studio .study .style .supplies .supply .support .surgery .systems .tax .taxi .team .tech .technology .tel .tennis .theater .theatre .tickets .tienda .tips .tires .tn .today .tools .top .tours .town .toys .trade .training .travel .tv .tz .ua .uk .university .uno .us .uz .vacations .ventures .vet .viajes .video .villas .vin .vip .vision .voyage .watch .website .wiki .win .wine .work .works .world .wtf .xin .xyz .yachts .za .zone .zuerich
+--------------------------------------------------------------------------------
+    gopro.com
+[91m
+Failure during test : 29
+Domains : ['    netsec.ninja', '    google.cat', '    google.com.vn', '    google.cc', '    afilias.com.au', '    google.com.au', '    google.sale', '    google.pub', '    google.pt', '    amazon.courses', '    bretagne.bzh', '    google.dev', '    vols.cat', '    ghc.fit', '    davidetson.ovh', '    rans88.vip', '    sylblog.xin', '    nic.desi', '    nic.london', '    nic.zuerich', '    nic.cyou', '    nic.autos', '    nic.boats', '    nic.homes', '    nic.motorcycles', '    nic.storage', '    nic.yachts', '    nic.saarland', '    bit.ly']
+[0m
