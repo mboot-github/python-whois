@@ -1,3 +1,5 @@
+# elements starting with _ are meta patterns and are not processed as domains
+
 # Commercial TLD - Original Big 7
 com = {
     "extend": None,
@@ -27,9 +29,8 @@ ac_uk = {
 }
 
 # United Arab Emirates
-ae = {
-    "extend": "ar",
-}
+# ae = {    "extend": "ar"}
+# redefined below
 
 # Anguilla
 ai = {
@@ -616,13 +617,16 @@ mobi = {
 }
 
 mx = {
+    "extend": None,
     "domain_name": r"Domain Name:\s?(.+)",
-    "registrant": r"Registrant:\n\s*(.+)",
-    "registrar": r"Registrar:\s?(.+)",
     "creation_date": r"Created On:\s?(.+)",
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": r"Last Updated On:\s?(.+)",
+    "registrar": r"Registrar:\s?(.+)",
+    "registrant": r"Registrant:\n\s*(.+)",
     "name_servers": r"\sDNS:\s*(.+)",
+    "registrant_country": None,
+    "status": None,
 }
 
 name = {
@@ -788,10 +792,6 @@ ru = {
     "expiration_date": r"\npaid-till:\s*(.+)",
     "name_servers": r"\nnserver:\s*(.+)",
     "status": r"\nstate:\s*(.+)",
-}
-
-su = {
-    "extend": "ru",
 }
 
 ru_rf = {
@@ -1345,6 +1345,61 @@ fans = {"extend": "_centralnic"}
 qpon = {"extend": "_centralnic"}
 saarland = {"extend": "_centralnic"}
 
+# mboot added start
 # Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
 #  in the Domain Name System of the Internet.
 # In the Domain Name System it has the ASCII DNS name xn--p1ai.
+
+buzz = {
+    "extend": "amsterdam",
+}
+
+lol = {
+    "extend": "amsterdam",
+}
+
+la = {
+    "extend": "com",
+}
+
+su = {
+    "extend": "ru",
+}
+
+ro = {
+    "extend": None,
+    "domain_name": r"\s+Domain name:\s+(.+)",
+    "registrar": r"\s+Registrar:\s+(.+)",
+    "creation_date": r"\s+Registered On:\s+(.+)",
+    "expiration_date": r"\s+Expires On:\s+(.+)",
+    "status": r"\s+Domain Status:\s(.+)",
+    "name_servers": r"\s+NameServer:\s+(.+)",
+    "registrant_country": None,
+    "updated_date": None,
+}
+
+ws = {
+    "extend": None,
+    "domain_name": r"Domain Name:\s+(.+)",
+    "creation_date": r"Creation Date:\s+(.+)",
+    "expiration_date": r"Registrar Registration Expiration Date:\s+(.+)",
+    "updated_date": r"Updated Date:\s?(.+)",
+    "registrar": r"Registrar:\s+(.+)",
+    "status": r"Domain Status:\s(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "registrant_country": None,
+}
+
+ae = {
+    "extend": "ar",
+    "domain_name": r"Domain Name:\s+(.+)",
+    "registrar": r"Registrar Name:\s+(.+)",
+    "status": r"Status:\s(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "registrant_country": None,
+    "creation_date": None,
+    "expiration_date": None,
+    "updated_date": None,
+}
+
+# mboot added end

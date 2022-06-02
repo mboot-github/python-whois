@@ -18,20 +18,29 @@ def get_tld_re(tld: str) -> Any:
 
     extend = v.get("extend")
     if extend:
-        e = get_tld_re(extend) # call recursive
+        e = get_tld_re(extend)  # call recursive
         tmp = e.copy()
-        tmp.update(v)
+        tmp.update(v)  # and merge results in tmp with caller data in v
+        # The update() method updates the dictionary with the elements
+        # from another dictionary object or from an iterable of key/value pairs.
     else:
         tmp = v
 
+    # finally we dont want tp propagate the extend data
+    # as it is only used to recursivly populate the dataset
     if "extend" in tmp:
         del tmp["extend"]
 
     tld_re = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
+
     if tld[0] != "_":
         TLD_RE[tld] = tld_re
+
     return tld_re
 
+
+# now fetch all defined data in
+# The dir() method returns the list of valid attributes of the passed object
 
 [get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != "_"]
 
