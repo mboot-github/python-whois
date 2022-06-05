@@ -43,6 +43,7 @@ def do_query(
     cache_file: Optional[str] = None,
     slow_down: int = 0,
     ignore_returncode: bool = False,
+    server: Optional[str] = None,
 ) -> str:
     k = ".".join(dl)
     if cache_file:
@@ -51,7 +52,11 @@ def do_query(
     if force or k not in CACHE or CACHE[k][0] < time.time() - CACHE_MAX_AGE:
         CACHE[k] = (
             int(time.time()),
-            _do_whois_query(dl, ignore_returncode),
+            _do_whois_query(
+                dl,
+                ignore_returncode,
+                server,
+            ),
         )
 
         if cache_file:
@@ -63,38 +68,53 @@ def do_query(
     return CACHE[k][1]
 
 
-def _do_whois_query(dl: List[str], ignore_returncode: bool) -> str:
+def _do_whois_query(
+    dl: List[str],
+    ignore_returncode: bool,
+    server: Optional[str] = None,
+) -> str:
     if platform.system() == "Windows":
         """
         Windows 'whois' command wrapper
+        https://docs.microsoft.com/en-us/sysinternals/downloads/whois
+        Usage: whois [-v] domainname [whois.server]
         """
         if not os.path.exists("whois.exe"):
             print("downloading dependencies")
             folder = os.getcwd()
+
             copy_command = r"copy \\live.sysinternals.com\tools\whois.exe " + folder
             print(copy_command)
-            subprocess.call(copy_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+            subprocess.call(
+                copy_command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                shell=True,
+            )
 
-        # print(p.stdout.read()+' '+p.stderr.read())
-        p = subprocess.Popen(
-            [r".\whois.exe ", ".".join(dl)],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            env={"LANG": "en"},
-        )
+        if server:
+            cmd = [r".\whois.exe ", ".".join(dl), server]
+        else:
+            cmd = [r".\whois.exe ", ".".join(dl)]
 
     else:
         """
         Linux 'whois' command wrapper
         """
-        # LANG=en is added to make the ".jp" output consist across all environments
-        p = subprocess.Popen(
-            ["whois", ".".join(dl)],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            env={"LANG": "en"},
-        )
+        if server:
+            cmd = ["whois", ".".join(dl), "-h", server]
+        else:
+            cmd = ["whois", ".".join(dl)]
 
+    # LANG=en is added to make the ".jp" output consist across all environments
+    p = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        env={"LANG": "en"},
+    )
+
+    # print(p.stdout.read()+' '+p.stderr.read())
     r = p.communicate()[0].decode(errors="ignore")
     if ignore_returncode is False and p.returncode not in [0, 1]:
         raise WhoisCommandFailed(r)

@@ -31,8 +31,12 @@ def get_tld_re(tld: str) -> Any:
     if "extend" in tmp:
         del tmp["extend"]
 
-    tld_re = dict((k, re.compile(v, re.IGNORECASE) if isinstance(v, str) else v) for k, v in tmp.items())
+    # we want now to exclude _server hints
+    tld_re = dict(
+        (k, re.compile(v, re.IGNORECASE) if (isinstance(v, str) and k[0] != "_") else v) for k, v in tmp.items()
+    )
 
+    # meta domains start with _: examples _centralnic and _donuts
     if tld[0] != "_":
         TLD_RE[tld] = tld_re
 
@@ -45,7 +49,10 @@ def get_tld_re(tld: str) -> Any:
 [get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != "_"]
 
 
-def do_parse(whois_str: str, tld: str) -> Optional[Dict[str, Any]]:
+def do_parse(
+    whois_str: str,
+    tld: str,
+) -> Optional[Dict[str, Any]]:
     r: Dict[str, Any] = {"tld": tld}
 
     if whois_str.count("\n") < 5:
@@ -83,7 +90,12 @@ def do_parse(whois_str: str, tld: str) -> Optional[Dict[str, Any]]:
     if sn:
         whois_str = whois_str[whois_str.find("Domain Name:") :]
 
+    # return TLD_RE["com"] as default if tld not exists in TLD_RE
     for k, v in TLD_RE.get(tld, TLD_RE["com"]).items():
+        if k.startswith("_"):
+            # skip meta element like: _server
+            continue
+
         if v is None:
             r[k] = [""]
         else:

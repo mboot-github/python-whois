@@ -1026,6 +1026,7 @@ ca = rw = mu = bank
 # WHOIS server: whois.donuts.co
 _donuts = {
     "extend": "com",
+    "_server": "whois.donuts.co",
     "registrant": r"Registrant Organization:\s?(.+)",
     "status": r"Domain Status:\s?(.+)",
 }
@@ -1053,8 +1054,8 @@ camera = {"extend": "_donuts"}
 camp = {"extend": "_donuts"}
 capital = {"extend": "_donuts"}
 cards = {"extend": "_donuts"}
-care = {"extend": "_donuts"}
 careers = {"extend": "_donuts"}
+care = {"extend": "_donuts"}
 cash = {"extend": "_donuts"}
 casino = {"extend": "_donuts"}
 catering = {"extend": "_donuts"}
@@ -1081,8 +1082,8 @@ contact = {"extend": "_donuts"}
 contractors = {"extend": "_donuts"}
 cool = {"extend": "_donuts"}
 coupons = {"extend": "_donuts"}
-credit = {"extend": "_donuts"}
 creditcard = {"extend": "_donuts"}
+credit = {"extend": "_donuts"}
 cruises = {"extend": "_donuts"}
 dance = {"extend": "_donuts"}
 dating = {"extend": "_donuts"}
@@ -1151,8 +1152,8 @@ holdings = {"extend": "_donuts"}
 holiday = {"extend": "_donuts"}
 hospital = {"extend": "_donuts"}
 house = {"extend": "_donuts"}
-immo = {"extend": "_donuts"}
 immobilien = {"extend": "_donuts"}
+immo = {"extend": "_donuts"}
 industries = {"extend": "_donuts"}
 institute = {"extend": "_donuts"}
 insure = {"extend": "_donuts"}
@@ -1273,6 +1274,7 @@ zone = {"extend": "_donuts"}
 # WHOIS server: whois.centralnic.com
 _centralnic = {
     "extend": "com",
+    "_server": "whois.centralnic.com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
     "creation_date": r"Creation Date:\s?(.+)",
@@ -1281,69 +1283,70 @@ _centralnic = {
     "status": r"Domain Status:\s?(.+)",
 }
 
-cam = {"extend": "_centralnic"}
-gent = {"extend": "_centralnic"}
-desi = {"extend": "_centralnic"}
-london = {"extend": "_centralnic"}
-tech = {"extend": "_centralnic"}
-coop = {"extend": "_centralnic"}
-host = {"extend": "_centralnic"}
-online = {"extend": "_centralnic"}
-press = {"extend": "_centralnic"}
-site = {"extend": "_centralnic"}
-space = {"extend": "_centralnic"}
-store = {"extend": "_centralnic"}
-website = {"extend": "_centralnic"}
-frl = {"extend": "_centralnic"}
-ooo = {"extend": "_centralnic"}
-dealer = {"extend": "_centralnic"}
-inc = {"extend": "_centralnic"}
-zuerich = {"extend": "_centralnic"}
-blog = {"extend": "_centralnic"}
-luxury = {"extend": "_centralnic"}
-reit = {"extend": "_centralnic"}
-bar = {"extend": "_centralnic"}
-rest = {"extend": "_centralnic"}
-ceo = {"extend": "_centralnic"}
-kred = {"extend": "_centralnic"}
-build = {"extend": "_centralnic"}
-fun = {"extend": "_centralnic"}
-uno = {"extend": "_centralnic"}
-bond = {"extend": "_centralnic"}
-cfd = {"extend": "_centralnic"}
-cyou = {"extend": "_centralnic"}
-icu = {"extend": "_centralnic"}
-sbs = {"extend": "_centralnic"}
-best = {"extend": "_centralnic"}
-feedback = {"extend": "_centralnic"}
-forum = {"extend": "_centralnic"}
 art = {"extend": "_centralnic"}
 auto = {"extend": "_centralnic"}
 autos = {"extend": "_centralnic"}
 baby = {"extend": "_centralnic"}
+bar = {"extend": "_centralnic"}
 beauty = {"extend": "_centralnic"}
+best = {"extend": "_centralnic"}
+blog = {"extend": "_centralnic"}
 boats = {"extend": "_centralnic"}
+bond = {"extend": "_centralnic"}
+build = {"extend": "_centralnic"}
+cam = {"extend": "_centralnic"}
 car = {"extend": "_centralnic"}
 cars = {"extend": "_centralnic"}
+ceo = {"extend": "_centralnic"}
+cfd = {"extend": "_centralnic"}
 college = {"extend": "_centralnic"}
+coop = {"extend": "_centralnic"}
+cyou = {"extend": "_centralnic"}
+dealer = {"extend": "_centralnic"}
+desi = {"extend": "_centralnic"}
+fans = {"extend": "_centralnic"}
+feedback = {"extend": "_centralnic"}
+forum = {"extend": "_centralnic"}
+frl = {"extend": "_centralnic"}
+fun = {"extend": "_centralnic"}
+gent = {"extend": "_centralnic"}
 hair = {"extend": "_centralnic"}
 homes = {"extend": "_centralnic"}
+host = {"extend": "_centralnic"}
+icu = {"extend": "_centralnic"}
+inc = {"extend": "_centralnic"}
+kred = {"extend": "_centralnic"}
+london = {"extend": "_centralnic"}
+luxury = {"extend": "_centralnic"}
 makeup = {"extend": "_centralnic"}
 monster = {"extend": "_centralnic"}
 motorcycles = {"extend": "_centralnic"}
+online = {"extend": "_centralnic"}
+ooo = {"extend": "_centralnic"}
+press = {"extend": "_centralnic"}
 protection = {"extend": "_centralnic"}
+qpon = {"extend": "_centralnic"}
 quest = {"extend": "_centralnic"}
+reit = {"extend": "_centralnic"}
 rent = {"extend": "_centralnic"}
+rest = {"extend": "_centralnic"}
+saarland = {"extend": "_centralnic"}
+sbs = {"extend": "_centralnic"}
 security = {"extend": "_centralnic"}
+site = {"extend": "_centralnic"}
 skin = {"extend": "_centralnic"}
+space = {"extend": "_centralnic"}
 storage = {"extend": "_centralnic"}
+store = {"extend": "_centralnic"}
+tech = {"extend": "_centralnic"}
 theatre = {"extend": "_centralnic"}
 tickets = {"extend": "_centralnic"}
+uno = {"extend": "_centralnic"}
+website = {"extend": "_centralnic"}
 xyz = {"extend": "_centralnic"}
 yachts = {"extend": "_centralnic"}
-fans = {"extend": "_centralnic"}
-qpon = {"extend": "_centralnic"}
-saarland = {"extend": "_centralnic"}
+zuerich = {"extend": "_centralnic"}
+
 
 # mboot added start
 # Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
@@ -1402,4 +1405,37 @@ ae = {
     "updated_date": None,
 }
 
+ac = {
+    "extend": None,
+    "domain_name": r"Domain Name:\s+(.+)",
+    "registrar": r"Registrar:\s+(.+)",
+    "status": r"Domain Status:\s(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "registrant_country": None,
+    "updated_date": r"Updated Date:\s+(.+)",
+    "creation_date": r"Creation Date:\s+(.+)",
+    "expiration_date": r":Registry Expiry Date\s+(.+)",
+}
+
+pics = {
+    "extend": "ac",
+}
+
+rs = {
+    "domain_name": r"Domain name:\s+(.+)",
+    "registrar": r"Registrar:\s+(.+)",
+    "status": r"Domain status:\s(.+)",
+    "creation_date": r"Registration date:\s+(.+)",
+    "expiration_date": r":Expiration date\s+(.+)",
+    "updated_date": r"Modification date:\s+(.+)",
+    "name_servers": r"DNS:\s+(.+)",
+}
+
+af = {
+    "extend": "ac",
+}
+
+design = {
+    "extend": "ac",
+}
 # mboot added end

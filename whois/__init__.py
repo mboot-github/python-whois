@@ -24,6 +24,7 @@
     2020-09-14 00:00:00
 
 """
+import sys
 from ._1_query import do_query
 from ._2_parse import do_parse, TLD_RE
 from ._3_adjust import Domain
@@ -42,11 +43,16 @@ def query(
     cache_file: Optional[str] = None,
     slow_down: int = 0,
     ignore_returncode: bool = False,
+    server: Optional[str] = None,
 ) -> Optional[Domain]:
     """
-    force=1             Don't use cache.
+    force=True          Don't use cache.
     cache_file=<path>   Use file to store cache not only memory.
-    slow_down=0         Time [s] it will wait after you query WHOIS database. This is useful when there is a limit to the number of requests at a time.
+    slow_down=0         Time [s] it will wait after you query WHOIS database.
+                        This is useful when there is a limit to the number of requests at a time.
+    server:             if set use the whois server explicitly for making the query:
+                        propagates on linux to "whois -h <server> <domain>"
+                        propagates on Windows to whois.exe <domain> <server>
     """
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
 
@@ -116,6 +122,13 @@ def query(
         msg = f"The TLD {tld} is currently not supported by this package. Valid TLDs: {errmsg}"
         raise UnknownTld(msg)
 
+    # allow server hints using "_server" from the tld_regexpr.py file
+    thisTld = TLD_RE.get(tld)
+    thisTldServer = thisTld.get("_server")
+    if server is None and thisTldServer:
+        server = thisTldServer
+        print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
+
     while 1:
         q = do_query(
             d,
@@ -123,6 +136,7 @@ def query(
             cache_file,
             slow_down,
             ignore_returncode,
+            server,
         )
 
         pd = do_parse(
