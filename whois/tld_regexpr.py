@@ -1429,6 +1429,7 @@ rs = {
     "expiration_date": r":Expiration date\s+(.+)",
     "updated_date": r"Modification date:\s+(.+)",
     "name_servers": r"DNS:\s+(.+)",
+    "registrant_country": None,
 }
 
 af = {
