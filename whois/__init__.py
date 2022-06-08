@@ -65,7 +65,7 @@ def query(
     if d[0] == "www":
         d = d[1:]
 
-    if len(d) == 1:
+    if len(d) == 1 and server != "whois.iana.org":
         return None
 
     if domain.endswith(".ac.uk") and len(d) > 2:
@@ -138,6 +138,8 @@ def query(
             ignore_returncode,
             server,
         )
+
+        print(q, file=sys.stderr)
 
         pd = do_parse(
             q,
