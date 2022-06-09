@@ -191,6 +191,7 @@ ca = {
 
 cat = {
     "extend": "com",
+    "_server": "whois.nic.cat",
 }
 
 cc = {

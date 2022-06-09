@@ -261,20 +261,9 @@ def errorItem(d, e, what="Generic"):
     print(message)
 
 
-def main():
-    print(whois.validTlds())
+def testDomains(aList):
 
-    for d in sorted(DOMAINS.split("\n")):
-        if not d:
-            continue
-
-        prepItem(d)
-        try:
-            testItem(d)
-        except Exception as e:
-            errorItem(d, e, what="Generic")
-
-    for d in sorted(invalidTld.split("\n")):
+    for d in sorted(aList):
         if not d:
             continue
 
@@ -283,26 +272,30 @@ def main():
             testItem(d)
         except whois.UnknownTld as e:
             errorItem(d, e, what="UnknownTld")
-
-    for d in sorted(failedParsing.split("\n")):
-        if not d:
-            continue
-
-        prepItem(d)
-        try:
-            testItem(d)
         except whois.FailedParsingWhoisOutput as e:
             errorItem(d, e, what="FailedParsingWhoisOutput")
-
-    for d in sorted(unknownDateFormat.split("\n")):
-        if not d:
-            continue
-
-        prepItem(d)
-        try:
-            testItem(d)
         except whois.UnknownDateFormat as e:
             errorItem(d, e, what="UnknownDateFormat")
+        except whois.WhoisCommandFailed as e:
+            errorItem(d, e, what="WhoisCommandFailed")
+        except whois.WhoisQuotaExceeded as e:
+            errorItem(d, e, what="WhoisQuotaExceeded")
+        except Exception as e:
+            errorItem(d, e, what="Generic")
+
+
+def main():
+
+    print("Tld's currently supported")
+    zz = whois.validTlds()
+    for tld in zz:
+        print(tld)
+
+    print("Testing domains")
+    testDomains(DOMAINS.split("\n"))
+    testDomains(invalidTld.split("\n"))
+    testDomains(failedParsing.split("\n"))
+    testDomains(unknownDateFormat.split("\n"))
 
     print(f"Failure during test : {len(failure)}")
     for i in sorted(failure.keys()):

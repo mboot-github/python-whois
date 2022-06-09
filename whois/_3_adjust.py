@@ -23,7 +23,7 @@ class Domain:
     statuses: List = []
 
     dnssec = None
-    name_servers = set()
+    name_servers = []
     owner = None
     abuse_contact = None
     reseller = None
@@ -50,27 +50,34 @@ class Domain:
 
         self.dnssec = data["DNSSEC"]
 
+        # ----------------------------
         # name_servers
         tmp = []
-
         for x in data["name_servers"]:
             if isinstance(x, str):
-                tmp.append(x)
-            else:
-                for y in x:
-                    tmp.append(y)
+                tmp.append(x.strip().lower())
+                continue
+            # not a string but an array
+            for y in x:
+                tmp.append(y.strip().lower())
 
-        self.name_servers = set()
+        if 0:
+            if verbose:
+                print(tmp, file=sys.stderr)
 
+        self.name_servers = []
         for x in tmp:
-            x = x.strip(" .")
-
+            x = x.strip(" .")  # remove ant leading or trailing spaces and/or dots
             if x:
                 if " " in x:
                     x, _ = x.split(" ", 1)
                     x = x.strip(" .")
 
-                self.name_servers.add(x.lower())
+                x = x.lower()
+                if x not in self.name_servers:
+                    self.name_servers.append(x)
+        self.name_servers = sorted(self.name_servers)
+        # ----------------------------
 
         if "owner" in data:
             self.owner = data["owner"][0].strip()

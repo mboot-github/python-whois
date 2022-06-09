@@ -62,8 +62,10 @@ def cleanupWhoisResponse(
     response: str,
     verbose: bool = False,
 ) -> str:
-    if verbose:
-        print(f"BEFORE cleanup: \n{response}", file=sys.stderr)
+
+    if 0:
+        if verbose:
+            print(f"BEFORE cleanup: \n{response}", file=sys.stderr)
 
     tmp: List = response.split("\n")
 
@@ -78,8 +80,9 @@ def cleanupWhoisResponse(
         tmp2.append(line)
 
     response = "\n".join(tmp2)
-    if verbose:
-        print(f"AFTER cleanup: \n{response}", file=sys.stderr)
+    if 0:
+        if verbose:
+            print(f"AFTER cleanup: \n{response}", file=sys.stderr)
 
     return response
 
@@ -118,9 +121,18 @@ def do_parse(
         if s.count("error"):
             return None
 
-        # ToDo:  Name or service not known
+        if "connection limit exceeded" in s:
+            raise WhoisQuotaExceeded(whois_str)
+
         # TODO: output has: Server too busy, try again later
+        if "server too busy, try again later" in s:
+            raise WhoisQuotaExceeded(whois_str)
+
         # TODO: You exceeded the maximum allowable number of whois lookups.
+        if "exceeded the maximum allowable number" in s:
+            raise WhoisQuotaExceeded(whois_str)
+
+        # ToDo:  Name or service not known
 
         raise FailedParsingWhoisOutput(whois_str)
 

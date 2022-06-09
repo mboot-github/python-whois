@@ -47,6 +47,10 @@ or call whois.validTlds()
 ## Issues
 Raise an issue https://github.com/DannyCork/python-whois/issues/new
 
+## Changes:
+2022-06-09: maarten_boot:
+ * the returned list of name_servers is now a sorted unique list and not a set
+ * the help function whois.validTlds() now outputs the true tld with dots
 
 ## Support
 Python 3.x is supported.
