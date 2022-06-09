@@ -112,7 +112,7 @@ def do_parse(
             return None
 
         # TODO: Status: free
-        if "status free" in s:
+        if "status: free" in s:
             return None
 
         if "no such domain" in s:

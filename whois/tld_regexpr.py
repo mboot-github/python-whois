@@ -960,11 +960,16 @@ ua = {
     "domain_name": r"\ndomain:\s*(.+)",
     "registrar": r"\nregistrar:\s*(.+)",
     "registrant_country": r"\ncountry:\s*(.+)",
-    "creation_date": r"\ncreated:\s*(.+)",
+    "creation_date": r"\ncreated:\s+(.+)",
     "expiration_date": r"\nexpires:\s*(.+)",
     "updated_date": r"\nmodified:\s*(.+)",
     "name_servers": r"\nnserver:\s*(.+)",
     "status": r"\nstatus:\s*(.+)",
+}
+
+edu_ua = {
+    "extend": "ua",
+    "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)",
 }
 
 uk = {
@@ -1557,24 +1562,23 @@ ws = {
 # (https://www.iana.org/domains/root/db/<tld>.html)
 
 # ba
-# ch
 # duckdns.org
 # es
 # ga
-# gr
-# hu
 # li
-# tk
 # pk
 # com.pk
 # edu.pk
-# vn
 
-# TODO: add a restricted item like
-# ba = { "_restricted": True ,}
-# so that the lookup does not produce a error but produces KNOWN_BUT_RESTRICTED
+_privateReg = {
+    "_privateRegistry": True,
+}
 
-# existence of a domain can also be verified with dns lookup
-# (soa or if that does not exist A , NS, or MX)
+ch = {"extend": "_privateReg"}
+gr = {"extend": "_privateReg"}
+hu = {"extend": "_privateReg"}
+li = {"extend": "_privateReg"}
+tk = {"extend": "_privateReg"}
+vn = {"extend": "_privateReg"}
 
 # mboot added end

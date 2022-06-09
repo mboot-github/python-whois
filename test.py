@@ -3,6 +3,45 @@ import whois
 
 Verbose = True
 
+NEW_TESTS = """
+    nic.ua
+    zieit.edu.ua # has issues with date/time strings
+    custler.com # may have issues with gethostaddr
+    example.com
+    abroco.me
+    nic.me
+    fraukesart.de # status: free
+    google.ch
+    google.gr
+    google.hu
+    google.li
+    google.tk
+    google.vn
+"""
+
+InvalidTld = """
+    bit.ly
+    google.com.vn
+"""
+
+FailedParsing = """
+    vols.cat
+    sylblog.xin
+    google.dev
+    google.com.au
+    ghc.fit
+    davidetson.ovh
+    bretagne.bzh
+    amazon.courses
+    afilias.com.au
+    www.google.com
+    www.fsdfsdfsdfsd.google.com
+"""
+
+UnknownDateFormat = """
+"""
+
+# these are all supposed to result in data or None but no errors
 DOMAINS = """
     google.bj
     dot.ml
@@ -209,28 +248,6 @@ DOMAINS = """
 
 failure = {}
 
-invalidTld = """
-    bit.ly
-    google.com.vn
-"""
-
-failedParsing = """
-    vols.cat
-    sylblog.xin
-    google.dev
-    google.com.au
-    ghc.fit
-    davidetson.ovh
-    bretagne.bzh
-    amazon.courses
-    afilias.com.au
-    www.google.com
-    www.fsdfsdfsdfsd.google.com
-"""
-
-unknownDateFormat = """
-"""
-
 
 def prepItem(d):
     print("-" * 80)
@@ -262,10 +279,19 @@ def errorItem(d, e, what="Generic"):
 
 
 def testDomains(aList):
-
     for d in sorted(aList):
+
+        # skip empty lines
         if not d:
             continue
+
+        # skip comments
+        if d.startswith("#"):
+            continue
+
+        # skip comments behind the domain
+        d = d.split("#")[0]
+        d = d.strip()
 
         prepItem(d)
         try:
@@ -280,22 +306,38 @@ def testDomains(aList):
             errorItem(d, e, what="WhoisCommandFailed")
         except whois.WhoisQuotaExceeded as e:
             errorItem(d, e, what="WhoisQuotaExceeded")
+        except whois.WhoisPrivateRegistry as e:
+            errorItem(d, e, what="WhoisPrivateRegistry")
         except Exception as e:
             errorItem(d, e, what="Generic")
 
 
 def main():
 
-    print("Tld's currently supported")
-    zz = whois.validTlds()
-    for tld in zz:
-        print(tld)
+    testOnlyProblems = True
 
+    if testOnlyProblems is False:
+        print("Tld's currently supported")
+        zz = whois.validTlds()
+        for tld in zz:
+            print(tld)
+
+    print("\n========================================\n")
     print("Testing domains")
-    testDomains(DOMAINS.split("\n"))
-    testDomains(invalidTld.split("\n"))
-    testDomains(failedParsing.split("\n"))
-    testDomains(unknownDateFormat.split("\n"))
+    testDomains(NEW_TESTS.split("\n"))
+
+    if testOnlyProblems is False:
+        print("\n========================================\n")
+        testDomains(DOMAINS.split("\n"))
+
+    print("\n========================================\n")
+    testDomains(InvalidTld.split("\n"))
+
+    print("\n========================================\n")
+    testDomains(FailedParsing.split("\n"))
+
+    print("\n========================================\n")
+    testDomains(UnknownDateFormat.split("\n"))
 
     print(f"Failure during test : {len(failure)}")
     for i in sorted(failure.keys()):
