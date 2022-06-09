@@ -145,6 +145,7 @@ DATE_FORMATS = [
     "%m/%d/%Y",  # 03/28/2013
     "%d %b %Y",  # 28 jan 2021
     "%d-%b-%Y %H:%M:%S",  # 30-nov-2009 17:00:58
+    "%Y%m%d%H%M%S",  # 20071224102432 used in edu_ua
 ]
 
 CUSTOM_DATE_FORMATS = {
@@ -170,9 +171,9 @@ def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datet
     if tld and tld in CUSTOM_DATE_FORMATS:
         return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]).astimezone().replace(tzinfo=None)
 
-    for format in DATE_FORMATS:
+    for f in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(text, format).astimezone().replace(tzinfo=None)
+            return datetime.datetime.strptime(text, f).astimezone().replace(tzinfo=None)
         except ValueError:
             pass
 
