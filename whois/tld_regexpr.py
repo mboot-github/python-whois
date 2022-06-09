@@ -253,6 +253,10 @@ com_tr = {
     "status": None,
 }
 
+edu_tr = {
+    "extend": "com_tr",
+}
+
 co_il = {
     "extend": "com",
     "domain_name": r"domain:\s*(.+)",
@@ -987,7 +991,9 @@ uz = {
 }
 
 vip = {
+    "_server": "whois.nic.vip",
     "extend": "com",
+    "updated_date": None,
 }
 
 wiki = {
@@ -1015,6 +1021,7 @@ work = {
 
 xin = {
     "extend": "com",
+    "_server": "whois.nic.xin",
 }
 
 za = {
@@ -1557,6 +1564,10 @@ ws = {
 # hu
 # li
 # tk
+# pk
+# com.pk
+# edu.pk
+# vn
 
 # TODO: add a restricted item like
 # ba = { "_restricted": True ,}

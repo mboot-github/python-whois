@@ -1,8 +1,14 @@
 import re
+import sys
+
+from typing import Any, Dict, Optional, List
+
 from .exceptions import FailedParsingWhoisOutput
+from .exceptions import WhoisQuotaExceeded
+
 from . import tld_regexpr
 
-from typing import Any, Dict, Optional
+Verbose = True
 
 TLD_RE: Dict[str, Any] = {}
 
@@ -12,6 +18,9 @@ def get_tld_re(tld: str) -> Any:
         return TLD_RE[tld]
 
     if tld == "in":
+        # is this actually used ?
+        if Verbose:
+            print("Verbose: directly returning tld: in_ for tld: in", file=sys.stderr)
         return "in_"
 
     v = getattr(tld_regexpr, tld)
@@ -26,7 +35,7 @@ def get_tld_re(tld: str) -> Any:
     else:
         tmp = v
 
-    # finally we dont want tp propagate the extend data
+    # finally we dont want to propagate the extend data
     # as it is only used to recursivly populate the dataset
     if "extend" in tmp:
         del tmp["extend"]
@@ -49,24 +58,69 @@ def get_tld_re(tld: str) -> Any:
 [get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != "_"]
 
 
+def cleanupWhoisResponse(
+    response: str,
+    verbose: bool = False,
+) -> str:
+    if verbose:
+        print(f"BEFORE cleanup: \n{response}", file=sys.stderr)
+
+    tmp: List = response.split("\n")
+
+    tmp2 = []
+    for line in tmp:
+        # cleanup comment lines commonly used by whois
+        if line.startswith("%"):
+            continue
+        if "REDACTED FOR PRIVACY" in line:
+            continue
+
+        tmp2.append(line)
+
+    response = "\n".join(tmp2)
+    if verbose:
+        print(f"AFTER cleanup: \n{response}", file=sys.stderr)
+
+    return response
+
+
 def do_parse(
     whois_str: str,
     tld: str,
+    verbose: bool = False,
 ) -> Optional[Dict[str, Any]]:
     r: Dict[str, Any] = {"tld": tld}
 
-    if whois_str.count("\n") < 5:
-        s = whois_str.strip().lower()
+    whois_str = cleanupWhoisResponse(
+        response=whois_str,
+        verbose=verbose,
+    )
 
+    if whois_str.count("\n") < 5:
+        if Verbose:
+            print(f"line count < 5:: {whois_str}", file=sys.stderr)
+
+        s = whois_str.strip().lower()
         if s == "not found":
             return None
 
-        if s.startswith("no such domain"):
-            # could feed startswith a tuple of strings of expected responses
+        # No entries found
+        if "no entries found" in s:
+            return None
+
+        # TODO: Status: free
+        if "status free" in s:
+            return None
+
+        if "no such domain" in s:
             return None
 
         if s.count("error"):
             return None
+
+        # ToDo:  Name or service not known
+        # TODO: output has: Server too busy, try again later
+        # TODO: You exceeded the maximum allowable number of whois lookups.
 
         raise FailedParsingWhoisOutput(whois_str)
 

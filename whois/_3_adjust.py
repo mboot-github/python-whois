@@ -30,7 +30,11 @@ class Domain:
     registrant = None
     admin = None
 
-    def __init__(self, data: Dict[str, Any]):
+    def __init__(
+        self,
+        data: Dict[str, Any],
+        verbose: bool = False,
+    ):
         self.name = data["domain_name"][0].strip().lower()
         self.tld = data["tld"]
 

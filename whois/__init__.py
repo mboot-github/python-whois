@@ -37,6 +37,14 @@ CACHE_FILE = None
 SLOW_DOWN = 0
 
 
+def validTlds():
+    return sorted(
+        list(
+            TLD_RE.keys(),
+        ),
+    )
+
+
 def query(
     domain: str,
     force: bool = False,
@@ -44,6 +52,7 @@ def query(
     slow_down: int = 0,
     ignore_returncode: bool = False,
     server: Optional[str] = None,
+    verbose: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -65,7 +74,7 @@ def query(
     if d[0] == "www":
         d = d[1:]
 
-    if len(d) == 1 and server != "whois.iana.org":
+    if len(d) == 1:
         return None
 
     if domain.endswith(".ac.uk") and len(d) > 2:
@@ -117,9 +126,9 @@ def query(
         tld = d[-1]
 
     if tld not in TLD_RE.keys():
-        s = " ."
-        errmsg = s + s.join(sorted(list(TLD_RE.keys())))
-        msg = f"The TLD {tld} is currently not supported by this package. Valid TLDs: {errmsg}"
+        a = f"The TLD {tld} is currently not supported by this package."
+        b = "Use validTlds() to see what toplevel domains are supported."
+        msg = f"{a} {b}"
         raise UnknownTld(msg)
 
     # allow server hints using "_server" from the tld_regexpr.py file
@@ -127,23 +136,24 @@ def query(
     thisTldServer = thisTld.get("_server")
     if server is None and thisTldServer:
         server = thisTldServer
-        print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
+        if verbose:
+            print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
 
     while 1:
         q = do_query(
-            d,
-            force,
-            cache_file,
-            slow_down,
-            ignore_returncode,
-            server,
+            dl=d,
+            force=force,
+            cache_file=cache_file,
+            slow_down=slow_down,
+            ignore_returncode=ignore_returncode,
+            server=server,
+            verbose=verbose,
         )
 
-        print(q, file=sys.stderr)
-
         pd = do_parse(
-            q,
-            tld,
+            whois_str=q,
+            tld=tld,
+            verbose=verbose,
         )
 
         if (not pd or not pd["domain_name"][0]) and len(d) > 2:

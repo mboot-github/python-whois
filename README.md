@@ -9,6 +9,7 @@ A Python package for retrieving WHOIS information of domains.
  * Works with Python 3.x.
  * All dates as datetime objects.
  * Possibility to cache results.
+ * Verbose output on stderr during debugging to see how the internal functions are doing their work
 
 ## Help Wanted
 Your contributions are welcome, look for the Help wanted tag https://github.com/DannyCork/python-whois/labels/help%20wanted
@@ -40,135 +41,8 @@ google.com
 ```
 
 ## ccTLD & TLD support
-```
-.ac.uk
-.am
-.amsterdam
-.app
-.ar
-.asia
-.at
-.au
-.aw
-.bank
-.be
-.best
-.biz
-.bond
-.br
-.by
-.bzh
-.ca
-.cat
-.cc
-.cl
-.click
-.cloud
-.club
-.cn
-.co
-.co.il
-.co.jp
-.com
-.com.au
-.com.tr
-.courses
-.cr
-.cz
-.de
-.dev
-.download
-.edu
-.education
-.eu
-.fi
-.fit
-.fm
-.fr
-.frl
-.game
-.global
-.hk
-.icu
-.id
-.ie
-.im
-.in
-.info
-.ink
-.io
-.ir
-.is
-.it
-.jp
-.kiwi
-.kr
-.kz
-.link
-.lt
-.lv
-.me
-.ml
-.mobi
-.mu
-.mx
-.name
-.nc
-.net
-.ninja
-.nl
-.nu
-.nyc
-.nz
-.online
-.org
-.ovh
-.pe
-.pharmacy
-.pl
-.press
-.pt
-.pub
-.pw
-.red
-.rest
-.ru
-.ru.rf
-.rw
-.sa
-.sale
-.se
-.security
-.sh
-.shop
-.sk
-.site
-.space
-.store
-.study
-.tech
-.tel
-.theatre
-.tickets
-.tn
-.top
-.trade
-.tv
-.tz
-.ua
-.uk
-.us
-.uz
-.video
-.vip
-.website
-.wiki
-.win
-.work
-.xin
-.xyz
-.za
-```
+see the file: ./whois/tld_regexpr.py
+or call whois.validTlds()
 
 ## Issues
 Raise an issue https://github.com/DannyCork/python-whois/issues/new

@@ -6,6 +6,10 @@ class FailedParsingWhoisOutput(Exception):
     pass
 
 
+class WhoisQuotaExceeded(Exception):
+    pass
+
+
 class UnknownDateFormat(Exception):
     pass
 

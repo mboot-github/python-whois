@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 import whois
 
+Verbose = True
+
 DOMAINS = """
+    google.bj
     dot.ml
     example.com
     mphimmoitv.com
@@ -15,8 +18,6 @@ DOMAINS = """
     google.com.co
     google.pl
     google.com.br
-    www.google.com
-    www.fsdfsdfsdfsd.google.com
     digg.com
     imdb.com
     microsoft.com
@@ -47,7 +48,6 @@ DOMAINS = """
     google.fr
     google.nl
     google.cat
-    google.com.vn
     test.ez.lv
     google.store
     kono.store
@@ -90,9 +90,7 @@ DOMAINS = """
     google.nu
     google.fi
     google.is
-    afilias.com.au
     jisc.ac.uk
-    google.com.au
     register.bank
     yandex.ua
     google.ca
@@ -123,29 +121,22 @@ DOMAINS = """
     elcomercio.pe
     terra.com.pe
     amazon.study
-    amazon.courses
     google.aw
     karibu.tz
-    bretagne.bzh
     congres.nc
-    google.dev
     colooder.app
     bellerose.asia
     minigames.best
     timphillipsgarage.bond
-    vols.cat
     edc.click
     hisd.cloud
-    ghc.fit
     medicaldata.icu
     agtaster.kiwi
-    davidetson.ovh
     curly.red
     clubclio.shop
     agodasylumsy.top
     rans88.vip
     kubet77.win
-    sylblog.xin
     luminor.ee
     icee.sa
     vidange.tn
@@ -212,94 +203,110 @@ DOMAINS = """
     nic.fans
     nic.qpon
     nic.saarland
+    gopro.com
+    nic.bj
 """
 
-failure = list()
-
-# domains = ''
+failure = {}
 
 invalidTld = """
     bit.ly
+    google.com.vn
 """
 
 failedParsing = """
+    vols.cat
+    sylblog.xin
+    google.dev
+    google.com.au
+    ghc.fit
+    davidetson.ovh
+    bretagne.bzh
+    amazon.courses
+    afilias.com.au
+    www.google.com
+    www.fsdfsdfsdfsd.google.com
 """
 
 unknownDateFormat = """
-    gopro.com
 """
 
-for d in DOMAINS.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
 
+def prepItem(d):
+    print("-" * 80)
+    print(d)
+
+
+def testItem(d):
+    w = whois.query(
+        d,
+        ignore_returncode=True,
+        verbose=Verbose,
+    )
+    if w:
+        wd = w.__dict__
+        for k, v in wd.items():
+            print('%20s\t"%s"' % (k, v))
+    else:
+        print("None")
+
+
+def errorItem(d, e, what="Generic"):
+    print(f"Caught {what} Exception")
+    failure[d] = {"exception": what, "result": e}
+    message = f"""
+    Error : {e},
+    On Domain: {d}
+    """
+    print(message)
+
+
+def main():
+    print(whois.validTlds())
+
+    for d in sorted(DOMAINS.split("\n")):
+        if not d:
+            continue
+
+        prepItem(d)
         try:
-            w = whois.query(d, ignore_returncode=1)
-            if w:
-                wd = w.__dict__
-                for k, v in wd.items():
-                    print('%20s\t"%s"' % (k, v))
+            testItem(d)
         except Exception as e:
-            failure.append(d)
-            message = f"""
-            Error : {e},
-            On Domain: {d}
-            """
-            print(message)
+            errorItem(d, e, what="Generic")
 
-for d in invalidTld.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
+    for d in sorted(invalidTld.split("\n")):
+        if not d:
+            continue
 
+        prepItem(d)
         try:
-            w = whois.query(d, ignore_returncode=1)
+            testItem(d)
         except whois.UnknownTld as e:
-            failure.append(d)
-            message = f"""
-            Error : {e},
-            On Domain: {d}
-            """
-            print("Caught UnknownTld Exception")
-            print(e)
+            errorItem(d, e, what="UnknownTld")
 
-for d in failedParsing.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
+    for d in sorted(failedParsing.split("\n")):
+        if not d:
+            continue
 
+        prepItem(d)
         try:
-            w = whois.query(d, ignore_returncode=1)
+            testItem(d)
         except whois.FailedParsingWhoisOutput as e:
-            failure.append(d)
-            message = f"""
-            Error : {e},
-            On Domain: {d}
-            """
-            print("Caught FailedParsingWhoisOutput Exception")
-            print(e)
+            errorItem(d, e, what="FailedParsingWhoisOutput")
 
-for d in unknownDateFormat.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
+    for d in sorted(unknownDateFormat.split("\n")):
+        if not d:
+            continue
 
+        prepItem(d)
         try:
-            w = whois.query(d, ignore_returncode=1)
+            testItem(d)
         except whois.UnknownDateFormat as e:
-            failure.append(d)
-            message = """
-            Error : {e},
-            On Domain: {d}
-            """
-            print("Caught UnknownDateFormat Exception")
-            print(e)
+            errorItem(d, e, what="UnknownDateFormat")
+
+    print(f"Failure during test : {len(failure)}")
+    for i in sorted(failure.keys()):
+        print(i, failure[i])
 
 
-report_str = f"""
-Failure during test : {len(failure)}
-Domains : {failure}
-"""
-message = "\033[91m" + report_str + "\x1b[0m"
-print(message)
+main()
