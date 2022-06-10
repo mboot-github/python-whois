@@ -12,11 +12,17 @@ NEW_TESTS = """
 """
 
 PrivateRegistry = """
+    google.al
     google.ch
+    google.cw
+    google.ga
     google.gr
     google.hu
     google.li
+    google.mp
+    google.sr
     google.tk
+    google.to
     google.vn
 """
 
@@ -322,9 +328,9 @@ def testDomains(aList):
 
 def main():
     # ----------------------------
-    testAllTlds = False
+    testAllTlds = True
     testOnlyProblems = True
-    testOnlyNew = True
+    testOnlyNew = False
 
     # ----------------------------
     if testAllTlds is True:
