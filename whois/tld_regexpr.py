@@ -1586,13 +1586,18 @@ _privateReg = {
     "_privateRegistry": True,
 }
 
+al = {"extend": "_privateReg"}
 ch = {"extend": "_privateReg"}
+cw = {"extend": "_privateReg"}
+ga = {"extend": "_privateReg"}
 gr = {"extend": "_privateReg"}
 hu = {"extend": "_privateReg"}
 li = {"extend": "_privateReg"}
+mp = {"extend": "_privateReg"}
+sr = {"extend": "_privateReg"}
 tk = {"extend": "_privateReg"}
+to = {"extend": "_privateReg"}
 vn = {"extend": "_privateReg"}
-ga = {"extend": "_privateReg"}
 
 hopto_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois
