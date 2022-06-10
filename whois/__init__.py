@@ -46,6 +46,9 @@ SLOW_DOWN = 0
 Map2Underscore = {
     ".ac.uk": "ac_uk",
     ".co.il": "co_il",
+    # uganda
+    ".ca.ug": "ca_ug",
+    ".co.ug": "co_ug",
     # th
     ".co.th": "co_th",
     ".in.th": "in_th",
@@ -63,7 +66,10 @@ Map2Underscore = {
     #
     ".com.au": "com_au",
     ".com.sg": "com_sg",
+    #
     ".com.tr": "com_tr",
+    ".edu.tr": "edu_tr",
+    #
     ".edu.ua": "edu_ua",
     # dynamic dns without whois
     ".hopto.org": "hopto_org",
