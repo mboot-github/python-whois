@@ -1577,10 +1577,7 @@ ws = {
 # (https://www.iana.org/domains/root/db/<tld>.html)
 
 # ba
-# duckdns.org
 # es
-# ga
-# li
 # pk
 # com.pk
 # edu.pk
@@ -1595,6 +1592,7 @@ hu = {"extend": "_privateReg"}
 li = {"extend": "_privateReg"}
 tk = {"extend": "_privateReg"}
 vn = {"extend": "_privateReg"}
+ga = {"extend": "_privateReg"}
 
 hopto_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois

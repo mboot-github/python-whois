@@ -61,8 +61,8 @@ def get_tld_re(tld: str) -> Any:
 def cleanupWhoisResponse(
     response: str,
     verbose: bool = False,
+    with_cleanup_results: bool = False,
 ) -> str:
-    # sometimes the quota exceeded is actually in the % lines (e.g. toplevel .at)
 
     if 0:
         if verbose:
@@ -72,10 +72,14 @@ def cleanupWhoisResponse(
 
     tmp2 = []
     for line in tmp:
-        # cleanup comment lines commonly used by whois
-        if line.startswith("%"):
+        if with_cleanup_results is True and line.startswith("%"):
+            # sometimes the quota exceeded is actually in the % lines (e.g. toplevel .at)
             continue
+
         if "REDACTED FOR PRIVACY" in line:
+            continue
+
+        if line.startswith("Terms of Use:"):
             continue
 
         tmp2.append(line)
@@ -97,11 +101,11 @@ def do_parse(
 ) -> Optional[Dict[str, Any]]:
     r: Dict[str, Any] = {"tld": tld}
 
-    if with_cleanup_results is True:
-        whois_str = cleanupWhoisResponse(
-            response=whois_str,
-            verbose=verbose,
-        )
+    whois_str = cleanupWhoisResponse(
+        response=whois_str,
+        verbose=verbose,
+        with_cleanup_results=with_cleanup_results,
+    )
 
     if whois_str.count("\n") < 5:
         if verbose:
