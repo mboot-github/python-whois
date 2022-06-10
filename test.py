@@ -1,7 +1,49 @@
 #!/usr/bin/python3
 import whois
 
+Verbose = True
+
+NEW_TESTS = """
+    nic.ua
+    zieit.edu.ua # has issues with date/time strings
+    custler.com # may have issues with gethostaddr
+    example.com
+    abroco.me
+    nic.me
+    fraukesart.de # status: free
+    google.ch
+    google.gr
+    google.hu
+    google.li
+    google.tk
+    google.vn
+"""
+
+InvalidTld = """
+    bit.ly
+    google.com.vn
+"""
+
+FailedParsing = """
+    vols.cat
+    sylblog.xin
+    google.dev
+    google.com.au
+    ghc.fit
+    davidetson.ovh
+    bretagne.bzh
+    amazon.courses
+    afilias.com.au
+    www.google.com
+    www.fsdfsdfsdfsd.google.com
+"""
+
+UnknownDateFormat = """
+"""
+
+# these are all supposed to result in data or None but no errors
 DOMAINS = """
+    google.bj
     dot.ml
     example.com
     mphimmoitv.com
@@ -15,8 +57,6 @@ DOMAINS = """
     google.com.co
     google.pl
     google.com.br
-    www.google.com
-    www.fsdfsdfsdfsd.google.com
     digg.com
     imdb.com
     microsoft.com
@@ -47,7 +87,6 @@ DOMAINS = """
     google.fr
     google.nl
     google.cat
-    google.com.vn
     test.ez.lv
     google.store
     kono.store
@@ -90,9 +129,7 @@ DOMAINS = """
     google.nu
     google.fi
     google.is
-    afilias.com.au
     jisc.ac.uk
-    google.com.au
     register.bank
     yandex.ua
     google.ca
@@ -123,29 +160,22 @@ DOMAINS = """
     elcomercio.pe
     terra.com.pe
     amazon.study
-    amazon.courses
     google.aw
     karibu.tz
-    bretagne.bzh
     congres.nc
-    google.dev
     colooder.app
     bellerose.asia
     minigames.best
     timphillipsgarage.bond
-    vols.cat
     edc.click
     hisd.cloud
-    ghc.fit
     medicaldata.icu
     agtaster.kiwi
-    davidetson.ovh
     curly.red
     clubclio.shop
     agodasylumsy.top
     rans88.vip
     kubet77.win
-    sylblog.xin
     luminor.ee
     icee.sa
     vidange.tn
@@ -212,94 +242,106 @@ DOMAINS = """
     nic.fans
     nic.qpon
     nic.saarland
-"""
-
-failure = list()
-
-# domains = ''
-
-invalidTld = """
-    bit.ly
-"""
-
-failedParsing = """
-"""
-
-unknownDateFormat = """
     gopro.com
+    nic.bj
 """
 
-for d in DOMAINS.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
+failure = {}
 
+
+def prepItem(d):
+    print("-" * 80)
+    print(d)
+
+
+def testItem(d):
+    w = whois.query(
+        d,
+        ignore_returncode=True,
+        verbose=Verbose,
+    )
+    if w:
+        wd = w.__dict__
+        for k, v in wd.items():
+            print('%20s\t"%s"' % (k, v))
+    else:
+        print("None")
+
+
+def errorItem(d, e, what="Generic"):
+    print(f"Caught {what} Exception")
+    failure[d] = {"exception": what, "result": e}
+    message = f"""
+    Error : {e},
+    On Domain: {d}
+    """
+    print(message)
+
+
+def testDomains(aList):
+    for d in sorted(aList):
+
+        # skip empty lines
+        if not d:
+            continue
+
+        # skip comments
+        if d.startswith("#"):
+            continue
+
+        # skip comments behind the domain
+        d = d.split("#")[0]
+        d = d.strip()
+
+        prepItem(d)
         try:
-            w = whois.query(d, ignore_returncode=1)
-            if w:
-                wd = w.__dict__
-                for k, v in wd.items():
-                    print('%20s\t"%s"' % (k, v))
-        except Exception as e:
-            failure.append(d)
-            message = f"""
-            Error : {e},
-            On Domain: {d}
-            """
-            print(message)
-
-for d in invalidTld.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
-
-        try:
-            w = whois.query(d, ignore_returncode=1)
+            testItem(d)
         except whois.UnknownTld as e:
-            failure.append(d)
-            message = f"""
-            Error : {e},
-            On Domain: {d}
-            """
-            print("Caught UnknownTld Exception")
-            print(e)
-
-for d in failedParsing.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
-
-        try:
-            w = whois.query(d, ignore_returncode=1)
+            errorItem(d, e, what="UnknownTld")
         except whois.FailedParsingWhoisOutput as e:
-            failure.append(d)
-            message = f"""
-            Error : {e},
-            On Domain: {d}
-            """
-            print("Caught FailedParsingWhoisOutput Exception")
-            print(e)
-
-for d in unknownDateFormat.split("\n"):
-    if d:
-        print("-" * 80)
-        print(d)
-
-        try:
-            w = whois.query(d, ignore_returncode=1)
+            errorItem(d, e, what="FailedParsingWhoisOutput")
         except whois.UnknownDateFormat as e:
-            failure.append(d)
-            message = """
-            Error : {e},
-            On Domain: {d}
-            """
-            print("Caught UnknownDateFormat Exception")
-            print(e)
+            errorItem(d, e, what="UnknownDateFormat")
+        except whois.WhoisCommandFailed as e:
+            errorItem(d, e, what="WhoisCommandFailed")
+        except whois.WhoisQuotaExceeded as e:
+            errorItem(d, e, what="WhoisQuotaExceeded")
+        except whois.WhoisPrivateRegistry as e:
+            errorItem(d, e, what="WhoisPrivateRegistry")
+        except Exception as e:
+            errorItem(d, e, what="Generic")
 
 
-report_str = f"""
-Failure during test : {len(failure)}
-Domains : {failure}
-"""
-message = "\033[91m" + report_str + "\x1b[0m"
-print(message)
+def main():
+
+    testOnlyProblems = True
+
+    if testOnlyProblems is False:
+        print("Tld's currently supported")
+        zz = whois.validTlds()
+        for tld in zz:
+            print(tld)
+
+    print("\n========================================\n")
+    print("Testing domains")
+    testDomains(NEW_TESTS.split("\n"))
+
+    if testOnlyProblems is False:
+        print("\n========================================\n")
+        testDomains(DOMAINS.split("\n"))
+
+    print("\n========================================\n")
+    testDomains(InvalidTld.split("\n"))
+
+    print("\n========================================\n")
+    testDomains(FailedParsing.split("\n"))
+
+    print("\n========================================\n")
+    testDomains(UnknownDateFormat.split("\n"))
+
+    print(f"Failure during test : {len(failure)}")
+    for i in sorted(failure.keys()):
+        print(i, failure[i])
+
+
+main()

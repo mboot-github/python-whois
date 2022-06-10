@@ -44,26 +44,31 @@ def do_query(
     slow_down: int = 0,
     ignore_returncode: bool = False,
     server: Optional[str] = None,
+    verbose: bool = False,
 ) -> str:
     k = ".".join(dl)
+
     if cache_file:
         cache_load(cache_file)
 
     if force or k not in CACHE or CACHE[k][0] < time.time() - CACHE_MAX_AGE:
+        # slow down before so we can force individual domains at a slower tempo
+        if slow_down:
+            time.sleep(slow_down)
+
+        # populate a fresh cache entry
         CACHE[k] = (
             int(time.time()),
             _do_whois_query(
-                dl,
-                ignore_returncode,
-                server,
+                dl=dl,
+                ignore_returncode=ignore_returncode,
+                server=server,
+                verbose=verbose,
             ),
         )
 
         if cache_file:
             cache_save(cache_file)
-
-        if slow_down:
-            time.sleep(slow_down)
 
     return CACHE[k][1]
 
@@ -72,6 +77,7 @@ def _do_whois_query(
     dl: List[str],
     ignore_returncode: bool,
     server: Optional[str] = None,
+    verbose: bool = False,
 ) -> str:
     if platform.system() == "Windows":
         """
@@ -80,11 +86,14 @@ def _do_whois_query(
         Usage: whois [-v] domainname [whois.server]
         """
         if not os.path.exists("whois.exe"):
-            print("downloading dependencies")
-            folder = os.getcwd()
+            if verbose:
+                print("downloading dependencies", file=sys.stderr)
 
+            folder = os.getcwd()
             copy_command = r"copy \\live.sysinternals.com\tools\whois.exe " + folder
-            print(copy_command)
+            if verbose:
+                print(copy_command, file=sys.stderr)
+
             subprocess.call(
                 copy_command,
                 stdout=subprocess.PIPE,

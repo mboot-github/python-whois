@@ -23,14 +23,18 @@ class Domain:
     statuses: List = []
 
     dnssec = None
-    name_servers = set()
+    name_servers = []
     owner = None
     abuse_contact = None
     reseller = None
     registrant = None
     admin = None
 
-    def __init__(self, data: Dict[str, Any]):
+    def __init__(
+        self,
+        data: Dict[str, Any],
+        verbose: bool = False,
+    ):
         self.name = data["domain_name"][0].strip().lower()
         self.tld = data["tld"]
 
@@ -46,27 +50,34 @@ class Domain:
 
         self.dnssec = data["DNSSEC"]
 
+        # ----------------------------
         # name_servers
         tmp = []
-
         for x in data["name_servers"]:
             if isinstance(x, str):
-                tmp.append(x)
-            else:
-                for y in x:
-                    tmp.append(y)
+                tmp.append(x.strip().lower())
+                continue
+            # not a string but an array
+            for y in x:
+                tmp.append(y.strip().lower())
 
-        self.name_servers = set()
+        if 0:
+            if verbose:
+                print(tmp, file=sys.stderr)
 
+        self.name_servers = []
         for x in tmp:
-            x = x.strip(" .")
-
+            x = x.strip(" .")  # remove ant leading or trailing spaces and/or dots
             if x:
                 if " " in x:
                     x, _ = x.split(" ", 1)
                     x = x.strip(" .")
 
-                self.name_servers.add(x.lower())
+                x = x.lower()
+                if x not in self.name_servers:
+                    self.name_servers.append(x)
+        self.name_servers = sorted(self.name_servers)
+        # ----------------------------
 
         if "owner" in data:
             self.owner = data["owner"][0].strip()
@@ -134,6 +145,7 @@ DATE_FORMATS = [
     "%m/%d/%Y",  # 03/28/2013
     "%d %b %Y",  # 28 jan 2021
     "%d-%b-%Y %H:%M:%S",  # 30-nov-2009 17:00:58
+    "%Y%m%d%H%M%S",  # 20071224102432 used in edu_ua
 ]
 
 CUSTOM_DATE_FORMATS = {
@@ -159,9 +171,9 @@ def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datet
     if tld and tld in CUSTOM_DATE_FORMATS:
         return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]).astimezone().replace(tzinfo=None)
 
-    for format in DATE_FORMATS:
+    for f in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(text, format).astimezone().replace(tzinfo=None)
+            return datetime.datetime.strptime(text, f).astimezone().replace(tzinfo=None)
         except ValueError:
             pass
 

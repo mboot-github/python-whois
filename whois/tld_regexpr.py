@@ -1,4 +1,10 @@
-# elements starting with _ are meta patterns and are not processed as domains
+# elements starting with _
+# are meta patterns and are not processed as domains
+# examples:  _donuts, _centralnic
+
+# elements ending in _
+# like id_ , is_, if_, in_, global_ are conflicting words in python without a trailing _
+# and auto replaced with a non conflicting word by adding a _ at the end
 
 # Commercial TLD - Original Big 7
 com = {
@@ -84,6 +90,7 @@ asia = {
 # Austria
 at = {
     "extend": "com",
+    "_server": "whois.nic.at",
     "domain_name": r"domain:\s?(.+)",
     "updated_date": r"changed:\s?(.+)",
     "name_servers": r"nserver:\s*(.+)",
@@ -96,6 +103,15 @@ au = {
     "extend": "com",
     "registrar": r"Registrar Name:\s?(.+)",
     "updated_date": r"Last Modified:\s?(.+)",
+}
+
+ax = {
+    "extend": "com",
+    "domain_name": r"domain...............:\s?(.+)",
+    "registrar": r"registrar............:\s?(.+)",
+    "creation_date": r"created..............:\s?(.+)",
+    "expiration_date": r"expires..............:\s?(.+)",
+    "updated_date": r"Information Updated:\s?(.+)",
 }
 
 aw = {
@@ -176,6 +192,7 @@ ca = {
 
 cat = {
     "extend": "com",
+    "_server": "whois.nic.cat",
 }
 
 cc = {
@@ -238,6 +255,10 @@ com_tr = {
     "status": None,
 }
 
+edu_tr = {
+    "extend": "com_tr",
+}
+
 co_il = {
     "extend": "com",
     "domain_name": r"domain:\s*(.+)",
@@ -259,7 +280,9 @@ co_jp = {
     "updated_date": r"\[最終更新\]\s?(.+)",
 }
 
-courses = {"extend": "com"}
+courses = {
+    "extend": "com",
+}
 
 cr = {
     "extend": "cz",
@@ -623,7 +646,7 @@ mx = {
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": r"Last Updated On:\s?(.+)",
     "registrar": r"Registrar:\s?(.+)",
-    "registrant": r"Registrant:\n\s*(.+)",
+    # "registrant": r"Registrant:\n\s*(.+)",
     "name_servers": r"\sDNS:\s*(.+)",
     "registrant_country": None,
     "status": None,
@@ -761,6 +784,9 @@ pro = {
 }
 
 pt = {
+    # looks like this is now a privateRegistry mboot: 2022-06-10,
+    # manual lookup: use the website at whois.dns.pt
+    "_privateRegistry": True,
     "extend": "com",
     "domain_name": r"Domain:\s?(.+)",
     "registrar": None,
@@ -794,13 +820,11 @@ ru = {
     "status": r"\nstate:\s*(.+)",
 }
 
+# Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
+# In the Domain Name System it has the ASCII DNS name xn--p1ai.
+
 ru_rf = {
-    "extend": "com",
-    "domain_name": r"\ndomain:\s*(.+)",
-    "creation_date": r"\ncreated:\s*(.+)",
-    "expiration_date": r"\npaid-till:\s*(.+)",
-    "name_servers": r"\nnserver:\s*(.+)",
-    "status": r"\nstate:\s*(.+)",
+    "extend": "ru",
 }
 
 sa = {
@@ -883,6 +907,17 @@ tel = {
 
 # Thailand - Commercial sub-domain
 co_th = {
+    "_server": "whois.thnic.co.th",
+    "extend": "com",
+    "registrant": r"Domain Holder Organization:\s?(.+)",
+    "registrant_country": r"Domain Holder Country:\s?(.+)",
+    "creation_date": r"Created date:\s?(.+)",
+    "expiration_date": r"Exp date:\s?(.+)",
+    "updated_date": r"Updated date:\s?(.+)",
+}
+
+in_th = {
+    "_server": "whois.thnic.co.th",
     "extend": "com",
     "registrant": r"Domain Holder Organization:\s?(.+)",
     "registrant_country": r"Domain Holder Country:\s?(.+)",
@@ -940,11 +975,16 @@ ua = {
     "domain_name": r"\ndomain:\s*(.+)",
     "registrar": r"\nregistrar:\s*(.+)",
     "registrant_country": r"\ncountry:\s*(.+)",
-    "creation_date": r"\ncreated:\s*(.+)",
+    "creation_date": r"\ncreated:\s+(.+)",
     "expiration_date": r"\nexpires:\s*(.+)",
     "updated_date": r"\nmodified:\s*(.+)",
     "name_servers": r"\nnserver:\s*(.+)",
     "status": r"\nstatus:\s*(.+)",
+}
+
+edu_ua = {
+    "extend": "ua",
+    "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)",
 }
 
 uk = {
@@ -972,7 +1012,9 @@ uz = {
 }
 
 vip = {
+    "_server": "whois.nic.vip",
     "extend": "com",
+    "updated_date": None,
 }
 
 wiki = {
@@ -1000,19 +1042,11 @@ work = {
 
 xin = {
     "extend": "com",
+    "_server": "whois.nic.xin",
 }
 
 za = {
     "extend": "com",
-}
-
-ax = {
-    "extend": "com",
-    "domain_name": r"domain...............:\s?(.+)",
-    "registrar": r"registrar............:\s?(.+)",
-    "creation_date": r"created..............:\s?(.+)",
-    "expiration_date": r"expires..............:\s?(.+)",
-    "updated_date": r"Information Updated:\s?(.+)",
 }
 
 gy = {
@@ -1347,51 +1381,9 @@ xyz = {"extend": "_centralnic"}
 yachts = {"extend": "_centralnic"}
 zuerich = {"extend": "_centralnic"}
 
-
 # mboot added start
-# Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
-#  in the Domain Name System of the Internet.
-# In the Domain Name System it has the ASCII DNS name xn--p1ai.
-
-buzz = {
-    "extend": "amsterdam",
-}
-
-lol = {
-    "extend": "amsterdam",
-}
-
-la = {
-    "extend": "com",
-}
-
-su = {
-    "extend": "ru",
-}
-
-ro = {
-    "extend": None,
-    "domain_name": r"\s+Domain name:\s+(.+)",
-    "registrar": r"\s+Registrar:\s+(.+)",
-    "creation_date": r"\s+Registered On:\s+(.+)",
-    "expiration_date": r"\s+Expires On:\s+(.+)",
-    "status": r"\s+Domain Status:\s(.+)",
-    "name_servers": r"\s+NameServer:\s+(.+)",
-    "registrant_country": None,
-    "updated_date": None,
-}
-
-ws = {
-    "extend": None,
-    "domain_name": r"Domain Name:\s+(.+)",
-    "creation_date": r"Creation Date:\s+(.+)",
-    "expiration_date": r"Registrar Registration Expiration Date:\s+(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "registrar": r"Registrar:\s+(.+)",
-    "status": r"Domain Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(.+)",
-    "registrant_country": None,
-}
+# note i extract the whois server for each toplevel domain using: https://github.com/jophy/iana_tld_list
+# of which i am a contributer
 
 ae = {
     "extend": "ar",
@@ -1417,8 +1409,96 @@ ac = {
     "expiration_date": r":Registry Expiry Date\s+(.+)",
 }
 
+af = {
+    "extend": "ac",
+}
+
+ag = {
+    "extend": "ac",
+}
+
+bet = {
+    "extend": "ac",
+    "_server": "whois.nic.bet",
+}
+
+bid = {
+    "extend": "ac",
+    "_server": "whois.nic.bid",
+}
+
+# Benin
+# WHOIS server: whois.nic.bj
+# by: https://github.com/LickosA
+
+bj = {
+    "_server": "whois.nic.bj",
+    "extend": "com",
+    "domain_name": r"Domain Name:\s?(.+)",
+    "registrar": r"Registrar:\s*(.+)",
+    "creation_date": r"Creation Date:\s?(.+)",
+    "expiration_date": r"Registry Expiry Date:\s?(.+)",
+    "updated_date": r"Updated Date:\s?(.+)",
+    "status": r"Status:\s?(.+)",
+}
+
+buzz = {
+    "extend": "amsterdam",
+}
+
+design = {
+    "extend": "ac",
+}
+
+eus = {
+    "extend": "ac",
+}
+
+ge = {
+    "_server": "whois.nic.ge",
+    "extend": "ac",
+    "updated_date": None,
+}
+
+gq = {
+    "extend": "ml",
+    "_server": "whois.domino.gq",
+}
+
+la = {
+    "extend": "com",
+}
+
+lol = {
+    "extend": "amsterdam",
+}
+
+ma = {
+    "_server": "whois.registre.ma",
+    "extend": "ac",
+    "registrar": r"Sponsoring Registrar:\s*(.+)",
+}
+
+ng = {
+    "_server": "whois.nic.net.ng",
+    "extend": "ac",
+    "registrant_country": r"Registrant Country:\s+(.+)",
+}
+
 pics = {
     "extend": "ac",
+}
+
+ro = {
+    "extend": None,
+    "domain_name": r"\s+Domain name:\s+(.+)",
+    "registrar": r"\s+Registrar:\s+(.+)",
+    "creation_date": r"\s+Registered On:\s+(.+)",
+    "expiration_date": r"\s+Expires On:\s+(.+)",
+    "status": r"\s+Domain Status:\s(.+)",
+    "name_servers": r"\s+NameServer:\s+(.+)",
+    "registrant_country": None,
+    "updated_date": None,
 }
 
 rs = {
@@ -1429,13 +1509,94 @@ rs = {
     "expiration_date": r":Expiration date\s+(.+)",
     "updated_date": r"Modification date:\s+(.+)",
     "name_servers": r"DNS:\s+(.+)",
+    "registrant_country": None,
 }
 
-af = {
-    "extend": "ac",
+# singapore
+sg = {
+    "_server": "whois.sgnic.sg",
+    "registrar": r"Registrar:\s+(.+)",
+    "domain_name": r"\s+Domain name:\s+(.+)",
+    "creation_date": r"\s+Creation Date:\s+(.+)",
+    "expiration_date": r":\s+Expiration Date\s+(.+)",
+    "updated_date": r"\s+Modified Date:\s+(.+)",
+    "status": r"\s+Domain Status:\s(.+)",
+    "registrant_country": None,
+    "name_servers": None,  # actually a multi line match: TODO
 }
 
-design = {
+srl = {
+    "_server": "whois.afilias-srs.net",
     "extend": "ac",
+    "registrant_country": r"Registrant Country:\s+(.+)",
 }
+
+su = {
+    "extend": "ru",
+}
+
+ug = {
+    "_server": "whois.co.ug",
+    "extend": None,
+    "domain_name": r"Domain name:\s+(.+)",
+    "creation_date": r"Registered On:\s+(.+)",
+    "expiration_date": r"Expires On:\s+(.+)",
+    "status": r"Status:\s+(.+)",
+    "name_servers": r"Nameserver:\s+(.+)",
+    "registrant_country": r"Registrant Country:\s+(.+)",
+    "updated_date": r"Renewed On:\s+(.+)",
+    "registrar": None,
+}
+
+co_ug = {
+    "extend": "ug",
+}
+
+ca_ug = {
+    "extend": "ug",
+}
+
+ws = {
+    "extend": None,
+    "domain_name": r"Domain Name:\s+(.+)",
+    "creation_date": r"Creation Date:\s+(.+)",
+    "expiration_date": r"Registrar Registration Expiration Date:\s+(.+)",
+    "updated_date": r"Updated Date:\s?(.+)",
+    "registrar": r"Registrar:\s+(.+)",
+    "status": r"Domain Status:\s(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "registrant_country": None,
+}
+
+# RESTRICTED:
+# restricted domains never answer or never show information sufficient for parsing
+# some only show if the domain is free, most allow using a website but some have no web
+# but you may have to prove you are not a robot and limits apply also on the website
+# some actually dont have a working whois server
+# details can be found at:
+# (https://www.iana.org/domains/root/db/<tld>.html)
+
+# ba
+# duckdns.org
+# es
+# ga
+# li
+# pk
+# com.pk
+# edu.pk
+
+_privateReg = {
+    "_privateRegistry": True,
+}
+
+ch = {"extend": "_privateReg"}
+gr = {"extend": "_privateReg"}
+hu = {"extend": "_privateReg"}
+li = {"extend": "_privateReg"}
+tk = {"extend": "_privateReg"}
+vn = {"extend": "_privateReg"}
+
+hopto_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+
 # mboot added end

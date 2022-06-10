@@ -28,13 +28,118 @@ import sys
 from ._1_query import do_query
 from ._2_parse import do_parse, TLD_RE
 from ._3_adjust import Domain
-from .exceptions import UnknownTld, FailedParsingWhoisOutput, UnknownDateFormat, WhoisCommandFailed
+from .exceptions import (
+    UnknownTld,
+    FailedParsingWhoisOutput,
+    UnknownDateFormat,
+    WhoisCommandFailed,
+    WhoisPrivateRegistry,
+    WhoisQuotaExceeded,
+)
 
-from typing import Optional
+from typing import Optional, List
 
 
 CACHE_FILE = None
 SLOW_DOWN = 0
+
+Map2Underscore = {
+    ".ac.uk": "ac_uk",
+    ".co.il": "co_il",
+    # th
+    ".co.th": "co_th",
+    ".in.th": "in_th",
+    # .jp
+    ".ac.jp": "ac_jp",
+    ".ad.jp": "ad_jp",
+    ".co.jp": "co_jp",
+    ".ed.jp": "ed_jp",
+    ".go.jp": "go_jp",
+    ".gr.jp": "gr_jp",
+    ".lg.jp": "lg_jp",
+    ".ne.jp": "ne_jp",
+    ".or.jp": "or_jp",
+    ".geo.jp": "geo_jp",
+    #
+    ".com.au": "com_au",
+    ".com.sg": "com_sg",
+    ".com.tr": "com_tr",
+    ".edu.ua": "edu_ua",
+    # dynamic dns without whois
+    ".hopto.org": "hopto_org",
+    ".duckdns.org": "duckdns_org",
+}
+
+PythonKeyWordMap = {
+    "global": "global_",
+    ".id": "id_",
+    ".in": "in_",
+    ".is": "is_",
+}
+
+Utf8Map = {
+    ".xn--p1ai": "ru_rf",
+}
+
+
+def validTlds():
+    # --------------------------------------
+    # we should map back to valid tld without underscore
+    # but remove the starting . from the real domain
+    rmap = {}  # build a reverse dict from the original tld translation maps
+    for i in Map2Underscore:
+        rmap[Map2Underscore[i]] = i.lstrip(".")
+    for i in PythonKeyWordMap:
+        rmap[PythonKeyWordMap[i]] = i.lstrip(".")
+    for i in Utf8Map:
+        rmap[Utf8Map[i]] = i.lstrip(".")
+
+    # --------------------------------------
+    tlds = []
+    for tld in TLD_RE.keys():
+        if tld in rmap:
+            tlds.append(rmap[tld])
+        else:
+            tlds.append(tld)
+    return sorted(tlds)
+
+
+def filterTldToSupportedPattern(
+    domain: str,
+    d: List[str],
+    verbose: bool = False,
+) -> str:
+    # the moment we have a valid tld we can leave:
+    # no need for else or elif anymore
+    # that is the "leave early" paradigm
+    # also known as "dont overstay your welcome" or "don't linger"
+
+    tld = None
+
+    if len(d) > 2:
+        for i in Map2Underscore:
+            if domain.endswith(i):
+                tld = Map2Underscore[i]
+                return tld
+
+    for i in PythonKeyWordMap:
+        if domain.endswith(i):
+            tld = PythonKeyWordMap[i]
+            return tld
+
+    for i in Utf8Map:
+        if domain.endswith(i):
+            tld = Utf8Map[i]
+            return tld
+
+    if domain.endswith(".name"):
+        # some special case with xxx.name -> domain=xxx.name and tld is name
+        d[0] = "domain=" + d[0]
+        tld = d[-1]
+        return tld
+
+    # just take the last item as the top level
+    return d[-1]
 
 
 def query(
@@ -44,6 +149,8 @@ def query(
     slow_down: int = 0,
     ignore_returncode: bool = False,
     server: Optional[str] = None,
+    verbose: bool = False,
+    with_cleanup_results=False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -53,6 +160,7 @@ def query(
     server:             if set use the whois server explicitly for making the query:
                         propagates on linux to "whois -h <server> <domain>"
                         propagates on Windows to whois.exe <domain> <server>
+    with_cleanup_results: cleanup lines starting with % and REDACTED FOR PRIVACY
     """
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
 
@@ -68,58 +176,12 @@ def query(
     if len(d) == 1:
         return None
 
-    if domain.endswith(".ac.uk") and len(d) > 2:
-        tld = "ac_uk"
-    elif domain.endswith("co.il") and len(d) > 2:
-        tld = "co_il"
-    elif domain.endswith(".co.jp") and len(d) > 2:
-        tld = "co_jp"
-    elif domain.endswith(".ne.jp") and len(d) > 2:
-        tld = "ne_jp"
-    elif domain.endswith(".or.jp") and len(d) > 2:
-        tld = "or_jp"
-    elif domain.endswith(".go.jp") and len(d) > 2:
-        tld = "go_jp"
-    elif domain.endswith(".ac.jp") and len(d) > 2:
-        tld = "ac_jp"
-    elif domain.endswith(".ad.jp") and len(d) > 2:
-        tld = "ad_jp"
-    elif domain.endswith(".ed.jp") and len(d) > 2:
-        tld = "ed_jp"
-    elif domain.endswith(".gr.jp") and len(d) > 2:
-        tld = "gr_jp"
-    elif domain.endswith(".lg.jp") and len(d) > 2:
-        tld = "lg_jp"
-    elif domain.endswith(".geo.jp") and len(d) > 2:
-        tld = "geo_jp"
-    elif domain.endswith(".com.au") and len(d) > 2:
-        tld = "com_au"
-    elif domain.endswith("co.th") and len(d) > 2:
-        tld = "co_th"
-    elif domain.endswith("com.tr") and len(d) > 2:
-        tld = "com_tr"
-    elif domain.endswith("com.sg") and len(d) > 2:
-        tld = "com_sg"
-    elif domain.endswith("global"):
-        tld = "global_"
-    elif domain.endswith(".id"):
-        tld = "id_"
-    elif domain.endswith(".in"):
-        tld = "in_"
-    elif domain.endswith(".is"):
-        tld = "is_"
-    elif domain.endswith(".name"):
-        d[0] = "domain=" + d[0]
-        tld = d[-1]
-    elif domain.endswith(".xn--p1ai"):
-        tld = "ru_rf"
-    else:
-        tld = d[-1]
+    tld = filterTldToSupportedPattern(domain, d, verbose)
 
     if tld not in TLD_RE.keys():
-        s = " ."
-        errmsg = s + s.join(sorted(list(TLD_RE.keys())))
-        msg = f"The TLD {tld} is currently not supported by this package. Valid TLDs: {errmsg}"
+        a = f"The TLD {tld} is currently not supported by this package."
+        b = "Use validTlds() to see what toplevel domains are supported."
+        msg = f"{a} {b}"
         raise UnknownTld(msg)
 
     # allow server hints using "_server" from the tld_regexpr.py file
@@ -127,21 +189,30 @@ def query(
     thisTldServer = thisTld.get("_server")
     if server is None and thisTldServer:
         server = thisTldServer
-        print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
+        if verbose:
+            print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
+
+    if thisTld.get("_privateRegistry"):
+        msg = "This tld has either no whois server or responds only with minimal information"
+        raise WhoisPrivateRegistry(msg)
 
     while 1:
         q = do_query(
-            d,
-            force,
-            cache_file,
-            slow_down,
-            ignore_returncode,
-            server,
+            dl=d,
+            force=force,
+            cache_file=cache_file,
+            slow_down=slow_down,
+            ignore_returncode=ignore_returncode,
+            server=server,
+            verbose=verbose,
         )
 
         pd = do_parse(
-            q,
-            tld,
+            whois_str=q,
+            tld=tld,
+            dl=d,
+            verbose=verbose,
+            with_cleanup_results=with_cleanup_results,
         )
 
         if (not pd or not pd["domain_name"][0]) and len(d) > 2:
@@ -150,6 +221,9 @@ def query(
             break
 
     if pd and pd["domain_name"][0]:
-        return Domain(pd)
+        return Domain(
+            pd,
+            verbose=verbose,
+        )
 
     return None
