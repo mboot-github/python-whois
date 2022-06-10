@@ -314,7 +314,7 @@ def testDomains(aList):
 
 def main():
 
-    testOnlyProblems = True
+    testOnlyProblems = False
 
     if testOnlyProblems is False:
         print("Tld's currently supported")
