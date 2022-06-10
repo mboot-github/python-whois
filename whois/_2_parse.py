@@ -62,6 +62,7 @@ def cleanupWhoisResponse(
     response: str,
     verbose: bool = False,
 ) -> str:
+    # sometimes the quota exceeded is actually in the % lines (e.g. toplevel .at)
 
     if 0:
         if verbose:
@@ -90,68 +91,79 @@ def cleanupWhoisResponse(
 def do_parse(
     whois_str: str,
     tld: str,
+    dl: List[str],
     verbose: bool = False,
+    with_cleanup_results=False,
 ) -> Optional[Dict[str, Any]]:
     r: Dict[str, Any] = {"tld": tld}
 
-    whois_str = cleanupWhoisResponse(
-        response=whois_str,
-        verbose=verbose,
-    )
+    if with_cleanup_results is True:
+        whois_str = cleanupWhoisResponse(
+            response=whois_str,
+            verbose=verbose,
+        )
 
     if whois_str.count("\n") < 5:
-        if Verbose:
-            print(f"line count < 5:: {whois_str}", file=sys.stderr)
+        if verbose:
+            d = ".".join(dl)
+            print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
 
         s = whois_str.strip().lower()
-        if s == "not found":
-            return None
 
-        # No entries found
-        if "no entries found" in s:
-            return None
+        # NOTE: from here s is lowercase only
+        # ---------------------------------
+        noneStrings = [
+            "not found",
+            "no entries found",
+            "status: free",
+            "no such domain",
+            "the queried object does not exist",
+        ]
 
-        # TODO: Status: free
-        if "status: free" in s:
-            return None
+        for i in noneStrings:
+            if i in s:
+                return None
 
-        if "no such domain" in s:
-            return None
-
+        # ---------------------------------
+        # is there any error string in the result
         if s.count("error"):
             return None
 
-        if "connection limit exceeded" in s:
-            raise WhoisQuotaExceeded(whois_str)
+        # ---------------------------------
+        quotaStrings = [
+            "limit exceeded",
+            "quota exceeded",
+            "try again later",
+            "please try again",
+            "exceeded the maximum allowable number",
+            "can temporarily not be answered",
+        ]
 
-        # TODO: output has: Server too busy, try again later
-        if "server too busy, try again later" in s:
-            raise WhoisQuotaExceeded(whois_str)
+        for i in quotaStrings:
+            if i in s:
+                raise WhoisQuotaExceeded(whois_str)
 
-        # TODO: You exceeded the maximum allowable number of whois lookups.
-        if "exceeded the maximum allowable number" in s:
-            raise WhoisQuotaExceeded(whois_str)
-
+        # ---------------------------------
         # ToDo:  Name or service not known
 
+        # ---------------------------------
         raise FailedParsingWhoisOutput(whois_str)
 
     # check the status of DNSSEC
     r["DNSSEC"] = False
     whois_dnssec: Any = whois_str.split("DNSSEC:")
-
     if len(whois_dnssec) >= 2:
         whois_dnssec = whois_dnssec[1].split("\n")[0]
-
         if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
             r["DNSSEC"] = True
 
+    # this is mostly not available in many tld's anymore, should be investigated
     # split whois_str to remove first IANA part showing info for TLD only
     whois_splitted = whois_str.split("source:       IANA")
-
     if len(whois_splitted) == 2:
         whois_str = whois_splitted[1]
 
+    # also not available for many modern tld's
     sn = re.findall(r"Server Name:\s?(.+)", whois_str, re.IGNORECASE)
     if sn:
         whois_str = whois_str[whois_str.find("Domain Name:") :]
@@ -159,7 +171,7 @@ def do_parse(
     # return TLD_RE["com"] as default if tld not exists in TLD_RE
     for k, v in TLD_RE.get(tld, TLD_RE["com"]).items():
         if k.startswith("_"):
-            # skip meta element like: _server
+            # skip meta element like: _server or _privateRegistry
             continue
 
         if v is None:

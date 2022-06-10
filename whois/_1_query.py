@@ -47,10 +47,16 @@ def do_query(
     verbose: bool = False,
 ) -> str:
     k = ".".join(dl)
+
     if cache_file:
         cache_load(cache_file)
 
     if force or k not in CACHE or CACHE[k][0] < time.time() - CACHE_MAX_AGE:
+        # slow down before so we can force individual domains at a slower tempo
+        if slow_down:
+            time.sleep(slow_down)
+
+        # populate a fresh cache entry
         CACHE[k] = (
             int(time.time()),
             _do_whois_query(
@@ -63,9 +69,6 @@ def do_query(
 
         if cache_file:
             cache_save(cache_file)
-
-        if slow_down:
-            time.sleep(slow_down)
 
     return CACHE[k][1]
 

@@ -90,6 +90,7 @@ asia = {
 # Austria
 at = {
     "extend": "com",
+    "_server": "whois.nic.at",
     "domain_name": r"domain:\s?(.+)",
     "updated_date": r"changed:\s?(.+)",
     "name_servers": r"nserver:\s*(.+)",
@@ -783,6 +784,9 @@ pro = {
 }
 
 pt = {
+    # looks like this is now a privateRegistry mboot: 2022-06-10,
+    # manual lookup: use the website at whois.dns.pt
+    "_privateRegistry": True,
     "extend": "com",
     "domain_name": r"Domain:\s?(.+)",
     "registrar": None,
@@ -903,6 +907,17 @@ tel = {
 
 # Thailand - Commercial sub-domain
 co_th = {
+    "_server": "whois.thnic.co.th",
+    "extend": "com",
+    "registrant": r"Domain Holder Organization:\s?(.+)",
+    "registrant_country": r"Domain Holder Country:\s?(.+)",
+    "creation_date": r"Created date:\s?(.+)",
+    "expiration_date": r"Exp date:\s?(.+)",
+    "updated_date": r"Updated date:\s?(.+)",
+}
+
+in_th = {
+    "_server": "whois.thnic.co.th",
     "extend": "com",
     "registrant": r"Domain Holder Organization:\s?(.+)",
     "registrant_country": r"Domain Holder Country:\s?(.+)",
@@ -1580,5 +1595,8 @@ hu = {"extend": "_privateReg"}
 li = {"extend": "_privateReg"}
 tk = {"extend": "_privateReg"}
 vn = {"extend": "_privateReg"}
+
+hopto_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 
 # mboot added end

@@ -43,10 +43,12 @@ from typing import Optional, List
 CACHE_FILE = None
 SLOW_DOWN = 0
 
-Map2underscore = {
+Map2Underscore = {
     ".ac.uk": "ac_uk",
     ".co.il": "co_il",
+    # th
     ".co.th": "co_th",
+    ".in.th": "in_th",
     # .jp
     ".ac.jp": "ac_jp",
     ".ad.jp": "ad_jp",
@@ -63,6 +65,9 @@ Map2underscore = {
     ".com.sg": "com_sg",
     ".com.tr": "com_tr",
     ".edu.ua": "edu_ua",
+    # dynamic dns without whois
+    ".hopto.org": "hopto_org",
+    ".duckdns.org": "duckdns_org",
 }
 
 PythonKeyWordMap = {
@@ -78,16 +83,18 @@ Utf8Map = {
 
 
 def validTlds():
+    # --------------------------------------
     # we should map back to valid tld without underscore
     # but remove the starting . from the real domain
-    rmap = {}
-    for i in Map2underscore:
-        rmap[Map2underscore[i]] = i.lstrip(".")
+    rmap = {}  # build a reverse dict from the original tld translation maps
+    for i in Map2Underscore:
+        rmap[Map2Underscore[i]] = i.lstrip(".")
     for i in PythonKeyWordMap:
         rmap[PythonKeyWordMap[i]] = i.lstrip(".")
     for i in Utf8Map:
         rmap[Utf8Map[i]] = i.lstrip(".")
 
+    # --------------------------------------
     tlds = []
     for tld in TLD_RE.keys():
         if tld in rmap:
@@ -105,14 +112,14 @@ def filterTldToSupportedPattern(
     # the moment we have a valid tld we can leave:
     # no need for else or elif anymore
     # that is the "leave early" paradigm
-    # also known as "dont overstay your welcome"
+    # also known as "dont overstay your welcome" or "don't linger"
 
     tld = None
 
     if len(d) > 2:
-        for i in Map2underscore:
+        for i in Map2Underscore:
             if domain.endswith(i):
-                tld = Map2underscore[i]
+                tld = Map2Underscore[i]
                 return tld
 
     for i in PythonKeyWordMap:
@@ -143,6 +150,7 @@ def query(
     ignore_returncode: bool = False,
     server: Optional[str] = None,
     verbose: bool = False,
+    with_cleanup_results=False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -152,6 +160,7 @@ def query(
     server:             if set use the whois server explicitly for making the query:
                         propagates on linux to "whois -h <server> <domain>"
                         propagates on Windows to whois.exe <domain> <server>
+    with_cleanup_results: cleanup lines starting with % and REDACTED FOR PRIVACY
     """
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
 
@@ -201,7 +210,9 @@ def query(
         pd = do_parse(
             whois_str=q,
             tld=tld,
+            dl=d,
             verbose=verbose,
+            with_cleanup_results=with_cleanup_results,
         )
 
         if (not pd or not pd["domain_name"][0]) and len(d) > 2:
