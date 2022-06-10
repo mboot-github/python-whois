@@ -4,13 +4,14 @@ import whois
 Verbose = True
 
 NEW_TESTS = """
-    nic.ua
-    zieit.edu.ua # has issues with date/time strings
-    custler.com # may have issues with gethostaddr
-    example.com
-    abroco.me
-    nic.me
-    fraukesart.de # status: free
+    # https://www.rfc-editor.org/rfc/rfc6761.html
+    # The domains "example.", "example.com.", "example.net.", "example.org.",
+    # and any names falling within those domains,
+    # are special in the following ways:
+    example.com #  All example names are registered in perpetuity to IANA:
+"""
+
+PrivateRegistry = """
     google.ch
     google.gr
     google.hu
@@ -43,6 +44,13 @@ UnknownDateFormat = """
 
 # these are all supposed to result in data or None but no errors
 DOMAINS = """
+    nic.ua
+    abroco.me
+    nic.me
+    fraukesart.de # status: free
+
+    zieit.edu.ua # has issues with date/time strings
+    custler.com # may have issues with gethostaddr
     google.bj
     dot.ml
     example.com
@@ -313,33 +321,40 @@ def testDomains(aList):
 
 
 def main():
+    # ----------------------------
+    testAllTlds = False
+    testOnlyProblems = True
+    testOnlyNew = True
 
-    testOnlyProblems = False
-
-    if testOnlyProblems is False:
+    # ----------------------------
+    if testAllTlds is True:
         print("Tld's currently supported")
         zz = whois.validTlds()
         for tld in zz:
             print(tld)
 
     print("\n========================================\n")
-    print("Testing domains")
+    print("Testing")
     testDomains(NEW_TESTS.split("\n"))
 
-    if testOnlyProblems is False:
+    if testOnlyNew is False:
+        if testOnlyProblems is False:
+            print("\n========================================\n")
+            testDomains(DOMAINS.split("\n"))
+
         print("\n========================================\n")
-        testDomains(DOMAINS.split("\n"))
+        testDomains(PrivateRegistry.split("\n"))
 
-    print("\n========================================\n")
-    testDomains(InvalidTld.split("\n"))
+        print("\n========================================\n")
+        testDomains(InvalidTld.split("\n"))
 
-    print("\n========================================\n")
-    testDomains(FailedParsing.split("\n"))
+        print("\n========================================\n")
+        testDomains(FailedParsing.split("\n"))
 
-    print("\n========================================\n")
-    testDomains(UnknownDateFormat.split("\n"))
+        print("\n========================================\n")
+        testDomains(UnknownDateFormat.split("\n"))
 
-    print(f"Failure during test : {len(failure)}")
+        print(f"Failure during test : {len(failure)}")
     for i in sorted(failure.keys()):
         print(i, failure[i])
 
