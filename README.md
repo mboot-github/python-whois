@@ -11,7 +11,7 @@ A Python package for retrieving WHOIS information of domains.
  * Possibility to cache results.
  * Verbose output on stderr during debugging to see how the internal functions are doing their work
  * raise a exception on Quota ecceeded type responses
- * raise a ecception on PrivateRegistry tld's where we know the tld and know we don't know anything
+ * raise a exception on PrivateRegistry tld's where we know the tld and know we don't know anything
  * allow for optional cleaning the whois response before extracting information
 
 ## Help Wanted
