@@ -1226,6 +1226,7 @@ news = {"extend": "_donuts"}
 ninja = {"extend": "_donuts"}
 partners = {"extend": "_donuts"}
 parts = {"extend": "_donuts"}
+pet = {"extend": "_donuts"}
 photography = {"extend": "_donuts"}
 photos = {"extend": "_donuts"}
 pictures = {"extend": "_donuts"}
@@ -1385,18 +1386,6 @@ zuerich = {"extend": "_centralnic"}
 # note i extract the whois server for each toplevel domain using: https://github.com/jophy/iana_tld_list
 # of which i am a contributer
 
-ae = {
-    "extend": "ar",
-    "domain_name": r"Domain Name:\s+(.+)",
-    "registrar": r"Registrar Name:\s+(.+)",
-    "status": r"Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(.+)",
-    "registrant_country": None,
-    "creation_date": None,
-    "expiration_date": None,
-    "updated_date": None,
-}
-
 ac = {
     "extend": None,
     "domain_name": r"Domain Name:\s+(.+)",
@@ -1409,6 +1398,25 @@ ac = {
     "expiration_date": r":Registry Expiry Date\s+(.+)",
 }
 
+ae = {
+    "extend": "ar",
+    "domain_name": r"Domain Name:\s+(.+)",
+    "registrar": r"Registrar Name:\s+(.+)",
+    "status": r"Status:\s(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "registrant_country": None,
+    "creation_date": None,
+    "expiration_date": None,
+    "updated_date": None,
+}
+
+aero = {
+    "extend": "ac",
+    "_server": "whois.aero",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+}
+
+
 af = {
     "extend": "ac",
 }
@@ -1420,6 +1428,19 @@ ag = {
 bet = {
     "extend": "ac",
     "_server": "whois.nic.bet",
+}
+
+bg = {
+    "extend": None,
+    "_server": "whois.register.bg",
+    "domain_name": r"DOMAIN\s+NAME:\s+(.+)",
+    "status": r"registration\s+status:\s(.+)",
+    "name_servers": r"NAME SERVER INFORMATION:\n(?:(.+)\n)(?:(.+)\n)?(?:(.+)\n)?(?:(.+)\n)?",
+    "creation_date": None,
+    "expiration_date": None,
+    "updated_date": None,
+    "registrar": None,
+    "registrant_country": None,
 }
 
 bid = {
@@ -1444,6 +1465,12 @@ bj = {
 
 buzz = {
     "extend": "amsterdam",
+}
+
+cd = {
+    "extend": "ac",
+    "_server": "whois.nic.cd",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
 design = {
@@ -1471,6 +1498,12 @@ la = {
 
 lol = {
     "extend": "amsterdam",
+}
+
+ly = {
+    "extend": "ac",
+    "_server": "whois.nic.ly",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
 ma = {
@@ -1568,6 +1601,17 @@ ws = {
     "registrant_country": None,
 }
 
+re = {
+    "domain_name": r"domain:\s+(.+)",
+    "status": r"status:\s+(.+)",
+    "registrar": r"registrar:\s+(.+)",
+    "name_servers": r"nserver:\s+(.+)",
+
+    "creation_date": r"created:\s+(.+)",
+    "expiration_date": r"Expiry Date:\s+(.+)",
+    "updated_date": r"last-update:\s+(.+)",
+    "registrant_country": None,
+}
 # RESTRICTED:
 # restricted domains never answer or never show information sufficient for parsing
 # some only show if the domain is free, most allow using a website but some have no web
@@ -1587,6 +1631,8 @@ _privateReg = {
 }
 
 al = {"extend": "_privateReg"}
+az = {"extend": "_privateReg"}
+ba = {"extend": "_privateReg"}
 ch = {"extend": "_privateReg"}
 cw = {"extend": "_privateReg"}
 ga = {"extend": "_privateReg"}
@@ -1595,11 +1641,28 @@ hu = {"extend": "_privateReg"}
 li = {"extend": "_privateReg"}
 mp = {"extend": "_privateReg"}
 sr = {"extend": "_privateReg"}
+
+# https://www.iana.org/domains/root/db/td.html
+td = {"extend": "_privateReg"} # Chad (French: Tchad) made available for use in 1997.
+
 tk = {"extend": "_privateReg"}
-to = {"extend": "_privateReg"}
+to = {"extend": "_privateReg"} #
+tw = {"extend": "_privateReg"} #
+uy = {"extend": "_privateReg"} # Uruguay
 vn = {"extend": "_privateReg"}
 
+# https://umbrella.cisco.com/blog/on-the-trail-of-malicious-dynamic-dns-domains
 hopto_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+# changeip_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# dnsdynamic_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+# noip_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# freedns_afraid_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+# dyndns_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# sitelutions_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# 3322_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+
+# https://en.wikipedia.org/wiki/.onion, a "official" fake domain
+onion = {"extend": "_privateReg"}
 
 # mboot added end

@@ -8,7 +8,24 @@ NEW_TESTS = """
     # The domains "example.", "example.com.", "example.net.", "example.org.",
     # and any names falling within those domains,
     # are special in the following ways:
-    example.com #  All example names are registered in perpetuity to IANA:
+
+    # TODO future:
+    # example.com #  All example names are registered in perpetuity to IANA:
+
+    # OK NOW:
+    # abroco.me
+    # wp.pl
+
+    # New TLD
+    whois.aero
+    nic.cd
+    register.bg
+    nic.ba
+    whois.az
+    bit.ly
+    nic.re
+    nic.pet
+    gooogle.onion
 """
 
 PrivateRegistry = """
@@ -27,22 +44,20 @@ PrivateRegistry = """
 """
 
 InvalidTld = """
-    bit.ly
-    google.com.vn
 """
 
 FailedParsing = """
-    vols.cat
-    sylblog.xin
-    google.dev
-    google.com.au
-    ghc.fit
-    davidetson.ovh
-    bretagne.bzh
-    amazon.courses
     afilias.com.au
-    www.google.com
+    amazon.courses
+    bretagne.bzh
+    davidetson.ovh
+    ghc.fit
+    google.com.au
+    google.dev
+    sylblog.xin
+    vols.cat
     www.fsdfsdfsdfsd.google.com
+    www.google.com
 """
 
 UnknownDateFormat = """
@@ -50,214 +65,214 @@ UnknownDateFormat = """
 
 # these are all supposed to result in data or None but no errors
 DOMAINS = """
-    nic.ua
     abroco.me
-    nic.me
-    fraukesart.de # status: free
-
-    zieit.edu.ua # has issues with date/time strings
-    custler.com # may have issues with gethostaddr
-    google.bj
-    dot.ml
-    example.com
-    mphimmoitv.com
-    phimchill.tv
-    netsec.ninja
-    test.education
-    doramy.club
-    google.cl
-    google.in
-    google.com.ar
-    google.com.co
-    google.pl
-    google.com.br
-    digg.com
-    imdb.com
-    microsoft.com
-    office.com
-    python.org
-    www.google.org
-    ddarko.org
-    google.net
-    www.asp.net
-    www.ddarko.pl
-    google.co.uk
-    google.jp
-    www.google.co.jp
-    google.io
-    google.co
-    google.de
-    yandex.ru
-    google.us
-    google.eu
-    google.me
-    google.be
-    google.lt
-    google.biz
-    google.info
-    google.name
-    google.it
-    google.cz
-    google.fr
-    google.nl
-    google.cat
-    test.ez.lv
-    google.store
-    kono.store
-    wonder.store
-    viacom.tech
-    google.tech
-    google.space
-    loop.space
-    bloom.space
-    invr.space
-    buzzi.space
-    theobservatory.space
-    google.security
-    pep.security
-    token.security
-    juniper.security
-    ci.security
-    in.security
-    autobuyer.site
-    emeralds.site
-    darkops.site
-    google.site
-    manniswindows.site
-    google.website
-    discjockey.website
-    anthropology.website
-    livechat.website
-    google.tickets
-    google.theatre
-    google.xyz
-    google.tel
-    google.tv
-    google.cc
-    google.nyc
-    google.pw
-    google.online
-    google.wiki
-    google.press
-    google.se
-    google.nu
-    google.fi
-    google.is
-    jisc.ac.uk
-    register.bank
-    yandex.ua
-    google.ca
-    google.mu
-    google.rw
-    tut.by
-    guinness.ie
-    google.com.tr
-    google.sale
-    google.link
-    google.game
-    google.trade
-    google.ink
-    google.pub
-    google.im
-    google.am
-    google.fm
-    google.hk
-    google.cr
-    google.global
-    google.co.il
-    google.pt
-    google.sk
-    youtube.com
-    youtu.be
-    belgium.com
-    america.com
-    elcomercio.pe
-    terra.com.pe
-    amazon.study
-    google.aw
-    karibu.tz
-    congres.nc
-    colooder.app
-    bellerose.asia
-    minigames.best
-    timphillipsgarage.bond
-    edc.click
-    hisd.cloud
-    medicaldata.icu
-    agtaster.kiwi
-    curly.red
-    clubclio.shop
     agodasylumsy.top
-    rans88.vip
-    kubet77.win
-    luminor.ee
+    agtaster.kiwi
+    amazon.study
+    america.com
+    anthropology.website
+    autobuyer.site
+    belgium.com
+    bellerose.asia
+    bloom.space
+    buzzi.space
+    ci.security
+    clubclio.shop
+    colooder.app
+    congres.nc
+    curly.red
+    custler.com # may have issues with gethostaddr
+    darkops.site
+    ddarko.org
+    digg.com
+    discjockey.website
+    doramy.club
+    dot.ml
+    edc.click
+    elcomercio.pe
+    emeralds.site
+    example.com
+    fraukesart.de # status: free
+    google.am
+    google.aw
+    google.be
+    google.biz
+    google.bj
+    google.ca
+    google.cat
+    google.cc
+    google.cl
+    google.co
+    google.co.il
+    google.com.ar
+    google.com.br
+    google.com.co
+    google.com.tr
+    google.co.uk
+    google.cr
+    google.cz
+    google.de
+    google.eu
+    google.fi
+    google.fm
+    google.fr
+    google.game
+    google.global
+    google.hk
+    google.im
+    google.in
+    google.info
+    google.ink
+    google.io
+    google.is
+    google.it
+    google.jp
+    google.link
+    google.lt
+    google.me
+    google.mu
+    google.name
+    google.net
+    google.nl
+    google.nu
+    google.nyc
+    google.online
+    google.pl
+    google.press
+    google.pt
+    google.pub
+    google.pw
+    google.rw
+    google.sale
+    google.se
+    google.security
+    google.site
+    google.sk
+    google.space
+    google.store
+    google.tech
+    google.tel
+    google.theatre
+    google.tickets
+    google.trade
+    google.tv
+    google.us
+    google.website
+    google.wiki
+    google.xyz
+    gopro.com
+    guinness.ie
+    hisd.cloud
     icee.sa
-    vidange.tn
-    nic.cam
-    nic.gent
-    nic.desi
-    nic.london
-    nic.tech
-    nic.coop
-    nic.host
-    nic.online
-    nic.press
-    nic.site
-    nic.space
-    nic.store
-    nic.website
-    nic.frl
-    nic.ooo
-    nic.dealer
-    nic.inc
-    nic.zuerich
-    nic.blog
-    nic.luxury
-    nic.reit
-    nic.bar
-    nic.rest
-    nic.ceo
-    nic.kred
-    nic.build
-    nic.fun
-    nic.uno
-    nic.bond
-    nic.cfd
-    nic.cyou
-    nic.icu
-    nic.sbs
-    nic.best
-    nic.feedback
-    nic.forum
+    imdb.com
+    in.security
+    invr.space
+    jisc.ac.uk
+    juniper.security
+    karibu.tz
+    kono.store
+    kubet77.win
+    livechat.website
+    loop.space
+    luminor.ee
+    manniswindows.site
+    medicaldata.icu
+    microsoft.com
+    minigames.best
+    mphimmoitv.com
+    netsec.ninja
     nic.art
     nic.auto
     nic.autos
     nic.baby
+    nic.bar
     nic.beauty
+    nic.best
+    nic.bj
+    nic.blog
     nic.boats
+    nic.bond
+    nic.build
+    nic.cam
     nic.car
     nic.cars
+    nic.ceo
+    nic.cfd
     nic.college
+    nic.coop
+    nic.cyou
+    nic.dealer
+    nic.desi
+    nic.fans
+    nic.feedback
+    nic.forum
+    nic.frl
+    nic.fun
+    nic.gent
     nic.hair
     nic.homes
+    nic.host
+    nic.icu
+    nic.inc
+    nic.kred
+    nic.london
+    nic.luxury
     nic.makeup
+    nic.me
     nic.monster
     nic.motorcycles
+    nic.online
+    nic.ooo
+    nic.press
     nic.protection
+    nic.qpon
     nic.quest
+    nic.reit
     nic.rent
+    nic.rest
+    nic.saarland
+    nic.sbs
     nic.security
+    nic.site
     nic.skin
+    nic.space
     nic.storage
+    nic.store
+    nic.tech
     nic.theatre
     nic.tickets
+    nic.ua
+    nic.uno
+    nic.website
     nic.xyz
     nic.yachts
-    nic.fans
-    nic.qpon
-    nic.saarland
-    gopro.com
-    nic.bj
+    nic.zuerich
+    office.com
+    pep.security
+    phimchill.tv
+    python.org
+    rans88.vip
+    register.bank
+    terra.com.pe
+    test.education
+    test.ez.lv
+    theobservatory.space
+    timphillipsgarage.bond
+    token.security
+    tut.by
+    viacom.tech
+    vidange.tn
+    wonder.store
+    www.asp.net
+    www.ddarko.pl
+    www.google.co.jp
+    www.google.org
+    yandex.ru
+    yandex.ua
+    youtu.be
+    youtube.com
+    zieit.edu.ua # has issues with date/time strings
+
 """
 
 failure = {}
@@ -293,7 +308,7 @@ def errorItem(d, e, what="Generic"):
 
 
 def testDomains(aList):
-    for d in sorted(aList):
+    for d in aList:
 
         # skip empty lines
         if not d:
@@ -330,7 +345,7 @@ def main():
     # ----------------------------
     testAllTlds = True
     testOnlyProblems = True
-    testOnlyNew = False
+    testOnlyNew = True
 
     # ----------------------------
     if testAllTlds is True:
@@ -361,6 +376,8 @@ def main():
         testDomains(UnknownDateFormat.split("\n"))
 
         print(f"Failure during test : {len(failure)}")
+
+    print("\n# ========================")
     for i in sorted(failure.keys()):
         print(i, failure[i])
 
