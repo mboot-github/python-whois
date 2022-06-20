@@ -259,6 +259,10 @@ edu_tr = {
     "extend": "com_tr",
 }
 
+org_tr = {
+    "extend": "com_tr",
+}
+
 co_il = {
     "extend": "com",
     "domain_name": r"domain:\s*(.+)",
@@ -916,14 +920,16 @@ co_th = {
     "updated_date": r"Updated date:\s?(.+)",
 }
 
+go_th = {
+    "extend": "co_th",
+}
+
 in_th = {
-    "_server": "whois.thnic.co.th",
-    "extend": "com",
-    "registrant": r"Domain Holder Organization:\s?(.+)",
-    "registrant_country": r"Domain Holder Country:\s?(.+)",
-    "creation_date": r"Created date:\s?(.+)",
-    "expiration_date": r"Exp date:\s?(.+)",
-    "updated_date": r"Updated date:\s?(.+)",
+    "extend": "co_th",
+}
+
+ac_th = {
+    "extend": "co_th",
 }
 
 tn = {
@@ -1226,6 +1232,7 @@ news = {"extend": "_donuts"}
 ninja = {"extend": "_donuts"}
 partners = {"extend": "_donuts"}
 parts = {"extend": "_donuts"}
+pet = {"extend": "_donuts"}
 photography = {"extend": "_donuts"}
 photos = {"extend": "_donuts"}
 pictures = {"extend": "_donuts"}
@@ -1385,18 +1392,6 @@ zuerich = {"extend": "_centralnic"}
 # note i extract the whois server for each toplevel domain using: https://github.com/jophy/iana_tld_list
 # of which i am a contributer
 
-ae = {
-    "extend": "ar",
-    "domain_name": r"Domain Name:\s+(.+)",
-    "registrar": r"Registrar Name:\s+(.+)",
-    "status": r"Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(.+)",
-    "registrant_country": None,
-    "creation_date": None,
-    "expiration_date": None,
-    "updated_date": None,
-}
-
 ac = {
     "extend": None,
     "domain_name": r"Domain Name:\s+(.+)",
@@ -1409,6 +1404,25 @@ ac = {
     "expiration_date": r":Registry Expiry Date\s+(.+)",
 }
 
+ae = {
+    "extend": "ar",
+    "domain_name": r"Domain Name:\s+(.+)",
+    "registrar": r"Registrar Name:\s+(.+)",
+    "status": r"Status:\s(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "registrant_country": None,
+    "creation_date": None,
+    "expiration_date": None,
+    "updated_date": None,
+}
+
+aero = {
+    "extend": "ac",
+    "_server": "whois.aero",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+}
+
+
 af = {
     "extend": "ac",
 }
@@ -1420,6 +1434,19 @@ ag = {
 bet = {
     "extend": "ac",
     "_server": "whois.nic.bet",
+}
+
+bg = {
+    "extend": None,
+    "_server": "whois.register.bg",
+    "domain_name": r"DOMAIN\s+NAME:\s+(.+)",
+    "status": r"registration\s+status:\s(.+)",
+    "name_servers": r"NAME SERVER INFORMATION:\n(?:(.+)\n)(?:(.+)\n)?(?:(.+)\n)?(?:(.+)\n)?",
+    "creation_date": None,
+    "expiration_date": None,
+    "updated_date": None,
+    "registrar": None,
+    "registrant_country": None,
 }
 
 bid = {
@@ -1444,6 +1471,30 @@ bj = {
 
 buzz = {
     "extend": "amsterdam",
+}
+
+casa = {
+    "extend": "ac",
+    "registrant_country": r"Registrant Country:\s+(.+)",
+}
+
+cd = {
+    "extend": "ac",
+    "_server": "whois.nic.cd",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+}
+
+cf = {
+    "extend": None,
+    "domain_name": None,
+    "name_servers": r"Domain Nameservers:\n(?:(.+)\n)(?:(.+)\n)?(?:(.+)\n)?(?:(.+)\n)?",
+    "registrar": r"Record maintained by:\s+(.+)",
+    "creation_date": r"Domain registered:\s?(.+)",
+    "expiration_date": r"Record will expire:\s?(.+)",
+    "updated_date": None,
+    "registrant_country": None,
+    # very restrictive, after a few queries it will refuse with try again later
+    "_slowdown": 5,
 }
 
 design = {
@@ -1473,10 +1524,35 @@ lol = {
     "extend": "amsterdam",
 }
 
-ma = {
-    "_server": "whois.registre.ma",
+love = {
     "extend": "ac",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+}
+
+ly = {
+    "extend": "ac",
+    "_server": "whois.nic.ly",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+}
+
+com_ly = {
+    "extend": "ly",
+}
+
+ma = {
+    "extend": "ac",
+    "_server": "whois.registre.ma",
     "registrar": r"Sponsoring Registrar:\s*(.+)",
+}
+
+mg = {
+    "extend": "ac",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+}
+
+moe = {
+    "extend": "ac",
+    "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
 ng = {
@@ -1485,8 +1561,26 @@ ng = {
     "registrant_country": r"Registrant Country:\s+(.+)",
 }
 
+ong = {
+    "extend": "ac",
+    "registrant_country": r"Registrant Country:\s+(.+)",
+}
+
 pics = {
     "extend": "ac",
+}
+
+re = {
+    "extend": "ac",
+    "registrant_country": None,
+    "domain_name": r"domain:\s+(.+)",
+    "registrar": r"registrar:\s+(.+)",
+    "name_servers": r"nserver:\s+(.+)",
+    "status": r"status:\s(.+)",
+    "creation_date": r"created:\s+(.+)",
+    "expiration_date": r"Expiry Date:\s+(.+)",
+    "updated_date": r"last-update:\s+(.*)",
+    "registrant_country": None,
 }
 
 ro = {
@@ -1535,6 +1629,29 @@ su = {
     "extend": "ru",
 }
 
+td = {
+    "_server": "whois.nic.td",
+    "extend": "ac",
+    "registrant_country": r"Registrant Country:\s+(.+)",
+}
+
+tw = {
+    "extend": None,
+    "domain_name": r"Domain Name:\s+(.+)",
+    "creation_date": r"\s+Record created on\s+(.+)",
+    "expiration_date": r"\s+Record expires on\s+(.+)",
+    "status": r"\s+Domain Status:\s+(.+)",
+    "registrar": r"Registration\s+Service\s+Provider:\s+(.+)",
+    "updated_date": None,
+    "registrant_country": None,
+    "name_servers": None,
+}
+
+
+com_tw = {
+    "_server": "tw",
+}
+
 ug = {
     "_server": "whois.co.ug",
     "extend": None,
@@ -1568,7 +1685,49 @@ ws = {
     "registrant_country": None,
 }
 
-# RESTRICTED:
+re = {
+    "domain_name": r"domain:\s+(.+)",
+    "status": r"status:\s+(.+)",
+    "registrar": r"registrar:\s+(.+)",
+    "name_servers": r"nserver:\s+(.+)",
+    "creation_date": r"created:\s+(.+)",
+    "expiration_date": r"Expiry Date:\s+(.+)",
+    "updated_date": r"last-update:\s+(.+)",
+    "registrant_country": None,
+}
+
+bo = {
+    "domain_name": r"\s*NOMBRE DE DOMINIO:\s+(.+)",
+    "registrant_country": r"País:\s+(.+)",
+    "creation_date": r"Fecha de activación:\s+(.+)",
+    "expiration_date": r"Fecha de corte:\s+(.+)",
+    "extend": None,
+    "registrar": None,
+    "status": None,
+    "name_servers": None,
+    "updated_date": None,
+}
+
+com_bo = {"extend": "bo"}
+
+hr = {
+    "domain_name": r"Domain Name:\s+(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "creation_date": r"Creation Date:\s+(.+)",
+    "updated_date": r"Updated Date:\s+(.+)",
+
+    "status": None,
+    "registrar": None,
+    "expiration_date": None,
+    "registrant_country": None,
+}
+
+# 2022-06-20: mboot
+# com_ec = {}
+# gob_ec = {}
+
+
+# RESTRICTED: now known as PrivateRegistry
 # restricted domains never answer or never show information sufficient for parsing
 # some only show if the domain is free, most allow using a website but some have no web
 # but you may have to prove you are not a robot and limits apply also on the website
@@ -1576,30 +1735,64 @@ ws = {
 # details can be found at:
 # (https://www.iana.org/domains/root/db/<tld>.html)
 
-# ba
-# es
-# pk
-# com.pk
-# edu.pk
-
 _privateReg = {
     "_privateRegistry": True,
 }
 
 al = {"extend": "_privateReg"}
+az = {"extend": "_privateReg"}
+ba = {"extend": "_privateReg"}
 ch = {"extend": "_privateReg"}
 cw = {"extend": "_privateReg"}
+es = {"extend": "_privateReg"}
 ga = {"extend": "_privateReg"}
 gr = {"extend": "_privateReg"}
 hu = {"extend": "_privateReg"}
 li = {"extend": "_privateReg"}
 mp = {"extend": "_privateReg"}
+my = {"extend": "_privateReg"}
+pk = {"extend": "_privateReg"}
 sr = {"extend": "_privateReg"}
-tk = {"extend": "_privateReg"}
-to = {"extend": "_privateReg"}
-vn = {"extend": "_privateReg"}
+ke = {"extend": "_privateReg"}  # Kenia
+co_ke = {"extend": "_privateReg"}
 
+# https://www.iana.org/domains/root/db/td.html
+# td = {"extend": "_privateReg"} # Chad (French: Tchad) made available for use in 1997.
+
+tk = {"extend": "_privateReg"}
+to = {"extend": "_privateReg"}  #
+uy = {"extend": "_privateReg"}  # Uruguay
+va = {"extend": "_privateReg"}  # This TLD has no whois server.
+vu = {"extend": "_privateReg"}  # all dates 1970 , no furter relevant info
+vn = {"extend": "_privateReg"}
+#
+zw = {"extend": "_privateReg"}  # Zimbabwe ; # This TLD has no whois server
+com_zw = {"extend": "zw"}
+org_zw = {"extend": "zw"}
+
+# Nepal
+np = {
+    "extend": "_privateReg"
+}  # This TLD has no whois server, but you can access the whois database at https://www.mos.com.np/
+com_np = {"extend": "np"}
+
+# Ecuador
+ec = {"extend": "_privateReg"}
+com_ec = {"extend": "ec"}
+gob_ec = {"extend": "ec"}
+
+# https://umbrella.cisco.com/blog/on-the-trail-of-malicious-dynamic-dns-domains
 hopto_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+# changeip_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# dnsdynamic_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+# noip_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# freedns_afraid_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+# dyndns_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# sitelutions_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+# 3322_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+
+# https://en.wikipedia.org/wiki/.onion, a "official" fake domain
+onion = {"extend": "_privateReg"}
 
 # mboot added end
