@@ -264,7 +264,7 @@ def query(
                 print(f"try again with {d}, {len(d)}, {len(tldLevel)+1}", file=sys.stderr)
             continue
 
-        # no result or no domain but we can reduce any further so we have None
+        # no result or no domain but we can not reduce any further so we have None
         return None
 
         """
