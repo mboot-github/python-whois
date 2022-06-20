@@ -45,6 +45,13 @@ NEW_TESTS = """
     phila.ac.ug # has a None date
     nic.ma # error in ma: missing extend
     merlin.ua # Unknown date format: '2006-03-30 13:26:31+03:00'
+    www.google.co.jp
+
+    # test next item if first one has no whois data
+    dns1.carnet.hr # get actual info from carnet.hr
+
+    # now a secondlevel tld
+    ns1.cfi.co.ug # should go to: cfi.co.ug but not to: co.ug
 """
 
 PrivateRegistry = """

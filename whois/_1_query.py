@@ -51,6 +51,8 @@ def do_query(
     if cache_file:
         cache_load(cache_file)
 
+    # actually also whois uses cache, so if you really dont want to use cache
+    # you should also pass the --force-lookup flag (on linux)
     if force or k not in CACHE or CACHE[k][0] < time.time() - CACHE_MAX_AGE:
         # slow down before so we can force individual domains at a slower tempo
         if slow_down:

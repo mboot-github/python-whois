@@ -226,6 +226,12 @@ def query(
         if verbose:
             print(f"using _slowdown hint {slowDown} for tld: {tld}", file=sys.stderr)
 
+    # if the tld is a multi level we should not move further down than the tld itself
+    # we currently allow progressive lookups until we find something:
+    # so xxx.yyy.zzz will try both xxx.yyy.zzz and yyy.zzz
+    # but if the tld is yyy.zzz we should only try xxx.yyy.zzz
+    tldLevel = tld.split("_")
+
     while 1:
         q = do_query(
             dl=d,
@@ -245,15 +251,28 @@ def query(
             with_cleanup_results=with_cleanup_results,
         )
 
-        if (not pd or not pd["domain_name"][0]) and len(d) > 2:
+        # do we have a result and does it have a domain name
+        if pd and pd["domain_name"][0]:
+            return Domain(
+                pd,
+                verbose=verbose,
+            )
+
+        if len(d) > (len(tldLevel) + 1):
+            d = d[1:]  # strip one element from the front and try again
+            if verbose:
+                print(f"try again with {d}, {len(d)}, {len(tldLevel)+1}", file=sys.stderr)
+            continue
+
+        # no result or no domain but we can reduce any further so we have None
+        return None
+
+        """
+        # not a or not b == not ( a and b )
+        if len(d) > 2 and (not pd or not pd["domain_name"][0]):
             d = d[1:]
         else:
             break
-
-    if pd and pd["domain_name"][0]:
-        return Domain(
-            pd,
-            verbose=verbose,
-        )
+        """
 
     return None

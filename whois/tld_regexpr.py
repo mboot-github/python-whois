@@ -1710,6 +1710,18 @@ bo = {
 
 com_bo = {"extend": "bo"}
 
+hr = {
+    "domain_name": r"Domain Name:\s+(.+)",
+    "name_servers": r"Name Server:\s+(.+)",
+    "creation_date": r"Creation Date:\s+(.+)",
+    "updated_date": r"Updated Date:\s+(.+)",
+
+    "status": None,
+    "registrar": None,
+    "expiration_date": None,
+    "registrant_country": None,
+}
+
 # 2022-06-20: mboot
 # com_ec = {}
 # gob_ec = {}
