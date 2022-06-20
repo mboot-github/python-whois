@@ -157,7 +157,12 @@ CUSTOM_DATE_FORMATS = {
 def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datetime]:
     text = text.strip().lower()
 
-    if not text or text == "not defined" or text == "n/a":
+    noDate = [
+        "not defined",
+        "n/a",
+        "none",
+    ]
+    if not text or text in noDate:
         return None
 
     # replace japan standard time to +0900 (%z format)

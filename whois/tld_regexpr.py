@@ -1540,6 +1540,7 @@ com_ly = {
 }
 
 ma = {
+    "extend": "ac",
     "_server": "whois.registre.ma",
     "registrar": r"Sponsoring Registrar:\s*(.+)",
 }
