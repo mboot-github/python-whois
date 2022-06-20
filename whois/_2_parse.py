@@ -72,8 +72,11 @@ def cleanupWhoisResponse(
 
     tmp2 = []
     for line in tmp:
+        # some servers respond with: % Quota exceeded in the comment section (lines starting with %)
+        if "quota exceeded" in line.lower():
+            raise WhoisQuotaExceeded(response)
+
         if with_cleanup_results is True and line.startswith("%"):
-            # sometimes the quota exceeded is actually in the % lines (e.g. toplevel .at)
             continue
 
         if "REDACTED FOR PRIVACY" in line:

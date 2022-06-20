@@ -41,7 +41,7 @@ NEW_TESTS = """
     nic.br
     nic.zw
     nic.ec
-
+    nusurionuy5ff.at
 """
 
 PrivateRegistry = """

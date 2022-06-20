@@ -67,8 +67,10 @@ Map2Underscore = {
     ".com.au": "com_au",
     ".com.sg": "com_sg",
     #
+    # TÜRKİYE (formerly Turkey)
     ".com.tr": "com_tr",
     ".edu.tr": "edu_tr",
+    ".org.tr": "org_tr",
     #
     ".edu.ua": "edu_ua",
     # dynamic dns without whois

@@ -259,6 +259,10 @@ edu_tr = {
     "extend": "com_tr",
 }
 
+org_tr = {
+    "extend": "com_tr",
+}
+
 co_il = {
     "extend": "com",
     "domain_name": r"domain:\s*(.+)",
