@@ -74,6 +74,18 @@ Map2Underscore = {
     # dynamic dns without whois
     ".hopto.org": "hopto_org",
     ".duckdns.org": "duckdns_org",
+    # 2022-06-20: mboot
+    ".ac.th": "ac_th",
+    ".co.ke": "co_ke",
+    ".com.bo": "com_bo",
+    ".com.ly": "com_ly",
+    ".com.tw": "com_tw",
+    ".com.np": "com_np",
+    ".go.th": "go_th",
+    ".com.ec": "com_ec",
+    ".gob.ec": "gob_ec",
+    ".co.zw": "com_zw",
+    ".org.zw": "org_zw",
 }
 
 PythonKeyWordMap = {
@@ -95,8 +107,10 @@ def validTlds():
     rmap = {}  # build a reverse dict from the original tld translation maps
     for i in Map2Underscore:
         rmap[Map2Underscore[i]] = i.lstrip(".")
+
     for i in PythonKeyWordMap:
         rmap[PythonKeyWordMap[i]] = i.lstrip(".")
+
     for i in Utf8Map:
         rmap[Utf8Map[i]] = i.lstrip(".")
 
@@ -192,15 +206,23 @@ def query(
 
     # allow server hints using "_server" from the tld_regexpr.py file
     thisTld = TLD_RE.get(tld)
+    if thisTld.get("_privateRegistry"):
+        msg = "This tld has either no whois server or responds only with minimal information"
+        raise WhoisPrivateRegistry(msg)
+
+    # allow explicit whois server usage
     thisTldServer = thisTld.get("_server")
     if server is None and thisTldServer:
         server = thisTldServer
         if verbose:
             print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
 
-    if thisTld.get("_privateRegistry"):
-        msg = "This tld has either no whois server or responds only with minimal information"
-        raise WhoisPrivateRegistry(msg)
+    # allow a configrable slowdown for some tld's
+    slowDown = thisTld.get("_slowdown")
+    if slow_down == 0 and slowDown and slowDown > 0:
+        slow_down = slowDown
+        if verbose:
+            print(f"using _slowdown hint {slowDown} for tld: {tld}", file=sys.stderr)
 
     while 1:
         q = do_query(

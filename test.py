@@ -26,6 +26,22 @@ NEW_TESTS = """
     nic.re
     nic.pet
     gooogle.onion
+    twnic.net.tw
+    nic.td
+    net.pk # no whois server
+    mynic.my # No answers
+    nic.moe
+    nic.mg
+    nic.love
+    nic.es
+    google.cf
+    google.bo
+    thnic.co.th
+    google.ke
+    nic.br
+    nic.zw
+    nic.ec
+
 """
 
 PrivateRegistry = """

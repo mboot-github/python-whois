@@ -146,6 +146,7 @@ DATE_FORMATS = [
     "%d %b %Y",  # 28 jan 2021
     "%d-%b-%Y %H:%M:%S",  # 30-nov-2009 17:00:58
     "%Y%m%d%H%M%S",  # 20071224102432 used in edu_ua
+    "%Y-%m-%d %H:%M:%S (%Z%z)",  # .tw uses (UTC+8) but we need (UTC+0800) for %z match
 ]
 
 CUSTOM_DATE_FORMATS = {
@@ -159,10 +160,18 @@ def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datet
     if not text or text == "not defined" or text == "n/a":
         return None
 
+    # replace japan standard time to +0900 (%z format)
     text = text.replace("(jst)", "(+0900)")
     text = re.sub(r"(\+[0-9]{2}):([0-9]{2})", "\\1\\2", text)
     text = re.sub(r"(\+[0-9]{2})$", "\\1:00", text)
+
+    # strip trailing space and comment
     text = re.sub(r"(\ #.*)", "", text)
+
+    # tw uses UTC+8, but strptime needs UTC+0800), note we are now lower case
+    r = r"\(utc([-+])(\d)\)"
+    if re.search(r, text):
+        text = re.sub(r, "(utc\\g<1>0\\g<2>00)", text)
 
     # hack for 1st 2nd 3rd 4th etc
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
