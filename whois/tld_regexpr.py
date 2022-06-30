@@ -1715,7 +1715,6 @@ hr = {
     "name_servers": r"Name Server:\s+(.+)",
     "creation_date": r"Creation Date:\s+(.+)",
     "updated_date": r"Updated Date:\s+(.+)",
-
     "status": None,
     "registrar": None,
     "expiration_date": None,
@@ -1731,7 +1730,7 @@ hr = {
 _gtldKnet = {
     "extend": "com",
     "_server": "whois.gtld.knet.cn",
-    "admin": r"Admin\s*Name:\s+(.+)"
+    "admin": r"Admin\s*Name:\s+(.+)",
 }
 
 wang = {"extend": "_gtldKnet"}
@@ -1739,72 +1738,24 @@ wang = {"extend": "_gtldKnet"}
 商城 = {"extend": "_gtldKnet"}
 网店 = {"extend": "_gtldKnet"}
 
-
-accountant = {
-    "extend": "com",
-    "_server": "whois.nic.accountant"
-}
-
-cricket = {
-    "extend": "com",
-    "_server": "whois.nic.cricket"
-}
-
-date = {
-    "extend": "com",
-    "_server": "whois.nic.date"
-}
-
-faith = {
-    "extend": "com",
-    "_server": "whois.nic.faith"
-}
-
-hiphop = {
-    "extend": "com",
-    "_server": "whois.nic.hiphop"
-}
-
-loan = {
-    "extend": "com",
-    "_server": "whois.nic.loan"
-}
-
-party = {
-    "extend": "com",
-    "_server": "whois.nic.party"
-}
-
-racing = {
-    "extend": "com",
-    "_server": "whois.nic.racing"
-}
-
-ren = {
-    "extend": "com",
-    "_server": "whois.nic.ren"
-}
-
-review = {
-    "extend": "com",
-    "_server": "whois.nic.review"
-}
-
-science = {
-    "extend": "com",
-    "_server": "whois.nic.science"
-}
-
-webcam = {
-    "extend": "com",
-    "_server": "whois.nic.webcam"
-}
+accountant = {"extend": "com", "_server": "whois.nic.accountant"}
+cricket = {"extend": "com", "_server": "whois.nic.cricket"}
+date = {"extend": "com", "_server": "whois.nic.date"}
+faith = {"extend": "com", "_server": "whois.nic.faith"}
+hiphop = {"extend": "com", "_server": "whois.nic.hiphop"}
+loan = {"extend": "com", "_server": "whois.nic.loan"}
+party = {"extend": "com", "_server": "whois.nic.party"}
+racing = {"extend": "com", "_server": "whois.nic.racing"}
+ren = {"extend": "com", "_server": "whois.nic.ren"}
+review = {"extend": "com", "_server": "whois.nic.review"}
+science = {"extend": "com", "_server": "whois.nic.science"}
+webcam = {"extend": "com", "_server": "whois.nic.webcam"}
 
 # Registry operator: UNR Corp.
 # WHOIS server: whois.uniregistry.net
 _uniregistry = {
     "extend": "com",
-    "_server": "whois.uniregistry.net"
+    "_server": "whois.uniregistry.net",
 }
 
 help = {"extend": "_uniregistry"}
@@ -1826,7 +1777,7 @@ audio = {"extend": "_uniregistry"}
 # WHOIS server: whois.teleinfo.cn
 _teleinfo = {
     "extend": "com",
-    "_server": "whois.teleinfo.cn"
+    "_server": "whois.teleinfo.cn",
 }
 
 中文网 = {"extend": "_teleinfo"}

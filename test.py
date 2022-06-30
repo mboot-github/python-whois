@@ -20,27 +20,18 @@ NEW_TESTS = """
     whois.aero
     nic.cd
     register.bg
-    nic.ba
-    whois.az
     bit.ly
     nic.re
     nic.pet
-    gooogle.onion
     twnic.net.tw
     nic.td
-    net.pk # no whois server
-    mynic.my # No answers
     nic.moe
     nic.mg
     nic.love
-    nic.es
     google.cf
     google.bo
     thnic.co.th
-    google.ke
     nic.br
-    nic.zw
-    nic.ec
     nusurionuy5ff.at
     phila.ac.ug # has a None date
     nic.ma # error in ma: missing extend
@@ -52,11 +43,11 @@ NEW_TESTS = """
 
     # now a secondlevel tld
     ns1.cfi.co.ug # should go to: cfi.co.ug but not to: co.ug
-    
+
     # test IDNs
     meta.中文网
     meta.在线
-    
+
     # NEW TLDs
     meta.accountant
     meta.audio
@@ -100,6 +91,16 @@ PrivateRegistry = """
     google.tk
     google.to
     google.vn
+    nic.ba # PrivateReg
+    net.pk # PrivateReg
+    mynic.my # PrivateReg
+    nic.es # PrivateReg
+    nic.ec # PrivateReg
+    nic.zw # PrivateReg
+    gooogle.onion # PrivateReg
+    google.ke # PrivateReg
+    whois.az # PrivateReg
+
 """
 
 InvalidTld = """
@@ -343,11 +344,7 @@ def prepItem(d):
 
 
 def testItem(d):
-    w = whois.query(
-        d,
-        ignore_returncode=True,
-        verbose=Verbose,
-    )
+    w = whois.query(d, ignore_returncode=True, verbose=Verbose, internationalized=True)
     if w:
         wd = w.__dict__
         for k, v in wd.items():
@@ -373,8 +370,11 @@ def testDomains(aList):
         if not d:
             continue
 
+        if len(d.strip()) == 0:
+            continue
+
         # skip comments
-        if d.startswith("#"):
+        if d.strip().startswith("#"):
             continue
 
         # skip comments behind the domain
