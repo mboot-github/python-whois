@@ -1738,34 +1738,25 @@ wang = {"extend": "_gtldKnet"}
 商城 = {"extend": "_gtldKnet"}
 网店 = {"extend": "_gtldKnet"}
 
-
 accountant = {"extend": "com", "_server": "whois.nic.accountant"}
-
 cricket = {"extend": "com", "_server": "whois.nic.cricket"}
-
 date = {"extend": "com", "_server": "whois.nic.date"}
-
 faith = {"extend": "com", "_server": "whois.nic.faith"}
-
 hiphop = {"extend": "com", "_server": "whois.nic.hiphop"}
-
 loan = {"extend": "com", "_server": "whois.nic.loan"}
-
 party = {"extend": "com", "_server": "whois.nic.party"}
-
 racing = {"extend": "com", "_server": "whois.nic.racing"}
-
 ren = {"extend": "com", "_server": "whois.nic.ren"}
-
 review = {"extend": "com", "_server": "whois.nic.review"}
-
 science = {"extend": "com", "_server": "whois.nic.science"}
-
 webcam = {"extend": "com", "_server": "whois.nic.webcam"}
 
 # Registry operator: UNR Corp.
 # WHOIS server: whois.uniregistry.net
-_uniregistry = {"extend": "com", "_server": "whois.uniregistry.net"}
+_uniregistry = {
+    "extend": "com",
+    "_server": "whois.uniregistry.net",
+}
 
 help = {"extend": "_uniregistry"}
 photo = {"extend": "_uniregistry"}
@@ -1784,7 +1775,10 @@ audio = {"extend": "_uniregistry"}
 
 # Registry operator: TLD REGISTRY LIMITED.
 # WHOIS server: whois.teleinfo.cn
-_teleinfo = {"extend": "com", "_server": "whois.teleinfo.cn"}
+_teleinfo = {
+    "extend": "com",
+    "_server": "whois.teleinfo.cn",
+}
 
 中文网 = {"extend": "_teleinfo"}
 在线 = {"extend": "_teleinfo"}

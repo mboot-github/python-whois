@@ -344,12 +344,7 @@ def prepItem(d):
 
 
 def testItem(d):
-    w = whois.query(
-        d,
-        ignore_returncode=True,
-        verbose=Verbose,
-        internationalized=True
-    )
+    w = whois.query(d, ignore_returncode=True, verbose=Verbose, internationalized=True)
     if w:
         wd = w.__dict__
         for k, v in wd.items():

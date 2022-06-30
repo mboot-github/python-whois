@@ -242,10 +242,10 @@ def query(
 
     if internationalized and isinstance(internationalized, bool):
         if verbose:
-            print(d,file=sys.stderr)
+            print(d, file=sys.stderr)
         d = internationalizedDomainNameToPunyCode(d)
         if verbose:
-            print(d,file=sys.stderr)
+            print(d, file=sys.stderr)
 
     while 1:
         q = do_query(
