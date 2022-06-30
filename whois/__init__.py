@@ -164,6 +164,13 @@ def filterTldToSupportedPattern(
     return d[-1]
 
 
+def internationalizedDomainNameToPunyCode(
+    d: List[str]
+) -> str:
+    import idna
+    return [idna.alabel(k).decode() or k for k in d]
+
+
 def query(
     domain: str,
     force: bool = False,
@@ -173,6 +180,7 @@ def query(
     server: Optional[str] = None,
     verbose: bool = False,
     with_cleanup_results=False,
+    internationalized: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -231,6 +239,9 @@ def query(
     # so xxx.yyy.zzz will try both xxx.yyy.zzz and yyy.zzz
     # but if the tld is yyy.zzz we should only try xxx.yyy.zzz
     tldLevel = tld.split("_")
+
+    if internationalized and isinstance(internationalized, bool):
+        d = internationalizedDomainNameToPunyCode(d)
 
     while 1:
         q = do_query(

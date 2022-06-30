@@ -52,6 +52,39 @@ NEW_TESTS = """
 
     # now a secondlevel tld
     ns1.cfi.co.ug # should go to: cfi.co.ug but not to: co.ug
+    
+    # test IDNs
+    meta.中文网
+    meta.在线
+    
+    # NEW TLDs
+    meta.accountant
+    meta.audio
+    meta.blackfriday
+    meta.christmas
+    meta.cricket
+    meta.date
+    meta.diet
+    meta.faith
+    meta.flowers
+    meta.gift
+    meta.guitars
+    meta.help
+    meta.hiphop
+    meta.hosting
+    meta.juegos
+    meta.loan
+    meta.party
+    meta.photo
+    meta.property
+    meta.racing
+    meta.ren
+    meta.review
+    meta.science
+    meta.sexy
+    meta.tattoo
+    meta.wang
+    meta.webcam
 """
 
 PrivateRegistry = """
