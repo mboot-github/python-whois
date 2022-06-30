@@ -1726,6 +1726,111 @@ hr = {
 # com_ec = {}
 # gob_ec = {}
 
+# Registry operator: Zodiac Wang Limited
+# WHOIS server: whois.gtld.knet.cn
+_gtldKnet = {
+    "extend": "com",
+    "_server": "whois.gtld.knet.cn",
+    "admin": r"Admin\s*Name:\s+(.+)"
+}
+
+wang = {"extend": "_gtldKnet"}
+八卦 = {"extend": "_gtldKnet"}
+商城 = {"extend": "_gtldKnet"}
+网店 = {"extend": "_gtldKnet"}
+
+
+accountant = {
+    "extend": "com",
+    "_server": "whois.nic.accountant"
+}
+
+cricket = {
+    "extend": "com",
+    "_server": "whois.nic.cricket"
+}
+
+date = {
+    "extend": "com",
+    "_server": "whois.nic.date"
+}
+
+faith = {
+    "extend": "com",
+    "_server": "whois.nic.faith"
+}
+
+hiphop = {
+    "extend": "com",
+    "_server": "whois.nic.hiphop"
+}
+
+loan = {
+    "extend": "com",
+    "_server": "whois.nic.loan"
+}
+
+party = {
+    "extend": "com",
+    "_server": "whois.nic.party"
+}
+
+racing = {
+    "extend": "com",
+    "_server": "whois.nic.racing"
+}
+
+ren = {
+    "extend": "com",
+    "_server": "whois.nic.ren"
+}
+
+review = {
+    "extend": "com",
+    "_server": "whois.nic.review"
+}
+
+science = {
+    "extend": "com",
+    "_server": "whois.nic.science"
+}
+
+webcam = {
+    "extend": "com",
+    "_server": "whois.nic.webcam"
+}
+
+# Registry operator: UNR Corp.
+# WHOIS server: whois.uniregistry.net
+_uniregistry = {
+    "extend": "com",
+    "_server": "whois.uniregistry.net"
+}
+
+help = {"extend": "_uniregistry"}
+photo = {"extend": "_uniregistry"}
+sexy = {"extend": "_uniregistry"}
+gift = {"extend": "_uniregistry"}
+tattoo = {"extend": "_uniregistry"}
+property = {"extend": "_uniregistry"}
+juegos = {"extend": "_uniregistry"}
+hosting = {"extend": "_uniregistry"}
+guitars = {"extend": "_uniregistry"}
+flowers = {"extend": "_uniregistry"}
+diet = {"extend": "_uniregistry"}
+christmas = {"extend": "_uniregistry"}
+blackfriday = {"extend": "_uniregistry"}
+audio = {"extend": "_uniregistry"}
+
+# Registry operator: TLD REGISTRY LIMITED.
+# WHOIS server: whois.teleinfo.cn
+_teleinfo = {
+    "extend": "com",
+    "_server": "whois.teleinfo.cn"
+}
+
+中文网 = {"extend": "_teleinfo"}
+在线 = {"extend": "_teleinfo"}
 
 # RESTRICTED: now known as PrivateRegistry
 # restricted domains never answer or never show information sufficient for parsing

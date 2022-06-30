@@ -104,7 +104,7 @@ def _do_whois_query(
             )
 
         if server:
-            cmd = [r".\whois.exe ", ".".join(dl), server]
+            cmd = [r".\whois.exe ", ".".join(dl), "-v", server]
         else:
             cmd = [r".\whois.exe ", ".".join(dl)]
 
@@ -122,7 +122,7 @@ def _do_whois_query(
         cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        env={"LANG": "en"},
+        env={"LANG": "en"} if dl[-1] in ".jp" else None,
     )
 
     # print(p.stdout.read()+' '+p.stderr.read())
