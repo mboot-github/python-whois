@@ -164,10 +164,9 @@ def filterTldToSupportedPattern(
     return d[-1]
 
 
-def internationalizedDomainNameToPunyCode(
-    d: List[str]
-) -> str:
+def internationalizedDomainNameToPunyCode(d: List[str]) -> List[str]:
     import idna
+
     return [idna.alabel(k).decode() or k for k in d]
 
 
@@ -191,6 +190,7 @@ def query(
                         propagates on linux to "whois -h <server> <domain>"
                         propagates on Windows to whois.exe <domain> <server>
     with_cleanup_results: cleanup lines starting with % and REDACTED FOR PRIVACY
+    internationalized:  if true convert internationalizedDomainNameToPunyCode
     """
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
 
@@ -241,7 +241,11 @@ def query(
     tldLevel = tld.split("_")
 
     if internationalized and isinstance(internationalized, bool):
+        if verbose:
+            print(d,file=sys.stderr)
         d = internationalizedDomainNameToPunyCode(d)
+        if verbose:
+            print(d,file=sys.stderr)
 
     while 1:
         q = do_query(
