@@ -7,7 +7,7 @@
     Usage example
     >>> import whois
     >>> domain = whois.query('google.com')
-    >>> print(domain.__dict__)
+    >>> print(domain.__dict__)  # print(whois.get('google.com'))
 
     {
         'expiration_date':  datetime.datetime(2020, 9, 14, 0, 0),
@@ -24,7 +24,12 @@
     2020-09-14 00:00:00
 
 """
+__all__ = ["query", "get"]
+
 import sys
+from functools import wraps
+from typing import Optional, List
+
 from ._1_query import do_query
 from ._2_parse import do_parse, TLD_RE
 from ._3_adjust import Domain
@@ -36,9 +41,6 @@ from .exceptions import (
     WhoisPrivateRegistry,
     WhoisQuotaExceeded,
 )
-
-from typing import Optional, List
-
 
 CACHE_FILE = None
 SLOW_DOWN = 0
@@ -127,9 +129,9 @@ def validTlds():
 
 
 def filterTldToSupportedPattern(
-    domain: str,
-    d: List[str],
-    verbose: bool = False,
+        domain: str,
+        d: List[str],
+        verbose: bool = False,
 ) -> str:
     # the moment we have a valid tld we can leave:
     # no need for else or elif anymore
@@ -165,21 +167,28 @@ def filterTldToSupportedPattern(
 
 
 def internationalizedDomainNameToPunyCode(d: List[str]) -> List[str]:
-    import idna
+    return [k.encode("idna").decode() or k for k in d]
 
-    return [idna.alabel(k).decode() or k for k in d]
+
+def result2dict(func):
+    @wraps(func)
+    def _inner(*args, **kw):
+        r = func(*args, **kw)
+        return r and vars(r) or {}
+
+    return _inner
 
 
 def query(
-    domain: str,
-    force: bool = False,
-    cache_file: Optional[str] = None,
-    slow_down: int = 0,
-    ignore_returncode: bool = False,
-    server: Optional[str] = None,
-    verbose: bool = False,
-    with_cleanup_results=False,
-    internationalized: bool = False,
+        domain: str,
+        force: bool = False,
+        cache_file: Optional[str] = None,
+        slow_down: int = 0,
+        ignore_returncode: bool = False,
+        server: Optional[str] = None,
+        verbose: bool = False,
+        with_cleanup_results=False,
+        internationalized: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -276,7 +285,7 @@ def query(
         if len(d) > (len(tldLevel) + 1):
             d = d[1:]  # strip one element from the front and try again
             if verbose:
-                print(f"try again with {d}, {len(d)}, {len(tldLevel)+1}", file=sys.stderr)
+                print(f"try again with {d}, {len(d)}, {len(tldLevel) + 1}", file=sys.stderr)
             continue
 
         # no result or no domain but we can not reduce any further so we have None
@@ -291,3 +300,7 @@ def query(
         """
 
     return None
+
+
+# Add get function to support return result in dictionary form
+get = result2dict(query)
