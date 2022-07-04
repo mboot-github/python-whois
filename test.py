@@ -88,6 +88,9 @@ NEW_TESTS = """
     meta.si
     meta.py
     meta.com.py
+
+    meta.no-ip.com
+    meta.no-ip.org
 """
 
 PrivateRegistry = """

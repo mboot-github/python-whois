@@ -126,6 +126,7 @@ def do_parse(
             "no such domain",
             "the queried object does not exist",
             "domain you requested is not known",
+            "status: available",
         ]
 
         for i in noneStrings:

@@ -76,6 +76,8 @@ Map2Underscore = {
     # dynamic dns without whois
     ".hopto.org": "hopto_org",
     ".duckdns.org": "duckdns_org",
+    ".no-ip.com": "noip_com",
+    ".no-ip.org": "noip_org",
     # 2022-06-20: mboot
     ".ac.th": "ac_th",
     ".co.ke": "co_ke",
