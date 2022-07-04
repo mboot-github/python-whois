@@ -88,6 +88,7 @@ Map2Underscore = {
     ".gob.ec": "gob_ec",
     ".co.zw": "com_zw",
     ".org.zw": "org_zw",
+    ".com.py": "com_py",
 }
 
 PythonKeyWordMap = {
@@ -95,6 +96,7 @@ PythonKeyWordMap = {
     ".id": "id_",
     ".in": "in_",
     ".is": "is_",
+    ".as": "as_",
 }
 
 Utf8Map = {

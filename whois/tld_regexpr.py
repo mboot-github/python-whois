@@ -1750,6 +1750,7 @@ ren = {"extend": "com", "_server": "whois.nic.ren"}
 review = {"extend": "com", "_server": "whois.nic.review"}
 science = {"extend": "com", "_server": "whois.nic.science"}
 webcam = {"extend": "com", "_server": "whois.nic.webcam"}
+fashion = {"extend": "com", "_server": "whois.nic.fashion"}
 
 # Registry operator: UNR Corp.
 # WHOIS server: whois.uniregistry.net
@@ -1799,6 +1800,7 @@ al = {"extend": "_privateReg"}
 az = {"extend": "_privateReg"}
 ba = {"extend": "_privateReg"}
 ch = {"extend": "_privateReg"}
+cv = {"extend": "_privateReg"}  # Cape Verde
 cw = {"extend": "_privateReg"}
 es = {"extend": "_privateReg"}
 ga = {"extend": "_privateReg"}
@@ -1808,6 +1810,8 @@ li = {"extend": "_privateReg"}
 mp = {"extend": "_privateReg"}
 my = {"extend": "_privateReg"}
 pk = {"extend": "_privateReg"}
+py = {"extend": "_privateReg"}  # Paraguay:https://www.iana.org/domains/root/db/py.html
+com_py = {"extend": "_privateReg"}
 sr = {"extend": "_privateReg"}
 ke = {"extend": "_privateReg"}  # Kenia
 co_ke = {"extend": "_privateReg"}
@@ -1851,4 +1855,40 @@ duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 # https://en.wikipedia.org/wiki/.onion, a "official" fake domain
 onion = {"extend": "_privateReg"}
 
-# mboot added end
+# backend registry for domain names ending in GG, JE, and AS.
+gg = {
+    "domain_name": r"Domain:\s*\n\s+(.+)",
+    "status": r"Domain Status:\s*\n\s+(.+)",
+    "registrar": r"Registrar:\s*\n\s+(.+)",
+    "name_servers": r"Name servers:\s*\n\s+(.+)\n\s+(.+)",
+    "creation_date": r"Relevant dates:\s*\n\s+Registered on(.+)",
+    "expiration_date": None,
+    "updated_date": None,
+    "registrant_country": None,
+}
+
+as_ = {"extend": "gg"}
+je = {"extend": "gg"}
+
+sn = {
+    "_server": "whois.nic.sn",
+    "domain_name": r"Nom de domaine:\s+(.+)",
+    "status": r"Statut:\s+(.+)",
+    "registrar": r"Registrar:\s+(.+)",
+    "name_servers": r"Serveur de noms:\s*(.+)",
+    "creation_date": r"Date de création:\s+(.+)",
+    "expiration_date": r"Date d'expiration:\s+(.+)",
+    "updated_date": r"Dernière modification:\s+(.+)",
+    "registrant_country": None,
+}
+
+si = {
+    "domain_name": r"domain:\s+(.+)",
+    "status": r"status:\s+(.+)",
+    "registrar": r"registrar:\s+(.+)",
+    "name_servers": r"nameserver:\s*(.+)",
+    "creation_date": r"created:\s+(.+)",
+    "expiration_date": r"expire:\s+(.+)",
+    "updated_date": None,
+    "registrant_country": None,
+}
