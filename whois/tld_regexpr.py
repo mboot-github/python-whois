@@ -14,6 +14,7 @@ com = {
 
     'name_servers':		r'Name Server:\s*(.+)\s*',
     'status':			r'Status:\s?(.+)',
+    'abuse_contact':    r'Registrar Abuse Contact Email:\s?([\w.-]+@[\w.-]+\.[\w]{2,4})',
     'emails':			r'[\w.-]+@[\w.-]+\.[\w]{2,4}',
 }
 
