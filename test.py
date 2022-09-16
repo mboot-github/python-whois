@@ -76,6 +76,21 @@ NEW_TESTS = """
     meta.tattoo
     meta.wang
     meta.webcam
+
+    meta.gg
+    meta.as
+    meta.je
+
+    meta.sn
+
+    meta.fashion
+    meta.cv
+    meta.si
+    meta.py
+    meta.com.py
+
+    meta.no-ip.com
+    meta.no-ip.org
 """
 
 PrivateRegistry = """

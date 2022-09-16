@@ -13,6 +13,7 @@ A Python package for retrieving WHOIS information of domains.
  * raise a exception on Quota ecceeded type responses
  * raise a exception on PrivateRegistry tld's where we know the tld and know we don't know anything
  * allow for optional cleaning the whois response before extracting information
+ * optionally allow IDN's to be translated to Punycode
 
 ## Help Wanted
 Your contributions are welcome, look for the Help wanted tag https://github.com/DannyCork/python-whois/labels/help%20wanted

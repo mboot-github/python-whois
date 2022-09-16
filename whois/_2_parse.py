@@ -125,6 +125,8 @@ def do_parse(
             "status: free",
             "no such domain",
             "the queried object does not exist",
+            "domain you requested is not known",
+            "status: available",
         ]
 
         for i in noneStrings:
@@ -145,6 +147,7 @@ def do_parse(
             "exceeded the maximum allowable number",
             "can temporarily not be answered",
             "please try again.",
+            "queried interval is too short",
         ]
 
         for i in quotaStrings:

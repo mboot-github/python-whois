@@ -18,6 +18,7 @@ doIt()
 main()
 {
     ls *.py >/dev/null 2>/dev/null && doIt
+    # ./test.py
 }
 
 main
