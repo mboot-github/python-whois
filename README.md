@@ -56,7 +56,12 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * the returned list of name_servers is now a sorted unique list and not a set
  * the help function whois.validTlds() now outputs the true tld with dots
 
-## Support
-Python 3.x is supported.
+2022-09-27: maarten_boot
+ * add test2.py to replace test.py
+ * ./test2.py -h will show the possible usage
+ * all tests from the original program are now files in the ./tests directory
+ * test can be done on all supported tld's with -a or --all and limitest by regex with -r <pattern> or --reg=<pattern>
 
-Python 2.x IS NOT supported.
+## Support
+ * Python 3.x is supported.
+ * Python 2.x IS NOT supported.
