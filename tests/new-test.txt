@@ -1,0 +1,90 @@
+    KPVALIDATE.ME
+    meta.me
+    meta.hn
+    # https://www.rfc-editor.org/rfc/rfc6761.html
+    # The domains "example.", "example.com.", "example.net.", "example.org.",
+    # and any names falling within those domains,
+    # are special in the following ways:
+
+    # TODO future:
+    # example.com #  All example names are registered in perpetuity to IANA:
+
+    # OK NOW:
+    # abroco.me
+    # wp.pl
+
+    # New TLD
+    whois.aero
+    nic.cd
+    register.bg
+    bit.ly
+    nic.re
+    nic.pet
+    twnic.net.tw
+    nic.td
+    nic.moe
+    nic.mg
+    nic.love
+    google.cf
+    google.bo
+    thnic.co.th
+    nic.br
+    nusurionuy5ff.at
+    phila.ac.ug # has a None date
+    nic.ma # error in ma: missing extend
+    merlin.ua # Unknown date format: '2006-03-30 13:26:31+03:00'
+    www.google.co.jp
+
+    # test next item if first one has no whois data
+    dns1.carnet.hr # get actual info from carnet.hr
+
+    # now a secondlevel tld
+    ns1.cfi.co.ug # should go to: cfi.co.ug but not to: co.ug
+
+    # test IDNs
+    meta.中文网
+    meta.在线
+
+    # NEW TLDs
+    meta.accountant
+    meta.audio
+    meta.blackfriday
+    meta.christmas
+    meta.cricket
+    meta.date
+    meta.diet
+    meta.faith
+    meta.flowers
+    meta.gift
+    meta.guitars
+    meta.help
+    meta.hiphop
+    meta.hosting
+    meta.juegos
+    meta.loan
+    meta.party
+    meta.photo
+    meta.property
+    meta.racing
+    meta.ren
+    meta.review
+    meta.science
+    meta.sexy
+    meta.tattoo
+    meta.wang
+    meta.webcam
+
+    meta.gg
+    meta.as
+    meta.je
+
+    meta.sn
+
+    meta.fashion
+    meta.cv
+    meta.si
+    meta.py
+    meta.com.py
+
+    meta.no-ip.com
+    meta.no-ip.org
