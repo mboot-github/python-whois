@@ -7,6 +7,7 @@ import sys
 
 Verbose = False
 Failures = {}
+IgnoreReturncode = False
 
 
 def prepItem(d):
@@ -17,7 +18,7 @@ def prepItem(d):
 def testItem(d):
     w = whois.query(
         d,
-        ignore_returncode=True,
+        ignore_returncode=IgnoreReturncode,
         verbose=Verbose,
         internationalized=True,
     )
@@ -111,10 +112,15 @@ def getAllCurrentTld():
     return whois.validTlds()
 
 
-def makeMateAllCurrentTld():
+def makeMetaAllCurrentTld(allHaving=None, allRegex=None):
     rr = []
     for tld in getAllCurrentTld():
-        rr.append(f"meta.{tld}")
+        if allRegex:
+            if re.search(allRegex, tld):
+                rr.append(f"meta.{tld}")
+        else:
+            rr.append(f"meta.{tld}")
+
     return rr
 
 
@@ -130,6 +136,9 @@ def usage():
 test.py
     [ -v | --verbose ]
         # set verbose to True, this will be forwarded to whois.query
+
+    [ -I | --IgnoreReturncode ]
+        # sets the IgnoreReturncode to True, this will be forwarded to whois.query
 
     [ -a | --all]
         # test all existing tld currently supported,
@@ -148,7 +157,22 @@ test.py
         # files are processed as in the -f option so comments and empty lines are skipped
         # the option can be repeated to specify more then one directory
 
-    example: ./test2.py -f tests/ok-domains.txt -D tests -d meta.org -d meta.com -a 2>2 >out
+    # options are exclusive and without any options the test2 program does nothing
+
+    # test one specific file with verbose and IgnoreReturncode
+    example: ./test2.py -v -I -f tests/ok-domains.txt 2>2 >out
+
+    # test one specific directory with verbose and IgnoreReturncode
+    example: ./test2.py -v -I -D tests 2>2 >out
+
+    # test two domains with verbose and IgnoreReturncode
+    example: ./test2.py -v -I -d meta.org -d meta.com 2>2 >out
+
+    # test all supported tld's with verbose and IgnoreReturncode
+    example: ./test2.py -v -I -a 2>2 >out
+
+    # test nothing
+    example: ./test2.py -v -I 2>2 >out
 """
     )
 
@@ -157,7 +181,7 @@ test.py
     --all --reg <re>
         from all tld a regex match sub selection
 
-    --all -- having <name>
+    --all --having <name>
         from all but only the ones haveing a certain field
     """
 
@@ -172,17 +196,21 @@ def showFailures():
 
 def main(argv):
     global Verbose
+    global IgnoreReturncode
 
     try:
         opts, args = getopt.getopt(
             argv,
-            "vhaf:d:D:",
+            "vIhaf:d:D:r:H:",
             [
                 "verbose",
+                "IgnoreReturncode",
                 "all",
-                "file =",
-                "Directory =",
-                "domain =",
+                "file=",
+                "Directory=",
+                "domain=",
+                "reg=",
+                "having=",
             ],
         )
     except getopt.GetoptError:
@@ -190,6 +218,8 @@ def main(argv):
         sys.exit(2)
 
     testAllTld = False
+    allHaving = None  # from all supported tld only process the ones having this :: TODO ::
+    allRegex = None  # from all supported tld process only the ones matching this regex
 
     directory = None
     dirs = []
@@ -209,6 +239,14 @@ def main(argv):
 
         if opt in ("-a", "--all"):
             testAllTld = True
+
+        if opt in ("-H", "--having"):
+            testAllTld = True
+            allHaving = arg
+
+        if opt in ("-r", "--reg"):
+            testAllTld = True
+            allRegex = arg
 
         if opt in ("-v", "--verbose"):
             Verbose = True
@@ -242,11 +280,13 @@ def main(argv):
 
     if testAllTld:
         print("## ===== TEST CURRENT TLD's")
-        allMetaTld = makeMateAllCurrentTld()
+        allMetaTld = makeMetaAllCurrentTld(allHaving, allRegex)
         testDomains(allMetaTld)
         showFailures()
+        return
 
     if len(dirs):
+        fileData = {}
         print("## ===== TEST DIRECTORIES")
         for dName in dirs:
             getTestFilesAll(dName, fileData)
@@ -254,8 +294,10 @@ def main(argv):
             print(f"## ===== TEST FILE: {testFile}")
             testDomains(fileData[testFile])
         showFailures()
+        return
 
     if len(files):
+        fileData = {}
         print("## ===== TEST FILES")
         for testFile in files:
             getTestFileOne(testFile, fileData)
@@ -263,11 +305,13 @@ def main(argv):
             print(f"## ===== TEST FILE: {testFile}")
             testDomains(fileData[testFile])
         showFailures()
+        return
 
     if len(domains):
         print("## ===== TEST DOMAINS")
         testDomains(domains)
         showFailures()
+        return
 
 
 if __name__ == "__main__":
