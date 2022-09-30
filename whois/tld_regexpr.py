@@ -811,6 +811,11 @@ pw = {
     "status": r"Status:\s?(.+)",
 }
 
+radio = {
+    "extend": "com",
+    "_server": "whois.nic.radio",
+}
+
 red = {
     "extend": "com",
 }
