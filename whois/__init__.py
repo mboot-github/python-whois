@@ -133,9 +133,9 @@ def validTlds():
 
 
 def filterTldToSupportedPattern(
-        domain: str,
-        d: List[str],
-        verbose: bool = False,
+    domain: str,
+    d: List[str],
+    verbose: bool = False,
 ) -> str:
     # the moment we have a valid tld we can leave:
     # no need for else or elif anymore
@@ -184,15 +184,15 @@ def result2dict(func):
 
 
 def query(
-        domain: str,
-        force: bool = False,
-        cache_file: Optional[str] = None,
-        slow_down: int = 0,
-        ignore_returncode: bool = False,
-        server: Optional[str] = None,
-        verbose: bool = False,
-        with_cleanup_results=False,
-        internationalized: bool = False,
+    domain: str,
+    force: bool = False,
+    cache_file: Optional[str] = None,
+    slow_down: int = 0,
+    ignore_returncode: bool = False,
+    server: Optional[str] = None,
+    verbose: bool = False,
+    with_cleanup_results=False,
+    internationalized: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.

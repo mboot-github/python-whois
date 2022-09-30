@@ -1,0 +1,21 @@
+    google.al
+    google.ch
+    google.cw
+    google.ga
+    google.gr
+    google.hu
+    google.li
+    google.mp
+    google.sr
+    google.tk
+    google.to
+    google.vn
+    nic.ba # PrivateReg
+    net.pk # PrivateReg
+    mynic.my # PrivateReg
+    nic.es # PrivateReg
+    nic.ec # PrivateReg
+    nic.zw # PrivateReg
+    gooogle.onion # PrivateReg
+    google.ke # PrivateReg
+    whois.az # PrivateReg
