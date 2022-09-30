@@ -91,6 +91,8 @@ NEW_TESTS = """
 
     meta.no-ip.com
     meta.no-ip.org
+
+    nic.radio
 """
 
 PrivateRegistry = """
