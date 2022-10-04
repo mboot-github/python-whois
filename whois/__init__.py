@@ -75,6 +75,7 @@ Map2Underscore = {
     ".org.tr": "org_tr",
     #
     ".edu.ua": "edu_ua",
+    ".lviv.ua": "lviv_ua",
     # dynamic dns without whois
     ".hopto.org": "hopto_org",
     ".duckdns.org": "duckdns_org",
