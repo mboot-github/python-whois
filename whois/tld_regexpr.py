@@ -998,6 +998,10 @@ edu_ua = {
     "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)",
 }
 
+lviv_ua = {
+    "extend": "com",
+}
+
 uk = {
     "extend": "com",
     "registrant": r"Registrant:\n\s*(.+)",
