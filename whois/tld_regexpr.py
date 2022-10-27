@@ -391,6 +391,11 @@ fm = {
     "extend": "com",
 }
 
+fo = {
+    "extend": "com",
+    "registrant": None,
+}
+
 fr = {
     "extend": "com",
     "domain_name": r"domain:\s?(.+)",

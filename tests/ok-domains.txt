@@ -49,6 +49,7 @@
     google.eu
     google.fi
     google.fm
+    google.fo
     google.fr
     google.game
     google.global
