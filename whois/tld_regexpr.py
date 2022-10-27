@@ -973,6 +973,10 @@ tn = {
     "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
 }
 
+tokyo = {
+    "extend": "com",
+}
+
 top = {
     "extend": "com",
 }

@@ -91,6 +91,7 @@
     google.tel
     google.theatre
     google.tickets
+    google.tokyo
     google.trade
     google.tv
     google.us
