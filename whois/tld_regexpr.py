@@ -573,6 +573,18 @@ kiwi = {
     "extend": "com",
 }
 
+kg = {
+    "extend": None,
+    "domain_name": r"Domain\s(.+)\s\(",
+    "registrar": r"Billing\sContact:\n.*\n\s+Name:\s(.+)\n",
+    "registrant_country": None,
+    "expiration_date": r"Record expires on:\s+(.+)",
+    "creation_date": r"Record created:\s+(.+)",
+    "updated_date": r"Record last updated on:\s+(.+)",
+    "name_servers": None,
+    "status": None,
+}
+
 # Saint Kitts and Nevis
 kn = {
     "extend": "com",
