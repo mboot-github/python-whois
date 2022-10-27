@@ -573,6 +573,11 @@ kiwi = {
     "extend": "com",
 }
 
+# Saint Kitts and Nevis
+kn = {
+    "extend": "com",
+}
+
 kr = {
     "extend": "com",
     "domain_name": r"Domain Name\s*:\s?(.+)",

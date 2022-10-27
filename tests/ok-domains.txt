@@ -61,6 +61,7 @@
     google.is
     google.it
     google.jp
+    google.kn
     google.link
     google.lt
     google.me
