@@ -102,7 +102,7 @@ at = {
 au = {
     "extend": "com",
     "registrar": r"Registrar Name:\s?(.+)",
-    "updated_date": r"Last Modified:\s?(.+)",
+    "updated_date": r"Last Modified:([^\n]*)", # fix empty LastModified
 }
 
 ax = {
