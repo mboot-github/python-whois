@@ -12,6 +12,8 @@ Verbose = True
 
 TLD_RE: Dict[str, Any] = {}
 
+VERY_SMALL_RESPONSE_LINES = 5
+
 
 def get_tld_re(tld: str) -> Any:
     if tld in TLD_RE:
@@ -95,14 +97,102 @@ def cleanupWhoisResponse(
     return response
 
 
+def _doFilterVerySmallResponses(
+    tld: str,
+    whois_str: str,
+    domainAsList: List,
+    verbose: bool = False,
+):
+    if verbose:
+        d = ".".join(domainAsList)
+        print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
+
+    s = whois_str.strip().lower()
+
+    # NOTE: from here s is lowercase only
+    # ---------------------------------
+    noneStrings = [
+        "not found",
+        "no entries found",
+        "status: free",
+        "no such domain",
+        "the queried object does not exist",
+        "domain you requested is not known",
+        "status: available",
+    ]
+
+    for i in noneStrings:
+        if i in s:
+            return None
+
+    # ---------------------------------
+    # is there any error string in the result
+    if s.count("error"):
+        return None
+
+    # ---------------------------------
+    quotaStrings = [
+        "limit exceeded",
+        "quota exceeded",
+        "try again later",
+        "please try again",
+        "exceeded the maximum allowable number",
+        "can temporarily not be answered",
+        "please try again.",
+        "queried interval is too short",
+    ]
+
+    for i in quotaStrings:
+        if i in s:
+            raise WhoisQuotaExceeded(whois_str)
+
+    # ToDo:  Name or service not known
+
+    raise FailedParsingWhoisOutput(whois_str)
+
+
+def _doDnsSec(whois_str: str, verbose: bool = False):
+    whois_dnssec: Any = whois_str.split("DNSSEC:")
+    if len(whois_dnssec) >= 2:
+        whois_dnssec = whois_dnssec[1].split("\n")[0]
+        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
+            if verbose:
+                msg = "detected valid dnssec entry in the raw string"
+                print(msg, file=sys.stderr)
+            return True
+    return False
+
+
+def _doSplitOnIanaPresent(whois_str: str, verbose: bool = False):
+    # this is mostly not available in many tld's anymore, should be investigated
+    # split whois_str to remove first IANA part showing info for TLD only
+    whois_splitted = whois_str.split("source:       IANA")
+    if len(whois_splitted) == 2:
+        if verbose:
+            msg = "stripping the raw string to remove 'source: IANA'"
+            print(msg, file=sys.stderr)
+        return whois_splitted[1]
+    return whois_str
+
+
+def _doIfServerNameThenStripUntilDomainName(whois_str: str, verbose: bool = False):
+    # also not available for many modern tld's
+    sn = re.findall(r"Server Name:\s?(.+)", whois_str, re.IGNORECASE)
+    if sn:
+        if verbose:
+            print(f"found Server Name {sn}; looking for Domain Name", file=sys.stderr)
+        index = whois_str.find("Domain Name:")
+        return whois_str[index:]
+    return whois_str
+
+
 def do_parse(
     whois_str: str,
     tld: str,
-    dl: List[str],
+    domainAsList: List[str],
     verbose: bool = False,
     with_cleanup_results=False,
 ) -> Optional[Dict[str, Any]]:
-    r: Dict[str, Any] = {"tld": tld}
 
     whois_str = cleanupWhoisResponse(
         response=whois_str,
@@ -110,85 +200,26 @@ def do_parse(
         with_cleanup_results=with_cleanup_results,
     )
 
-    if whois_str.count("\n") < 5:
-        if verbose:
-            d = ".".join(dl)
-            print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
+    if whois_str.count("\n") < VERY_SMALL_RESPONSE_LINES:  # normally 5
+        # may raise WhoisQuotaExceeded or FailedParsingWhoisOutput
+        return _doFilterVerySmallResponses(tld, whois_str, domainAsList, verbose)
 
-        s = whois_str.strip().lower()
+    result: Dict[str, Any] = {
+        "tld": tld,
+    }
+    result["DNSSEC"] = _doDnsSec(whois_str, verbose)  # check the status of DNSSEC
 
-        # NOTE: from here s is lowercase only
-        # ---------------------------------
-        noneStrings = [
-            "not found",
-            "no entries found",
-            "status: free",
-            "no such domain",
-            "the queried object does not exist",
-            "domain you requested is not known",
-            "status: available",
-        ]
+    whois_str = _doSplitOnIanaPresent(whois_str, verbose)  # not very common anymore
+    whois_str = _doIfServerNameThenStripUntilDomainName(whois_str, verbose)  # not very common anymore
 
-        for i in noneStrings:
-            if i in s:
-                return None
-
-        # ---------------------------------
-        # is there any error string in the result
-        if s.count("error"):
-            return None
-
-        # ---------------------------------
-        quotaStrings = [
-            "limit exceeded",
-            "quota exceeded",
-            "try again later",
-            "please try again",
-            "exceeded the maximum allowable number",
-            "can temporarily not be answered",
-            "please try again.",
-            "queried interval is too short",
-        ]
-
-        for i in quotaStrings:
-            if i in s:
-                raise WhoisQuotaExceeded(whois_str)
-
-        # ---------------------------------
-        # ToDo:  Name or service not known
-
-        # ---------------------------------
-        raise FailedParsingWhoisOutput(whois_str)
-
-    # check the status of DNSSEC
-    r["DNSSEC"] = False
-    whois_dnssec: Any = whois_str.split("DNSSEC:")
-    if len(whois_dnssec) >= 2:
-        whois_dnssec = whois_dnssec[1].split("\n")[0]
-        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
-            r["DNSSEC"] = True
-
-    # this is mostly not available in many tld's anymore, should be investigated
-    # split whois_str to remove first IANA part showing info for TLD only
-    whois_splitted = whois_str.split("source:       IANA")
-    if len(whois_splitted) == 2:
-        whois_str = whois_splitted[1]
-
-    # also not available for many modern tld's
-    sn = re.findall(r"Server Name:\s?(.+)", whois_str, re.IGNORECASE)
-    if sn:
-        whois_str = whois_str[whois_str.find("Domain Name:") :]
-
-    # return TLD_RE["com"] as default if tld not exists in TLD_RE
-    for k, v in TLD_RE.get(tld, TLD_RE["com"]).items():
-        if k.startswith("_"):
-            # skip meta element like: _server or _privateRegistry
+    for k, v in TLD_RE.get(tld, TLD_RE["com"]).items():  # use TLD_RE["com"] as default
+        if k.startswith("_"):  # skip meta element like: _server or _privateRegistry
             continue
 
-        if v is None:
-            r[k] = [""]
-        else:
-            r[k] = v.findall(whois_str) or [""]
-            # print("DEBUG: Keyval = " + str(r[k]))
+        if v is None:  # we have no value for this element
+            result[k] = [""]
+            continue
 
-    return r
+        result[k] = v.findall(whois_str) or [""]
+
+    return result
