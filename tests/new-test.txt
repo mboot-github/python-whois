@@ -1,3 +1,7 @@
+    example.com
+    example.org
+    example.net
+    meta.au
     meta.com.au # may not work as from some countries/networks the whois servers are not reachable
     KPVALIDATE.ME
     meta.me

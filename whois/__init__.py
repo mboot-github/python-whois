@@ -305,7 +305,7 @@ def query(
         )
 
         parsedDomainData = do_parse(
-            whois_str=rawResultString,
+            rawResultString=rawResultString,
             tld=tld,
             domainAsList=domainAsList,
             verbose=verbose,

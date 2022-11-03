@@ -150,17 +150,19 @@ class Domain:
         data: Dict[str, Any],
         verbose: bool = False,
     ) -> List:
+
         tmp: List = []
-        for x in data["name_servers"]:
-            if isinstance(x, str):
-                tmp.append(x.strip().lower())
-                continue
-            # not a string but an array
-            for y in x:
-                tmp.append(y.strip().lower())
+        if "name_servers" in data:
+            for x in data["name_servers"]:
+                if isinstance(x, str):
+                    tmp.append(x.strip().lower())
+                    continue
+                # not a string but an array
+                for y in x:
+                    tmp.append(y.strip().lower())
 
         if verbose:
-            print("nameservers: ", tmp, file=sys.stderr)
+            print("before cleanup, nameservers: ", tmp, file=sys.stderr)
 
         name_servers: List = []
         for x in tmp:
@@ -181,49 +183,52 @@ class Domain:
         data: Dict[str, Any],
         verbose: bool = False,
     ):
+        # domain_name , tld , DNSSEC are always present
         self.name = data["domain_name"][0].strip().lower()
         self.tld = data["tld"]
-
-        self.registrar = data["registrar"][0].strip()
-        self.registrant_country = data["registrant_country"][0].strip()
-
-        self.creation_date = self.str_to_date(
-            data["creation_date"][0],
-            self.tld.lower(),
-            verbose,
-        )
-        self.expiration_date = self.str_to_date(
-            data["expiration_date"][0],
-            self.tld.lower(),
-            verbose,
-        )
-        self.last_updated = self.str_to_date(
-            data["updated_date"][0],
-            self.tld.lower(),
-            verbose,
-        )
-
-        self.status = data["status"][0].strip()
-        self.statuses = list(
-            set(
-                [s.strip() for s in data["status"]],
-            ),
-        )  # list(set(...))) to deduplicate
-
         self.dnssec = data["DNSSEC"]
+
+        # ------------------------------------------
+        # single items
+        singleMap = {
+            "registrar": self.registrar,
+            "registrant_country": self.registrant_country,
+            "owner": self.owner,
+            "abuse_contact": self.abuse_contact,
+            "reseller": self.reseller,
+            "registrant": self.registrant,
+            "admin": self.admin,
+        }
+
+        for key in singleMap.keys():
+            if key in data and len(data[key]):
+                singleMap[key] = data[key][0].strip()
+
+        # ------------------------------------------
+        # date items
+        dateMap = {
+            "creation_date": self.creation_date,
+            "expiration_date": self.expiration_date,
+            "updated_date": self.last_updated,
+        }
+
+        for key in dateMap.keys():
+            if key in data and len(data[key]):
+                dateMap[key] = self.str_to_date(
+                    data[key][0],
+                    self.tld.lower(),
+                    verbose,
+                )
+
+        # ------------------------------------------
+        # multiple items
+        key = "status"
+        if key in data and len(data[key]):
+            self.status = data[key][0].strip()
+            self.statuses = list(
+                set(
+                    [s.strip() for s in data[key]],
+                ),
+            )  # list(set(...))) to deduplicate
+
         self.name_servers = self.extractNameServers(data, verbose)
-
-        if "owner" in data:
-            self.owner = data["owner"][0].strip()
-
-        if "abuse_contact" in data:
-            self.abuse_contact = data["abuse_contact"][0].strip()
-
-        if "reseller" in data:
-            self.reseller = data["reseller"][0].strip()
-
-        if "registrant" in data:
-            self.registrant = data["registrant"][0].strip()
-
-        if "admin" in data:
-            self.admin = data["admin"][0].strip()
