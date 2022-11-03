@@ -201,6 +201,7 @@ class Domain:
             "reseller": "reseller",
             "registrant": "registrant",
             "admin": "admin",
+            "status": "status",  # single and multiple as statuses
         }
 
         for key in singleMap.keys():
@@ -232,12 +233,9 @@ class Domain:
         # ------------------------------------------
         # multiple items
         key = "status"
+        self.statuses = []
         if key in data and len(data[key]):
-            self.status = data[key][0].strip()
-            self.statuses = list(
-                set(
-                    [s.strip() for s in data[key]],
-                ),
-            )  # list(set(...))) to deduplicate
+            # use:: list(set(...))) to deduplicate multiple entries
+            self.statuses = list(set([s.strip() for s in data[key]]))
 
         self.name_servers = self.extractNameServers(data, verbose)

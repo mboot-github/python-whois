@@ -34,6 +34,19 @@ ac_uk = {
     "name_servers": r"Servers:\s*(.+)\t\n\s*(.+)\t\n",
 }
 
+co_uk = {
+    "extend": "uk",
+    "domain_name": r"Domain name:\s+(.+)",
+    "registrar": r"Registrar:\s+(.+)",
+    "name_servers": r"Name servers:\s+(.+)\s+(.+)",
+    "status": r"Registration status:\s*(.+)",
+    "creation_date": r"Registered on:(.+)",
+    "expiration_date": r"Expiry date:(.+)",
+    "updated_date": r"Last updated:(.+)",
+    "owner": r"Domain Owner:\s+(.+)",
+    "registrant": r"Registered Contact:\s+(.+)",
+}
+
 # United Arab Emirates
 # ae = {    "extend": "ar"}
 # redefined below

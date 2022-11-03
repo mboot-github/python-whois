@@ -52,7 +52,10 @@ CACHE_FILE = None
 SLOW_DOWN = 0
 
 Map2Underscore = {
+    # uk
     ".ac.uk": "ac_uk",
+    ".co.uk": "co_uk",
+    # il
     ".co.il": "co_il",
     # uganda
     ".ca.ug": "ca_ug",
@@ -71,15 +74,16 @@ Map2Underscore = {
     ".ne.jp": "ne_jp",
     ".or.jp": "or_jp",
     ".geo.jp": "geo_jp",
-    #
+    # au
     ".com.au": "com_au",
+    # sg
     ".com.sg": "com_sg",
     #
     # TÜRKİYE (formerly Turkey)
     ".com.tr": "com_tr",
     ".edu.tr": "edu_tr",
     ".org.tr": "org_tr",
-    #
+    # ua
     ".edu.ua": "edu_ua",
     ".lviv.ua": "lviv_ua",
     # dynamic dns without whois
@@ -97,8 +101,10 @@ Map2Underscore = {
     ".go.th": "go_th",
     ".com.ec": "com_ec",
     ".gob.ec": "gob_ec",
+    # zw
     ".co.zw": "com_zw",
     ".org.zw": "org_zw",
+    #
     ".com.py": "com_py",
 }
 
@@ -152,7 +158,10 @@ def filterTldToSupportedPattern(
     tld = None
 
     if len(d) > 2:
-        for i in Map2Underscore:
+        for i in Map2Underscore.keys():
+            if verbose:
+                print(i, file=sys.stderr)
+
             if domain.endswith(i):
                 tld = Map2Underscore[i]
                 return tld
@@ -277,6 +286,8 @@ def query(
         return None
 
     tld = filterTldToSupportedPattern(domain, domainAsList, verbose)
+    if verbose:
+        print(tld, file=sys.stderr)
 
     thisTld = _doTldIsSupportedOrfail(tld)  # may raise UnknownTld
     _doPrivateRegistry(thisTld, verbose)  # may raise WhoisPrivateRegistry
@@ -311,6 +322,9 @@ def query(
             verbose=verbose,
             with_cleanup_results=with_cleanup_results,
         )
+
+        if verbose:
+            print(parsedDomainData, file=sys.stderr)
 
         # do we have a result and does it have a domain name
         if (
