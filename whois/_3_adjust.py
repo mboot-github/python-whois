@@ -105,6 +105,9 @@ class Domain:
     ) -> Optional[datetime.datetime]:
         text = text.strip().lower()
 
+        if verbose:
+            print("str_to_date", text, file=sys.stderr)
+
         noData = [
             "not defined",
             "n/a",
@@ -191,34 +194,40 @@ class Domain:
         # ------------------------------------------
         # single items
         singleMap = {
-            "registrar": self.registrar,
-            "registrant_country": self.registrant_country,
-            "owner": self.owner,
-            "abuse_contact": self.abuse_contact,
-            "reseller": self.reseller,
-            "registrant": self.registrant,
-            "admin": self.admin,
+            "registrar": "registrar",
+            "registrant_country": "registrant_country",
+            "owner": "owner",
+            "abuse_contact": "abuse_contact",
+            "reseller": "reseller",
+            "registrant": "registrant",
+            "admin": "admin",
         }
 
         for key in singleMap.keys():
+            setattr(self, singleMap[key], None)
             if key in data and len(data[key]):
-                singleMap[key] = data[key][0].strip()
+                setattr(self, singleMap[key], data[key][0].strip())
 
         # ------------------------------------------
         # date items
         dateMap = {
-            "creation_date": self.creation_date,
-            "expiration_date": self.expiration_date,
-            "updated_date": self.last_updated,
+            "creation_date": "creation_date",
+            "expiration_date": "expiration_date",
+            "updated_date": "last_updated",
         }
 
         for key in dateMap.keys():
+            setattr(self, dateMap[key], None)
             if key in data and len(data[key]):
-                dateMap[key] = self.str_to_date(
+                if verbose:
+                    print(key, data[key], file=sys.stderr)
+
+                vv = self.str_to_date(
                     data[key][0],
                     self.tld.lower(),
                     verbose,
                 )
+                setattr(self, dateMap[key], vv)
 
         # ------------------------------------------
         # multiple items

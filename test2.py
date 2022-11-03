@@ -11,8 +11,9 @@ IgnoreReturncode = False
 
 
 def prepItem(d):
+    print("\n")
     print("-" * 80)
-    print(d)
+    print(f"test for tld: {d}")
 
 
 def testItem(d):
@@ -28,8 +29,8 @@ def testItem(d):
         return
 
     wd = w.__dict__
-    for k, v in wd.items():
-        print('%20s\t"%s"' % (k, v))
+    for key in wd.keys():
+        print("%-20s\t%s" % (key, wd[key]))
 
 
 def errorItem(d, e, what="Generic"):
@@ -74,8 +75,8 @@ def testDomains(aList):
             errorItem(d, e, what="WhoisQuotaExceeded")
         except whois.WhoisPrivateRegistry as e:
             errorItem(d, e, what="WhoisPrivateRegistry")
-        except Exception as e:
-            errorItem(d, e, what="Generic")
+        # except Exception as e:
+        #    errorItem(d, e, what="Generic")
 
 
 def getTestFileOne(fPath, fileData):

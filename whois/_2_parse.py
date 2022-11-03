@@ -218,7 +218,7 @@ def _doIfServerNameThenStripUntilDomainName(rawResultString: str, verbose: bool 
     sn = re.findall(r"Server Name:\s?(.+)", rawResultString, re.IGNORECASE)
     if sn:
         if verbose:
-            print(f"found Server Name {sn}; looking for Domain Name", file=sys.stderr)
+            print(f"found 'Server Name:' {sn}; looking for Domain Name", file=sys.stderr)
         index = rawResultString.find("Domain Name:")
         return rawResultString[index:]
     return rawResultString
@@ -244,11 +244,11 @@ def do_parse(
 
     result: Dict[str, Any] = {
         "tld": tld,
+        "DNSSEC": _doDnsSec(rawResultString, verbose),
     }
-    result["DNSSEC"] = _doDnsSec(rawResultString, verbose)  # check the status of DNSSEC
 
     if "source:       IANA" in rawResultString:
-        rawResultString, result2 = _doSplitOnIanaPresent(rawResultString, verbose)  # not very common anymore
+        rawResultString, result2 = _doSplitOnIanaPresent(rawResultString, verbose)  # will now handle IANA domains
         if result2:
             for key in result2.keys():
                 result[key] = result2[key]

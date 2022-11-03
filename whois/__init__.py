@@ -313,7 +313,12 @@ def query(
         )
 
         # do we have a result and does it have a domain name
-        if parsedDomainData and parsedDomainData["domain_name"][0]:
+        if (
+            parsedDomainData
+            and "domain_name" in parsedDomainData
+            and len(parsedDomainData["domain_name"])
+            and parsedDomainData["domain_name"][0]
+        ):
             return Domain(
                 parsedDomainData,
                 verbose=verbose,
