@@ -159,9 +159,6 @@ def filterTldToSupportedPattern(
 
     if len(d) > 2:
         for i in Map2Underscore.keys():
-            if verbose:
-                print(i, file=sys.stderr)
-
             if domain.endswith(i):
                 tld = Map2Underscore[i]
                 return tld
