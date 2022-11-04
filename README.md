@@ -62,6 +62,9 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * all tests from the original program are now files in the ./tests directory
  * test can be done on all supported tld's with -a or --all and limitest by regex with -r <pattern> or --reg=<pattern>
 
+2022-11-04: maarten_boot
+ * add support for Iana example.com, example.net
+
 ## Support
  * Python 3.x is supported.
  * Python 2.x IS NOT supported.
