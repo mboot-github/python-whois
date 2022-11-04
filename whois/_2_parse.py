@@ -164,7 +164,7 @@ def doExtractPattensIanaFromWhoisString(tld: str, r: Dict, whois_str: str, verbo
     # now handle the actual format if this whois response
     iana = {
         "domain_name": r"domain:\s?([^\n]+)",
-        "registar": r"organisation:\s?([^\n]+)",
+        "registrar": r"organisation:\s?([^\n]+)",
         "creation_date": r"created:\s?([^\n]+)",
     }
     for k, v in iana.items():
