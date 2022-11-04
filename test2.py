@@ -15,9 +15,11 @@ def prepItem(d):
     print("")
     print(f"test domain: <<<<<<<<<< {d} >>>>>>>>>>>>>>>>>>>>")
 
+
 def xType(x):
     s = f"{type(x)}"
     return s.split("'")[1]
+
 
 def testItem(d):
     w = whois.query(
@@ -37,7 +39,7 @@ def testItem(d):
     # statuses can be a array of one empty string if no data
 
     # not all values are always present it mainly depends on whet we see in the output of whois
-    # if we return not None: the elements that ars always there ars domain_name and tld
+    # if we return not None: the elements that ars always there ars domain_name , tld, dnssec
 
     wd = w.__dict__
     for k, v in wd.items():

@@ -95,6 +95,69 @@ def cleanupWhoisResponse(
     return response
 
 
+def handleShortResponse(
+    tld: str,
+    dl: List,
+    whois_str: str,
+    verbose: bool = False,
+):
+    if verbose:
+        d = ".".join(dl)
+        print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
+
+    s = whois_str.strip().lower()
+
+    # NOTE: from here s is lowercase only
+    # ---------------------------------
+    noneStrings = [
+        "not found",
+        "no entries found",
+        "status: free",
+        "no such domain",
+        "the queried object does not exist",
+        "domain you requested is not known",
+        "status: available",
+    ]
+
+    for i in noneStrings:
+        if i in s:
+            return None
+
+    # ---------------------------------
+    # is there any error string in the result
+    if s.count("error"):
+        return None
+
+    # ---------------------------------
+    quotaStrings = [
+        "limit exceeded",
+        "quota exceeded",
+        "try again later",
+        "please try again",
+        "exceeded the maximum allowable number",
+        "can temporarily not be answered",
+        "please try again.",
+        "queried interval is too short",
+    ]
+
+    for i in quotaStrings:
+        if i in s:
+            raise WhoisQuotaExceeded(whois_str)
+
+    # ---------------------------------
+    # ToDo:  Name or service not known
+
+    # ---------------------------------
+    raise FailedParsingWhoisOutput(whois_str)
+
+def doDnsSec(whois_str: str):
+    whois_dnssec: Any = whois_str.split("DNSSEC:")
+    if len(whois_dnssec) >= 2:
+        whois_dnssec = whois_dnssec[1].split("\n")[0]
+        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
+            return True
+    return False
+
 def do_parse(
     whois_str: str,
     tld: str,
@@ -111,62 +174,9 @@ def do_parse(
     )
 
     if whois_str.count("\n") < 5:
-        if verbose:
-            d = ".".join(dl)
-            print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
+        return handleShortResponse(tld, dl, whois_str, verbose)
 
-        s = whois_str.strip().lower()
-
-        # NOTE: from here s is lowercase only
-        # ---------------------------------
-        noneStrings = [
-            "not found",
-            "no entries found",
-            "status: free",
-            "no such domain",
-            "the queried object does not exist",
-            "domain you requested is not known",
-            "status: available",
-        ]
-
-        for i in noneStrings:
-            if i in s:
-                return None
-
-        # ---------------------------------
-        # is there any error string in the result
-        if s.count("error"):
-            return None
-
-        # ---------------------------------
-        quotaStrings = [
-            "limit exceeded",
-            "quota exceeded",
-            "try again later",
-            "please try again",
-            "exceeded the maximum allowable number",
-            "can temporarily not be answered",
-            "please try again.",
-            "queried interval is too short",
-        ]
-
-        for i in quotaStrings:
-            if i in s:
-                raise WhoisQuotaExceeded(whois_str)
-
-        # ---------------------------------
-        # ToDo:  Name or service not known
-
-        # ---------------------------------
-        raise FailedParsingWhoisOutput(whois_str)
-
-    # check the status of DNSSEC
-    r["DNSSEC"] = False
-    whois_dnssec: Any = whois_str.split("DNSSEC:")
-    if len(whois_dnssec) >= 2:
-        whois_dnssec = whois_dnssec[1].split("\n")[0]
-        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
-            r["DNSSEC"] = True
+    r["DNSSEC"] = doDnsSec(whois_str) # check the status of DNSSEC
 
     # this is mostly not available in many tld's anymore, should be investigated
     # split whois_str to remove first IANA part showing info for TLD only
