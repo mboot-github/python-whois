@@ -95,6 +95,90 @@ def cleanupWhoisResponse(
     return response
 
 
+def handleShortResponse(
+    tld: str,
+    dl: List,
+    whois_str: str,
+    verbose: bool = False,
+): # returns None or raises one of (WhoisQuotaExceeded, FailedParsingWhoisOutput)
+    if verbose:
+        d = ".".join(dl)
+        print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
+
+    s = whois_str.strip().lower()
+
+    # NOTE: from here s is lowercase only
+    # ---------------------------------
+    noneStrings = [
+        "not found",
+        "no entries found",
+        "status: free",
+        "no such domain",
+        "the queried object does not exist",
+        "domain you requested is not known",
+        "status: available",
+    ]
+
+    for i in noneStrings:
+        if i in s:
+            return None
+
+    # ---------------------------------
+    # is there any error string in the result
+    if s.count("error"):
+        return None
+
+    # ---------------------------------
+    quotaStrings = [
+        "limit exceeded",
+        "quota exceeded",
+        "try again later",
+        "please try again",
+        "exceeded the maximum allowable number",
+        "can temporarily not be answered",
+        "please try again.",
+        "queried interval is too short",
+    ]
+
+    for i in quotaStrings:
+        if i in s:
+            raise WhoisQuotaExceeded(whois_str)
+
+    # ---------------------------------
+    # ToDo:  Name or service not known
+
+    # ---------------------------------
+    raise FailedParsingWhoisOutput(whois_str)
+
+def doDnsSec(whois_str: str) -> bool:
+    whois_dnssec: Any = whois_str.split("DNSSEC:")
+    if len(whois_dnssec) >= 2:
+        whois_dnssec = whois_dnssec[1].split("\n")[0]
+        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
+            return True
+    return False
+
+def doSourceIana(whois_str: str, verbose: bool = False) -> str:
+    # here we can handle the example.com and example.net permanent IANA domains
+
+    if verbose:
+        msg = f"i have seen source: IANA"
+        print(msg, file=sys.stderr)
+
+    whois_splitted = whois_str.split("source:       IANA")
+    if len(whois_splitted) == 2:
+        whois_str = whois_splitted[1] # often this is actually just whitespace
+    return whois_str
+
+def doIfServerNameLookForDomainName(whois_str: str, verbose: bool = False) -> str:
+    # not often available anymore
+    if re.findall(r"Server Name:\s?(.+)", whois_str, re.IGNORECASE):
+        if verbose:
+            msg = f"i have seen Server Name:, looking for Domain Name:"
+            print(msg, file=sys.stderr)
+        whois_str = whois_str[whois_str.find("Domain Name:") :]
+    return whois_str
+
 def do_parse(
     whois_str: str,
     tld: str,
@@ -111,84 +195,24 @@ def do_parse(
     )
 
     if whois_str.count("\n") < 5:
-        if verbose:
-            d = ".".join(dl)
-            print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
+        return handleShortResponse(tld, dl, whois_str, verbose)
 
-        s = whois_str.strip().lower()
+    r["DNSSEC"] = doDnsSec(whois_str) # check the status of DNSSEC
 
-        # NOTE: from here s is lowercase only
-        # ---------------------------------
-        noneStrings = [
-            "not found",
-            "no entries found",
-            "status: free",
-            "no such domain",
-            "the queried object does not exist",
-            "domain you requested is not known",
-            "status: available",
-        ]
+    if "source:       IANA" in whois_str: # prepare for handling historical IANA domains
+        whois_str = doSourceIana(whois_str, verbose)
 
-        for i in noneStrings:
-            if i in s:
-                return None
+    if "Server Name" in whois_str: # handle old type Server Name (not very common anymore)
+        whois_str = doIfServerNameLookForDomainName(whois_str, verbose)
 
-        # ---------------------------------
-        # is there any error string in the result
-        if s.count("error"):
-            return None
-
-        # ---------------------------------
-        quotaStrings = [
-            "limit exceeded",
-            "quota exceeded",
-            "try again later",
-            "please try again",
-            "exceeded the maximum allowable number",
-            "can temporarily not be answered",
-            "please try again.",
-            "queried interval is too short",
-        ]
-
-        for i in quotaStrings:
-            if i in s:
-                raise WhoisQuotaExceeded(whois_str)
-
-        # ---------------------------------
-        # ToDo:  Name or service not known
-
-        # ---------------------------------
-        raise FailedParsingWhoisOutput(whois_str)
-
-    # check the status of DNSSEC
-    r["DNSSEC"] = False
-    whois_dnssec: Any = whois_str.split("DNSSEC:")
-    if len(whois_dnssec) >= 2:
-        whois_dnssec = whois_dnssec[1].split("\n")[0]
-        if whois_dnssec.strip() == "signedDelegation" or whois_dnssec.strip() == "yes":
-            r["DNSSEC"] = True
-
-    # this is mostly not available in many tld's anymore, should be investigated
-    # split whois_str to remove first IANA part showing info for TLD only
-    whois_splitted = whois_str.split("source:       IANA")
-    if len(whois_splitted) == 2:
-        whois_str = whois_splitted[1]
-
-    # also not available for many modern tld's
-    sn = re.findall(r"Server Name:\s?(.+)", whois_str, re.IGNORECASE)
-    if sn:
-        whois_str = whois_str[whois_str.find("Domain Name:") :]
-
-    # return TLD_RE["com"] as default if tld not exists in TLD_RE
-    for k, v in TLD_RE.get(tld, TLD_RE["com"]).items():
-        if k.startswith("_"):
-            # skip meta element like: _server or _privateRegistry
+    for k, v in TLD_RE.get(tld, TLD_RE["com"]).items(): # use TLD_RE["com"] as default if a regex is missing
+        if k.startswith("_"): # skip meta element like: _server or _privateRegistry
             continue
 
+        # Historical: here we use 'empty string' as default, not None
         if v is None:
             r[k] = [""]
         else:
             r[k] = v.findall(whois_str) or [""]
-            # print("DEBUG: Keyval = " + str(r[k]))
 
     return r
