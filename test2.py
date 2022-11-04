@@ -4,7 +4,6 @@ import os
 import re
 import getopt
 import sys
-import json
 
 Verbose = False
 Failures = {}
