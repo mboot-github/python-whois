@@ -48,7 +48,6 @@ SLOW_DOWN = 0
 Map2Underscore = {
     ".ac.uk": "ac_uk",
     ".co.uk": "co_uk",
-
     ".co.il": "co_il",
     # uganda
     ".ca.ug": "ca_ug",

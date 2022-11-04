@@ -4,6 +4,7 @@ import os
 import re
 import getopt
 import sys
+import json
 
 Verbose = False
 Failures = {}
@@ -11,9 +12,12 @@ IgnoreReturncode = False
 
 
 def prepItem(d):
-    print("-" * 80)
-    print(d)
+    print("")
+    print(f"test domain: <<<<<<<<<< {d} >>>>>>>>>>>>>>>>>>>>")
 
+def xType(x):
+    s = f"{type(x)}"
+    return s.split("'")[1]
 
 def testItem(d):
     w = whois.query(
@@ -27,9 +31,21 @@ def testItem(d):
         print("None")
         return
 
+    # the 3 date time items can be None if not present or a datetime string
+    # dnssec is a bool
+    # some strings are return as '' when empty (status)
+    # statuses can be a array of one empty string if no data
+
+    # not all values are always present it mainly depends on whet we see in the output of whois
+    # if we return not None: the elements that ars always there ars domain_name and tld
+
     wd = w.__dict__
     for k, v in wd.items():
-        print('%20s\t"%s"' % (k, v))
+        ss = "%-18s %-17s "
+        if isinstance(v, str):
+            print((ss + "'%s'") % (k, xType(v), v))
+        else:
+            print((ss + "%s") % (k, xType(v), v))
 
 
 def errorItem(d, e, what="Generic"):
@@ -74,8 +90,8 @@ def testDomains(aList):
             errorItem(d, e, what="WhoisQuotaExceeded")
         except whois.WhoisPrivateRegistry as e:
             errorItem(d, e, what="WhoisPrivateRegistry")
-        except Exception as e:
-            errorItem(d, e, what="Generic")
+        # except Exception as e:
+        #    errorItem(d, e, what="Generic")
 
 
 def getTestFileOne(fPath, fileData):
