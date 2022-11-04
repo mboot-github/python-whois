@@ -150,6 +150,32 @@ def doDnsSec(whois_str: str) -> bool:
     return False
 
 
+def doIfServerNameLookForDomainName(whois_str: str, verbose: bool = False) -> str:
+    # not often available anymore
+    if re.findall(r"Server Name:\s?(.+)", whois_str, re.IGNORECASE):
+        if verbose:
+            msg = "i have seen Server Name:, looking for Domain Name:"
+            print(msg, file=sys.stderr)
+        whois_str = whois_str[whois_str.find("Domain Name:") :]
+    return whois_str
+
+
+def doExtractPattensIanaFromWhoisString(tld: str, r: Dict, whois_str: str, verbose: bool = False):
+    # now handle the actual format if this whois response
+    iana = {
+        "domain_name": r"domain:\s?([^\n]+)",
+        "registar": r"organisation:\s?([^\n]+)",
+        "creation_date": r"created:\s?([^\n]+)",
+    }
+    for k, v in iana.items():
+        zz = re.findall(v, whois_str)
+        if zz:
+            if verbose:
+                print(tld, zz, file=sys.stderr)
+            r[k] = zz
+    return r
+
+
 def doSourceIana(tld: str, r: Dict, whois_str: str, verbose: bool = False) -> str:
     # here we can handle the example.com and example.net permanent IANA domains
 
@@ -167,35 +193,12 @@ def doSourceIana(tld: str, r: Dict, whois_str: str, verbose: bool = False) -> st
         return whois_splitted[1], None
 
     # try to parse this as a IANA domain as after is only whitespace
-    # this will require us to fill in sufficient default values that the code expects to be there
-    r = doExtractPattensFromWhoisString(tld, r, whois_str, verbose)
+    r = doExtractPattensFromWhoisString(tld, r, whois_str, verbose)  # set default values
 
-    iana = {
-        "domain_name": r"domain:\s?([^\n]+)",
-        "registar": r"organisation:\s?([^\n]+)",
-        "creation_date": r"created:\s?([^\n]+)",
-    }
-    for k, v in iana.items():
-        zz = re.findall(v, whois_str)
-        if zz:
-            if verbose:
-                print(zz, file=sys.stderr)
-            r[k] = zz
-
-    if verbose:
-        print(r, file=sys.stderr)
+    # now handle the actual format if this whois response
+    r = doExtractPattensIanaFromWhoisString(tld, r, whois_str, verbose)
 
     return whois_str, r
-
-
-def doIfServerNameLookForDomainName(whois_str: str, verbose: bool = False) -> str:
-    # not often available anymore
-    if re.findall(r"Server Name:\s?(.+)", whois_str, re.IGNORECASE):
-        if verbose:
-            msg = "i have seen Server Name:, looking for Domain Name:"
-            print(msg, file=sys.stderr)
-        whois_str = whois_str[whois_str.find("Domain Name:") :]
-    return whois_str
 
 
 def doExtractPattensFromWhoisString(tld: str, r: Dict, whois_str: str, verbose: bool = False):
