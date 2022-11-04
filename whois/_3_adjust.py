@@ -30,28 +30,7 @@ class Domain:
     registrant = None
     admin = None
 
-    def __init__(
-        self,
-        data: Dict[str, Any],
-        verbose: bool = False,
-    ):
-        self.name = data["domain_name"][0].strip().lower()
-        self.tld = data["tld"]
-
-        self.registrar = data["registrar"][0].strip()
-        self.registrant_country = data["registrant_country"][0].strip()
-
-        self.creation_date = str_to_date(data["creation_date"][0], self.tld.lower())
-        self.expiration_date = str_to_date(data["expiration_date"][0], self.tld.lower())
-        self.last_updated = str_to_date(data["updated_date"][0], self.tld.lower())
-
-        self.status = data["status"][0].strip()
-        self.statuses = list(set([s.strip() for s in data["status"]]))  # list(set(...))) to deduplicate
-
-        self.dnssec = data["DNSSEC"]
-
-        # ----------------------------
-        # name_servers
+    def extractNameServers(self, data: Dict) -> List:
         tmp = []
         for x in data["name_servers"]:
             if isinstance(x, str):
@@ -60,10 +39,6 @@ class Domain:
             # not a string but an array
             for y in x:
                 tmp.append(y.strip().lower())
-
-        if 0:
-            if verbose:
-                print(tmp, file=sys.stderr)
 
         self.name_servers = []
         for x in tmp:
@@ -76,23 +51,46 @@ class Domain:
                 x = x.lower()
                 if x not in self.name_servers:
                     self.name_servers.append(x)
-        self.name_servers = sorted(self.name_servers)
-        # ----------------------------
+        return sorted(self.name_servers)
 
-        if "owner" in data:
-            self.owner = data["owner"][0].strip()
+    def __init__(
+        self,
+        data: Dict[str, Any],
+        verbose: bool = False,
+    ):
+        # first all fields that return a single value [str,None,datetime]
 
-        if "abuse_contact" in data:
-            self.abuse_contact = data["abuse_contact"][0].strip()
+        self.name = data["domain_name"][0].strip().lower()  # always present
+        self.tld = data["tld"]  # always present
+        self.dnssec = data["DNSSEC"]  # always present
 
-        if "reseller" in data:
-            self.reseller = data["reseller"][0].strip()
+        mapNamesAllways = {  # we expect these items to be always in the result
+            "registrar": "registrar",
+            "registrant_country": "registrant_country",
+            "creation_date": "creation_date",
+            "expiration_date": "expiration_date",
+            "updated_date": "last_updated",
+            "status": "status",
+        }
 
-        if "registrant" in data:
-            self.registrant = data["registrant"][0].strip()
+        for key, val in mapNamesAllways.items():
+            setattr(self, val, data[key][0].strip())
 
-        if "admin" in data:
-            self.admin = data["admin"][0].strip()
+        mapNamesOptional = {  # these items are optional and could be in the result
+            "owner": "owner",
+            "abuse_contact": "abuse_contact",
+            "reseller": "reseller",
+            "registrant": "registrant",
+            "admin": "admin",
+        }
+
+        for key, val in mapNamesOptional.items():
+            if key in data:
+                setattr(self, val, data[key][0].strip())
+
+        # items returning a list
+        self.statuses = list(set([s.strip() for s in data["status"]]))  # list(set(...))) to deduplicate
+        self.name_servers = self.extractNameServers(data)
 
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior

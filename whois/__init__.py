@@ -283,10 +283,7 @@ def query(
 
         # do we have a result and does it have a domain name
         if pd and pd["domain_name"][0]:
-            return Domain(
-                pd,
-                verbose=verbose,
-            )
+            return Domain(pd, verbose=verbose)
 
         if len(d) > (len(tldLevel) + 1):
             d = d[1:]  # strip one element from the front and try again
@@ -297,15 +294,7 @@ def query(
         # no result or no domain but we can not reduce any further so we have None
         return None
 
-        """
-        # not a or not b == not ( a and b )
-        if len(d) > 2 and (not pd or not pd["domain_name"][0]):
-            d = d[1:]
-        else:
-            break
-        """
-
-    return None
+    return None  # not reached
 
 
 # Add get function to support return result in dictionary form
