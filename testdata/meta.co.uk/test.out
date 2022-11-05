@@ -1,0 +1,15 @@
+
+test domain: <<<<<<<<<< meta.co.uk >>>>>>>>>>>>>>>>>>>>
+name               str               'meta.co.uk'
+tld                str               'co_uk'
+dnssec             bool              False
+registrar          str               'Hogan Lovells International LLP [Tag = LOVELLSLLP]'
+registrant_country str               ''
+creation_date      str               '01-Nov-2001'
+expiration_date    str               '01-Nov-2029'
+last_updated       str               '28-Jul-2022'
+status             str               'Registered until expiry date.'
+owner              str               ''
+registrant         str               ''
+statuses           list              ['Registered until expiry date.']
+name_servers       list              ['a.ns.facebook.com', 'b.ns.facebook.com']

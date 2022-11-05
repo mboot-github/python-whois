@@ -1,0 +1,14 @@
+
+test domain: <<<<<<<<<< example.com >>>>>>>>>>>>>>>>>>>>
+name               str               'example.com'
+tld                str               'com'
+dnssec             bool              False
+registrar          str               'Internet Assigned Numbers Authority'
+registrant_country str               ''
+creation_date      str               '1992-01-01'
+expiration_date    str               ''
+last_updated       str               ''
+status             str               ''
+registrant         str               ''
+statuses           list              ['']
+name_servers       list              []

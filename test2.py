@@ -325,7 +325,6 @@ def main(argv):
         return
 
     if len(domains):
-        print("## ===== TEST DOMAINS")
         testDomains(domains)
         showFailures()
         return

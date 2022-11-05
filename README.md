@@ -65,6 +65,10 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
 2022-11-04: maarten_boot
  * add support for Iana example.com, example.net
 
+2022-11-05: maarten_boot
+ * add testing agains static known data in testdata
+ * test.sh will test all domains in testdata without actually calling whois, the data is read from testdata/<domain>/in
+
 ## Support
  * Python 3.x is supported.
  * Python 2.x IS NOT supported.

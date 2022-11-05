@@ -89,7 +89,7 @@ class Domain:
                 setattr(self, val, data[key][0].strip())
 
         # items returning a list
-        self.statuses = list(set([s.strip() for s in data["status"]]))  # list(set(...))) to deduplicate
+        self.statuses = sorted(list(set([s.strip() for s in data["status"]])))  # list(set(...))) to deduplicate
         self.name_servers = self.extractNameServers(data)
 
 

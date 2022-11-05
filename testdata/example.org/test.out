@@ -1,0 +1,14 @@
+
+test domain: <<<<<<<<<< example.org >>>>>>>>>>>>>>>>>>>>
+name               str               'example.org'
+tld                str               'org'
+dnssec             bool              True
+registrar          str               'ICANN'
+registrant_country str               'US'
+creation_date      str               '1995-08-31T04:00:00Z'
+expiration_date    str               '2023-08-30T04:00:00Z'
+last_updated       str               ''
+status             str               'serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited'
+registrant         str               'ICANN'
+statuses           list              ['serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited', 'serverRenewProhibited https://icann.org/epp#serverRenewProhibited', 'serverTransferProhibited https://icann.org/epp#serverTransferProhibited', 'serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited']
+name_servers       list              ['a.iana-servers.net', 'b.iana-servers.net']

@@ -94,7 +94,11 @@ def tryInstallMissingWhoisOnWindows(verbose: bool = False):
     )
 
 
-def makeWhoisCommandToRun(dl: List[str], server: Optional[str] = None, verbose: bool = False,):
+def makeWhoisCommandToRun(
+    dl: List[str],
+    server: Optional[str] = None,
+    verbose: bool = False,
+):
     domain = ".".join(dl)
     wh = "whois"  # default 'whois'
 
@@ -109,6 +113,22 @@ def makeWhoisCommandToRun(dl: List[str], server: Optional[str] = None, verbose: 
     return [wh, domain]
 
 
+def testWhoisPythonFromStaticTestData(
+    dl: List[str],
+    ignore_returncode: bool,
+    server: Optional[str] = None,
+    verbose: bool = False,
+) -> str:
+    domain = ".".join(dl)
+
+    pathToTestFile = f"./testdata/{domain}/in"
+    if os.path.exists(pathToTestFile):
+        with open(pathToTestFile, mode="r") as f:
+            return f.read()
+
+    raise WhoisCommandFailed("")
+
+
 def _do_whois_query(
     dl: List[str],
     ignore_returncode: bool,
@@ -117,6 +137,8 @@ def _do_whois_query(
 ) -> str:
     # TODO: if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
     # this wasy we can actually implemnt a test run with known data in and expected data out
+    if os.getenv("TEST_WHOIS_PYTHON"):
+        return testWhoisPythonFromStaticTestData(dl, ignore_returncode, server, verbose)
 
     cmd = makeWhoisCommandToRun(dl, server, verbose)
 
