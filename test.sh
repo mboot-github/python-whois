@@ -19,7 +19,7 @@ testOneDomain()
     echo "testing: $domain"
     ./test2.py -d "$domain" >"$TestDataDir/$domain/test.out"
 
-    diff "$TestDataDir/$domain/output" "$TestDataDir/$domain/test.out"
+    diff "$TestDataDir/$domain/output" "$TestDataDir/$domain/test.out" | tee "$TestDataDir/$domain/out"
 }
 
 main()
