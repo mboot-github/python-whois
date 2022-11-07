@@ -33,8 +33,13 @@ class Domain:
     def __init__(
         self,
         data: Dict[str, Any],
+        whois_str: Optional[str] = None,
         verbose: bool = False,
+        include_raw_whois_text: bool = False,
     ):
+        if include_raw_whois_text and whois_str is not None:
+            self.text = whois_str
+
         self.name = data["domain_name"][0].strip().lower()
         self.tld = data["tld"]
 
