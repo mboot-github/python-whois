@@ -75,47 +75,72 @@ def do_query(
     return CACHE[k][1]
 
 
+def tryInstallMissingWhoisOnWindows(verbose: bool = False):
+    """
+    Windows 'whois' command wrapper
+    https://docs.microsoft.com/en-us/sysinternals/downloads/whois
+    """
+    folder = os.getcwd()
+    copy_command = r"copy \\live.sysinternals.com\tools\whois.exe " + folder
+    if verbose:
+        print("downloading dependencies", file=sys.stderr)
+        print(copy_command, file=sys.stderr)
+
+    subprocess.call(
+        copy_command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
+    )
+
+
+def makeWhoisCommandToRun(
+    dl: List[str],
+    server: Optional[str] = None,
+    verbose: bool = False,
+):
+    domain = ".".join(dl)
+    wh = "whois"  # default 'whois'
+
+    if platform.system() == "Windows":
+        # Usage: whois [-v] domainname [whois.server]
+        if not os.path.exists("whois.exe"):
+            tryInstallMissingWhoisOnWindows(verbose)
+        wh = r".\whois.exe "
+
+    if server:
+        return [wh, domain, "-h", server]
+    return [wh, domain]
+
+
+def testWhoisPythonFromStaticTestData(
+    dl: List[str],
+    ignore_returncode: bool,
+    server: Optional[str] = None,
+    verbose: bool = False,
+) -> str:
+    domain = ".".join(dl)
+
+    pathToTestFile = f"./testdata/{domain}/input"
+    if os.path.exists(pathToTestFile):
+        with open(pathToTestFile, mode="r") as f:
+            return f.read()
+
+    raise WhoisCommandFailed("")
+
+
 def _do_whois_query(
     dl: List[str],
     ignore_returncode: bool,
     server: Optional[str] = None,
     verbose: bool = False,
 ) -> str:
-    if platform.system() == "Windows":
-        """
-        Windows 'whois' command wrapper
-        https://docs.microsoft.com/en-us/sysinternals/downloads/whois
-        Usage: whois [-v] domainname [whois.server]
-        """
-        if not os.path.exists("whois.exe"):
-            if verbose:
-                print("downloading dependencies", file=sys.stderr)
+    # TODO: if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
+    # this wasy we can actually implemnt a test run with known data in and expected data out
+    if os.getenv("TEST_WHOIS_PYTHON"):
+        return testWhoisPythonFromStaticTestData(dl, ignore_returncode, server, verbose)
 
-            folder = os.getcwd()
-            copy_command = r"copy \\live.sysinternals.com\tools\whois.exe " + folder
-            if verbose:
-                print(copy_command, file=sys.stderr)
-
-            subprocess.call(
-                copy_command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                shell=True,
-            )
-
-        if server:
-            cmd = [r".\whois.exe ", ".".join(dl), "-v", server]
-        else:
-            cmd = [r".\whois.exe ", ".".join(dl)]
-
-    else:
-        """
-        Linux 'whois' command wrapper
-        """
-        if server:
-            cmd = ["whois", ".".join(dl), "-h", server]
-        else:
-            cmd = ["whois", ".".join(dl)]
+    cmd = makeWhoisCommandToRun(dl, server, verbose)
 
     # LANG=en is added to make the ".jp" output consist across all environments
     p = subprocess.Popen(

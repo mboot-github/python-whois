@@ -1,0 +1,15 @@
+## ===== TEST DOMAINS
+
+test domain: <<<<<<<<<< example.net >>>>>>>>>>>>>>>>>>>>
+name               str               'example.net'
+tld                str               'net'
+registrar          str               'Internet Assigned Numbers Authority'
+registrant_country str               ''
+creation_date      datetime.datetime 1992-01-01 00:00:00
+expiration_date    NoneType          None
+last_updated       NoneType          None
+status             str               ''
+statuses           list              ['']
+dnssec             bool              False
+name_servers       list              []
+registrant         str               ''

@@ -46,7 +46,13 @@ class Domain:
         self.last_updated = str_to_date(data["updated_date"][0], self.tld.lower())
 
         self.status = data["status"][0].strip()
-        self.statuses = list(set([s.strip() for s in data["status"]]))  # list(set(...))) to deduplicate
+        self.statuses = sorted(  # sorted added to get predictable output during test
+            list(  # list(set(...))) to deduplicate results
+                set(
+                    [s.strip() for s in data["status"]],
+                ),
+            ),
+        )
 
         self.dnssec = data["DNSSEC"]
 
