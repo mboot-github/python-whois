@@ -49,6 +49,7 @@
     google.eu
     google.fi
     google.fm
+    google.fo
     google.fr
     google.game
     google.global
@@ -61,6 +62,8 @@
     google.is
     google.it
     google.jp
+    google.kg
+    google.kn
     google.link
     google.lt
     google.me
@@ -88,6 +91,7 @@
     google.tel
     google.theatre
     google.tickets
+    google.tokyo
     google.trade
     google.tv
     google.us

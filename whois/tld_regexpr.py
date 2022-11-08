@@ -404,6 +404,11 @@ fm = {
     "extend": "com",
 }
 
+fo = {
+    "extend": "com",
+    "registrant": None,
+}
+
 fr = {
     "extend": "com",
     "domain_name": r"domain:\s?(.+)",
@@ -583,6 +588,23 @@ lg_jp = {"extend": "co_jp"}
 geo_jp = {"extend": "co_jp"}
 
 kiwi = {
+    "extend": "com",
+}
+
+kg = {
+    "extend": None,
+    "domain_name": r"Domain\s(.+)\s\(",
+    "registrar": r"Billing\sContact:\n.*\n\s+Name:\s(.+)\n",
+    "registrant_country": None,
+    "expiration_date": r"Record expires on:\s+(.+)",
+    "creation_date": r"Record created:\s+(.+)",
+    "updated_date": r"Record last updated on:\s+(.+)",
+    "name_servers": None,
+    "status": None,
+}
+
+# Saint Kitts and Nevis
+kn = {
     "extend": "com",
 }
 
@@ -962,6 +984,10 @@ tn = {
     "name_servers": r"DNS servers\s?Name\.+:\s?(.+)\s*Name\.+:\s?(.+)?",
     "status": r"Domain status\.+:(.+)",
     "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+}
+
+tokyo = {
+    "extend": "com",
 }
 
 top = {

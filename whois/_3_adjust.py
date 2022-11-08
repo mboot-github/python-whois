@@ -159,7 +159,8 @@ DATE_FORMATS = [
     "%Y%m%d%H%M%S",  # 20071224102432 used in edu_ua
     "%Y-%m-%d %H:%M:%S (%Z%z)",  # .tw uses (UTC+8) but we need (UTC+0800) for %z match
     "%d %B %Y at %H:%M:%S.%f",  # 07 january 2020 at 23:38:30.772
-    "%Y-%m-%d %H:%M:%S.%f %Z",  # 2022-09-18 22:38:18.0 UTC (sn Senegal)
+    "%Y-%m-%d %H:%M:%S.%f %Z",  # 2022-09-18 22:38:18.0 UTC (sn Senegal),
+    "%a %b %d %H:%M:%S %Y",  # Thu Oct 21 05:54:20 2032 (kg Kyrgyzstan)
 ]
 
 CUSTOM_DATE_FORMATS = {
@@ -194,6 +195,9 @@ def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datet
     # hack for 1st 2nd 3rd 4th etc
     # better here https://stackoverflow.com/questions/1258199/python-datetime-strptime-wildcard
     text = re.sub(r"(\d+)(st|nd|rd|th) ", r"\1 ", text)
+
+    # Remove consecutive whitespace
+    text = re.sub(r"\s\s+", r" ", text)
 
     # 07 january 2020 at 23:38:30.772
     # %d %B %Y at %H:%M %S.%f
