@@ -1,10 +1,11 @@
 #! /usr/bin/bash
 
 DOMAINS=(
-    example.net
-    example.com
-    example.org
-    meta.co.uk
+    example.net # has iana source
+    example.com # has iana source
+    example.org # has no iana source
+    meta.co.uk # has multiline for all relevant fields and 4 nameservers; should be fixed output has only 2
+    # xs4all.nl # has multiline nameserver and multiline registrar; outout has no nameservers should be 2
 )
 
 for str in ${DOMAINS[@]}

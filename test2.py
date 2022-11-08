@@ -6,6 +6,8 @@ import getopt
 import sys
 
 Verbose = False
+PrintGetRawWhoisResult = False
+
 Failures = {}
 IgnoreReturncode = False
 
@@ -20,12 +22,15 @@ def xType(x):
     return s.split("'")[1]
 
 
-def testItem(d):
+def testItem(d: str, printgetRawWhoisResult: bool = False):
+    global PrintGetRawWhoisResult
+
     w = whois.query(
         d,
         ignore_returncode=IgnoreReturncode,
         verbose=Verbose,
         internationalized=True,
+        include_raw_whois_text=PrintGetRawWhoisResult,
     )
 
     if w is None:
@@ -174,6 +179,8 @@ test.py
         # files are processed as in the -f option so comments and empty lines are skipped
         # the option can be repeated to specify more then one directory
 
+    [ -p | --print also print text containing the raw output of whois ]
+
     # options are exclusive and without any options the test2 program does nothing
 
     # test one specific file with verbose and IgnoreReturncode
@@ -214,12 +221,14 @@ def showFailures():
 def main(argv):
     global Verbose
     global IgnoreReturncode
+    global PrintGetRawWhoisResult
 
     try:
         opts, args = getopt.getopt(
             argv,
-            "vIhaf:d:D:r:H:",
+            "pvIhaf:d:D:r:H:",
             [
+                "print",
                 "verbose",
                 "IgnoreReturncode",
                 "all",
@@ -267,6 +276,9 @@ def main(argv):
 
         if opt in ("-v", "--verbose"):
             Verbose = True
+
+        if opt in ("-p", "--print"):
+            PrintGetRawWhoisResult = True
 
         if opt in ("-D", "--Directory"):
             directory = arg
@@ -325,7 +337,6 @@ def main(argv):
         return
 
     if len(domains):
-        print("## ===== TEST DOMAINS")
         testDomains(domains)
         showFailures()
         return

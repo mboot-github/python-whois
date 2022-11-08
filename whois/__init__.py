@@ -195,6 +195,7 @@ def query(
     verbose: bool = False,
     with_cleanup_results=False,
     internationalized: bool = False,
+    include_raw_whois_text: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -285,7 +286,9 @@ def query(
         if pd and pd["domain_name"][0]:
             return Domain(
                 pd,
+                whois_str=q,
                 verbose=verbose,
+                include_raw_whois_text=include_raw_whois_text,
             )
 
         if len(d) > (len(tldLevel) + 1):
