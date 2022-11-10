@@ -123,8 +123,9 @@ def testWhoisPythonFromStaticTestData(
 
     pathToTestFile = f"./testdata/{domain}/input"
     if os.path.exists(pathToTestFile):
-        with open(pathToTestFile, mode="r") as f:
-            return f.read()
+        with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
+            # make sure the data is treated exactly the same as the output of Popen
+            return f.read().decode(errors="ignore")
 
     raise WhoisCommandFailed("")
 
@@ -135,7 +136,7 @@ def _do_whois_query(
     server: Optional[str] = None,
     verbose: bool = False,
 ) -> str:
-    # TODO: if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
+    # if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
     # this wasy we can actually implemnt a test run with known data in and expected data out
     if os.getenv("TEST_WHOIS_PYTHON"):
         return testWhoisPythonFromStaticTestData(dl, ignore_returncode, server, verbose)
@@ -150,7 +151,6 @@ def _do_whois_query(
         env={"LANG": "en"} if dl[-1] in ".jp" else None,
     )
 
-    # print(p.stdout.read()+' '+p.stderr.read())
     r = p.communicate()[0].decode(errors="ignore")
     if ignore_returncode is False and p.returncode not in [0, 1]:
         raise WhoisCommandFailed(r)

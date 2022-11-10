@@ -28,7 +28,7 @@ __all__ = ["query", "get"]
 
 import sys
 from functools import wraps
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 from ._1_query import do_query
 from ._2_parse import do_parse, TLD_RE
@@ -185,6 +185,65 @@ def result2dict(func):
     return _inner
 
 
+def fromDomainStringToTld(domain: str, internationalized: bool, verbose: bool = False):
+    domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
+    d = domain.split(".")
+    if verbose:
+        print(d, file=sys.stderr)
+
+    if d[0] == "www":
+        d = d[1:]
+
+    if len(d) == 1:
+        return None, None
+
+    tld = filterTldToSupportedPattern(domain, d, verbose)
+
+    if internationalized and isinstance(internationalized, bool):
+        d = internationalizedDomainNameToPunyCode(d)
+
+    if verbose:
+        print(tld, d, file=sys.stderr)
+
+    return tld, d
+
+
+def validateWeKnowTheToplevelDomain(tld):  # may raise UnknownTld
+    if tld not in TLD_RE.keys():
+        a = f"The TLD {tld} is currently not supported by this package."
+        b = "Use validTlds() to see what toplevel domains are supported."
+        msg = f"{a} {b}"
+        raise UnknownTld(msg)
+    return TLD_RE.get(tld)
+
+
+def verifyPrivateREgistry(thisTld: Dict):  # may raise WhoisPrivateRegistry
+    # signal we know the tld but it has no whos or does not respond with any information
+    if thisTld.get("_privateRegistry"):
+        msg = "This tld has either no whois server or responds only with minimal information"
+        raise WhoisPrivateRegistry(msg)
+
+
+def doServerHintsForThisTld(tld: str, thisTld: Dict, server: Optional[str], verbose: bool = False):
+    # allow server hints using "_server" from the tld_regexpr.py file
+    thisTldServer = thisTld.get("_server")
+    if server is None and thisTldServer:
+        server = thisTldServer
+        if verbose:
+            print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
+    return server
+
+
+def doSlowdownHintForThisTld(tld: str, thisTld, slow_down: int, verbose: bool = False) -> int:
+    # allow a configrable slowdown for some tld's
+    slowDown = thisTld.get("_slowdown")
+    if slow_down == 0 and slowDown and slowDown > 0:
+        slow_down = slowDown
+        if verbose:
+            print(f"using _slowdown hint {slowDown} for tld: {tld}", file=sys.stderr)
+    return slow_down
+
+
 def query(
     domain: str,
     force: bool = False,
@@ -206,63 +265,33 @@ def query(
                         propagates on linux to "whois -h <server> <domain>"
                         propagates on Windows to whois.exe <domain> <server>
     with_cleanup_results: cleanup lines starting with % and REDACTED FOR PRIVACY
-    internationalized:  if true convert internationalizedDomainNameToPunyCode
+    internationalized:  if true convert with internationalizedDomainNameToPunyCode().
+    ignore_returncode:  if true and the whois command fails with code 1, still process the data returned as normal.
+    verbose:            if true, print relevant information on steps taken to standard error
+    include_raw_whois_text:
+                        if reqested the full response is also returned.
     """
+
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
 
-    cache_file = cache_file or CACHE_FILE
-    slow_down = slow_down or SLOW_DOWN
-
-    domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
-    d = domain.split(".")
-
-    if d[0] == "www":
-        d = d[1:]
-
-    if len(d) == 1:
+    tld, d = fromDomainStringToTld(domain, internationalized, verbose)
+    if tld is None:
         return None
 
-    tld = filterTldToSupportedPattern(domain, d, verbose)
+    thisTld = validateWeKnowTheToplevelDomain(tld)  # may raise UnknownTld
+    verifyPrivateREgistry(thisTld)  # may raise WhoisPrivateRegistry
+    server = doServerHintsForThisTld(tld, thisTld, server, verbose)
 
-    if tld not in TLD_RE.keys():
-        a = f"The TLD {tld} is currently not supported by this package."
-        b = "Use validTlds() to see what toplevel domains are supported."
-        msg = f"{a} {b}"
-        raise UnknownTld(msg)
-
-    # allow server hints using "_server" from the tld_regexpr.py file
-    thisTld = TLD_RE.get(tld)
-    if thisTld.get("_privateRegistry"):
-        msg = "This tld has either no whois server or responds only with minimal information"
-        raise WhoisPrivateRegistry(msg)
-
-    # allow explicit whois server usage
-    thisTldServer = thisTld.get("_server")
-    if server is None and thisTldServer:
-        server = thisTldServer
-        if verbose:
-            print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
-
-    # allow a configrable slowdown for some tld's
-    slowDown = thisTld.get("_slowdown")
-    if slow_down == 0 and slowDown and slowDown > 0:
-        slow_down = slowDown
-        if verbose:
-            print(f"using _slowdown hint {slowDown} for tld: {tld}", file=sys.stderr)
+    slow_down = slow_down or SLOW_DOWN
+    slow_down = doSlowdownHintForThisTld(tld, thisTld, slow_down, verbose)
 
     # if the tld is a multi level we should not move further down than the tld itself
     # we currently allow progressive lookups until we find something:
     # so xxx.yyy.zzz will try both xxx.yyy.zzz and yyy.zzz
     # but if the tld is yyy.zzz we should only try xxx.yyy.zzz
+
+    cache_file = cache_file or CACHE_FILE
     tldLevel = tld.split("_")
-
-    if internationalized and isinstance(internationalized, bool):
-        if verbose:
-            print(d, file=sys.stderr)
-        d = internationalizedDomainNameToPunyCode(d)
-        if verbose:
-            print(d, file=sys.stderr)
-
     while 1:
         q = do_query(
             dl=d,
@@ -299,14 +328,6 @@ def query(
 
         # no result or no domain but we can not reduce any further so we have None
         return None
-
-        """
-        # not a or not b == not ( a and b )
-        if len(d) > 2 and (not pd or not pd["domain_name"][0]):
-            d = d[1:]
-        else:
-            break
-        """
 
     return None
 
