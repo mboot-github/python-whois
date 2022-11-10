@@ -274,7 +274,7 @@ def query(
 
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
 
-    tld, d = fromDomainStringToTld(domain, internationalized, verbose)
+    tld, dl = fromDomainStringToTld(domain, internationalized, verbose)
     if tld is None:
         return None
 
@@ -291,10 +291,10 @@ def query(
     # but if the tld is yyy.zzz we should only try xxx.yyy.zzz
 
     cache_file = cache_file or CACHE_FILE
-    tldLevel = tld.split("_")
+    tldLevel = tld.split("_")  # note while the top level domain may have a . the tld has a _ ( co.uk becomes co_uk )
     while 1:
-        q = do_query(
-            dl=d,
+        whois_str = do_query(
+            dl=dl,
             force=force,
             cache_file=cache_file,
             slow_down=slow_down,
@@ -303,27 +303,27 @@ def query(
             verbose=verbose,
         )
 
-        pd = do_parse(
-            whois_str=q,
+        data = do_parse(
+            whois_str=whois_str,
             tld=tld,
-            dl=d,
+            dl=dl,
             verbose=verbose,
             with_cleanup_results=with_cleanup_results,
         )
 
         # do we have a result and does it have a domain name
-        if pd and pd["domain_name"][0]:
+        if data and data["domain_name"][0]:
             return Domain(
-                pd,
-                whois_str=q,
+                data=data,
+                whois_str=whois_str,
                 verbose=verbose,
                 include_raw_whois_text=include_raw_whois_text,
             )
 
-        if len(d) > (len(tldLevel) + 1):
-            d = d[1:]  # strip one element from the front and try again
+        if len(dl) > (len(tldLevel) + 1):
+            dl = dl[1:]  # strip one element from the front and try again
             if verbose:
-                print(f"try again with {d}, {len(d)}, {len(tldLevel) + 1}", file=sys.stderr)
+                print(f"try again with {dl}, {len(dl)}, {len(tldLevel) + 1}", file=sys.stderr)
             continue
 
         # no result or no domain but we can not reduce any further so we have None
