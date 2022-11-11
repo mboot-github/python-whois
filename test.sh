@@ -1,9 +1,8 @@
 #! /usr/bin/bash
 
 # signal whois module that we are testing, this reads data from testdata/<domain>/in
-export TEST_WHOIS_PYTHON="1"
-
-TestDataDir="./testdata"
+TestDataDir=$(realpath ./testdata)
+export TEST_WHOIS_PYTHON="$TestDataDir"
 
 get_testdomains()
 {

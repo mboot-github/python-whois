@@ -120,8 +120,8 @@ def testWhoisPythonFromStaticTestData(
     verbose: bool = False,
 ) -> str:
     domain = ".".join(dl)
-
-    pathToTestFile = f"./testdata/{domain}/input"
+    testDir = os.getenv("TEST_WHOIS_PYTHON")
+    pathToTestFile = f"{testDir}/{domain}/input"
     if os.path.exists(pathToTestFile):
         with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
             # make sure the data is treated exactly the same as the output of Popen
