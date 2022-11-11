@@ -260,7 +260,7 @@ def main(argv):
     fileData = {}
 
     for opt, arg in opts:
-        if opt in ( "-S", "SupportedTld"):
+        if opt in ("-S", "SupportedTld"):
             for tld in sorted(whois.validTlds()):
                 print(tld)
             sys.exit(0)

@@ -208,8 +208,10 @@ def fromDomainStringToTld(domain: str, internationalized: bool, verbose: bool = 
     return tld, d
 
 
-def validateWeKnowTheToplevelDomain(tld):  # may raise UnknownTld
+def validateWeKnowTheToplevelDomain(tld, return_raw_text_for_unsupported_tld: bool = False):  # may raise UnknownTld
     if tld not in TLD_RE.keys():
+        if return_raw_text_for_unsupported_tld:
+            return None
         a = f"The TLD {tld} is currently not supported by this package."
         b = "Use validTlds() to see what toplevel domains are supported."
         msg = f"{a} {b}"
@@ -244,6 +246,45 @@ def doSlowdownHintForThisTld(tld: str, thisTld, slow_down: int, verbose: bool = 
     return slow_down
 
 
+def doUnsupportedTldAnyway(
+    tld: str,
+    dl: Dict,
+    ignore_returncode: bool = False,
+    slow_down: int = 0,
+    server: Optional[str] = None,
+    verbose: bool = False,
+):
+    include_raw_whois_text = True
+
+    # we will not hunt for possible valid first level domains as we have no actual feedback
+
+    whois_str = do_query(
+        dl=dl,
+        slow_down=slow_down,
+        ignore_returncode=ignore_returncode,
+        server=server,
+        verbose=verbose,
+    )
+
+    # we will only return minimal data
+    data = {
+        "tld": tld,
+        "domain_name": "",
+    }
+    data["domain_name"] =  [".".join(dl)] # note the fields are default all array, except tld
+
+    if verbose:
+        print(data, file=sys.stderr)
+
+    return Domain(
+        data=data,
+        whois_str=whois_str,
+        verbose=verbose,
+        include_raw_whois_text=include_raw_whois_text,
+        return_raw_text_for_unsupported_tld=True,
+    )
+
+
 def query(
     domain: str,
     force: bool = False,
@@ -255,6 +296,7 @@ def query(
     with_cleanup_results=False,
     internationalized: bool = False,
     include_raw_whois_text: bool = False,
+    return_raw_text_for_unsupported_tld: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -270,15 +312,28 @@ def query(
     verbose:            if true, print relevant information on steps taken to standard error
     include_raw_whois_text:
                         if reqested the full response is also returned.
+    return_raw_text_for_unsupported_tld:
+                        if the tld is unsupported, just try it anyway but return only the raw text.
     """
 
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
+    return_raw_text_for_unsupported_tld = bool(return_raw_text_for_unsupported_tld)
 
     tld, dl = fromDomainStringToTld(domain, internationalized, verbose)
     if tld is None:
         return None
 
-    thisTld = validateWeKnowTheToplevelDomain(tld)  # may raise UnknownTld
+    thisTld = validateWeKnowTheToplevelDomain(tld, return_raw_text_for_unsupported_tld)  # may raise UnknownTld
+    if thisTld is None:
+        return doUnsupportedTldAnyway(
+            tld,
+            dl,
+            ignore_returncode=ignore_returncode,
+            slow_down=slow_down,
+            server=server,
+            verbose=verbose,
+        )
+
     verifyPrivateREgistry(thisTld)  # may raise WhoisPrivateRegistry
     server = doServerHintsForThisTld(tld, thisTld, server, verbose)
 

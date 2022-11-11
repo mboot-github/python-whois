@@ -69,6 +69,10 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * add testing against static known data in dir: ./testdata/<domain>/output
  * test.sh will test all domains in testdata without actually calling whois, the input data is instead read from testdata/<domain>/input
 
+2022-11-11: maarten_boot
+ * add support for returning the raw data from the whois command: flag include_raw_whois_text
+ * add support for handling unsupported domains via whois raw text only: flag return_raw_text_for_unsupported_tld
+
 ## Support
  * Python 3.x is supported.
  * Python 2.x IS NOT supported.
