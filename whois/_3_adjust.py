@@ -36,9 +36,15 @@ class Domain:
         whois_str: Optional[str] = None,
         verbose: bool = False,
         include_raw_whois_text: bool = False,
+        return_raw_text_for_unsupported_tld: bool = False,
     ):
         if include_raw_whois_text and whois_str is not None:
             self.text = whois_str
+
+        if return_raw_text_for_unsupported_tld is True:
+            self.tld = data["tld"]
+            self.name = data["domain_name"][0].strip().lower()
+            return
 
         self.name = data["domain_name"][0].strip().lower()
         self.tld = data["tld"]

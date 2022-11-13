@@ -28,7 +28,7 @@ __all__ = ["query", "get"]
 
 import sys
 from functools import wraps
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 from ._1_query import do_query
 from ._2_parse import do_parse, TLD_RE
@@ -185,6 +185,106 @@ def result2dict(func):
     return _inner
 
 
+def fromDomainStringToTld(domain: str, internationalized: bool, verbose: bool = False):
+    domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
+    d = domain.split(".")
+    if verbose:
+        print(d, file=sys.stderr)
+
+    if d[0] == "www":
+        d = d[1:]
+
+    if len(d) == 1:
+        return None, None
+
+    tld = filterTldToSupportedPattern(domain, d, verbose)
+
+    if internationalized and isinstance(internationalized, bool):
+        d = internationalizedDomainNameToPunyCode(d)
+
+    if verbose:
+        print(tld, d, file=sys.stderr)
+
+    return tld, d
+
+
+def validateWeKnowTheToplevelDomain(tld, return_raw_text_for_unsupported_tld: bool = False):  # may raise UnknownTld
+    if tld not in TLD_RE.keys():
+        if return_raw_text_for_unsupported_tld:
+            return None
+        a = f"The TLD {tld} is currently not supported by this package."
+        b = "Use validTlds() to see what toplevel domains are supported."
+        msg = f"{a} {b}"
+        raise UnknownTld(msg)
+    return TLD_RE.get(tld)
+
+
+def verifyPrivateREgistry(thisTld: Dict):  # may raise WhoisPrivateRegistry
+    # signal we know the tld but it has no whos or does not respond with any information
+    if thisTld.get("_privateRegistry"):
+        msg = "This tld has either no whois server or responds only with minimal information"
+        raise WhoisPrivateRegistry(msg)
+
+
+def doServerHintsForThisTld(tld: str, thisTld: Dict, server: Optional[str], verbose: bool = False):
+    # allow server hints using "_server" from the tld_regexpr.py file
+    thisTldServer = thisTld.get("_server")
+    if server is None and thisTldServer:
+        server = thisTldServer
+        if verbose:
+            print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
+    return server
+
+
+def doSlowdownHintForThisTld(tld: str, thisTld, slow_down: int, verbose: bool = False) -> int:
+    # allow a configrable slowdown for some tld's
+    slowDown = thisTld.get("_slowdown")
+    if slow_down == 0 and slowDown and slowDown > 0:
+        slow_down = slowDown
+        if verbose:
+            print(f"using _slowdown hint {slowDown} for tld: {tld}", file=sys.stderr)
+    return slow_down
+
+
+def doUnsupportedTldAnyway(
+    tld: str,
+    dl: Dict,
+    ignore_returncode: bool = False,
+    slow_down: int = 0,
+    server: Optional[str] = None,
+    verbose: bool = False,
+):
+    include_raw_whois_text = True
+
+    # we will not hunt for possible valid first level domains as we have no actual feedback
+
+    whois_str = do_query(
+        dl=dl,
+        slow_down=slow_down,
+        ignore_returncode=ignore_returncode,
+        server=server,
+        verbose=verbose,
+    )
+
+    # we will only return minimal data
+    data = {
+        "tld": tld,
+        "domain_name": "",
+    }
+    data["domain_name"] =  [".".join(dl)] # note the fields are default all array, except tld
+
+    if verbose:
+        print(data, file=sys.stderr)
+
+    return Domain(
+        data=data,
+        whois_str=whois_str,
+        verbose=verbose,
+        include_raw_whois_text=include_raw_whois_text,
+        return_raw_text_for_unsupported_tld=True,
+    )
+
+
 def query(
     domain: str,
     force: bool = False,
@@ -196,6 +296,7 @@ def query(
     with_cleanup_results=False,
     internationalized: bool = False,
     include_raw_whois_text: bool = False,
+    return_raw_text_for_unsupported_tld: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -206,66 +307,49 @@ def query(
                         propagates on linux to "whois -h <server> <domain>"
                         propagates on Windows to whois.exe <domain> <server>
     with_cleanup_results: cleanup lines starting with % and REDACTED FOR PRIVACY
-    internationalized:  if true convert internationalizedDomainNameToPunyCode
+    internationalized:  if true convert with internationalizedDomainNameToPunyCode().
+    ignore_returncode:  if true and the whois command fails with code 1, still process the data returned as normal.
+    verbose:            if true, print relevant information on steps taken to standard error
+    include_raw_whois_text:
+                        if reqested the full response is also returned.
+    return_raw_text_for_unsupported_tld:
+                        if the tld is unsupported, just try it anyway but return only the raw text.
     """
+
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
+    return_raw_text_for_unsupported_tld = bool(return_raw_text_for_unsupported_tld)
 
-    cache_file = cache_file or CACHE_FILE
-    slow_down = slow_down or SLOW_DOWN
-
-    domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
-    d = domain.split(".")
-
-    if d[0] == "www":
-        d = d[1:]
-
-    if len(d) == 1:
+    tld, dl = fromDomainStringToTld(domain, internationalized, verbose)
+    if tld is None:
         return None
 
-    tld = filterTldToSupportedPattern(domain, d, verbose)
+    thisTld = validateWeKnowTheToplevelDomain(tld, return_raw_text_for_unsupported_tld)  # may raise UnknownTld
+    if thisTld is None:
+        return doUnsupportedTldAnyway(
+            tld,
+            dl,
+            ignore_returncode=ignore_returncode,
+            slow_down=slow_down,
+            server=server,
+            verbose=verbose,
+        )
 
-    if tld not in TLD_RE.keys():
-        a = f"The TLD {tld} is currently not supported by this package."
-        b = "Use validTlds() to see what toplevel domains are supported."
-        msg = f"{a} {b}"
-        raise UnknownTld(msg)
+    verifyPrivateREgistry(thisTld)  # may raise WhoisPrivateRegistry
+    server = doServerHintsForThisTld(tld, thisTld, server, verbose)
 
-    # allow server hints using "_server" from the tld_regexpr.py file
-    thisTld = TLD_RE.get(tld)
-    if thisTld.get("_privateRegistry"):
-        msg = "This tld has either no whois server or responds only with minimal information"
-        raise WhoisPrivateRegistry(msg)
-
-    # allow explicit whois server usage
-    thisTldServer = thisTld.get("_server")
-    if server is None and thisTldServer:
-        server = thisTldServer
-        if verbose:
-            print(f"using _server hint {server} for tld: {tld}", file=sys.stderr)
-
-    # allow a configrable slowdown for some tld's
-    slowDown = thisTld.get("_slowdown")
-    if slow_down == 0 and slowDown and slowDown > 0:
-        slow_down = slowDown
-        if verbose:
-            print(f"using _slowdown hint {slowDown} for tld: {tld}", file=sys.stderr)
+    slow_down = slow_down or SLOW_DOWN
+    slow_down = doSlowdownHintForThisTld(tld, thisTld, slow_down, verbose)
 
     # if the tld is a multi level we should not move further down than the tld itself
     # we currently allow progressive lookups until we find something:
     # so xxx.yyy.zzz will try both xxx.yyy.zzz and yyy.zzz
     # but if the tld is yyy.zzz we should only try xxx.yyy.zzz
-    tldLevel = tld.split("_")
 
-    if internationalized and isinstance(internationalized, bool):
-        if verbose:
-            print(d, file=sys.stderr)
-        d = internationalizedDomainNameToPunyCode(d)
-        if verbose:
-            print(d, file=sys.stderr)
-
+    cache_file = cache_file or CACHE_FILE
+    tldLevel = tld.split("_")  # note while the top level domain may have a . the tld has a _ ( co.uk becomes co_uk )
     while 1:
-        q = do_query(
-            dl=d,
+        whois_str = do_query(
+            dl=dl,
             force=force,
             cache_file=cache_file,
             slow_down=slow_down,
@@ -274,39 +358,31 @@ def query(
             verbose=verbose,
         )
 
-        pd = do_parse(
-            whois_str=q,
+        data = do_parse(
+            whois_str=whois_str,
             tld=tld,
-            dl=d,
+            dl=dl,
             verbose=verbose,
             with_cleanup_results=with_cleanup_results,
         )
 
         # do we have a result and does it have a domain name
-        if pd and pd["domain_name"][0]:
+        if data and data["domain_name"][0]:
             return Domain(
-                pd,
-                whois_str=q,
+                data=data,
+                whois_str=whois_str,
                 verbose=verbose,
                 include_raw_whois_text=include_raw_whois_text,
             )
 
-        if len(d) > (len(tldLevel) + 1):
-            d = d[1:]  # strip one element from the front and try again
+        if len(dl) > (len(tldLevel) + 1):
+            dl = dl[1:]  # strip one element from the front and try again
             if verbose:
-                print(f"try again with {d}, {len(d)}, {len(tldLevel) + 1}", file=sys.stderr)
+                print(f"try again with {dl}, {len(dl)}, {len(tldLevel) + 1}", file=sys.stderr)
             continue
 
         # no result or no domain but we can not reduce any further so we have None
         return None
-
-        """
-        # not a or not b == not ( a and b )
-        if len(d) > 2 and (not pd or not pd["domain_name"][0]):
-            d = d[1:]
-        else:
-            break
-        """
 
     return None
 

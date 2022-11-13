@@ -1,9 +1,12 @@
 #! /usr/bin/bash
 
 # signal whois module that we are testing, this reads data from testdata/<domain>/in
-export TEST_WHOIS_PYTHON="1"
-
-TestDataDir="./testdata"
+prepPath()
+{
+    local xpath="$1"
+    TestDataDir=$( realpath "$xpath" )
+    export TEST_WHOIS_PYTHON="$TestDataDir"
+}
 
 get_testdomains()
 {
@@ -24,6 +27,11 @@ testOneDomain()
 
 main()
 {
+    prepPath "testdata" # set a default
+    [ -d "$1" ] && { # if a argument and is a dir use that for testing
+        prepPath "$1"
+    }
+
     get_testdomains |
     while read line
     do
@@ -31,4 +39,4 @@ main()
     done
 }
 
-main
+main $*

@@ -226,8 +226,9 @@ def main(argv):
     try:
         opts, args = getopt.getopt(
             argv,
-            "pvIhaf:d:D:r:H:",
+            "SpvIhaf:d:D:r:H:",
             [
+                "SupportedTld",
                 "print",
                 "verbose",
                 "IgnoreReturncode",
@@ -259,9 +260,14 @@ def main(argv):
     fileData = {}
 
     for opt, arg in opts:
+        if opt in ("-S", "SupportedTld"):
+            for tld in sorted(whois.validTlds()):
+                print(tld)
+            sys.exit(0)
+
         if opt == "-h":
             usage()
-            sys.exit()
+            sys.exit(0)
 
         if opt in ("-a", "--all"):
             testAllTld = True
