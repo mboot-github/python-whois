@@ -271,7 +271,7 @@ def doUnsupportedTldAnyway(
         "tld": tld,
         "domain_name": "",
     }
-    data["domain_name"] =  [".".join(dl)] # note the fields are default all array, except tld
+    data["domain_name"] = [".".join(dl)]  # note the fields are default all array, except tld
 
     if verbose:
         print(data, file=sys.stderr)

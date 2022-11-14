@@ -7,6 +7,7 @@ import sys
 
 Verbose = False
 PrintGetRawWhoisResult = False
+Ruleset = False
 
 Failures = {}
 IgnoreReturncode = False
@@ -152,6 +153,81 @@ def showAllCurrentTld():
         print(tld)
 
 
+def ShowRuleset(tld):
+    rr = whois.TLD_RE
+
+    if tld in rr:
+        for key in sorted(rr[tld].keys()):
+            rule = f"{rr[tld][key]}"
+            if "re.compile" in rule:
+                rule = rule.split("re.compile(")[1]
+                rule = rule.split(", re.IGNORECASE)")[0]
+            print(key, rule, "IGNORECASE")
+
+
+def readInputFile(pathToTestFile: str):
+    if not os.path.exists(pathToTestFile):
+        return None
+
+    with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
+        # make sure the data is treated exactly the same as the output of Popen
+        return f.read().decode(errors="ignore")
+
+
+def cleanupWhoisResponse(
+    response: str,
+    verbose: bool = False,
+    with_cleanup_results: bool = False,
+):
+    markPreable = True
+    markPostmble = True
+
+    result = whois._2_parse.cleanupWhoisResponse(response, verbose=False, with_cleanup_results=False)
+
+    preambleSeen = False
+    postambleSeen = False
+    percentSeen = False
+
+    rr = []
+    n = 0
+    z = result.split("\n")
+    for line in z:
+        if preambleSeen is False:
+            if line.startswith("["):
+                line = "PRE;" + line
+            else:
+                preambleSeen = True
+
+        if preambleSeen is True and percentSeen is False:
+            if line.startswith("%"):
+                line = "PERCENT;" + line
+            else:
+                percentSeen = True
+
+        if postambleSeen is False:
+            if line.startswith("--") or line.startswith(">>> ") or line.startswith("Copyright notice"):
+                postambleSeen = True
+                if n > 0:
+                    # look for lines just before me that are actually empty, we can add them to postamble
+                    p = n - 1
+                    if len(z[p]) == 0 or re.match(r"^\s*$", z[p]):
+                        rr[p] = "POST+;" + rr[p]
+
+        if postambleSeen is True:
+            line = "POST;" + line
+
+        if "\t" in line:
+            line = "TAB;" + line
+
+        if line.endswith("\r"):
+            line = "CR;" + line
+
+        rr.append(line)
+        n += 1
+
+    print("\n".join(rr))
+
+
 def usage():
     print(
         """
@@ -179,7 +255,17 @@ test.py
         # files are processed as in the -f option so comments and empty lines are skipped
         # the option can be repeated to specify more then one directory
 
-    [ -p | --print also print text containing the raw output of whois ]
+    [ -p | --print ]
+    also print text containing the raw output of whois
+
+    [ -R | --Ruleset ]
+    dump the ruleset for the tld and exit
+
+    [ -S | --SupportedTld ]
+    print all supported top level domains we know and exit
+
+    [ -C <file> | --Cleanup <file> ]
+    read the input file specified and run the same cleanup as in whois.query , then exit
 
     # options are exclusive and without any options the test2 program does nothing
 
@@ -222,12 +308,13 @@ def main(argv):
     global Verbose
     global IgnoreReturncode
     global PrintGetRawWhoisResult
-
+    global Ruleset
     try:
         opts, args = getopt.getopt(
             argv,
-            "SpvIhaf:d:D:r:H:",
+            "RSpvIhaf:d:D:r:H:C:",
             [
+                "Ruleset",
                 "SupportedTld",
                 "print",
                 "verbose",
@@ -238,6 +325,7 @@ def main(argv):
                 "domain=",
                 "reg=",
                 "having=",
+                "Cleanup=",
             ],
         )
     except getopt.GetoptError:
@@ -286,6 +374,9 @@ def main(argv):
         if opt in ("-p", "--print"):
             PrintGetRawWhoisResult = True
 
+        if opt in ("-R", "--Ruleset"):
+            Ruleset = True
+
         if opt in ("-D", "--Directory"):
             directory = arg
             isDir = os.path.isdir(directory)
@@ -293,9 +384,15 @@ def main(argv):
                 print(f"{directory} cannot be found or is not a directory", file=sys.stderr)
                 sys.exit(101)
 
-            if directory not in dirs:
-                dirs.append(directory)
-                testAllTld = False
+        if opt in ("-C", "--Cleanup"):
+            inFile = arg
+            isFile = os.path.isfile(inFile)
+            if isFile is False:
+                print(f"{inFile} cannot be found or is not a file", file=sys.stderr)
+                sys.exit(101)
+            whois_str = readInputFile(inFile)
+            cleanupWhoisResponse(whois_str)
+            sys.exit(0)
 
         if opt in ("-f", "--file"):
             filename = arg
@@ -312,6 +409,11 @@ def main(argv):
             domain = arg
             if domain not in domains:
                 domains.append(domain)
+
+    if Ruleset is True and len(domains):
+        for domain in domains:
+            ShowRuleset(domain)
+        sys.exit(0)
 
     if testAllTld:
         print("## ===== TEST CURRENT TLD's")
