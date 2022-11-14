@@ -112,7 +112,7 @@ getDnsSoaRecordAndLeaveEvidenceTldDomain()
     grep -q " has SOA record " || {
         # no soa record so that domain does not exist, cleanup the test dir
         cleanupTldTestDirectory "$tld" "$domain"
-        echo "WARN: no SOD for domain: $zz" >&2
+        echo "WARN: no SOA for domain: $zz" >&2
         >"$d/_NO_SOA_$zz"
         return 1
     }
