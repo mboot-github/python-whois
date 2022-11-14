@@ -156,7 +156,6 @@ def showAllCurrentTld():
 
 def ShowRuleset(tld):
     rr = whois.TLD_RE
-
     if tld in rr:
         for key in sorted(rr[tld].keys()):
             rule = f"{rr[tld][key]}"
@@ -214,19 +213,14 @@ def splitBodyInSections(body: List) -> List:
         sections[m] = cleanSection(sections[m])
         m += 1
 
-    # print(sections)
-    # print(len(sections))
-
     # now remove ampty sections and return
     sections2 = []
     m = 0
     while m < len(sections):
-        print(m, len(sections[m]))
         if len(sections[m]) > 0:
             sections2.append(sections[m])
         m += 1
 
-    # print(sections2)
     return sections2
 
 
@@ -292,9 +286,8 @@ def cleanupWhoisResponse(
         rr.append(line)
 
     body = cleanSection(body)
-    sections = splitBodyInSections(body)
-    rDict["Body"] = sections
-    return "\n".join(rr), rDict["Body"]
+    rDict["Body"] = splitBodyInSections(body)
+    return "\n".join(rr), rDict
 
 
 def usage():
@@ -464,6 +457,15 @@ def main(argv):
 
             print(d1)  # the data without pre and postamble or percent section
             print(rDict)
+
+            k = "Body"
+            if len(rDict[k]):
+                n = 0
+                for section in rDict[k]:
+                    print(f"# ------------- {k} Section: {n} ----------------------")
+                    n += 1
+                    for line in section:
+                        print(line)
 
             sys.exit(0)
 
