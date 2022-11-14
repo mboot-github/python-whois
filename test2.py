@@ -14,6 +14,155 @@ Failures = {}
 IgnoreReturncode = False
 
 
+class ResponseCleaner:
+    data: Optional[str] = None
+    rDict: Dict = {}
+
+    def __init__(self, pathToTestFile: str):
+        self.data = self.readInputFile(pathToTestFile)
+
+    def readInputFile(self, pathToTestFile: str):
+        if not os.path.exists(pathToTestFile):
+            return None
+
+        with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
+            # make sure the data is treated exactly the same as the output of Popen
+            return f.read().decode(errors="ignore")
+
+    def cleanSection(self, section: List) -> List:
+        # cleanup any beginning and ending empty lines from the section
+
+        if len(section) == 0:
+            return section
+
+        rr = r"^\s*$"
+        n = 0  # remove empty lines from the start of section
+        while re.match(rr, section[n]):
+            section.pop(n)
+            # n stays 0
+
+        n = len(section) - 1  # remove empty lines from the end of the section
+        while re.match(rr, section[n]):
+            section.pop(n)
+            n = len(section) - 1  # remove empty lines from the end of section
+
+        return section
+
+    def splitBodyInSections(self, body: List) -> List:
+        # split the body on empty line, cleanup all sections, remove empty sections
+        # return list of body's
+
+        sections = []
+        n = 0
+        sections.append([])
+        for line in body:
+            if re.match(r"^\s*$", line):
+                n += 1
+                sections.append([])
+                continue
+            sections[n].append(line)
+
+        m = 0
+        while m < len(sections):
+            sections[m] = self.cleanSection(sections[m])
+            m += 1
+
+        # now remove ampty sections and return
+        sections2 = []
+        m = 0
+        while m < len(sections):
+            if len(sections[m]) > 0:
+                sections2.append("\n".join(sections[m]))
+            m += 1
+
+        return sections2
+
+    def cleanupWhoisResponse(
+        self,
+        verbose: bool = False,
+        with_cleanup_results: bool = False,
+    ):
+        result = whois._2_parse.cleanupWhoisResponse(
+            self.data,
+            verbose=False,
+            with_cleanup_results=False,
+        )
+
+        self.rDict = {
+            "BodyHasSections": False,  # if this is true the body is not a list of lines but a list of sections with lines
+            "Preamble": [],  # the lines telling what whois servers wwere contacted
+            "Percent": [],  # lines staring with %% , often not present but may contain hints
+            "Body": [],  # the body of the whois, may be in sections separated by empty lines
+            "Postamble": [],  # copyright and other not relevant info for actual parsing whois
+        }
+        body = []
+
+        rr = []
+        z = result.split("\n")
+        preambleSeen = False
+        postambleSeen = False
+        percentSeen = False
+        for line in z:
+            if preambleSeen is False:
+                if line.startswith("["):
+                    self.rDict["Preamble"].append(line)
+                    line = "PRE;" + line
+                    continue
+                else:
+                    preambleSeen = True
+
+            if preambleSeen is True and percentSeen is False:
+                if line.startswith("%"):
+                    self.rDict["Percent"].append(line)
+                    line = "PERCENT;" + line
+                    continue
+                else:
+                    percentSeen = True
+
+            if postambleSeen is False:
+                if line.startswith("--") or line.startswith(">>> ") or line.startswith("Copyright notice"):
+                    postambleSeen = True
+
+            if postambleSeen is True:
+                self.rDict["Postamble"].append(line)
+                line = "POST;" + line
+                continue
+
+            body.append(line)
+
+            if "\t" in line:
+                line = "TAB;" + line  # mark lines having tabs
+
+            if line.endswith("\r"):
+                line = "CR;" + line  # mark lines having CR (\r)
+
+            rr.append(line)
+
+        body = self.cleanSection(body)
+        self.rDict["Body"] = self.splitBodyInSections(body)
+        return "\n".join(rr), self.rDict
+
+    def printMe(self):
+        zz = ["Preamble", "Percent", "Postamble"]
+        for k in zz:
+            n = 0
+            for lines in self.rDict[k]:
+                tab = " [TAB] " if "\t" in lines else "" # tabs are present in this section
+                cr = " [CR] " if "\r" in lines else "" # \r is present in this section
+                print(k,cr, tab, lines)
+
+
+        k = "Body"
+        if len(self.rDict[k]):
+            n = 0
+            for lines in self.rDict[k]:
+                tab = " [TAB] " if "\t" in lines else "-------" # tabs are present in this section
+                cr = " [CR] " if "\r" in lines else "------" # \r is present in this section
+                print(f"# ------------- {k} Section: {n} {cr}{tab}---------")
+                n += 1
+                print(lines)
+
+
 def prepItem(d):
     print("")
     print(f"test domain: <<<<<<<<<< {d} >>>>>>>>>>>>>>>>>>>>")
@@ -163,131 +312,6 @@ def ShowRuleset(tld):
                 rule = rule.split("re.compile(")[1]
                 rule = rule.split(", re.IGNORECASE)")[0]
             print(key, rule, "IGNORECASE")
-
-
-def readInputFile(pathToTestFile: str):
-    if not os.path.exists(pathToTestFile):
-        return None
-
-    with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
-        # make sure the data is treated exactly the same as the output of Popen
-        return f.read().decode(errors="ignore")
-
-
-def cleanSection(section: List) -> List:
-    # cleanup any beginning and ending empty lines from the section
-
-    if len(section) == 0:
-        return section
-
-    rr = r"^\s*$"
-    n = 0  # remove empty lines from the start of section
-    while re.match(rr, section[n]):
-        section.pop(n)
-        # n stays 0
-
-    n = len(section) - 1  # remove empty lines from the end of the section
-    while re.match(rr, section[n]):
-        section.pop(n)
-        n = len(section) - 1  # remove empty lines from the end of section
-
-    return section
-
-
-def splitBodyInSections(body: List) -> List:
-    # split the body on empty line, cleanup all sections, remove empty sections
-    # return list of body's
-
-    sections = []
-    n = 0
-    sections.append([])
-    for line in body:
-        if re.match(r"^\s*$", line):
-            n += 1
-            sections.append([])
-            continue
-        sections[n].append(line)
-
-    m = 0
-    while m < len(sections):
-        sections[m] = cleanSection(sections[m])
-        m += 1
-
-    # now remove ampty sections and return
-    sections2 = []
-    m = 0
-    while m < len(sections):
-        if len(sections[m]) > 0:
-            sections2.append(sections[m])
-        m += 1
-
-    return sections2
-
-
-def cleanupWhoisResponse(
-    response: str,
-    verbose: bool = False,
-    with_cleanup_results: bool = False,
-):
-    result = whois._2_parse.cleanupWhoisResponse(
-        response,
-        verbose=False,
-        with_cleanup_results=False,
-    )
-
-    rDict = {
-        "BodyHasSections": False,  # if this is true the body is not a list of lines but a list of sections with lines
-        "Preamble": [],  # the lines telling what whois servers wwere contacted
-        "Percent": [],  # lines staring with %% , often not present but may contain hints
-        "Body": [],  # the body of the whois, may be in sections separated by empty lines
-        "Postamble": [],  # copyright and other not relevant info for actual parsing whois
-    }
-    body = []
-
-    rr = []
-    z = result.split("\n")
-    preambleSeen = False
-    postambleSeen = False
-    percentSeen = False
-    for line in z:
-        if preambleSeen is False:
-            if line.startswith("["):
-                rDict["Preamble"].append(line)
-                line = "PRE;" + line
-                continue
-            else:
-                preambleSeen = True
-
-        if preambleSeen is True and percentSeen is False:
-            if line.startswith("%"):
-                rDict["Percent"].append(line)
-                line = "PERCENT;" + line
-                continue
-            else:
-                percentSeen = True
-
-        if postambleSeen is False:
-            if line.startswith("--") or line.startswith(">>> ") or line.startswith("Copyright notice"):
-                postambleSeen = True
-
-        if postambleSeen is True:
-            rDict["Postamble"].append(line)
-            line = "POST;" + line
-            continue
-
-        body.append(line)
-
-        if "\t" in line:
-            line = "TAB;" + line  # mark lines having tabs
-
-        if line.endswith("\r"):
-            line = "CR;" + line  # mark lines having CR (\r)
-
-        rr.append(line)
-
-    body = cleanSection(body)
-    rDict["Body"] = splitBodyInSections(body)
-    return "\n".join(rr), rDict
 
 
 def usage():
@@ -448,25 +472,14 @@ def main(argv):
 
         if opt in ("-C", "--Cleanup"):
             inFile = arg
-            isFile = os.path.isfile(inFile)
+            isFile = os.path.isfile(arg)
             if isFile is False:
                 print(f"{inFile} cannot be found or is not a file", file=sys.stderr)
                 sys.exit(101)
-            whois_str = readInputFile(inFile)
-            d1, rDict = cleanupWhoisResponse(whois_str)
 
-            print(d1)  # the data without pre and postamble or percent section
-            print(rDict)
-
-            k = "Body"
-            if len(rDict[k]):
-                n = 0
-                for section in rDict[k]:
-                    print(f"# ------------- {k} Section: {n} ----------------------")
-                    n += 1
-                    for line in section:
-                        print(line)
-
+            rc = ResponseCleaner(inFile)
+            d1, rDict = rc.cleanupWhoisResponse()
+            rc.printMe()
             sys.exit(0)
 
         if opt in ("-f", "--file"):

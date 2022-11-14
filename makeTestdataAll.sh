@@ -78,6 +78,9 @@ getTestDataInputForTldAndDomain()
             return 1
         }
     }
+
+    # parse the input and annotate it and split the body in sections
+    ./test2.py -C "$d/input" > "$d/input.out"
 }
 
 getTestDataOutputForTldAndDomain()
