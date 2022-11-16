@@ -4,12 +4,162 @@ import os
 import re
 import getopt
 import sys
+from typing import Optional, List, Dict
 
 Verbose = False
 PrintGetRawWhoisResult = False
+Ruleset = False
 
 Failures = {}
 IgnoreReturncode = False
+
+
+class ResponseCleaner:
+    data: Optional[str] = None
+    rDict: Dict = {}
+
+    def __init__(self, pathToTestFile: str):
+        self.data = self.readInputFile(pathToTestFile)
+
+    def readInputFile(self, pathToTestFile: str):
+        if not os.path.exists(pathToTestFile):
+            return None
+
+        with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
+            # make sure the data is treated exactly the same as the output of Popen
+            return f.read().decode(errors="ignore")
+
+    def cleanSection(self, section: List) -> List:
+        # cleanup any beginning and ending empty lines from the section
+
+        if len(section) == 0:
+            return section
+
+        rr = r"^\s*$"
+        n = 0  # remove empty lines from the start of section
+        while re.match(rr, section[n]):
+            section.pop(n)
+            # n stays 0
+
+        n = len(section) - 1  # remove empty lines from the end of the section
+        while re.match(rr, section[n]):
+            section.pop(n)
+            n = len(section) - 1  # remove empty lines from the end of section
+
+        return section
+
+    def splitBodyInSections(self, body: List) -> List:
+        # split the body on empty line, cleanup all sections, remove empty sections
+        # return list of body's
+
+        sections = []
+        n = 0
+        sections.append([])
+        for line in body:
+            if re.match(r"^\s*$", line):
+                n += 1
+                sections.append([])
+                continue
+            sections[n].append(line)
+
+        m = 0
+        while m < len(sections):
+            sections[m] = self.cleanSection(sections[m])
+            m += 1
+
+        # now remove ampty sections and return
+        sections2 = []
+        m = 0
+        while m < len(sections):
+            if len(sections[m]) > 0:
+                sections2.append("\n".join(sections[m]))
+            m += 1
+
+        return sections2
+
+    def cleanupWhoisResponse(
+        self,
+        verbose: bool = False,
+        with_cleanup_results: bool = False,
+    ):
+        result = whois._2_parse.cleanupWhoisResponse(
+            self.data,
+            verbose=False,
+            with_cleanup_results=False,
+        )
+
+        self.rDict = {
+            "BodyHasSections": False,  # if this is true the body is not a list of lines but a list of sections with lines
+            "Preamble": [],  # the lines telling what whois servers wwere contacted
+            "Percent": [],  # lines staring with %% , often not present but may contain hints
+            "Body": [],  # the body of the whois, may be in sections separated by empty lines
+            "Postamble": [],  # copyright and other not relevant info for actual parsing whois
+        }
+        body = []
+
+        rr = []
+        z = result.split("\n")
+        preambleSeen = False
+        postambleSeen = False
+        percentSeen = False
+        for line in z:
+            if preambleSeen is False:
+                if line.startswith("["):
+                    self.rDict["Preamble"].append(line)
+                    line = "PRE;" + line
+                    continue
+                else:
+                    preambleSeen = True
+
+            if preambleSeen is True and percentSeen is False:
+                if line.startswith("%"):
+                    self.rDict["Percent"].append(line)
+                    line = "PERCENT;" + line
+                    continue
+                else:
+                    percentSeen = True
+
+            if postambleSeen is False:
+                if line.startswith("--") or line.startswith(">>> ") or line.startswith("Copyright notice"):
+                    postambleSeen = True
+
+            if postambleSeen is True:
+                self.rDict["Postamble"].append(line)
+                line = "POST;" + line
+                continue
+
+            body.append(line)
+
+            if "\t" in line:
+                line = "TAB;" + line  # mark lines having tabs
+
+            if line.endswith("\r"):
+                line = "CR;" + line  # mark lines having CR (\r)
+
+            rr.append(line)
+
+        body = self.cleanSection(body)
+        self.rDict["Body"] = self.splitBodyInSections(body)
+        return "\n".join(rr), self.rDict
+
+    def printMe(self):
+        zz = ["Preamble", "Percent", "Postamble"]
+        for k in zz:
+            n = 0
+            for lines in self.rDict[k]:
+                tab = " [TAB] " if "\t" in lines else ""  # tabs are present in this section
+                cr = " [CR] " if "\r" in lines else ""  # \r is present in this section
+                print(k, cr, tab, lines)
+
+        k = "Body"
+        if len(self.rDict[k]):
+            n = 0
+            for lines in self.rDict[k]:
+                tab = " [TAB] " if "\t" in lines else "-------"  # tabs are present in this section
+                cr = " [CR] " if "\r" in lines else "------"  # \r is present in this section
+                print(f"# ------------- {k} Section: {n} {cr}{tab}---------")
+                n += 1
+                print(lines)
 
 
 def prepItem(d):
@@ -152,6 +302,17 @@ def showAllCurrentTld():
         print(tld)
 
 
+def ShowRuleset(tld):
+    rr = whois.TLD_RE
+    if tld in rr:
+        for key in sorted(rr[tld].keys()):
+            rule = f"{rr[tld][key]}"
+            if "re.compile" in rule:
+                rule = rule.split("re.compile(")[1]
+                rule = rule.split(", re.IGNORECASE)")[0]
+            print(key, rule, "IGNORECASE")
+
+
 def usage():
     print(
         """
@@ -179,7 +340,17 @@ test.py
         # files are processed as in the -f option so comments and empty lines are skipped
         # the option can be repeated to specify more then one directory
 
-    [ -p | --print also print text containing the raw output of whois ]
+    [ -p | --print ]
+    also print text containing the raw output of whois
+
+    [ -R | --Ruleset ]
+    dump the ruleset for the tld and exit
+
+    [ -S | --SupportedTld ]
+    print all supported top level domains we know and exit
+
+    [ -C <file> | --Cleanup <file> ]
+    read the input file specified and run the same cleanup as in whois.query , then exit
 
     # options are exclusive and without any options the test2 program does nothing
 
@@ -222,12 +393,13 @@ def main(argv):
     global Verbose
     global IgnoreReturncode
     global PrintGetRawWhoisResult
-
+    global Ruleset
     try:
         opts, args = getopt.getopt(
             argv,
-            "SpvIhaf:d:D:r:H:",
+            "RSpvIhaf:d:D:r:H:C:",
             [
+                "Ruleset",
                 "SupportedTld",
                 "print",
                 "verbose",
@@ -238,6 +410,7 @@ def main(argv):
                 "domain=",
                 "reg=",
                 "having=",
+                "Cleanup=",
             ],
         )
     except getopt.GetoptError:
@@ -286,6 +459,9 @@ def main(argv):
         if opt in ("-p", "--print"):
             PrintGetRawWhoisResult = True
 
+        if opt in ("-R", "--Ruleset"):
+            Ruleset = True
+
         if opt in ("-D", "--Directory"):
             directory = arg
             isDir = os.path.isdir(directory)
@@ -293,9 +469,17 @@ def main(argv):
                 print(f"{directory} cannot be found or is not a directory", file=sys.stderr)
                 sys.exit(101)
 
-            if directory not in dirs:
-                dirs.append(directory)
-                testAllTld = False
+        if opt in ("-C", "--Cleanup"):
+            inFile = arg
+            isFile = os.path.isfile(arg)
+            if isFile is False:
+                print(f"{inFile} cannot be found or is not a file", file=sys.stderr)
+                sys.exit(101)
+
+            rc = ResponseCleaner(inFile)
+            d1, rDict = rc.cleanupWhoisResponse()
+            rc.printMe()
+            sys.exit(0)
 
         if opt in ("-f", "--file"):
             filename = arg
@@ -312,6 +496,11 @@ def main(argv):
             domain = arg
             if domain not in domains:
                 domains.append(domain)
+
+    if Ruleset is True and len(domains):
+        for domain in domains:
+            ShowRuleset(domain)
+        sys.exit(0)
 
     if testAllTld:
         print("## ===== TEST CURRENT TLD's")

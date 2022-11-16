@@ -120,15 +120,21 @@ au = {
 
 ax = {
     "extend": "com",
-    "domain_name": r"domain...............:\s?(.+)",
-    "registrar": r"registrar............:\s?(.+)",
-    "creation_date": r"created..............:\s?(.+)",
-    "expiration_date": r"expires..............:\s?(.+)",
-    "updated_date": r"Information Updated:\s?(.+)",
+    "domain_name": r"domain\.+:\s*(\S+)",
+    "registrar": r"registrar\.+:\s*(.+)",
+    "creation_date": r"created\.+:\s*(\S+)",
+    "expiration_date": r"expires\.+:\s*(\S+)",
+    "updated_date": r"modified\.+:\s?(\S+)",
+    "name_servers": r"nserver\.+:\s*(\S+)",
+    "status": r"status\.+:\s*(\S+)",
+    "registrant": r"Holder\s+name\.+:\s*(.+)\r?\n", # not always present see meta.ax and google.ax
+    "registrant_country": r"country\.+:\s*(.+)\r?\n", # not always present see meta.ax and google.ax
+
 }
 
 aw = {
     "extend": "nl",
+    "name_servers": r"Domain nameservers:\s+(\S+)[ \t]*\r?\n(?:\s+(\S+))?",
 }
 
 # Banking TLD - ICANN
@@ -445,7 +451,8 @@ hk = {
     "creation_date": r"Domain Name Commencement Date:\s?(.+)",
     "expiration_date": r"Expiry Date:\s?(.+)",
     "updated_date": None,
-    "name_servers": r"Name Servers Information:\n\n(?:(\S+)\n)(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?\n?",
+    #  name servers have trailing whitespace, lines are \n only
+    "name_servers": r"Name Servers Information:\s*(?:(\S+)[ \t]*\n)(?:(\S+)[ \t]*\n)?(?:(\S+)[ \t]*\n)?(?:(\S+)[ \t]*\n)?",
     "status": None,
 }
 
@@ -592,15 +599,15 @@ kiwi = {
 }
 
 kg = {
-    "extend": None,
-    "domain_name": r"Domain\s(.+)\s\(",
+    "domain_name": r"Domain\s+(\S+)",
     "registrar": r"Billing\sContact:\n.*\n\s+Name:\s(.+)\n",
     "registrant_country": None,
     "expiration_date": r"Record expires on:\s+(.+)",
     "creation_date": r"Record created:\s+(.+)",
     "updated_date": r"Record last updated on:\s+(.+)",
-    "name_servers": None,
-    "status": None,
+    # name servers have trailing whitespace
+    "name_servers": r"Name servers in the listed order:\n\n(?:(\S+)[ \t]*\n)(?:(\S+)[ \t]*\n)?",
+    "status": r"Domain\s+\S+\s+\((\S+)\)",
 }
 
 # Saint Kitts and Nevis
@@ -652,11 +659,12 @@ lv = {
 }
 
 me = {
+    # lines have \r
     "extend": "biz",
-    "creation_date": r"Domain Create Date:\s?(.+)",
-    "expiration_date": r"Domain Expiration Date:\s?(.+)",
-    "updated_date": r"Domain Last Updated Date:\s?(.+)",
-    "name_servers": r"Nameservers:\s?(.+)",
+    "creation_date": r"Creation Date:\s?(.+)",
+    "expiration_date": r"Expiry Date:\s?(.+)",
+    "updated_date": r"Updated Date:\s?(.+)",
+    "name_servers": r"Name Server:\s*(\S+)\r?\n",
     "status": r"Domain Status:\s?(.+)",
 }
 
@@ -721,19 +729,30 @@ nl = {
     "domain_name": r"Domain name:\s?(.+)",
     "name_servers": (
         r"""(?x:
-            Domain\ nameservers:[ \t]*\n
-            (?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n       # ns1.tld.nl [A?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns2.tld.nl [A?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns2.tld.nl [AAAA?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns3.tld.nl [A?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns3.tld.nl [AAAA?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns4.tld.nl [A?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns4.tld.nl [AAAA?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns5.tld.nl [A?]
-            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns5.tld.nl [AAAA?]
-            # Don't check for final LF; there might be even more records..
+            Domain\ nameservers:\s+(\S+)\r?\n # the first
+            (?:\s+(\S+)\r?\n)?  # a optional 2th
+            (?:\s+(\S+)\r?\n)?  # a optional 3th
+            (?:\s+(\S+)\r?\n)?  # a optional 4th
+            (?:\s+(\S+)\r?\n)?  # a optional 5th
+            # there may be more, best use host -t ns <domain> to get the actual nameservers
         )"""
     ),
+    # the format with [A] or [AAAA] is no longer in use
+    #    "name_servers": (
+    #        r"""(?x:
+    #            Domain\ nameservers:[ \t]*\n
+    #            (?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n       # ns1.tld.nl [A?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns2.tld.nl [A?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns2.tld.nl [AAAA?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns3.tld.nl [A?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns3.tld.nl [AAAA?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns4.tld.nl [A?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns4.tld.nl [AAAA?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns5.tld.nl [A?]
+    #            (?:(?:[ \t]+) (\S+) (?:[ \t]+\S+)? \n)?  # opt-ns5.tld.nl [AAAA?]
+    #            # Don't check for final LF; there might be even more records..
+    #        )"""
+    #    ),
     "reseller": r"Reseller:\s?(.+)",
     "abuse_contact": r"Abuse Contact:\s?(.+)",
 }
@@ -809,12 +828,13 @@ pharmacy = {
 }
 
 pl = {
+    # pl has lines ending in multiple line feeds \r and trailing whitespace
     "extend": "uk",
     "registrar": r"\nREGISTRAR:\s*(.+)\n",
     "creation_date": r"\ncreated:\s*(.+)\n",
     "updated_date": r"\nlast modified:\s*(.+)\n",
     "expiration_date": r"\noption expiration date:\s*(.+)\n",
-    "name_servers": r"\nnameservers:\s*(.+)\n\s*(.+)\n",
+    "name_servers": r"\nnameservers:(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
     "status": r"\nStatus:\n\s*(.+)",
 }
 
@@ -823,16 +843,21 @@ pro = {
 }
 
 pt = {
+    # mboot 2022-11-16
+    # from aws frankfurt all ok, looks like network limitations
+    # actually it sometimes works, most of the time though we get: connect: Network is unreachable
     # looks like this is now a privateRegistry mboot: 2022-06-10,
     # manual lookup: use the website at whois.dns.pt
-    "_privateRegistry": True,
+    "_server": "whois.dns.pt",
+    # "_privateRegistry": True,
     "extend": "com",
     "domain_name": r"Domain:\s?(.+)",
     "registrar": None,
     "creation_date": r"Creation Date:\s?(.+)",
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": None,
-    "name_servers": r"Name Server:\s*(.+)",
+    # nameservers have trailing info: Name Server: ns1.dnscpanel.com | IPv4:  and IPv6:
+    "name_servers": r"Name Server:(?:\s*(\S+)[^\n]*\n)(?:\s*(\S+)[^\n]*\n)?",
     "status": r"Domain Status:\s?(.+)",
 }
 
@@ -910,17 +935,19 @@ se = {
 
 # Singapore - Commercial sub-domain
 com_sg = {
+    # uses \r nameservers have trailing whitespace
     "extend": None,
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s?(.+)",
-    "registrant": r"Registrant:\n\n\s?Name:\s?(.+)",
+    "registrant": r"Registrant:\r?\n\r?\n\s*Name:\s*(.+)\r?\n",
     "registrant_country": None,
     "creation_date": r"Creation Date:\s?(.+)",
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": r"Modified Date:\s?(.+)",
-    "name_servers": r"Name Servers:\s*(.+)\s*",
-    "status": None,
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    "name_servers": r"Name Servers:\r\n(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
+    "status": r"Domain Status:\s*(.*)\r\n",
+    # "emails": r"(\S+@\S+)",
+    "emails": r"([\w\.-]+@[\w\.-]+\.[\w])",
 }
 
 # Slovakia
@@ -981,7 +1008,7 @@ tn = {
     "creation_date": r"Creation date\.+:\s?(.+)",
     "expiration_date": None,
     "updated_date": None,
-    "name_servers": r"DNS servers\s?Name\.+:\s?(.+)\s*Name\.+:\s?(.+)?",
+    "name_servers": r"DNS servers\n(?:Name\.+:\s*(\S+)\n)(?:Name\.+:\s*(\S+)\n)?(?:Name\.+:\s*(\S+)\n)?(?:Name\.+:\s*(\S+)\n)?",
     "status": r"Domain status\.+:(.+)",
     "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
 }
@@ -1047,7 +1074,7 @@ uk = {
     "creation_date": r"Registered on:\s*(.+)",
     "expiration_date": r"Expiry date:\s*(.+)",
     "updated_date": r"Last updated:\s*(.+)",
-    "name_servers": r"Name Servers:\s*(.+)\s*",
+    "name_servers": r"Name Servers:\s*(\S+)\r?\n(?:\s+(\S+)\r?\n)?(?:\s+(\S+)\r?\n)?(?:\s+(\S+)\r?\n)?",
     "status": r"Registration status:\n\s*(.+)",
 }
 
@@ -1664,7 +1691,7 @@ sg = {
     "updated_date": r"\s+Modified Date:\s+(.+)",
     "status": r"\s+Domain Status:\s(.+)",
     "registrant_country": None,
-    "name_servers": None,  # actually a multi line match: TODO
+    "name_servers": r"Name Servers:\s+(\S+)[ \t]*\r?\n\s+(\S+)[ \t]*\r?\n\s+(\S+)",
 }
 
 srl = {
@@ -1692,17 +1719,15 @@ tw = {
     "registrar": r"Registration\s+Service\s+Provider:\s+(.+)",
     "updated_date": None,
     "registrant_country": None,
-    "name_servers": None,
+    "name_servers": r"Domain servers in listed order:\s*(\S+)[ \t]*\r?\n(?:\s+(\S+)[ \t]*\r?\n)?(?:\s+(\S+)[ \t]*\r?\n)?(?:\s+(\S+)[ \t]*\r?\n)?",
 }
 
-
 com_tw = {
-    "_server": "tw",
+    "extend": "tw",
 }
 
 ug = {
     "_server": "whois.co.ug",
-    "extend": None,
     "domain_name": r"Domain name:\s+(.+)",
     "creation_date": r"Registered On:\s+(.+)",
     "expiration_date": r"Expires On:\s+(.+)",
@@ -1905,11 +1930,12 @@ noip_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 onion = {"extend": "_privateReg"}
 
 # backend registry for domain names ending in GG, JE, and AS.
+# lines may have \r actually before \n , updated all 3 domains return all nameservers
 gg = {
     "domain_name": r"Domain:\s*\n\s+(.+)",
     "status": r"Domain Status:\s*\n\s+(.+)",
     "registrar": r"Registrar:\s*\n\s+(.+)",
-    "name_servers": r"Name servers:\s*\n\s+(.+)\n\s+(.+)",
+    "name_servers": r"Name servers:\s*\r?\n(?:\s+(\S+)\r?\n)(?:\s+(\S+)\r?\n)?(?:\s+(\S+)\r?\n)?",
     "creation_date": r"Relevant dates:\s*\n\s+Registered on(.+)",
     "expiration_date": None,
     "updated_date": None,

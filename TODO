@@ -1,0 +1,5 @@
+TODO
+
+# pt is difficult it often gives no data, it works in aws frankfurt through
+ERROR: output;  missing nameserver 'ns1.dnscpanel.com.' for tld: pt
+ERROR: output;  missing nameserver 'ns2.dnscpanel.com.' for tld: pt
