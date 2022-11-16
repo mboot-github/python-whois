@@ -66,10 +66,13 @@ getTestDataInputForTldAndDomain()
     # make the testing input data
     # dont overwire the input file unless FORCE is requested
 
-    [ ! -s "$d/input" -o "$FORCE" = "1" ] && {
+    [ "$FORCE" == "1" ] && {
+        rm -f "$d/input"
+    }
+
+    [ -s "$d/input" ] || {
         # for whois force english, force no cache
-        # LANG=EN whois --force-lookup "meta.$tld" >"$d/input" || {
-        whois --force-lookup "meta.$tld" >"$d/input" || {
+        LANG=EN whois --force-lookup "meta.$tld" >"$d/input" || {
             # whois has a problem
             local ret=$?
             echo "ERROR: whois returns $ret for domain: $zz" >&2
@@ -91,7 +94,11 @@ getTestDataOutputForTldAndDomain()
 
     # make the testing output data
     # dont overwrite the output file unless FORCE is requested
-    [ ! -s "$d/output" -o "$FORCE" = "1" ] && {
+    [ "$FORCE" == "1" ] && {
+        rm -f "$d/output"
+    }
+
+    [ -s "$d/output" ] || {
         ./test2.py -d "$domain.$tld" >"$d/output"
     }
 }
@@ -108,7 +115,7 @@ getDnsSoaRecordAndLeaveEvidenceTldDomain()
     # get the soa record , if it exists proceed otherwise ignore this domain
     # along the way we store the raw soa record also
     host -t soa "$zz" |
-    tee "$d/__dns-soa" |
+    tee "$d/__dns-soa__$zz" |
     grep -q " has SOA record " || {
         # no soa record so that domain does not exist, cleanup the test dir
         cleanupTldTestDirectory "$tld" "$domain"
@@ -150,9 +157,9 @@ makeTestDataOriginalOneTldDomain()
     touch "$d/__domain__$zz"
 
     # store the nameservers from dns
-    host -t ns "$zz" > "$d/__dns-ns"
+    host -t ns "$zz" > "$d/__dns-ns__$zz"
 
-    getTestDataInputForTldAndDomain || return 1
+    getTestDataInputForTldAndDomain "$tld" "$domain" || return 1
 
     getTestDataOutputForTldAndDomain "$tld" "$domain"
     return 0
@@ -180,7 +187,9 @@ makeTestDataTldFromDomains()
     while read domain
     do
         [ "$VERBOSE" = "1" ] && echo "try: $domain.$tld"
+
         makeTestDataOriginalOneTldDomain "$tld" "$domain"
+
         [ -s "$TMPDIR/$tld/input" ] && {
             [ "$VERBOSE" = "1" ] && ls -l "$TMPDIR/$tld/"
             testNameserverExistsInInputAndOutput "$tld" && break

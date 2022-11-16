@@ -111,6 +111,15 @@ class Domain:
         if "admin" in data:
             self.admin = data["admin"][0].strip()
 
+        if "emails" in data:
+            self.emails = sorted(  # sorted added to get predictable output during test
+                list(  # list(set(...))) to deduplicate results
+                    set(
+                        [s.strip() for s in data["emails"]],
+                    ),
+                ),
+            )
+
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [

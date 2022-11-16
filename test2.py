@@ -147,17 +147,16 @@ class ResponseCleaner:
         for k in zz:
             n = 0
             for lines in self.rDict[k]:
-                tab = " [TAB] " if "\t" in lines else "" # tabs are present in this section
-                cr = " [CR] " if "\r" in lines else "" # \r is present in this section
-                print(k,cr, tab, lines)
-
+                tab = " [TAB] " if "\t" in lines else ""  # tabs are present in this section
+                cr = " [CR] " if "\r" in lines else ""  # \r is present in this section
+                print(k, cr, tab, lines)
 
         k = "Body"
         if len(self.rDict[k]):
             n = 0
             for lines in self.rDict[k]:
-                tab = " [TAB] " if "\t" in lines else "-------" # tabs are present in this section
-                cr = " [CR] " if "\r" in lines else "------" # \r is present in this section
+                tab = " [TAB] " if "\t" in lines else "-------"  # tabs are present in this section
+                cr = " [CR] " if "\r" in lines else "------"  # \r is present in this section
                 print(f"# ------------- {k} Section: {n} {cr}{tab}---------")
                 n += 1
                 print(lines)

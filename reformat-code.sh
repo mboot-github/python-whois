@@ -4,7 +4,7 @@ doIt()
 {
     black --line-length 120 .
 
-    pylama . |
+    pylama *.py whois/ |
     awk '
     /__init__/ && / W0611/ { next }
 #    / W0401 / { next }

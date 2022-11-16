@@ -1,36 +1,5 @@
-ERROR: output;  missing nameserver 'dns1.idp365.net.' for tld: ac
-ERROR: output;  missing nameserver 'dns3.idp365.net.' for tld: ac
-ERROR: output;  missing nameserver 'dns2.idp365.net.' for tld: ac
-ERROR: output;  missing nameserver 'ns3202.ispapi.net.' for tld: as
-ERROR: output;  missing nameserver 'ns1.domain.io.' for tld: aw
-ERROR: output;  missing nameserver 'ns2.domain.io.' for tld: aw
-ERROR: output;  missing nameserver 'ns1.101domain.com.' for tld: ax
-ERROR: output;  missing nameserver 'ns2.101domain.com.' for tld: ax
-ERROR: output;  missing nameserver 'ns2.vodien.com.' for tld: com.sg
-ERROR: output;  missing nameserver 'ns3.vodien.com.' for tld: com.sg
-ERROR: output;  missing nameserver 'm.coowo.com.' for tld: com.tw
-ERROR: output;  missing nameserver 'n.coowo.com.' for tld: com.tw
-ERROR: output;  missing nameserver 'ns-1435.awsdns-51.org.' for tld: hk
-ERROR: output;  missing nameserver 'ns-2007.awsdns-58.co.uk.' for tld: hk
-ERROR: output;  missing nameserver 'ns-446.awsdns-55.com.' for tld: hk
-ERROR: output;  missing nameserver 'ns-711.awsdns-24.net.' for tld: hk
-ERROR: output;  missing nameserver 'ns3202.ispapi.net.' for tld: je
-ERROR: output;  missing nameserver 'ns1.101domain.com.' for tld: kg
-ERROR: output;  missing nameserver 'ns2.101domain.com.' for tld: kg
-ERROR: output;  missing nameserver 'ns01.domaincontrol.com.' for tld: me
-ERROR: output;  missing nameserver 'ns02.domaincontrol.com.' for tld: me
-ERROR: output;  missing nameserver 'ns4.european-server.com.' for tld: nl
-ERROR: output;  missing nameserver 'ns3.european-server.com.' for tld: nl
-ERROR: output;  missing nameserver 'ns3202.ispapi.net.' for tld: pl
+TODO
+
+# pt is difficult it often gives no data, it works in aws frankfurt through
 ERROR: output;  missing nameserver 'ns1.dnscpanel.com.' for tld: pt
 ERROR: output;  missing nameserver 'ns2.dnscpanel.com.' for tld: pt
-ERROR: output;  missing nameserver 'ns3.netim.net.' for tld: sg
-ERROR: output;  missing nameserver 'ns1.netim.net.' for tld: sg
-ERROR: output;  missing nameserver 'ns2.netim.net.' for tld: sg
-ERROR: output;  missing nameserver 'ns4.lovellsnames.org.' for tld: tn
-ERROR: output;  missing nameserver 'ns3.lovellsnames.org.' for tld: tn
-ERROR: output;  missing nameserver 'admns1.hinet.net.' for tld: tw
-ERROR: output;  missing nameserver 'admns2.hinet.net.' for tld: tw
-ERROR: output;  missing nameserver 'ns3.lovellsnames.org.' for tld: uk
-ERROR: output;  missing nameserver 'ns2.lovellsnames.org.' for tld: uk
-ERROR: output;  missing nameserver 'ns4.lovellsnames.org.' for tld: uk
