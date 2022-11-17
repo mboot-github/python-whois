@@ -170,6 +170,7 @@ domainsToTry()
 
     [ "$domain" = "__DEFAULT__" ] && {
         cat <<! |
+nic
 meta
 google
 !

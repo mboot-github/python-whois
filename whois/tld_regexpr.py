@@ -290,6 +290,10 @@ org_tr = {
     "extend": "com_tr",
 }
 
+net_tr = {
+    "extend": "com_tr",
+}
+
 co_il = {
     "extend": "com",
     "domain_name": r"domain:\s*(.+)",
@@ -1023,6 +1027,7 @@ tn = {
 
 tokyo = {
     "extend": "com",
+    "_server": "whois.nic.tokyo",
 }
 
 top = {
@@ -1983,7 +1988,7 @@ dz = {"extend": "_privateReg"}
 gd = {"extend": "com"}
 mn = {"extend": "com"}
 tl = {"extend": "com"}
-gay = { "extend": "com", "_server": "whois.nic.gay" }
+gay = {"extend": "com", "_server": "whois.nic.gay"}
 tt = {"extend": "_privateReg"}
 mo = {
     "extend": "com",
@@ -1991,20 +1996,28 @@ mo = {
     "expiration_date": r"expires on\s+(.+)",
     "name_servers": r"Domain name servers:\s*\-+(?:\s*(\S+)\n)(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?",
 }
-com_mo = {    "extend": "mo"}
+com_mo = {"extend": "mo"}
 st = {
     # .ST domains can now be registered with many different competing registrars. and hence different formats
+    # >>> line appears quite early, valid info after would have been suppressed with the ^>>> cleanup rule: switched off
     "extend": "com",
     "registrant_country": r"registrant-country:\s+(\S+)",
     "registrant": r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n",
 }
-so = { "extend": "com" }
-nrw = { "extend": "com" }
-lat = { "extend": "com" }
-realestate = { "_server": "whois.nic.realestate", "extend": "com" }
+so = {"extend": "com"}
+nrw = {"extend": "com"}
+lat = {"extend": "com"}
+realestate = {"_server": "whois.nic.realestate", "extend": "com"}
 ph = {"extend": "_privateReg"}
 com_ph = {"extend": "ph"}
-org_ph= {"extend": "ph"}
-net_ph= {"extend": "ph"}
-zm = { "extend": "com" }
-
+org_ph = {"extend": "ph"}
+net_ph = {"extend": "ph"}
+zm = {"extend": "com"}
+sy = {"extend": "_privateReg", "_server": "whois.tld.sy"}
+tr = {"extend": "_privateReg"}
+onl = {"extend": "com"}
+blue = {"extend": "com"}
+garden = {"extend": "com", "_server": "whois.nic.garden"}
+promo = {"extend": "com", "_server": "whois.nic.promo"}
+one = {"extend": "com"}
+pyc_ = {"extend": "com"}

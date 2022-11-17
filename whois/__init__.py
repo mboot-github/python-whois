@@ -80,6 +80,7 @@ Map2Underscore = {
     ".com.tr": "com_tr",
     ".edu.tr": "edu_tr",
     ".org.tr": "org_tr",
+    ".net.tr": "net_tr",
     #
     ".edu.ua": "edu_ua",
     ".lviv.ua": "lviv_ua",
@@ -113,6 +114,7 @@ PythonKeyWordMap = {
 
 Utf8Map = {
     ".xn--p1ai": "ru_rf",
+    ".xn--p1acf": "pyc_",  # .РУС
 }
 
 

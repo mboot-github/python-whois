@@ -35,3 +35,8 @@ DONE
 
   - add tld st, so, nrw, lat, so , realestate, ph, com.ph, org.ph, net.ph, zm
 
+  -  fix tokyo, it needs a explicit server, add sy it has a whois server but i cannot get it to answer, set to privateReg
+  -  add net.tr and tr (privateReg), onl, blue, garden, promo, one,
+
+  -  add nic to default test group for makeTestdataAll.sh
+
