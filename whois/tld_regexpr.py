@@ -1992,3 +1992,19 @@ mo = {
     "name_servers": r"Domain name servers:\s*\-+(?:\s*(\S+)\n)(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?",
 }
 com_mo = {    "extend": "mo"}
+st = {
+    # .ST domains can now be registered with many different competing registrars. and hence different formats
+    "extend": "com",
+    "registrant_country": r"registrant-country:\s+(\S+)",
+    "registrant": r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n",
+}
+so = { "extend": "com" }
+nrw = { "extend": "com" }
+lat = { "extend": "com" }
+realestate = { "_server": "whois.nic.realestate", "extend": "com" }
+ph = {"extend": "_privateReg"}
+com_ph = {"extend": "ph"}
+org_ph= {"extend": "ph"}
+net_ph= {"extend": "ph"}
+zm = { "extend": "com" }
+

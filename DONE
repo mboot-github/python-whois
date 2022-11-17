@@ -16,6 +16,7 @@ DONE
   - add skipFromHere in _2_parse.py: lines starting with ^>>> signify the end of a normal whois response
     after this line there is only human or legal information so we can simply skip that text
     (a similar construct with ^--\s will be done later)
+    (( retracted we have domains where this is very early: switched off for now, make this configurable ))
 
   - add commment that unfortunately we cannot currently use rtrim on input from whois response and may regexes expect
     either \r or trailing whitespace, this can be done later and would make many regexes simpler in end detection
@@ -32,4 +33,5 @@ DONE
 
   - add -t <tld> and -d <dmian> to makeTastdataAll support a cusom domain and not meta, google default
 
+  - add tld st, so, nrw, lat, so , realestate, ph, com.ph, org.ph, net.ph, zm
 

@@ -71,6 +71,10 @@ Map2Underscore = {
     ".com.sg": "com_sg",
     ".com.do": "com_do",
     ".com.mo": "com_mo",
+    # ph
+    ".com.ph": "com_ph",
+    ".org.ph": "org_ph",
+    ".net.ph": "net_ph",
     #
     # TÜRKİYE (formerly Turkey)
     ".com.tr": "com_tr",

@@ -94,9 +94,11 @@ def cleanupWhoisResponse(
 
         # regular responses may at the end have meta info starting with a line >>> some texte <<<
         # similar trailing info exists with lines starting with -- but we wil handle them later
-        if line.startswith(">>>"):
-            skipFromHere = True
-            continue
+        # unfortunalery we have domains (google.st) that have this early at the top
+        if 0:
+            if line.startswith(">>>"):
+                skipFromHere = True
+                continue
 
         if line.startswith("Terms of Use:"):  # these lines contibute nothing so ignore
             continue
