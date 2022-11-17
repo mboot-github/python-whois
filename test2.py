@@ -120,7 +120,7 @@ class ResponseCleaner:
                     percentSeen = True
 
             if postambleSeen is False:
-                if line.startswith("--") or line.startswith(">>> ") or line.startswith("Copyright notice"):
+                if line.startswith("-- ") or line.startswith(">>> ") or line.startswith("Copyright notice"):
                     postambleSeen = True
 
             if postambleSeen is True:
@@ -155,9 +155,10 @@ class ResponseCleaner:
         if len(self.rDict[k]):
             n = 0
             for lines in self.rDict[k]:
-                tab = " [TAB] " if "\t" in lines else "-------"  # tabs are present in this section
-                cr = " [CR] " if "\r" in lines else "------"  # \r is present in this section
-                print(f"# ------------- {k} Section: {n} {cr}{tab}---------")
+                ws = " [WHITESPACE AT END] " if re.search(r'[ \t]+\r?\n', lines) else ""
+                tab = " [TAB] " if "\t" in lines else ""  # tabs are present in this section
+                cr = " [CR] " if "\r" in lines else ""  # \r is present in this section
+                print(f"# --- {k} Section: {n} {cr}{tab}{ws}")
                 n += 1
                 print(lines)
 
