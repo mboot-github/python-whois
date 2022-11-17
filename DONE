@@ -20,3 +20,4 @@ DONE
   - add commment that unfortunately we cannot currently use rtrim on input from whois response and may regexes expect
     either \r or trailing whitespace, this can be done later and would make many regexes simpler in end detection
 
+  - simplefy com.tr regex from multiple . to \.+, and add note on the trailing dot behind the date

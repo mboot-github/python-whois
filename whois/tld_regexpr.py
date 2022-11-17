@@ -276,8 +276,8 @@ com_tr = {
     "registrar": r"Organization Name\s+:\s?(.+)",
     "registrant": r"\*\* Registrant:\s+?(.+)",
     "registrant_country": None,
-    "creation_date": r"Created on..............:\s?(.+).",
-    "expiration_date": r"Expires on..............:\s?(.+).",
+    "creation_date": r"Created on\.+:\s?(.+).",
+    "expiration_date": r"Expires on\.+:\s?(.+).", # note the trailing . on both dates fields
     "updated_date": "",
     "name_servers": r"\*\* Domain Servers:\n(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)\n?",
     "status": None,
