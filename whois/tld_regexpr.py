@@ -6,6 +6,12 @@
 # like id_ , is_, if_, in_, global_ are conflicting words in python without a trailing _
 # and auto replaced with a non conflicting word by adding a _ at the end
 
+# NOTE: many registrars use \r and some even have whitespace after the entry
+# Some items can be multiple: status, emails, name_servers
+# the remaining are always singular
+
+# when we finally apply the regexes we use IGNORE CASE allways on all matches
+
 # Commercial TLD - Original Big 7
 com = {
     "extend": None,
@@ -18,7 +24,10 @@ com = {
     "updated_date": r"Updated Date:\s?(.+)",
     "name_servers": r"Name Server:\s*(.+)\s*",
     "status": r"Status:\s?(.+)",
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    # the trailing domain must have minimal 2 parts firstname.lastname@fld.tld
+    # it may actually have more then 4 levels
+    # to match the dot in firstname.lastname we must use \.
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 # United Kingdom - academic sub-domain
@@ -380,7 +389,7 @@ ee = {
     "updated_date": r"Domain:(?:\n+.+\n*)*changed:\s+(.+)\n",
     "name_servers": r"nserver:\s*(.+)",
     "status": r"Domain:(?:\n+.+\n*)*status:\s+(.+)\n",
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 eu = {
@@ -519,7 +528,7 @@ is_ = {
     "updated_date": None,
     "name_servers": r"nserver:\s?(.+)",
     "status": None,
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 it = {
@@ -554,7 +563,7 @@ jp = {
     "name_servers": r"\[Name Server\]\s*(.+)",
     #    'status':                   r'\[状態\]\s?(.+)',
     "status": r"\[Status\]\s?(.+)",
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 # The Japanese whois servers always return English unless a Japanese locale is specified in the user's LANG environmental variable.
@@ -677,7 +686,7 @@ ml = {
     "creation_date": r"Domain registered: *(.+)",
     "expiration_date": r"Record will expire on: *(.+)",
     "name_servers": r"Domain Nameservers:\s*(.+)\n\s*(.+)\n",
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 mobi = {
@@ -797,7 +806,7 @@ nz = {
     "updated_date": r"domain_datelastmodified:\s?(.+)",
     "name_servers": r"ns_name_[0-9]{2}:\s?(.+)",
     "status": r"query_status:\s?(.+)",
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 org = {
@@ -947,7 +956,7 @@ com_sg = {
     "name_servers": r"Name Servers:\r\n(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
     "status": r"Domain Status:\s*(.*)\r\n",
     # "emails": r"(\S+@\S+)",
-    "emails": r"([\w\.-]+@[\w\.-]+\.[\w])",
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 # Slovakia
@@ -1010,7 +1019,7 @@ tn = {
     "updated_date": None,
     "name_servers": r"DNS servers\n(?:Name\.+:\s*(\S+)\n)(?:Name\.+:\s*(\S+)\n)?(?:Name\.+:\s*(\S+)\n)?(?:Name\.+:\s*(\S+)\n)?",
     "status": r"Domain status\.+:(.+)",
-    "emails": r"[\w.-]+@[\w.-]+\.[\w]{2,4}",
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
 tokyo = {
@@ -1473,7 +1482,7 @@ ac = {
     "registrar": r"Registrar:\s+(.+)",
     "status": r"Domain Status:\s(.+)",
     "name_servers": r"Name Server:\s+(.+)",
-    "registrant_country": None,
+    "registrant_country": r"Registrant Country:\s*(.*)\r?\n",
     "updated_date": r"Updated Date:\s+(.+)",
     "creation_date": r"Creation Date:\s+(.+)",
     "expiration_date": r":Registry Expiry Date\s+(.+)",

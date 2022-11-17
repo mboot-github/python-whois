@@ -1,0 +1,22 @@
+DONE
+2022-11-17:mboot;
+
+  - tld ac; add registrant_country
+
+  - email regex use \. in:  "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}"
+    this now results in valid data on google.com and meta.com and all derived from .com tld
+
+  - add comment in tld_resgepr.py that emails, status, name_serevers are multi items (lists)
+    and all the rest are single results.
+
+  - add comments to beginning of tld_regexpr.py explaining that all matches are actually case insensitive (findall)
+    and that many whois responses have trailing whitespace and may end in \r\n
+    this helps with constructing regexes for future use
+
+  - add skipFromHere in _2_parse.py: lines starting with ^>>> signify the end of a normal whois response
+    after this line there is only human or legal information so we can simply skip that text
+    (a similar construct with ^--\s will be done later)
+
+  - add commment that unfortunately we cannot currently use rtrim on input from whois response and may regexes expect
+    either \r or trailing whitespace, this can be done later and would make many regexes simpler in end detection
+

@@ -13,3 +13,4 @@ dnssec             bool              False
 name_servers       list              ['a.ns.facebook.com', 'b.ns.facebook.com']
 owner              str               ''
 registrant         str               ''
+emails             list              ['']

@@ -1,0 +1,15 @@
+
+test domain: <<<<<<<<<< meta.kr >>>>>>>>>>>>>>>>>>>>
+name               str               'meta.kr'
+tld                str               'kr'
+registrar          str               'Gabia, Inc.(http://www.gabia.co.kr)'
+registrant_country str               ''
+creation_date      datetime.datetime 2007-03-12 00:00:00
+expiration_date    datetime.datetime 2025-03-12 00:00:00
+last_updated       datetime.datetime 2022-04-05 00:00:00
+status             str               ''
+statuses           list              ['']
+dnssec             bool              False
+name_servers       list              []
+registrant         str               'Gabia C&S'
+emails             list              ['domreg@101domain.com']

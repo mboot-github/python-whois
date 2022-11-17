@@ -59,22 +59,41 @@ def get_tld_re(tld: str) -> Any:
 
 
 def cleanupWhoisResponse(
-    response: str,
+    whois_str: str,
     verbose: bool = False,
     with_cleanup_results: bool = False,
 ) -> str:
     tmp2 = []
 
-    tmp: List = response.split("\n")
+    # note we cannot do yet rstrip() on the lines as many registrars use \r and even trailing whitespace after entries
+    # as the resulting matches are all stripped of leading and trailing whitespace this currently is fixed there
+    # and relaxes the regexes: you will often see a capture with (.*)
+    # we would have to fix all regexes to allow stripping all trailing whitespace
+    # it would make many matches easier though.
+
+    skipFromHere = False
+    tmp: List = whois_str.split("\n")
     for line in tmp:
+        if skipFromHere is True:
+            continue
+
         # some servers respond with: % Quota exceeded in the comment section (lines starting with %)
         if "quota exceeded" in line.lower():
-            raise WhoisQuotaExceeded(response)
+            raise WhoisQuotaExceeded(whois_str)
 
         if with_cleanup_results is True and line.startswith("%"):  # only remove if requested
             continue
 
         if "REDACTED FOR PRIVACY" in line:  # these lines contibute nothing so ignore
+            continue
+
+        if "Please query the RDDS service of the Registrar of Record" in line: # these lines contibute nothing so ignore
+            continue
+
+        # regular responses may at the end have meta info starting with a line >>> some texte <<<
+        # similar trailing info exists with lines starting with -- but we wil handle them later
+        if line.startswith(">>>"):
+            skipFromHere = True
             continue
 
         if line.startswith("Terms of Use:"):  # these lines contibute nothing so ignore
@@ -224,7 +243,7 @@ def do_parse(
 ) -> Optional[Dict[str, Any]]:
 
     whois_str = cleanupWhoisResponse(
-        response=whois_str,
+        whois_str=whois_str,
         verbose=verbose,
         with_cleanup_results=with_cleanup_results,
     )

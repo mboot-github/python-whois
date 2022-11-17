@@ -1,0 +1,23 @@
+[Querying whois.jprs.jp]
+[whois.jprs.jp]
+[ JPRS database provides information on network administration. Its use is    ]
+[ restricted to network administration purposes. For further information,     ]
+[ use 'whois -h whois.jprs.jp help'. To suppress Japanese output, add'/e'     ]
+[ at the end of command, e.g. 'whois -h whois.jprs.jp xxx/e'.                 ]
+
+Domain Information:
+a. [Domain Name]                META.CO.JP
+g. [Organization]               METATECHNO INC.
+l. [Organization Type]          Corporation
+m. [Administrative Contact]     IT3969JP
+n. [Technical Contact]          SY39561JP
+n. [Technical Contact]          IT3969JP
+p. [Name Server]                ns.meta.co.jp
+p. [Name Server]                ns2.meta.co.jp
+p. [Name Server]                ns2.sphere.ad.jp
+s. [Signing Key]                
+[State]                         Connected (2023/04/30)
+[Registered Date]               1994/04/01
+[Connected Date]                1994/12/01
+[Last Update]                   2022/05/01 01:02:20 (JST)
+
