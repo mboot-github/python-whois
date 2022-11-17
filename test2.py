@@ -155,7 +155,7 @@ class ResponseCleaner:
         if len(self.rDict[k]):
             n = 0
             for lines in self.rDict[k]:
-                ws = " [WHITESPACE AT END] " if re.search(r'[ \t]+\r?\n', lines) else ""
+                ws = " [WHITESPACE AT END] " if re.search(r"[ \t]+\r?\n", lines) else ""
                 tab = " [TAB] " if "\t" in lines else ""  # tabs are present in this section
                 cr = " [CR] " if "\r" in lines else ""  # \r is present in this section
                 print(f"# --- {k} Section: {n} {cr}{tab}{ws}")

@@ -69,6 +69,8 @@ Map2Underscore = {
     #
     ".com.au": "com_au",
     ".com.sg": "com_sg",
+    ".com.do": "com_do",
+    ".com.mo": "com_mo",
     #
     # TÜRKİYE (formerly Turkey)
     ".com.tr": "com_tr",

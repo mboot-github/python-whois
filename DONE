@@ -28,3 +28,8 @@ DONE
   - allow maketestDataAll.sh -v -f -d com.sg to show the reduced input.out and the produced output of test2.py
   - add '[WHITESPACE AT END]' in input.out during input reduction test
 
+  - add tld do, com.do, mo, com.mo, cx, dz (never answeres), gd, mn, gay, tl, tt (responds with perl script)
+
+  - add -t <tld> and -d <dmian> to makeTastdataAll support a cusom domain and not meta, google default
+
+

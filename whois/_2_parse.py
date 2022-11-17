@@ -87,7 +87,9 @@ def cleanupWhoisResponse(
         if "REDACTED FOR PRIVACY" in line:  # these lines contibute nothing so ignore
             continue
 
-        if "Please query the RDDS service of the Registrar of Record" in line: # these lines contibute nothing so ignore
+        if (
+            "Please query the RDDS service of the Registrar of Record" in line
+        ):  # these lines contibute nothing so ignore
             continue
 
         # regular responses may at the end have meta info starting with a line >>> some texte <<<

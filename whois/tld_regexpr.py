@@ -136,9 +136,8 @@ ax = {
     "updated_date": r"modified\.+:\s?(\S+)",
     "name_servers": r"nserver\.+:\s*(\S+)",
     "status": r"status\.+:\s*(\S+)",
-    "registrant": r"Holder\s+name\.+:\s*(.+)\r?\n", # not always present see meta.ax and google.ax
-    "registrant_country": r"country\.+:\s*(.+)\r?\n", # not always present see meta.ax and google.ax
-
+    "registrant": r"Holder\s+name\.+:\s*(.+)\r?\n",  # not always present see meta.ax and google.ax
+    "registrant_country": r"country\.+:\s*(.+)\r?\n",  # not always present see meta.ax and google.ax
 }
 
 aw = {
@@ -277,7 +276,7 @@ com_tr = {
     "registrant": r"\*\* Registrant:\s+?(.+)",
     "registrant_country": None,
     "creation_date": r"Created on\.+:\s?(.+).",
-    "expiration_date": r"Expires on\.+:\s?(.+).", # note the trailing . on both dates fields
+    "expiration_date": r"Expires on\.+:\s?(.+).",  # note the trailing . on both dates fields
     "updated_date": "",
     "name_servers": r"\*\* Domain Servers:\n(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)\n?",
     "status": None,
@@ -1976,3 +1975,20 @@ si = {
     "updated_date": None,
     "registrant_country": None,
 }
+
+do = {"extend": "_privateReg"}
+com_do = {"extend": "_privateReg"}
+cx = {"extend": "com"}
+dz = {"extend": "_privateReg"}
+gd = {"extend": "com"}
+mn = {"extend": "com"}
+tl = {"extend": "com"}
+gay = { "extend": "com", "_server": "whois.nic.gay" }
+tt = {"extend": "_privateReg"}
+mo = {
+    "extend": "com",
+    "creation_date": r"created on\s+(.+)",
+    "expiration_date": r"expires on\s+(.+)",
+    "name_servers": r"Domain name servers:\s*\-+(?:\s*(\S+)\n)(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?",
+}
+com_mo = {    "extend": "mo"}

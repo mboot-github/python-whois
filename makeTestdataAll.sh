@@ -133,7 +133,6 @@ getDnsSoaRecordAndLeaveEvidenceTldDomain()
 makeDirectoryForTld()
 {
     local tld="$1"
-    local domain="$2"
     local d="$TMPDIR/$tld"
 
     mkdir -p "$d" || {
@@ -167,23 +166,31 @@ makeTestDataOriginalOneTldDomain()
 
 domainsToTry()
 {
-    cat <<! |
+    local domain="$1"
+
+    [ "$domain" = "__DEFAULT__" ] && {
+        cat <<! |
 meta
 google
 !
-    awk  '
-    /^[ \t]*$/ { next }
-    /^[ \t]*;/ { next }
-    /^[ \t]*#/ { next }
-    { print $1 }
-    '
+        awk  '
+        /^[ \t]*$/ { next }
+        /^[ \t]*;/ { next }
+        /^[ \t]*#/ { next }
+        { print $1 }
+        '
+        return
+    }
+
+    echo "$domain"
 }
 
 makeTestDataTldFromDomains()
 {
     local tld="$1"
+    local domain="$2"
 
-    domainsToTry |
+    domainsToTry "$domain" |
     while read domain
     do
         [ "$VERBOSE" = "1" ] && echo "try: $domain.$tld"
@@ -220,12 +227,13 @@ makeRulesFromTldIfExist()
 makeTestDataOriginalOneTld()
 {
     local tld="$1"
+    local domain="$2"
 
     [ "$VERBOSE" = "1" ] && echo "try: $tld"
 
-    makeDirectoryForTld "$tld" "$domain" || exit 101
+    makeDirectoryForTld "$tld" || exit 101
     makeRulesFromTldIfExist "$tld"
-    makeTestDataTldFromDomains "$tld"
+    makeTestDataTldFromDomains "$tld" "$domain"
 }
 
 makeTestDataOriginalAllTldSupported()
@@ -245,7 +253,8 @@ $0 usage:
 -h  show the help text
 -v  switch on verbose (will show progress)
 -f  switch on force (will re analyze all)
--d  <domain> specify a domain to analize if domain == ALL andlize all tld;s
+-t  <domain> specify a tld to analize
+-a  analyze all tld currently supported
 !
     exit 0;
 }
@@ -258,7 +267,9 @@ main()
     FORCE=0
     ALL=0
 
-    while getopts "havfd:" arg;
+    local domain="__DEFAULT__"
+
+    while getopts "havft:d:" arg;
     do
         case $arg in
 
@@ -271,7 +282,11 @@ main()
         a) ALL=1
             ;;
 
-        d) domain=${OPTARG}
+        t) tld="${OPTARG}"
+            ;;
+
+        d) domain="${OPTARG}"
+            # instead of the default meta and google use this domain and combine it with the tld for processing
             ;;
 
         h | *) usage
@@ -286,7 +301,7 @@ main()
         return
     }
 
-    makeTestDataOriginalOneTld "$domain"
+    makeTestDataOriginalOneTld "$tld" "$domain"
 }
 
 main $* 2>&1 |
