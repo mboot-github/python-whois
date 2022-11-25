@@ -15,6 +15,7 @@ NEW_TESTS = """
     # OK NOW:
     # abroco.me
     # wp.pl
+    # google.ai
 
     # New TLD
     whois.aero
