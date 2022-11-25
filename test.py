@@ -353,7 +353,7 @@ DOMAINS = """
 """
 
 failure = {}
-
+nones = []
 
 def prepItem(d):
     print("-" * 80)
@@ -367,6 +367,7 @@ def testItem(d):
         for k, v in wd.items():
             print('%20s\t"%s"' % (k, v))
     else:
+        nones.append(d)
         print("None")
 
 
@@ -451,11 +452,14 @@ def main():
         print("\n========================================\n")
         testDomains(UnknownDateFormat.split("\n"))
 
-        print(f"Failure during test : {len(failure)}")
-
     print("\n# ========================")
+    print(f"Failure during test : {len(failure)}")
     for i in sorted(failure.keys()):
         print(i, failure[i])
 
+    print("\n# ========================")
+    print(f"Domains with 'None' result : {len(nones)}")
+    for d in sorted(nones):
+        print(d)
 
 main()
