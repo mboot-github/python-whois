@@ -80,7 +80,7 @@ def cleanupWhoisResponse(
         if line.startswith("Terms of Use:"):  # these lines contibute nothing so ignore
             continue
 
-        tmp2.append(line)
+        tmp2.append(line.strip("\r"))
 
     return "\n".join(tmp2)
 
