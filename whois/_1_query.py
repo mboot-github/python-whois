@@ -104,9 +104,25 @@ def makeWhoisCommandToRun(
 
     if platform.system() == "Windows":
         # Usage: whois [-v] domainname [whois.server]
-        if not os.path.exists("whois.exe"):
-            tryInstallMissingWhoisOnWindows(verbose)
-        wh = r".\whois.exe "
+
+        if os.path.exists("whois.exe"):
+            wh = r".\whois.exe "
+        else:
+            find = False
+            paths = os.environ["path"].split(";")
+            for path in paths:
+                wpath = os.path.join(path, "whois.exe")
+                if os.path.exists(wpath):
+                    wh = wpath
+                    find = True
+                    break
+
+            if not find:
+                tryInstallMissingWhoisOnWindows(verbose)
+
+        if server:
+            return [wh, "-v", "-nobanner", domain, server]
+        return [wh, "-v", "-nobanner", domain]
 
     if server:
         return [wh, domain, "-h", server]
