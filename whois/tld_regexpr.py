@@ -1476,7 +1476,7 @@ ac = {
     "registrant_country": None,
     "updated_date": r"Updated Date:\s+(.+)",
     "creation_date": r"Creation Date:\s+(.+)",
-    "expiration_date": r":Registry Expiry Date\s+(.+)",
+    "expiration_date": r"Registry Expiry Date:\s+(.+)",
 }
 
 ae = {
