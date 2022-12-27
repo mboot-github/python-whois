@@ -63,6 +63,7 @@ co_uk = {
 # Anguilla
 ai = {
     "extend": "com",
+    "_server": "whois.nic.ai",
 }
 
 # Armenia
