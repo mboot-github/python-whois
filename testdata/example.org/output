@@ -12,3 +12,4 @@ statuses           list              ['serverDeleteProhibited https://icann.org/
 dnssec             bool              True
 name_servers       list              ['a.iana-servers.net', 'b.iana-servers.net']
 registrant         str               'ICANN'
+emails             list              ['']

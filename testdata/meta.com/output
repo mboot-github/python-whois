@@ -1,0 +1,15 @@
+
+test domain: <<<<<<<<<< meta.com >>>>>>>>>>>>>>>>>>>>
+name               str               'meta.com'
+tld                str               'com'
+registrar          str               'RegistrarSafe, LLC'
+registrant_country str               'US'
+creation_date      datetime.datetime 1991-01-21 05:00:00
+expiration_date    NoneType          None
+last_updated       datetime.datetime 2022-07-27 19:07:55
+status             str               'clientDeleteProhibited https://www.icann.org/epp#clientDeleteProhibited'
+statuses           list              ['clientDeleteProhibited https://www.icann.org/epp#clientDeleteProhibited', 'clientTransferProhibited https://www.icann.org/epp#clientTransferProhibited', 'clientUpdateProhibited https://www.icann.org/epp#clientUpdateProhibited', 'serverDeleteProhibited https://www.icann.org/epp#serverDeleteProhibited', 'serverTransferProhibited https://www.icann.org/epp#serverTransferProhibited', 'serverUpdateProhibited https://www.icann.org/epp#serverUpdateProhibited']
+dnssec             bool              False
+name_servers       list              ['a.ns.facebook.com', 'b.ns.facebook.com', 'c.ns.facebook.com', 'd.ns.facebook.com']
+registrant         str               'Meta Platforms, Inc.'
+emails             list              ['abusecomplaints@registrarsafe.com', 'domain@fb.com']

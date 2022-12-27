@@ -69,11 +69,18 @@ Map2Underscore = {
     #
     ".com.au": "com_au",
     ".com.sg": "com_sg",
+    ".com.do": "com_do",
+    ".com.mo": "com_mo",
+    # ph
+    ".com.ph": "com_ph",
+    ".org.ph": "org_ph",
+    ".net.ph": "net_ph",
     #
     # TÜRKİYE (formerly Turkey)
     ".com.tr": "com_tr",
     ".edu.tr": "edu_tr",
     ".org.tr": "org_tr",
+    ".net.tr": "net_tr",
     #
     ".edu.ua": "edu_ua",
     ".lviv.ua": "lviv_ua",
@@ -107,6 +114,7 @@ PythonKeyWordMap = {
 
 Utf8Map = {
     ".xn--p1ai": "ru_rf",
+    ".xn--p1acf": "pyc_",  # .РУС
 }
 
 

@@ -2,12 +2,13 @@
 
 TMPDIR="./tmp" # the default work directory is a local tmp (exclude by .gitignore )
 
-FORCE=0 # force whois loogup by not using cached data
-VERBOSE=0 # along the way inform us on progress and results
+FORCE=0     # force whois loogup by not using cached data
+VERBOSE=0   # along the way inform us on progress and results
+ALL=0       # process all supported tld's
 
 prepTempDir()
 {
-    # make the work dir if it does nt exist
+    # make the work dir if it does not exist
     mkdir -p "$TMPDIR" || {
         echo "FATAL: cannot make test dir: $TMPDIR" >&2
         exit 101
@@ -27,6 +28,7 @@ testNameserverExistsInInputAndOutput()
     local dns="$d/__dns-ns"
 
     [ -s "$dns" ] || return # dont bother at all if we have no dns file
+    [ -s "$d/input" ] || return # dont bother if we have no input file
 
     rm -f "$d/error.ns"
 
@@ -34,16 +36,19 @@ testNameserverExistsInInputAndOutput()
     awk '{ print $NF }' |
     while read ns
     do
-        [ -s "$d/input" ] || return # dont bother if we have no input file
-
+        [ "$VERBOSE" = "1" ] && echo "test $ns in input"
         grep -q -i "$ns" "$d/input" && {
             # only test in the output if it is present in the input
+
+            [ "$VERBOSE" = "1" ] && echo "test $ns in output"
             grep -q -i "$ns" "$d/output" || {
                 echo "ERROR: output;  missing nameserver '$ns' for tld: $tld" |
                 tee -a "$d/error.ns"
+                return 1
             }
         }
     done
+    return 0
 }
 
 cleanupTldTestDirectory()
@@ -128,7 +133,6 @@ getDnsSoaRecordAndLeaveEvidenceTldDomain()
 makeDirectoryForTld()
 {
     local tld="$1"
-    local domain="$2"
     local d="$TMPDIR/$tld"
 
     mkdir -p "$d" || {
@@ -153,48 +157,63 @@ makeTestDataOriginalOneTldDomain()
 
     getDnsSoaRecordAndLeaveEvidenceTldDomain "$tld" "$domain" || return 1
 
-    # what domain did we test
-    touch "$d/__domain__$zz"
-
-    # store the nameservers from dns
-    host -t ns "$zz" > "$d/__dns-ns__$zz"
-
+    touch "$d/__domain__$zz"                # what domain did we test
+    host -t ns "$zz" > "$d/__dns-ns__$zz"   # store the nameservers from dns
     getTestDataInputForTldAndDomain "$tld" "$domain" || return 1
-
-    getTestDataOutputForTldAndDomain "$tld" "$domain"
+    getTestDataOutputForTldAndDomain "$tld" "$domain" || return 1
     return 0
 }
 
 domainsToTry()
 {
-    cat <<! |
+    local domain="$1"
+
+    [ "$domain" = "__DEFAULT__" ] && {
+        cat <<! |
+nic
 meta
 google
 !
-    awk  '
-    /^[ \t]*$/ { next }
-    /^[ \t]*;/ { next }
-    /^[ \t]*#/ { next }
-    { print $1 }
-    '
+        awk  '
+        /^[ \t]*$/ { next }
+        /^[ \t]*;/ { next }
+        /^[ \t]*#/ { next }
+        { print $1 }
+        '
+        return
+    }
+
+    echo "$domain"
 }
 
 makeTestDataTldFromDomains()
 {
     local tld="$1"
+    local domain="$2"
 
-    domainsToTry |
+    domainsToTry "$domain" |
     while read domain
     do
         [ "$VERBOSE" = "1" ] && echo "try: $domain.$tld"
 
-        makeTestDataOriginalOneTldDomain "$tld" "$domain"
-
-        [ -s "$TMPDIR/$tld/input" ] && {
-            [ "$VERBOSE" = "1" ] && ls -l "$TMPDIR/$tld/"
-            testNameserverExistsInInputAndOutput "$tld" && break
+        makeTestDataOriginalOneTldDomain "$tld" "$domain" && {
+            [ -s "$TMPDIR/$tld/input" ] && {
+                [ "$VERBOSE" = "1" ] && {
+                    ls -l "$TMPDIR/$tld/"
+                }
+            }
+            break
         }
     done
+
+    [ "$VERBOSE" = "1" ] && {
+        # show the rediced input and the output
+        cat "$TMPDIR/$tld/input.out" "$TMPDIR/$tld/output"
+    }
+
+    testNameserverExistsInInputAndOutput "$tld" && {
+        return
+    }
 }
 
 makeRulesFromTldIfExist()
@@ -209,12 +228,13 @@ makeRulesFromTldIfExist()
 makeTestDataOriginalOneTld()
 {
     local tld="$1"
+    local domain="$2"
 
     [ "$VERBOSE" = "1" ] && echo "try: $tld"
 
-    makeDirectoryForTld "$tld" "$domain" || exit 101
+    makeDirectoryForTld "$tld" || exit 101
     makeRulesFromTldIfExist "$tld"
-    makeTestDataTldFromDomains "$tld"
+    makeTestDataTldFromDomains "$tld" "$domain"
 }
 
 makeTestDataOriginalAllTldSupported()
@@ -227,19 +247,62 @@ makeTestDataOriginalAllTldSupported()
     done
 }
 
+usage()
+{
+    cat <<!
+$0 usage:
+-h  show the help text
+-v  switch on verbose (will show progress)
+-f  switch on force (will re analyze all)
+-t  <domain> specify a tld to analize
+-a  analyze all tld currently supported
+!
+    exit 0;
+}
+
 main()
 {
+    [ $# -eq 0 ] && usage
+
+    VERBOSE=0
+    FORCE=0
+    ALL=0
+
+    local domain="__DEFAULT__"
+
+    while getopts "havft:d:" arg;
+    do
+        case $arg in
+
+        v) VERBOSE=1
+            ;;
+
+        f) FORCE=1
+            ;;
+
+        a) ALL=1
+            ;;
+
+        t) tld="${OPTARG}"
+            ;;
+
+        d) domain="${OPTARG}"
+            # instead of the default meta and google use this domain and combine it with the tld for processing
+            ;;
+
+        h | *) usage
+            ;;
+        esac
+    done
+
     prepTempDir
 
-    [ "$#" = "0" ] && {
+    [ "$ALL" = "1" ] && {
         makeTestDataOriginalAllTldSupported
         return
     }
 
-    for tld in $*
-    do
-        makeTestDataOriginalOneTld "$tld"
-    done
+    makeTestDataOriginalOneTld "$tld" "$domain"
 }
 
 main $* 2>&1 |

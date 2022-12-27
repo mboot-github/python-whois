@@ -1,0 +1,31 @@
+[Querying whois.jprs.jp]
+[whois.jprs.jp]
+[ JPRS database provides information on network administration. Its use is    ]
+[ restricted to network administration purposes. For further information,     ]
+[ use 'whois -h whois.jprs.jp help'. To suppress Japanese output, add'/e'     ]
+[ at the end of command, e.g. 'whois -h whois.jprs.jp xxx/e'.                 ]
+
+Domain Information:
+[Domain Name]                   META.JP
+
+[Registrant]                    METATECHNO INC.
+
+[Name Server]                   ns.meta.jp
+[Signing Key]                   
+
+[Created on]                    2009/07/10
+[Expires on]                    2023/07/31
+[Status]                        Active
+[Last Updated]                  2022/08/01 01:05:08 (JST)
+
+Contact Information:
+[Name]                          METATECHNO INC.
+[Email]                         itjpnc@meta.co.jp
+[Web Page]                       
+[Postal code]                   211-0063
+[Postal Address]                Kanagawa
+                                1-403 Kosugimachi Nakahara-ku, Kawasaki
+                                Musashi-Kosugi Tower Place Building,
+[Phone]                         044-739-3308
+[Fax]                           044-739-3309
+

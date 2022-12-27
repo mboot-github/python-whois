@@ -1,0 +1,59 @@
+[Querying whois.kr]
+[whois.kr]
+query : meta.kr
+
+
+# KOREAN(UTF8)
+
+도메인이름                  : meta.kr
+등록인                      : 그리드
+등록인 주소                 : 경기도 성남시 분당구 대왕판교로 660 유스페이스1 B동 4층
+등록인 우편번호             : 13494
+책임자                      : 도메인관리자
+책임자 전자우편             : domreg@101domain.com
+책임자 전화번호             : 17604448674
+등록일                      : 2007. 03. 12.
+최근 정보 변경일            : 2022. 04. 05.
+사용 종료일                 : 2025. 03. 12.
+정보공개여부                : Y
+등록대행자                  : (주)가비아(http://www.gabia.co.kr)
+DNSSEC                      : 미서명
+
+1차 네임서버 정보
+   호스트이름               : ns1.lovellsnames.org
+
+2차 네임서버 정보
+   호스트이름               : ns2.lovellsnames.org
+   호스트이름               : ns3.lovellsnames.org
+   호스트이름               : ns4.lovellsnames.org
+
+네임서버 이름이 .kr이 아닌 경우는 IP주소가 보이지 않습니다.
+
+
+# ENGLISH
+
+Domain Name                 : meta.kr
+Registrant                  : Gabia C&S
+Registrant Address          : 660,Daewangpangyo-ro,Bundang-gu, 4F, ComplexB, U-SPACE 1 B/D
+Registrant Zip Code         : 13494
+Administrative Contact(AC)  : 101Domain
+AC E-Mail                   : domreg@101domain.com
+AC Phone Number             : 17604448674
+Registered Date             : 2007. 03. 12.
+Last Updated Date           : 2022. 04. 05.
+Expiration Date             : 2025. 03. 12.
+Publishes                   : Y
+Authorized Agency           : Gabia, Inc.(http://www.gabia.co.kr)
+DNSSEC                      : unsigned
+
+Primary Name Server
+   Host Name                : ns1.lovellsnames.org
+
+Secondary Name Server
+   Host Name                : ns2.lovellsnames.org
+   Host Name                : ns3.lovellsnames.org
+   Host Name                : ns4.lovellsnames.org
+
+
+- KISA/KRNIC WHOIS Service -
+
