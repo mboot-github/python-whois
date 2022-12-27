@@ -356,6 +356,7 @@ DOMAINS = """
 failure = {}
 nones = []
 
+
 def prepItem(d):
     print("-" * 80)
     print(d)
@@ -462,5 +463,6 @@ def main():
     print(f"Domains with 'None' result : {len(nones)}")
     for d in sorted(nones):
         print(d)
+
 
 main()
