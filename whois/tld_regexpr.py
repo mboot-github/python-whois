@@ -2010,6 +2010,7 @@ st = {
     "registrant_country": r"registrant-country:\s+(\S+)",
     "registrant": r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n",
 }
+
 so = {"extend": "com"}
 nrw = {"extend": "com"}
 lat = {"extend": "com"}
@@ -2025,5 +2026,33 @@ onl = {"extend": "com"}
 blue = {"extend": "com"}
 garden = {"extend": "com", "_server": "whois.nic.garden"}
 promo = {"extend": "com", "_server": "whois.nic.promo"}
-one = {"extend": "com"}
+
 pyc_ = {"extend": "com"}
+
+mn = {"extend": "com", "_server": "whois.nic.mn"}
+
+africa = { "extend": "com", "_server": "whois.nic.africa" }
+
+green = {"extend": "com"}
+
+mk = {
+    "extend": None,
+    "_server": "whois.marnet.mk",
+    "domain_name": r"domain:\s?(.+)",
+    "registrar": r"registrar:\s?(.+)",
+    "registrant": r"registrant:\s?(.+)",
+    "registrant_country": r"Registrant Country:\s?(.+)",
+    "creation_date": r"registered:\s?(.+)",
+    "expiration_date": r"expire:\s?(.+)",
+    "updated_date": r"changed:\s?(.+)",
+    "name_servers": r"nserver:\s*(.+)\s*",
+    "status": r"Status:\s?(.+)",
+    # the trailing domain must have minimal 2 parts firstname.lastname@fld.tld
+    # it may actually have more then 4 levels
+    # to match the dot in firstname.lastname we must use \.
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+}
+
+observer = {"extend": "com", "_server": "whois.nic.observer"}
+one = {"extend": "com", "_server": "whois.nic.one"}
+page = {"extend": "com", "_server": "whois.nic.google"}
