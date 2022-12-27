@@ -368,7 +368,7 @@ dk = {
 
 download = {
     "extend": "amsterdam",
-    "name_servers": r"Name Server:\s*(.+)\r",
+    "name_servers": r"Name Server:[ \t]+(\S+)", # fix needed after strip(\r) in _2_parse.py in version 0.19
     "status": r"Domain Status:\s*([a-zA-z]+)",
 }
 
@@ -957,8 +957,13 @@ com_sg = {
     "creation_date": r"Creation Date:\s?(.+)",
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": r"Modified Date:\s?(.+)",
-    "name_servers": r"Name Servers:\r\n(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
-    "status": r"Domain Status:\s*(.*)\r\n",
+
+    # fix needed after strip(\r) in _2_parse.py in version 0.19
+    # "name_servers": r"Name Servers:\r\n(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
+    "name_servers": r"Name Servers:(?:\s+(\S+))(?:\s+(\S+))?(?:\s+([\.\w]+)\s+)?",
+    # this seems ok for 2 and 3 ns and does not catch the dnssec: line
+
+    "status": r"Domain Status:\s*(.*)\r?\n",
     # "emails": r"(\S+@\S+)",
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
@@ -970,7 +975,7 @@ sk = {
     "creation_date": r"Created:\s?(.+)",
     "expiration_date": r"Valid Until:\s?(.+)",
     "updated_date": r"Updated:\s?(.+)",
-    "name_servers": r"Nameserver:\s*(.+)\r",
+    "name_servers": r"Nameserver:\s*(\S+)", # fix needed after strip(\r) in _2_parse.py in version 0.19
     "registrant": r"Contact:\s?(.+)",
     "registrant_country": r"Country Code:\s?(.+)\nRegistrar:",
 }
