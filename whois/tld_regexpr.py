@@ -2118,3 +2118,5 @@ mo = {
     "creation_date": r"Record created on (.+)",
     "expiration_date": r"Record expires on (.+)",
 }
+
+ph = {"extend": "_privateReg"}
