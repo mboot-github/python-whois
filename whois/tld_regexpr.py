@@ -2106,3 +2106,15 @@ wf = {
     "name_servers": r"nserver:\s*(.+)\s*",
     "status": r"\nstatus:\s?(.+)",
 }
+
+lk = {"extend": "_privateReg"}  # Sri Lanka, whois.nic.lk exists but does not answer
+eg = {"extend": "_privateReg"}  # Egipt
+com_eg = {"extend": "_privateReg"}  # Egipt
+
+mo = {
+    "extend": "com",
+    "_server": "whois.monic.mo",
+    "name_servers": r"Domain name servers:\s+-+\s+(\S+)\n(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?",
+    "creation_date": r"Record created on (.+)",
+    "expiration_date": r"Record expires on (.+)",
+}
