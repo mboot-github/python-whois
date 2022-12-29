@@ -676,7 +676,7 @@ me = {
     "extend": "biz",
     "creation_date": r"Creation Date:\s?(.+)",
     "expiration_date": r"Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
+    "updated_date": None, # some entries have no date string but not always
     "name_servers": r"Name Server:\s*(\S+)\r?\n",
     "status": r"Domain Status:\s?(.+)",
 }
