@@ -84,6 +84,8 @@ Map2Underscore = {
     ".net.tr": "net_tr",
     #
     ".edu.ua": "edu_ua",
+    ".com.ua": "com_ua",
+    ".net.ua": "net_ua",
     ".lviv.ua": "lviv_ua",
     # dynamic dns without whois
     ".hopto.org": "hopto_org",

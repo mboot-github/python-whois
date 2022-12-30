@@ -1080,6 +1080,12 @@ edu_ua = {
     "extend": "ua",
     "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)",
 }
+com_ua = {
+    "extend": "ua",
+}
+net_ua = {
+    "extend": "ua",
+}
 
 lviv_ua = {
     "extend": "com",
