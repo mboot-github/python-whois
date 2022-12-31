@@ -123,6 +123,7 @@ def handleShortResponse(
     # NOTE: from here s is lowercase only
     # ---------------------------------
     noneStrings = [
+        "no matching record"
         "not found",
         "no entries found",
         "status: free",
