@@ -125,6 +125,7 @@ def handleShortResponse(
     noneStrings = [
         "no matching record",
         "not found",
+        "no data found",
         "no entries found",
         "status: free",
         "no such domain",
