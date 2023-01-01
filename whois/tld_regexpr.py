@@ -368,7 +368,7 @@ dk = {
 
 download = {
     "extend": "amsterdam",
-    "name_servers": r"Name Server:[ \t]+(\S+)", # fix needed after strip(\r) in _2_parse.py in version 0.19
+    "name_servers": r"Name Server:[ \t]+(\S+)",  # fix needed after strip(\r) in _2_parse.py in version 0.19
     "status": r"Domain Status:\s*([a-zA-z]+)",
 }
 
@@ -676,7 +676,7 @@ me = {
     "extend": "biz",
     "creation_date": r"Creation Date:\s?(.+)",
     "expiration_date": r"Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
+    "updated_date": None,  # some entries have no date string but not always
     "name_servers": r"Name Server:\s*(\S+)\r?\n",
     "status": r"Domain Status:\s?(.+)",
 }
@@ -957,12 +957,10 @@ com_sg = {
     "creation_date": r"Creation Date:\s?(.+)",
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": r"Modified Date:\s?(.+)",
-
     # fix needed after strip(\r) in _2_parse.py in version 0.19
     # "name_servers": r"Name Servers:\r\n(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
     "name_servers": r"Name Servers:(?:\s+(\S+))(?:\s+(\S+))?(?:\s+([\.\w]+)\s+)?",
     # this seems ok for 2 and 3 ns and does not catch the dnssec: line
-
     "status": r"Domain Status:\s*(.*)\r?\n",
     # "emails": r"(\S+@\S+)",
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
@@ -975,7 +973,7 @@ sk = {
     "creation_date": r"Created:\s?(.+)",
     "expiration_date": r"Valid Until:\s?(.+)",
     "updated_date": r"Updated:\s?(.+)",
-    "name_servers": r"Nameserver:\s*(\S+)", # fix needed after strip(\r) in _2_parse.py in version 0.19
+    "name_servers": r"Nameserver:\s*(\S+)",  # fix needed after strip(\r) in _2_parse.py in version 0.19
     "registrant": r"Contact:\s?(.+)",
     "registrant_country": r"Country Code:\s?(.+)\nRegistrar:",
 }
@@ -1082,6 +1080,12 @@ edu_ua = {
     "extend": "ua",
     "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)",
 }
+com_ua = {
+    "extend": "ua",
+}
+net_ua = {
+    "extend": "ua",
+}
 
 lviv_ua = {
     "extend": "com",
@@ -1148,6 +1152,11 @@ xin = {
 za = {
     "extend": "com",
 }
+
+web_za = { "extend": "za", "_server": "web-whois.registry.net.za" }
+org_za = { "extend": "za", "_server": "org-whois.registry.net.za" }
+net_za = { "extend": "za", "_server": "net-whois.registry.net.za" }
+co_za = { "extend": "za" , "_server": "coza-whois.registry.net.za"}
 
 gy = {
     "extend": "com",
@@ -2010,6 +2019,7 @@ st = {
     "registrant_country": r"registrant-country:\s+(\S+)",
     "registrant": r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n",
 }
+
 so = {"extend": "com"}
 nrw = {"extend": "com"}
 lat = {"extend": "com"}
@@ -2025,5 +2035,99 @@ onl = {"extend": "com"}
 blue = {"extend": "com"}
 garden = {"extend": "com", "_server": "whois.nic.garden"}
 promo = {"extend": "com", "_server": "whois.nic.promo"}
-one = {"extend": "com"}
+
 pyc_ = {"extend": "com"}
+
+mn = {"extend": "com", "_server": "whois.nic.mn"}
+
+africa = {"extend": "com", "_server": "whois.nic.africa"}
+
+green = {"extend": "com"}
+
+mk = {
+    "extend": None,
+    "_server": "whois.marnet.mk",
+    "domain_name": r"domain:\s?(.+)",
+    "registrar": r"registrar:\s?(.+)",
+    "registrant": r"registrant:\s?(.+)",
+    "registrant_country": r"Registrant Country:\s?(.+)",
+    "creation_date": r"registered:\s?(.+)",
+    "expiration_date": r"expire:\s?(.+)",
+    "updated_date": r"changed:\s?(.+)",
+    "name_servers": r"nserver:\s*(.+)\s*",
+    "status": r"Status:\s?(.+)",
+    # the trailing domain must have minimal 2 parts firstname.lastname@fld.tld
+    # it may actually have more then 4 levels
+    # to match the dot in firstname.lastname we must use \.
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+}
+
+observer = {"extend": "com", "_server": "whois.nic.observer"}
+one = {"extend": "com", "_server": "whois.nic.one"}
+page = {"extend": "com", "_server": "whois.nic.google"}
+
+bf = {
+    "extend": "com",
+    "_server": "whois.nic.bf",
+    "registrant": r"Registrant Name:\s?(.+)",
+}
+bz = {"extend": "_privateReg"}
+
+si = {
+    "extend": None,
+    "_server": "whois.register.si",
+    "domain_name": r"domain:\s?(.+)",
+    "registrar": r"registrar:\s?(.+)",
+    "registrant": r"registrant:\s?(.+)",
+    "registrant_country": r"Registrant Country:\s?(.+)",
+    "creation_date": r"created:\s?(.+)",
+    "expiration_date": r"expire:\s?(.+)",
+    "updated_date": r"changed:\s?(.+)",
+    "name_servers": r"nameserver:\s*(.+)\s*",
+    "status": r"Status:\s?(.+)",
+    # the trailing domain must have minimal 2 parts firstname.lastname@fld.tld
+    # it may actually have more then 4 levels
+    # to match the dot in firstname.lastname we must use \.
+    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+}
+
+sx = {"extend": "com", "_server": "whois.sx"}
+
+tc = {
+    "extend": "com",
+    "_server": "whois.nic.tc",
+    "domain_name": r"Domain Name:\s?(.+)",
+    "registrar": r"Sponsoring Registrar:\s?(.+)",
+    "creation_date": r"Creation Date:\s?(.+)",
+    "expiration_date": r"Registry Expiry Date:\s?(.+)",
+    "name_servers": r"Name Server:\s*(.+)\s*",
+    "status": r"Domain Status:\s?(.+)",
+}
+
+wf = {
+    "extend": "com",
+    "_server": "whois.nic.wf",
+    "domain_name": r"domain:\s?(.+)",
+    "registrar": r"registrar:\s?(.+)",
+    "registrant": r"registrant:\s?(.+)",
+    "registrant_country": r"Registrant Country:\s?(.+)",
+    "creation_date": r"created:\s?(.+)",
+    "expiration_date": r"Expiry Date:\s?(.+)",
+    "updated_date": r"last-update:\s?(.+)",
+    "name_servers": r"nserver:\s*(.+)\s*",
+    "status": r"\nstatus:\s?(.+)",
+}
+
+lk = {"extend": "_privateReg"}  # Sri Lanka, whois.nic.lk exists but does not answer
+eg = {"extend": "_privateReg"}  # Egipt
+com_eg = {"extend": "_privateReg"}  # Egipt
+
+mo = {
+    "extend": "com",
+    "_server": "whois.monic.mo",
+    "name_servers": r"Domain name servers:\s+-+\s+(\S+)\n(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?",
+    "creation_date": r"Record created on (.+)",
+    "expiration_date": r"Record expires on (.+)",
+}
+
+ph = {"extend": "_privateReg"}

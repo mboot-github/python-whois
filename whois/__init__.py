@@ -46,6 +46,12 @@ CACHE_FILE = None
 SLOW_DOWN = 0
 
 Map2Underscore = {
+    ".co.za": "co_za",  # south africa
+    ".web.za": "web_za",  # south africa
+    ".org.za": "org_za",  # south africa
+    ".net.za": "net_za",  # south africa
+    #
+    ".com.eg": "com_eg",  # egypt
     ".ac.uk": "ac_uk",
     ".co.uk": "co_uk",
     ".co.il": "co_il",
@@ -83,6 +89,8 @@ Map2Underscore = {
     ".net.tr": "net_tr",
     #
     ".edu.ua": "edu_ua",
+    ".com.ua": "com_ua",
+    ".net.ua": "net_ua",
     ".lviv.ua": "lviv_ua",
     # dynamic dns without whois
     ".hopto.org": "hopto_org",
