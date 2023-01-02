@@ -1153,10 +1153,10 @@ za = {
     "extend": "com",
 }
 
-web_za = { "extend": "za", "_server": "web-whois.registry.net.za" }
-org_za = { "extend": "za", "_server": "org-whois.registry.net.za" }
-net_za = { "extend": "za", "_server": "net-whois.registry.net.za" }
-co_za = { "extend": "za" , "_server": "coza-whois.registry.net.za"}
+web_za = {"extend": "za", "_server": "web-whois.registry.net.za"}
+org_za = {"extend": "za", "_server": "org-whois.registry.net.za"}
+net_za = {"extend": "za", "_server": "net-whois.registry.net.za"}
+co_za = {"extend": "za", "_server": "coza-whois.registry.net.za"}
 
 gy = {
     "extend": "com",
