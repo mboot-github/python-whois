@@ -132,6 +132,8 @@ def handleShortResponse(
         "the queried object does not exist",
         "domain you requested is not known",
         "status: available",
+        "no whois server is known for this kind of object",
+        "nameserver not found",
     ]
 
     for i in noneStrings:

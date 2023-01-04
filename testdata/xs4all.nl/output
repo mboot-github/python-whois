@@ -2,7 +2,7 @@
 test domain: <<<<<<<<<< xs4all.nl >>>>>>>>>>>>>>>>>>>>
 name               str               'xs4all.nl'
 tld                str               'nl'
-registrar          str               ''
+registrar          str               'KPN'
 registrant_country str               ''
 creation_date      datetime.datetime 1994-08-07 00:00:00
 expiration_date    NoneType          None
@@ -11,7 +11,7 @@ status             str               'active'
 statuses           list              ['active']
 dnssec             bool              True
 name_servers       list              ['ns1.kpn.net', 'ns11.kpn.net']
-abuse_contact      str               ''
+abuse_contact      str               'abuse@kpn.com'
 reseller           str               ''
 registrant         str               ''
 emails             list              ['abuse@kpn.com']

@@ -12,4 +12,4 @@ statuses           list              ['clientDeleteProhibited (https://www.icann
 dnssec             bool              False
 name_servers       list              ['ns1.google.com', 'ns2.google.com', 'ns3.google.com', 'ns4.google.com']
 registrant         str               'Google LLC'
-emails             list              ['abusecomplaints@markmonitor.com']
+emails             list              ['abusecomplaints@markmonitor.com', 'whoisrequest@markmonitor.com']

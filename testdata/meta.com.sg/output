@@ -5,8 +5,8 @@ tld                str               'com_sg'
 registrar          str               'SINGNET PTE LTD'
 registrant_country str               ''
 creation_date      datetime.datetime 1998-12-03 17:04:50
-expiration_date    datetime.datetime 2022-12-03 00:00:00
-last_updated       datetime.datetime 2021-12-03 00:05:14
+expiration_date    datetime.datetime 2023-12-03 00:00:00
+last_updated       datetime.datetime 2022-12-03 00:00:18
 status             str               'OK'
 statuses           list              ['OK', 'VerifiedID@SG-Not Required']
 dnssec             bool              False

@@ -18,6 +18,14 @@ getDomains()
     )
 }
 
+verifyNameservers()
+{
+    local str="$1"
+
+    grep name_servers  "./$str/output" | awk '{ $1 = $2 = ""; print }' | awk -F, '{print NF}'
+    grep "name server" "./$str/nameservers" | wc -l
+
+}
 makeDataForDomain()
 {
     local str="$1"
@@ -32,6 +40,12 @@ makeDataForDomain()
     # dump the expected output as output
     ../test2.py -d "$str" |
     tee "./$str/output"
+
+    # dump the nameservers via host
+    host -t ns "$str" |
+    tee "./$str/nameservers"
+
+    # verifyNameservers "$str"
 }
 
 makeDataIfNotExist()
@@ -43,10 +57,22 @@ makeDataIfNotExist()
     done
 }
 
-main()
+makeDataIfExist()
 {
-    getDomains
-    makeDataIfNotExist
+    for str in ${DOMAINS[@]}
+    do
+        makeDataForDomain "$str"
+    done
 }
 
-main
+main()
+{
+    local force="$1"
+    getDomains
+    makeDataIfNotExist
+    [ "$force" == "force" ] && {
+        makeDataIfExist
+    }
+}
+
+main $*
