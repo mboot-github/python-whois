@@ -93,6 +93,7 @@ amsterdam = {
 
 app = {
     "extend": "com",
+    "_server": "whois.nic.google",
 }
 
 # Argentina
