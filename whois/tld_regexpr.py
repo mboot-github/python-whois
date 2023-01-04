@@ -543,7 +543,8 @@ it = {
     "creation_date": r"Created:\s?(.+)",
     "expiration_date": r"Expire Date:\s?(.+)",
     "updated_date": r"Last Update:\s?(.+)",
-    "name_servers": r"Nameservers\s?(.+)\s?(.+)\s?(.+)\s?(.+)",
+    # "name_servers": r"Nameservers\s?(.+)\s?(.+)\s?(.+)\s?(.+)",
+    "name_servers": r"Nameservers(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?",
     "status": r"Status:\s?(.+)",
 }
 
