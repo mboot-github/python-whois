@@ -22,7 +22,7 @@ com = {
     "creation_date": r"Creation Date:\s?(.+)",
     "expiration_date": r"Registry Expiry Date:\s?(.+)",
     "updated_date": r"Updated Date:\s?(.+)",
-    "name_servers": r"Name Server:\s*(.+)\s*",
+    "name_servers": r"Name Server:\s*(.+)\s*",  # host -t ns <domain> often has more nameservers then the output of whois
     "status": r"Status:\s?(.+)",
     # the trailing domain must have minimal 2 parts firstname.lastname@fld.tld
     # it may actually have more then 4 levels
@@ -47,13 +47,13 @@ co_uk = {
     "extend": "uk",
     "domain_name": r"Domain name:\s+(.+)",
     "registrar": r"Registrar:\s+(.+)",
-    "name_servers": r"Name servers:\s+(.+)\s+(.+)",
+    "name_servers": r"Name servers:(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?\n\n",  # capture up to 4
     "status": r"Registration status:\s*(.+)",
     "creation_date": r"Registered on:(.+)",
     "expiration_date": r"Expiry date:(.+)",
     "updated_date": r"Last updated:(.+)",
     "owner": r"Domain Owner:\s+(.+)",
-    "registrant": r"Registered Contact:\s+(.+)",
+    "registrant": r"Registrant:\n\s+(.+)",  # example meta.co.uk has a registrar google.co.uk has not
 }
 
 # United Arab Emirates
@@ -136,7 +136,7 @@ ax = {
     "creation_date": r"created\.+:\s*(\S+)",
     "expiration_date": r"expires\.+:\s*(\S+)",
     "updated_date": r"modified\.+:\s?(\S+)",
-    "name_servers": r"nserver\.+:\s*(\S+)",
+    "name_servers": r"nserver\.+:\s*(\S+)",  # host -t ns gives back more then output of whois
     "status": r"status\.+:\s*(\S+)",
     "registrant": r"Holder\s+name\.+:\s*(.+)\r?\n",  # not always present see meta.ax and google.ax
     "registrant_country": r"country\.+:\s*(.+)\r?\n",  # not always present see meta.ax and google.ax
@@ -163,6 +163,7 @@ be = {
     "registrar": r"Company Name:\n?(.+)",
     "creation_date": r"Registered:\s*(.+)\n",
     "status": r"Status:\s?(.+)",
+    "name_servers": r"Nameservers:(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?\n\n",  # fix missing and wrong output
 }
 
 biz = {
@@ -188,16 +189,16 @@ br = {
     "status": r"status:\s?(.+)",
 }
 
-by = {
+by = {  # fix multiple dns by removing test for \n at the beginning as it is not needed
     "extend": "com",
     "domain_name": r"Domain Name:\s*(.+)",
-    "registrar": r"\nRegistrar:\s*(.+)",
-    "registrant": r"\nOrg:\s*(.+)",
-    "registrant_country": r"\nCountry:\s*(.+)",
-    "creation_date": r"\nCreation Date:\s*(.+)",
-    "expiration_date": r"\nExpiration Date:\s*(.+)",
-    "updated_date": r"\nUpdated Date:\s*(.+)",
-    "name_servers": r"\nName Server:\s*(.+)",
+    "registrar": r"Registrar:\s*(.+)",
+    "registrant": r"Org:\s*(.+)",
+    "registrant_country": r"Country:\s*(.+)",
+    "creation_date": r"Creation Date:\s*(.+)",
+    "expiration_date": r"Expiration Date:\s*(.+)",
+    "updated_date": r"Updated Date:\s*(.+)",
+    "name_servers": r"Name Server:\s+(\S+)\n",
 }
 
 # Brittany (French Territory)
@@ -334,7 +335,7 @@ cz = {
     "creation_date": r"registered:\s?(.+)",
     "expiration_date": r"expire:\s?(.+)",
     "updated_date": r"changed:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+) ",
+    "name_servers": r"nserver:\s+(\S+)",
     "status": r"status:\s*(.+)",
 }
 
@@ -621,7 +622,8 @@ kg = {
     "creation_date": r"Record created:\s+(.+)",
     "updated_date": r"Record last updated on:\s+(.+)",
     # name servers have trailing whitespace
-    "name_servers": r"Name servers in the listed order:\n\n(?:(\S+)[ \t]*\n)(?:(\S+)[ \t]*\n)?",
+    "name_servers": r"Name servers in the listed order:\n\n(?:(\S+)[ \t]*\S*\n)(?:(\S+)[ \t]*\S*\n)?(?:(\S+)[ \t]*\S*\n)?\n",
+    # nameservers can have trailing ip (e.g. google.kg)
     "status": r"Domain\s+\S+\s+\((\S+)\)",
 }
 
@@ -639,6 +641,7 @@ kr = {
     "expiration_date": r"Expiration Date\s*:\s?(.+)",
     "updated_date": r"Last Updated Date\s*:\s?(.+)",
     "status": r"status\s*:\s?(.+)",
+    "name_servers": r"Host Name\s+:\s+(\S+)\n",
 }
 
 kz = {
@@ -649,8 +652,8 @@ kz = {
     "expiration_date": None,
     "creation_date": r"Domain created:\s(.+)",
     "updated_date": r"Last modified :\s(.+)",
-    "name_servers": r"server.*:\s(.+)",
-    "status": r"Domain status :\s?(.+)",
+    "name_servers": r"ary server\.+:\s+(\S+)",
+    "status": r"Domain status :(?:\s+([^\n]+)\n)",
 }
 
 link = {
@@ -849,7 +852,8 @@ pl = {
     "creation_date": r"\ncreated:\s*(.+)\n",
     "updated_date": r"\nlast modified:\s*(.+)\n",
     "expiration_date": r"\noption expiration date:\s*(.+)\n",
-    "name_servers": r"\nnameservers:(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
+    # ns: match up to 4
+    "name_servers": r"nameservers:(?:\s+(\S+)[^\n]*\n)(?:\s+(\S+)[^\n]*\n)?(?:\s+(\S+)[^\n]*\n)?(?:\s+(\S+)[^\n]*\n)?",
     "status": r"\nStatus:\n\s*(.+)",
 }
 
@@ -961,7 +965,7 @@ com_sg = {
     "updated_date": r"Modified Date:\s?(.+)",
     # fix needed after strip(\r) in _2_parse.py in version 0.19
     # "name_servers": r"Name Servers:\r\n(?:\s*(\S+)[ \t\r]*\n)(?:\s*(\S+)[ \t\r]*\n)?(?:\s*(\S+)[ \t\r]*\n)?",
-    "name_servers": r"Name Servers:(?:\s+(\S+))(?:\s+(\S+))?(?:\s+([\.\w]+)\s+)?",
+    "name_servers": r"Name Servers:(?:\s+(\S+))(?:\s+(\S+))?(?:\s+(\S+))?(?:\s+([\.\w]+)\s+)?",
     # this seems ok for 2 and 3 ns and does not catch the dnssec: line
     "status": r"Domain Status:\s*(.*)\r?\n",
     # "emails": r"(\S+@\S+)",
@@ -1115,6 +1119,8 @@ uz = {
     "expiration_date": r"Expiration Date:\s?(.+)",
     "updated_date": r"Updated Date:\s?(.+)",
     "status": r"Status:\s?(.+)",
+    "name_servers": r"Domain servers in listed order:(?:\n\s+(\S+))(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?\n\n",
+    # sometimes 'not.defined is returned as a nameserver (e.g. google.uz)
 }
 
 vip = {
@@ -1502,7 +1508,7 @@ ac = {
     "domain_name": r"Domain Name:\s+(.+)",
     "registrar": r"Registrar:\s+(.+)",
     "status": r"Domain Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(.+)",
+    "name_servers": r"Name Server:\s+(\S+)",
     "registrant_country": r"Registrant Country:\s*(.*)\r?\n",
     "updated_date": r"Updated Date:\s+(.+)",
     "creation_date": r"Creation Date:\s+(.+)",
@@ -1514,7 +1520,7 @@ ae = {
     "domain_name": r"Domain Name:\s+(.+)",
     "registrar": r"Registrar Name:\s+(.+)",
     "status": r"Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(.+)",
+    "name_servers": r"Name Server:\s+(\S+)",  # host -t ns gives back more, but whois output only has 2
     "registrant_country": None,
     "creation_date": None,
     "expiration_date": None,
@@ -1572,6 +1578,7 @@ bj = {
     "expiration_date": r"Registry Expiry Date:\s?(.+)",
     "updated_date": r"Updated Date:\s?(.+)",
     "status": r"Status:\s?(.+)",
+    "name_servers": r"Name Server:\s+(\S+)\n",
 }
 
 buzz = {
@@ -1641,7 +1648,7 @@ ly = {
 }
 
 com_ly = {
-    "extend": "ly",
+    "extend": "ly",  # host -t ns <domain> often has more nameservers then output of whois
 }
 
 ma = {
@@ -1721,7 +1728,8 @@ sg = {
     "updated_date": r"\s+Modified Date:\s+(.+)",
     "status": r"\s+Domain Status:\s(.+)",
     "registrant_country": None,
-    "name_servers": r"Name Servers:\s+(\S+)[ \t]*\r?\n\s+(\S+)[ \t]*\r?\n\s+(\S+)",
+    "name_servers": r"Name Servers:(?:\n[ \t]+(\S+)[^\n]*)(?:\n[ \t]+(\S+)[^\n]*)?(?:\n[ \t]+(\S+)[^\n]*)?(?:\n[ \t]+(\S+)[^\n]*)?",
+    # make sure the dnssec is not matched
 }
 
 srl = {
@@ -1807,7 +1815,7 @@ bo = {
     "extend": None,
     "registrar": None,
     "status": None,
-    "name_servers": None,
+    "name_servers": None,  # bo has no nameservers, use host -t ns <domain>
     "updated_date": None,
 }
 
@@ -1965,7 +1973,7 @@ gg = {
     "domain_name": r"Domain:\s*\n\s+(.+)",
     "status": r"Domain Status:\s*\n\s+(.+)",
     "registrar": r"Registrar:\s*\n\s+(.+)",
-    "name_servers": r"Name servers:\s*\r?\n(?:\s+(\S+)\r?\n)(?:\s+(\S+)\r?\n)?(?:\s+(\S+)\r?\n)?",
+    "name_servers": r"Name servers:(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?\n",
     "creation_date": r"Relevant dates:\s*\n\s+Registered on(.+)",
     "expiration_date": None,
     "updated_date": None,
