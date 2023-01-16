@@ -2141,3 +2141,6 @@ mo = {
 }
 
 ph = {"extend": "_privateReg"}
+
+vc = {"extend": "com"}
+cm = {"extend": "com"}
