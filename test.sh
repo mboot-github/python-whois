@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /usr/bin/env bash
 
 # signal whois module that we are testing, this reads data from testdata/<domain>/in
 prepPath()
@@ -22,7 +22,7 @@ testOneDomain()
     echo "testing: $domain"
     ./test2.py -d "$domain" >"$TestDataDir/$domain/test.out"
 
-    diff "$TestDataDir/$domain/output" "$TestDataDir/$domain/test.out" | 
+    diff "$TestDataDir/$domain/output" "$TestDataDir/$domain/test.out" |
     tee "$TestDataDir/$domain/diff.out"
 }
 
