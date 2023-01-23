@@ -118,6 +118,16 @@ def handleShortResponse(
         d = ".".join(dl)
         print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
 
+    # TODO: some short responses are actually valid:
+    # lookfor Domain: and Status but all other fields are missing so the regexec could fail
+    # this domain is taken already or reserved
+
+    # whois syswow.64-b.it
+    # [Querying whois.nic.it]
+    # [whois.nic.it]
+    # Domain:             syswow.64-b.it
+    # Status:             UNASSIGNABLE
+
     s = whois_str.strip().lower()
 
     # NOTE: from here s is lowercase only
