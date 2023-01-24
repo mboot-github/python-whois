@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 TMPDIR="./tmp" # the default work directory is a local tmp (exclude by .gitignore )
 

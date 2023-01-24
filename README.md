@@ -73,6 +73,9 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * add support for returning the raw data from the whois command: flag include_raw_whois_text
  * add support for handling unsupported domains via whois raw text only: flag return_raw_text_for_unsupported_tld
 
+2023-01-18: sorrowless
+ * add an opportunity to specify maximum cache age
+
 ## Support
  * Python 3.x is supported.
  * Python 2.x IS NOT supported.

@@ -305,6 +305,7 @@ def query(
     domain: str,
     force: bool = False,
     cache_file: Optional[str] = None,
+    cache_age: int = 60 * 60 * 48,
     slow_down: int = 0,
     ignore_returncode: bool = False,
     server: Optional[str] = None,
@@ -317,6 +318,7 @@ def query(
     """
     force=True          Don't use cache.
     cache_file=<path>   Use file to store cache not only memory.
+    cache_age=172800    Cache expiration time for given domain, in seconds
     slow_down=0         Time [s] it will wait after you query WHOIS database.
                         This is useful when there is a limit to the number of requests at a time.
     server:             if set use the whois server explicitly for making the query:
@@ -368,6 +370,7 @@ def query(
             dl=dl,
             force=force,
             cache_file=cache_file,
+            cache_age=cache_age,
             slow_down=slow_down,
             ignore_returncode=ignore_returncode,
             server=server,
