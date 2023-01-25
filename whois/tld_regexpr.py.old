@@ -1,7 +1,3 @@
-from typing import Dict
-
-ZZ: Dict = {}
-
 # elements starting with _
 # are meta patterns and are not processed as domains
 # examples:  _donuts, _centralnic
@@ -17,7 +13,7 @@ ZZ: Dict = {}
 # when we finally apply the regexes we use IGNORE CASE allways on all matches
 
 # Commercial TLD - Original Big 7
-ZZ["com"] = {
+com = {
     "extend": None,
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s?(.+)",
@@ -35,7 +31,7 @@ ZZ["com"] = {
 }
 
 # United Kingdom - academic sub-domain
-ZZ["ac.uk"] = {
+ac_uk = {
     "extend": "uk",
     "domain_name": r"Domain:\n\s?(.+)",
     "owner": r"Domain Owner:\n\s?(.+)",
@@ -47,7 +43,7 @@ ZZ["ac.uk"] = {
     "name_servers": r"Servers:\s*(.+)\t\n\s*(.+)\t\n",
 }
 
-ZZ["co.uk"] = {
+co_uk = {
     "extend": "uk",
     "domain_name": r"Domain name:\s+(.+)",
     "registrar": r"Registrar:\s+(.+)",
@@ -65,13 +61,13 @@ ZZ["co.uk"] = {
 # redefined below
 
 # Anguilla
-ZZ["ai"] = {
+ai = {
     "extend": "com",
     "_server": "whois.nic.ai",
 }
 
 # Armenia
-ZZ["am"] = {
+am = {
     "extend": None,
     "domain_name": r"Domain name:\s+(.+)",
     "status": r"Status:\s(.+)",
@@ -85,7 +81,7 @@ ZZ["am"] = {
 }
 
 # Amsterdam
-ZZ["amsterdam"] = {
+amsterdam = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -95,13 +91,13 @@ ZZ["amsterdam"] = {
     "status": r"Domain Status:\s?(.+)",
 }
 
-ZZ["app"] = {
+app = {
     "extend": "com",
     "_server": "whois.nic.google",
 }
 
 # Argentina
-ZZ["ar"] = {
+ar = {
     "extend": "com",
     "domain_name": r"domain\s*:\s?(.+)",
     "registrar": r"registrar:\s?(.+)",
@@ -111,12 +107,12 @@ ZZ["ar"] = {
     "name_servers": r"nserver:\s*(.+)\s*",
 }
 
-ZZ["asia"] = {
+asia = {
     "extend": "com",
 }
 
 # Austria
-ZZ["at"] = {
+at = {
     "extend": "com",
     "_server": "whois.nic.at",
     "domain_name": r"domain:\s?(.+)",
@@ -127,13 +123,13 @@ ZZ["at"] = {
 }
 
 # Australia
-ZZ["au"] = {
+au = {
     "extend": "com",
     "registrar": r"Registrar Name:\s?(.+)",
     "updated_date": r"Last Modified:([^\n]*)",  # fix empty LastModified
 }
 
-ZZ["ax"] = {
+ax = {
     "extend": "com",
     "domain_name": r"domain\.+:\s*(\S+)",
     "registrar": r"registrar\.+:\s*(.+)",
@@ -146,13 +142,13 @@ ZZ["ax"] = {
     "registrant_country": r"country\.+:\s*(.+)\r?\n",  # not always present see meta.ax and google.ax
 }
 
-ZZ["aw"] = {
+aw = {
     "extend": "nl",
     "name_servers": r"Domain nameservers:\s+(\S+)[ \t]*\r?\n(?:\s+(\S+))?",
 }
 
 # Banking TLD - ICANN
-ZZ["bank"] = {
+bank = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -161,7 +157,7 @@ ZZ["bank"] = {
     "updated_date": r"Updated Date:\s?(.+)",
 }
 
-ZZ["be"] = {
+be = {
     "extend": "pl",
     "domain_name": r"\nDomain:\s*(.+)",
     "registrar": r"Company Name:\n?(.+)",
@@ -170,7 +166,7 @@ ZZ["be"] = {
     "name_servers": r"Nameservers:(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?\n\n",  # fix missing and wrong output
 }
 
-ZZ["biz"] = {
+biz = {
     "extend": "com",
     "registrar": r"Registrar:\s?(.+)",
     "registrant": r"Registrant Organization:\s?(.+)",
@@ -180,7 +176,7 @@ ZZ["biz"] = {
     "status": None,
 }
 
-ZZ["br"] = {
+br = {
     "extend": "com",
     "domain_name": r"domain:\s?(.+)",
     "registrar": "nic.br",
@@ -193,7 +189,7 @@ ZZ["br"] = {
     "status": r"status:\s?(.+)",
 }
 
-ZZ["by"] = {  # fix multiple dns by removing test for \n at the beginning as it is not needed
+by = {  # fix multiple dns by removing test for \n at the beginning as it is not needed
     "extend": "com",
     "domain_name": r"Domain Name:\s*(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -207,7 +203,7 @@ ZZ["by"] = {  # fix multiple dns by removing test for \n at the beginning as it 
 
 # Brittany (French Territory)
 # Some personal data could be obfuscated at request from the registrant
-ZZ["bzh"] = {
+bzh = {
     "extend": "fr",
     "domain_name": r"Domain Name:\s*(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -220,16 +216,16 @@ ZZ["bzh"] = {
     "status": r"Domain Status:\s*(.*)",
 }
 
-ZZ["ca"] = {
+ca = {
     "extend": "com",
 }
 
-ZZ["cat"] = {
+cat = {
     "extend": "com",
     "_server": "whois.nic.cat",
 }
 
-ZZ["cc"] = {
+cc = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -239,7 +235,7 @@ ZZ["cc"] = {
     "status": r"Status:\s?(.+)",
 }
 
-ZZ["cl"] = {
+cl = {
     "extend": "com",
     "registrar": "nic.cl",
     "creation_date": r"Creation Date:\s?(.+)",
@@ -247,19 +243,19 @@ ZZ["cl"] = {
     "name_servers": r"Name Server:\s*(.+)\s*",
 }
 
-ZZ["click"] = {
+click = {
     "extend": "com",
 }
 
-ZZ["cloud"] = {
+cloud = {
     "extend": "com",
 }
 
-ZZ["club"] = {
+club = {
     "extend": "com",
 }
 
-ZZ["cn"] = {
+cn = {
     "extend": "com",
     "registrar": r"Sponsoring Registrar:\s?(.+)",
     "registrant": r"Registrant:\s?(.+)",
@@ -267,16 +263,16 @@ ZZ["cn"] = {
     "expiration_date": r"Expiration Time:\s?(.+)",
 }
 
-ZZ["co"] = {
+co = {
     "extend": "biz",
     "status": r"Status:\s?(.+)",
 }
 
-ZZ["com.au"] = {
+com_au = {
     "extend": "au",
 }
 
-ZZ["com.tr"] = {
+com_tr = {
     "extend": "com",
     "domain_name": r"\*\* Domain Name:\s?(.+)",
     "registrar": r"Organization Name\s+:\s?(.+)",
@@ -289,19 +285,19 @@ ZZ["com.tr"] = {
     "status": None,
 }
 
-ZZ["edu.tr"] = {
-    "extend": "com.tr"
+edu_tr = {
+    "extend": "com_tr",
 }
 
-ZZ["org.tr"] = {
-    "extend": "com.tr"
+org_tr = {
+    "extend": "com_tr",
 }
 
-ZZ["net.tr"] = {
-    "extend": "com.tr"
+net_tr = {
+    "extend": "com_tr",
 }
 
-ZZ["co.il"] = {
+co_il = {
     "extend": "com",
     "domain_name": r"domain:\s*(.+)",
     "registrar": r"registrar name:\s*(.+)",
@@ -314,7 +310,7 @@ ZZ["co.il"] = {
     "status": r"status:\s*(.+)",
 }
 
-ZZ["co.jp"] = { # is redefined later with english
+co_jp = {
     "extend": "jp",
     "domain_name": r"\[ドメイン名\]\s?(.+)",
     "creation_date": r"\[登録年月\]\s?(.+)",
@@ -322,15 +318,15 @@ ZZ["co.jp"] = { # is redefined later with english
     "updated_date": r"\[最終更新\]\s?(.+)",
 }
 
-ZZ["courses"] = {
-    "extend": "com"
+courses = {
+    "extend": "com",
 }
 
-ZZ["cr"] = {
-    "extend": "cz"
+cr = {
+    "extend": "cz",
 }
 
-ZZ["cz"] = {
+cz = {
     "extend": "com",
     "domain_name": r"domain:\s?(.+)",
     "registrar": r"registrar:\s?(.+)",
@@ -345,7 +341,7 @@ ZZ["cz"] = {
 
 # The .de NIC whois servers no longer provide any PII data for domains in the TLD.
 # To obtains "personal" data, one must use the web interface: http://www.denic.de/en/domains/whois-service/web-whois.html
-ZZ["de"] = {
+de = {
     "extend": "com",
     "domain_name": r"\ndomain:\s*(.+)",
     "updated_date": r"\nChanged:\s?(.+)",
@@ -353,12 +349,12 @@ ZZ["de"] = {
 }
 
 # Developer
-ZZ["dev"] = {
-    "extend": "com"
+dev = {
+    "extend": "com",
 }
 
 # Denmark
-ZZ["dk"] = {
+dk = {
     "extend": None,
     "domain_name": r"Domain:\s?(.+)",
     "registrar": None,
@@ -372,13 +368,13 @@ ZZ["dk"] = {
     "emails": None,
 }
 
-ZZ["download"] = {
+download = {
     "extend": "amsterdam",
     "name_servers": r"Name Server:[ \t]+(\S+)",  # fix needed after strip(\r) in _2_parse.py in version 0.19
     "status": r"Domain Status:\s*([a-zA-z]+)",
 }
 
-ZZ["edu"] = {
+edu = {
     "extend": "com",
     "registrant": r"Registrant:\s*(.+)",
     "creation_date": r"Domain record activated:\s?(.+)",
@@ -388,7 +384,7 @@ ZZ["edu"] = {
 }
 
 # estonian
-ZZ["ee"] = {
+ee = {
     "extend": "com",
     "domain_name": r"Domain:\nname:\s+(.+\.ee)\n",
     "registrar": r"Registrar:\nname:\s+(.+)\n",
@@ -402,14 +398,14 @@ ZZ["ee"] = {
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
-ZZ["eu"] = {
+eu = {
     "extend": "com",
     "registrar": r"Name:\s?(.+)",
     "domain_name": r"\nDomain:\s*(.+)",
     "name_servers": r"Name servers:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?",
 }
 
-ZZ["fi"] = {
+fi = {
     "extend": None,
     "domain_name": r"domain\.+:\s?(.+)",
     "registrar": r"registrar\.+:\s?(.+)",
@@ -421,20 +417,20 @@ ZZ["fi"] = {
     "status": r"status\.+:\s?(.+)",
 }
 
-ZZ["fit"] = {
+fit = {
     "extend": "com",
 }
 
-ZZ["fm"] = {
+fm = {
     "extend": "com",
 }
 
-ZZ["fo"] = {
+fo = {
     "extend": "com",
     "registrant": None,
 }
 
-ZZ["fr"] = {
+fr = {
     "extend": "com",
     "domain_name": r"domain:\s?(.+)",
     "registrar": r"registrar:\s*(.+)",
@@ -446,22 +442,22 @@ ZZ["fr"] = {
     "status": r"status:\s?(.+)",
 }
 
-ZZ["game"] = {
+game = {
     "extend": "amsterdam",
 }
 
-ZZ["global"] = {
+global_ = {
     "extend": "amsterdam",
     "name_servers": r"Name Server: (.+)",
 }
 
 # Honduras
-ZZ["hn"] = {
+hn = {
     "extend": "com",
 }
 
 # Hong Kong
-ZZ["hk"] = {
+hk = {
     "extend": "com",
     "domain_name": r"Domain Name:\s+(.+)",
     "registrar": r"Registrar Name:\s?(.+)",
@@ -475,7 +471,7 @@ ZZ["hk"] = {
     "status": None,
 }
 
-ZZ["id"] = {
+id_ = {
     "extend": "com",
     "registrar": r"Sponsoring Registrar Organization:\s?(.+)",
     "creation_date": r"Created On:\s?(.+)",
@@ -484,11 +480,11 @@ ZZ["id"] = {
 }
 
 # Ireland
-ZZ["ie"] = {
+ie = {
     "extend": "com",
 }
 
-ZZ["im"] = {
+im = {
     "domain_name": r"Domain Name:\s+(.+)",
     "status": None,
     "registrar": None,
@@ -499,24 +495,24 @@ ZZ["im"] = {
     "name_servers": r"Name Server:(.+)",
 }
 
-ZZ["in"] = {
+in_ = {
     "extend": "com",
 }
 
-ZZ["info"] = {
+info = {
     "extend": "com",
 }
 
-ZZ["ink"] = {
+ink = {
     "extend": "amsterdam",
 }
 
-ZZ["io"] = {
+io = {
     "extend": "com",
     "expiration_date": r"\nRegistry Expiry Date:\s?(.+)",
 }
 
-ZZ["ir"] = {
+ir = {
     "extend": None,
     "domain_name": r"domain:\s?(.+)",
     "registrar": "nic.ir",
@@ -528,7 +524,7 @@ ZZ["ir"] = {
     "name_servers": r"nserver:\s*(.+)\s*",
 }
 
-ZZ["is"] = {
+is_ = {
     "domain_name": r"domain:\s?(.+)",
     "registrar": None,
     "registrant": r"registrant:\s?(.+)",
@@ -541,7 +537,7 @@ ZZ["is"] = {
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
-ZZ["it"] = {
+it = {
     "extend": "com",
     "domain_name": r"Domain:\s?(.+)",
     "registrar": r"Registrar\s*Organization:\s*(.+)",
@@ -559,7 +555,7 @@ ZZ["it"] = {
 # Additionally, whois qeuries can explicitly request english:
 # 	To suppress Japanese output, add'/e' at the end of command, e.g. 'whois -h whois.jprs.jp xxx/e'.
 #
-ZZ["jp"] = {
+jp = {
     "domain_name": r"\[Domain Name\]\s?(.+)",
     #    'registrar':                None,
     "registrar": r"\[ (.+) database provides information on network administration. Its use is    \]",
@@ -582,7 +578,7 @@ ZZ["jp"] = {
 # Additionally, whois qeuries can explicitly request english:
 # 	To suppress Japanese output, add'/e' at the end of command, e.g. 'whois -h whois.jprs.jp xxx/e'.
 #
-ZZ["co.jp"] = {
+co_jp = {
     "extend": "jp",
     #    'domain_name':              r'\[ドメイン名\]\s?(.+)',
     "domain_name": r"\[Domain Name\]\s?(.+)",
@@ -596,18 +592,29 @@ ZZ["co.jp"] = {
 }
 
 # All Japanese Sub-TLDs. See: https://jprs.co.jp/en/jpdomain.html
-ZZ["ne.jp"] = {"extend": "co.jp"}
-ZZ["or.jp"] = {"extend": "co.jp"}
-ZZ["go.jp"] = {"extend": "co.jp"}
-ZZ["ac.jp"] = {"extend": "co.jp"}
-ZZ["ad.jp"] = {"extend": "co.jp"}
-ZZ["ed.jp"] = {"extend": "co.jp"}
-ZZ["gr.jp"] = {"extend": "co.jp"}
-ZZ["lg.jp"] = {"extend": "co.jp"}
-ZZ["geo.jp"] = {"extend": "co.jp"}
-ZZ["kiwi"] = {    "extend": "com"}
+ne_jp = {"extend": "co_jp"}
 
-ZZ["kg"] = {
+or_jp = {"extend": "co_jp"}
+
+go_jp = {"extend": "co_jp"}
+
+ac_jp = {"extend": "co_jp"}
+
+ad_jp = {"extend": "co_jp"}
+
+ed_jp = {"extend": "co_jp"}
+
+gr_jp = {"extend": "co_jp"}
+
+lg_jp = {"extend": "co_jp"}
+
+geo_jp = {"extend": "co_jp"}
+
+kiwi = {
+    "extend": "com",
+}
+
+kg = {
     "domain_name": r"Domain\s+(\S+)",
     "registrar": r"Billing\sContact:\n.*\n\s+Name:\s(.+)\n",
     "registrant_country": None,
@@ -621,11 +628,11 @@ ZZ["kg"] = {
 }
 
 # Saint Kitts and Nevis
-ZZ["kn"] = {
+kn = {
     "extend": "com",
 }
 
-ZZ["kr"] = {
+kr = {
     "extend": "com",
     "domain_name": r"Domain Name\s*:\s?(.+)",
     "registrar": r"Authorized Agency\s*:\s*(.+)",
@@ -637,7 +644,7 @@ ZZ["kr"] = {
     "name_servers": r"Host Name\s+:\s+(\S+)\n",
 }
 
-ZZ["kz"] = {
+kz = {
     "extend": None,
     "domain_name": r"Domain name\.+:\s(.+)",
     "registrar": r"Current Registar:\s(.+)",
@@ -649,11 +656,11 @@ ZZ["kz"] = {
     "status": r"Domain status :(?:\s+([^\n]+)\n)",
 }
 
-ZZ["link"] = {
+link = {
     "extend": "amsterdam",
 }
 
-ZZ["lt"] = {
+lt = {
     "extend": "com",
     "domain_name": r"Domain:\s?(.+)",
     "creation_date": r"Registered:\s?(.+)",
@@ -662,14 +669,14 @@ ZZ["lt"] = {
     "status": r"\nStatus:\s?(.+)",
 }
 
-ZZ["lv"] = {
+lv = {
     "extend": "ru",
     "creation_date": r"Registered:\s*(.+)\n",
     "updated_date": r"Changed:\s*(.+)\n",
     "status": r"Status:\s?(.+)",
 }
 
-ZZ["me"] = {
+me = {
     # lines have \r
     "extend": "biz",
     "creation_date": r"Creation Date:\s?(.+)",
@@ -679,7 +686,7 @@ ZZ["me"] = {
     "status": r"Domain Status:\s?(.+)",
 }
 
-ZZ["ml"] = {
+ml = {
     "extend": "com",
     "domain_name": r"Domain name:\s*([^(i|\n)]+)",
     "registrar": r"(?<=Owner contact:\s)[\s\S]*?Organization:(.*)",
@@ -691,13 +698,13 @@ ZZ["ml"] = {
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
-ZZ["mobi"] = {
+mobi = {
     "extend": "com",
     "expiration_date": r"\nRegistry Expiry Date:\s?(.+)",
     "updated_date": r"\nUpdated Date:\s?(.+)",
 }
 
-ZZ["mx"] = {
+mx = {
     "extend": None,
     "domain_name": r"Domain Name:\s?(.+)",
     "creation_date": r"Created On:\s?(.+)",
@@ -710,13 +717,13 @@ ZZ["mx"] = {
     "status": None,
 }
 
-ZZ["name"] = {
+name = {
     "extend": "com",
     "status": r"Domain Status:\s?(.+)",
 }
 
 # New-Caledonia (French Territory)
-ZZ["nc"] = {
+nc = {
     "extend": "fr",
     "domain_name": r"Domain\s*:\s(.+)",
     "registrar": r"Registrar\s*:\s(.+)",
@@ -729,11 +736,11 @@ ZZ["nc"] = {
     "status": None,
 }
 
-ZZ["net"] = {
+net = {
     "extend": "com",
 }
 
-ZZ["nl"] = {
+nl = {
     "extend": "com",
     "expiration_date": None,
     "registrant_country": None,
@@ -769,7 +776,7 @@ ZZ["nl"] = {
 }
 
 # Norway
-ZZ["no"] = {
+no = {
     "extend": None,
     "domain_name": r"Domain Name\.+:\s?(.+)",
     "registrar": r"Registrar Handle\.+:\s?(.+)",
@@ -783,11 +790,11 @@ ZZ["no"] = {
     "emails": None,
 }
 
-ZZ["nu"] = {
+nu = {
     "extend": "se",
 }
 
-ZZ["nyc"] = {
+nyc = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -797,7 +804,7 @@ ZZ["nyc"] = {
     "status": r"Status:\s?(.+)",
 }
 
-ZZ["nz"] = {
+nz = {
     "extend": None,
     "domain_name": r"domain_name:\s?(.+)",
     "registrar": r"registrar_name:\s?(.+)",
@@ -811,24 +818,24 @@ ZZ["nz"] = {
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
-ZZ["org"] = {
+org = {
     "extend": "com",
     "expiration_date": r"\nRegistry Expiry Date:\s?(.+)",
     "updated_date": r"\nLast Updated On:\s?(.+)",
     "name_servers": r"Name Server:\s?(.+)\s*",
 }
 
-ZZ["ovh"] = {
+ovh = {
     "extend": "com",
 }
 
-ZZ["pe"] = {
+pe = {
     "extend": "com",
     "registrant": r"Registrant Name:\s?(.+)",
     "admin": r"Admin Name:\s?(.+)",
 }
 
-ZZ["pharmacy"] = {
+pharmacy = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -838,7 +845,7 @@ ZZ["pharmacy"] = {
     "status": r"status:\s?(.+)",
 }
 
-ZZ["pl"] = {
+pl = {
     # pl has lines ending in multiple line feeds \r and trailing whitespace
     "extend": "uk",
     "registrar": r"\nREGISTRAR:\s*(.+)\n",
@@ -850,11 +857,11 @@ ZZ["pl"] = {
     "status": r"\nStatus:\n\s*(.+)",
 }
 
-ZZ["pro"] = {
+pro = {
     "extend": "com",
 }
 
-ZZ["pt"] = {
+pt = {
     # mboot 2022-11-16
     # from aws frankfurt all ok, looks like network limitations
     # actually it sometimes works, most of the time though we get: connect: Network is unreachable
@@ -873,7 +880,7 @@ ZZ["pt"] = {
     "status": r"Domain Status:\s?(.+)",
 }
 
-ZZ["pw"] = {
+pw = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -883,16 +890,16 @@ ZZ["pw"] = {
     "status": r"Status:\s?(.+)",
 }
 
-ZZ["radio"] = {
+radio = {
     "extend": "com",
     "_server": "whois.nic.radio",
 }
 
-ZZ["red"] = {
+red = {
     "extend": "com",
 }
 
-ZZ["ru"] = {
+ru = {
     "extend": "com",
     "domain_name": r"\ndomain:\s*(.+)",
     "creation_date": r"\ncreated:\s*(.+)",
@@ -904,11 +911,11 @@ ZZ["ru"] = {
 # Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
 # In the Domain Name System it has the ASCII DNS name xn--p1ai.
 
-ZZ["ru.rf"] = {
+ru_rf = {
     "extend": "ru",
 }
 
-ZZ["sa"] = {
+sa = {
     "extend": "com",
     "domain_name": r"Domain Name:\s*(.+\.sa)\s",
     "registrant": r"Registrant:\n*(.+)\n",
@@ -922,18 +929,18 @@ ZZ["sa"] = {
     "emails": None,
 }
 
-ZZ["sh"] = {
+sh = {
     "extend": "com",
     "registrant": r"\nRegistrant Organization:\s?(.+)",
     "expiration_date": r"\nRegistry Expiry Date:\s*(.+)",
     "status": r"\nDomain Status:\s?(.+)",
 }
 
-ZZ["shop"] = {
+shop = {
     "extend": "com",
 }
 
-ZZ["se"] = {
+se = {
     "extend": None,
     "domain_name": r"domain:\s?(.+)",
     "registrar": r"registrar:\s?(.+)",
@@ -946,7 +953,7 @@ ZZ["se"] = {
 }
 
 # Singapore - Commercial sub-domain
-ZZ["com.sg"] = {
+com_sg = {
     # uses \r nameservers have trailing whitespace
     "extend": None,
     "domain_name": r"Domain Name:\s?(.+)",
@@ -966,7 +973,7 @@ ZZ["com.sg"] = {
 }
 
 # Slovakia
-ZZ["sk"] = {
+sk = {
     "extend": "com",
     "domain_name": r"Domain:\s?(.+)",
     "creation_date": r"Created:\s?(.+)",
@@ -977,11 +984,11 @@ ZZ["sk"] = {
     "registrant_country": r"Country Code:\s?(.+)\nRegistrar:",
 }
 
-ZZ["study"] = {
+study = {
     "extend": "com",
 }
 
-ZZ["tel"] = {
+tel = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -992,7 +999,7 @@ ZZ["tel"] = {
 }
 
 # Thailand - Commercial sub-domain
-ZZ["co.th"] = {
+co_th = {
     "_server": "whois.thnic.co.th",
     "extend": "com",
     "registrant": r"Domain Holder Organization:\s?(.+)",
@@ -1002,19 +1009,19 @@ ZZ["co.th"] = {
     "updated_date": r"Updated date:\s?(.+)",
 }
 
-ZZ["go.th"] = {
-    "extend": "co.th",
+go_th = {
+    "extend": "co_th",
 }
 
-ZZ["in.th"] = {
-    "extend": "co.th",
+in_th = {
+    "extend": "co_th",
 }
 
-ZZ["ac.th"] = {
-    "extend": "co.th",
+ac_th = {
+    "extend": "co_th",
 }
 
-ZZ["tn"] = {
+tn = {
     "extend": "com",
     "domain_name": r"Domain name\.+:(.+)\s*",
     "registrar": r"Registrar\.+:(.+)\s*",
@@ -1028,20 +1035,20 @@ ZZ["tn"] = {
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
-ZZ["tokyo"] = {
+tokyo = {
     "extend": "com",
     "_server": "whois.nic.tokyo",
 }
 
-ZZ["top"] = {
+top = {
     "extend": "com",
 }
 
-ZZ["trade"] = {
+trade = {
     "extend": "amsterdam",
 }
 
-ZZ["tv"] = {
+tv = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -1051,7 +1058,7 @@ ZZ["tv"] = {
     "status": r"Status:\s?(.+)",
 }
 
-ZZ["tz"] = {
+tz = {
     "domain_name": r"\ndomain:\s*(.+)",
     "registrar": r"\nregistrar:\s?(.+)",
     "registrant": r"\nregistrant:\s*(.+)",
@@ -1063,7 +1070,7 @@ ZZ["tz"] = {
     "name_servers": r"\nnserver:\s*(.+)",
 }
 
-ZZ["ua"] = {
+ua = {
     "extend": "com",
     "domain_name": r"\ndomain:\s*(.+)",
     "registrar": r"\nregistrar:\s*(.+)",
@@ -1075,22 +1082,22 @@ ZZ["ua"] = {
     "status": r"\nstatus:\s*(.+)",
 }
 
-ZZ["edu.ua"] = {
+edu_ua = {
     "extend": "ua",
     "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)",
 }
-ZZ["com.ua"] = {
-    "extend": "ua"
+com_ua = {
+    "extend": "ua",
 }
-ZZ["net.ua"] = {
-    "extend": "ua"
-}
-
-ZZ["lviv.ua"] = {
-    "extend": "com"
+net_ua = {
+    "extend": "ua",
 }
 
-ZZ["uk"] = {
+lviv_ua = {
+    "extend": "com",
+}
+
+uk = {
     "extend": "com",
     "registrant": r"Registrant:\n\s*(.+)",
     "creation_date": r"Registered on:\s*(.+)",
@@ -1100,11 +1107,11 @@ ZZ["uk"] = {
     "status": r"Registration status:\n\s*(.+)",
 }
 
-ZZ["us"] = {
-    "extend": "name"
+us = {
+    "extend": "name",
 }
 
-ZZ["uz"] = {
+uz = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -1116,13 +1123,13 @@ ZZ["uz"] = {
     # sometimes 'not.defined is returned as a nameserver (e.g. google.uz)
 }
 
-ZZ["vip"] = {
+vip = {
     "_server": "whois.nic.vip",
     "extend": "com",
     "updated_date": None,
 }
 
-ZZ["wiki"] = {
+wiki = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -1132,11 +1139,11 @@ ZZ["wiki"] = {
     "status": r"Status:\s?(.+)",
 }
 
-ZZ["win"] = {
+win = {
     "extend": "com",
 }
 
-ZZ["work"] = {
+work = {
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
@@ -1145,280 +1152,279 @@ ZZ["work"] = {
     "updated_date": r"Updated Date:\s?(.+)",
 }
 
-ZZ["xin"] = {
+xin = {
     "extend": "com",
     "_server": "whois.nic.xin",
 }
 
-ZZ["za"] = {
+za = {
     "extend": "com",
 }
 
-ZZ["web.za"] = {"extend": "za", "_server": "web-whois.registry.net.za"}
-ZZ["org.za"] = {"extend": "za", "_server": "org-whois.registry.net.za"}
-ZZ["net.za"] = {"extend": "za", "_server": "net-whois.registry.net.za"}
-ZZ["co.za"] = {"extend": "za", "_server": "coza-whois.registry.net.za"}
+web_za = {"extend": "za", "_server": "web-whois.registry.net.za"}
+org_za = {"extend": "za", "_server": "org-whois.registry.net.za"}
+net_za = {"extend": "za", "_server": "net-whois.registry.net.za"}
+co_za = {"extend": "za", "_server": "coza-whois.registry.net.za"}
 
-ZZ["gy"] = {"extend": "com"}
+gy = {
+    "extend": "com",
+}
 
 # Multiple initialization
-ZZ["ca"] = {"extend": "bank"}
-ZZ["rw"] = {"extend": "bank"}
-ZZ["mu"] = {"extend": "bank"}
-ZZ["mu"] = {"extend": "bank"}
+ca = rw = mu = bank
 
 # Registry operator: donuts.domains
 # WHOIS server: whois.donuts.co
-ZZ["_donuts"] = {
+_donuts = {
     "extend": "com",
     "_server": "whois.donuts.co",
     "registrant": r"Registrant Organization:\s?(.+)",
     "status": r"Domain Status:\s?(.+)",
 }
 
-ZZ["academy"] = {"extend": "_donuts"}
-ZZ["accountants"] = {"extend": "_donuts"}
-ZZ["actor"] = {"extend": "_donuts"}
-ZZ["agency"] = {"extend": "_donuts"}
-ZZ["airforce"] = {"extend": "_donuts"}
-ZZ["apartments"] = {"extend": "_donuts"}
-ZZ["army"] = {"extend": "_donuts"}
-ZZ["associates"] = {"extend": "_donuts"}
-ZZ["attorney"] = {"extend": "_donuts"}
-ZZ["auction"] = {"extend": "_donuts"}
-ZZ["band"] = {"extend": "_donuts"}
-ZZ["bargains"] = {"extend": "_donuts"}
-ZZ["bike"] = {"extend": "_donuts"}
-ZZ["bingo"] = {"extend": "_donuts"}
-ZZ["boutique"] = {"extend": "_donuts"}
-ZZ["builders"] = {"extend": "_donuts"}
-ZZ["business"] = {"extend": "_donuts"}
-ZZ["cab"] = {"extend": "_donuts"}
-ZZ["cafe"] = {"extend": "_donuts"}
-ZZ["camera"] = {"extend": "_donuts"}
-ZZ["camp"] = {"extend": "_donuts"}
-ZZ["capital"] = {"extend": "_donuts"}
-ZZ["cards"] = {"extend": "_donuts"}
-ZZ["careers"] = {"extend": "_donuts"}
-ZZ["care"] = {"extend": "_donuts"}
-ZZ["cash"] = {"extend": "_donuts"}
-ZZ["casino"] = {"extend": "_donuts"}
-ZZ["catering"] = {"extend": "_donuts"}
-ZZ["center"] = {"extend": "_donuts"}
-ZZ["charity"] = {"extend": "_donuts"}
-ZZ["chat"] = {"extend": "_donuts"}
-ZZ["cheap"] = {"extend": "_donuts"}
-ZZ["church"] = {"extend": "_donuts"}
-ZZ["city"] = {"extend": "_donuts"}
-ZZ["claims"] = {"extend": "_donuts"}
-ZZ["cleaning"] = {"extend": "_donuts"}
-ZZ["clinic"] = {"extend": "_donuts"}
-ZZ["clothing"] = {"extend": "_donuts"}
-ZZ["coach"] = {"extend": "_donuts"}
-ZZ["codes"] = {"extend": "_donuts"}
-ZZ["coffee"] = {"extend": "_donuts"}
-ZZ["community"] = {"extend": "_donuts"}
-ZZ["company"] = {"extend": "_donuts"}
-ZZ["computer"] = {"extend": "_donuts"}
-ZZ["condos"] = {"extend": "_donuts"}
-ZZ["construction"] = {"extend": "_donuts"}
-ZZ["consulting"] = {"extend": "_donuts"}
-ZZ["contact"] = {"extend": "_donuts"}
-ZZ["contractors"] = {"extend": "_donuts"}
-ZZ["cool"] = {"extend": "_donuts"}
-ZZ["coupons"] = {"extend": "_donuts"}
-ZZ["creditcard"] = {"extend": "_donuts"}
-ZZ["credit"] = {"extend": "_donuts"}
-ZZ["cruises"] = {"extend": "_donuts"}
-ZZ["dance"] = {"extend": "_donuts"}
-ZZ["dating"] = {"extend": "_donuts"}
-ZZ["deals"] = {"extend": "_donuts"}
-ZZ["degree"] = {"extend": "_donuts"}
-ZZ["delivery"] = {"extend": "_donuts"}
-ZZ["democrat"] = {"extend": "_donuts"}
-ZZ["dental"] = {"extend": "_donuts"}
-ZZ["dentist"] = {"extend": "_donuts"}
-ZZ["diamonds"] = {"extend": "_donuts"}
-ZZ["digital"] = {"extend": "_donuts"}
-ZZ["direct"] = {"extend": "_donuts"}
-ZZ["directory"] = {"extend": "_donuts"}
-ZZ["discount"] = {"extend": "_donuts"}
-ZZ["doctor"] = {"extend": "_donuts"}
-ZZ["dog"] = {"extend": "_donuts"}
-ZZ["domains"] = {"extend": "_donuts"}
-ZZ["education"] = {"extend": "_donuts"}
-ZZ["email"] = {"extend": "_donuts"}
-ZZ["energy"] = {"extend": "_donuts"}
-ZZ["engineer"] = {"extend": "_donuts"}
-ZZ["engineering"] = {"extend": "_donuts"}
-ZZ["enterprises"] = {"extend": "_donuts"}
-ZZ["equipment"] = {"extend": "_donuts"}
-ZZ["estate"] = {"extend": "_donuts"}
-ZZ["events"] = {"extend": "_donuts"}
-ZZ["exchange"] = {"extend": "_donuts"}
-ZZ["expert"] = {"extend": "_donuts"}
-ZZ["exposed"] = {"extend": "_donuts"}
-ZZ["express"] = {"extend": "_donuts"}
-ZZ["fail"] = {"extend": "_donuts"}
-ZZ["family"] = {"extend": "_donuts"}
-ZZ["fan"] = {"extend": "_donuts"}
-ZZ["farm"] = {"extend": "_donuts"}
-ZZ["finance"] = {"extend": "_donuts"}
-ZZ["financial"] = {"extend": "_donuts"}
-ZZ["fish"] = {"extend": "_donuts"}
-ZZ["fitness"] = {"extend": "_donuts"}
-ZZ["flights"] = {"extend": "_donuts"}
-ZZ["florist"] = {"extend": "_donuts"}
-ZZ["football"] = {"extend": "_donuts"}
-ZZ["forsale"] = {"extend": "_donuts"}
-ZZ["foundation"] = {"extend": "_donuts"}
-ZZ["fund"] = {"extend": "_donuts"}
-ZZ["furniture"] = {"extend": "_donuts"}
-ZZ["futbol"] = {"extend": "_donuts"}
-ZZ["fyi"] = {"extend": "_donuts"}
-ZZ["gallery"] = {"extend": "_donuts"}
-ZZ["games"] = {"extend": "_donuts"}
-ZZ["gifts"] = {"extend": "_donuts"}
-ZZ["gives"] = {"extend": "_donuts"}
-ZZ["glass"] = {"extend": "_donuts"}
-ZZ["gmbh"] = {"extend": "_donuts"}
-ZZ["gold"] = {"extend": "_donuts"}
-ZZ["golf"] = {"extend": "_donuts"}
-ZZ["graphics"] = {"extend": "_donuts"}
-ZZ["gratis"] = {"extend": "_donuts"}
-ZZ["gripe"] = {"extend": "_donuts"}
-ZZ["group"] = {"extend": "_donuts"}
-ZZ["guide"] = {"extend": "_donuts"}
-ZZ["guru"] = {"extend": "_donuts"}
-ZZ["haus"] = {"extend": "_donuts"}
-ZZ["healthcare"] = {"extend": "_donuts"}
-ZZ["hockey"] = {"extend": "_donuts"}
-ZZ["holdings"] = {"extend": "_donuts"}
-ZZ["holiday"] = {"extend": "_donuts"}
-ZZ["hospital"] = {"extend": "_donuts"}
-ZZ["house"] = {"extend": "_donuts"}
-ZZ["immobilien"] = {"extend": "_donuts"}
-ZZ["immo"] = {"extend": "_donuts"}
-ZZ["industries"] = {"extend": "_donuts"}
-ZZ["institute"] = {"extend": "_donuts"}
-ZZ["insure"] = {"extend": "_donuts"}
-ZZ["international"] = {"extend": "_donuts"}
-ZZ["investments"] = {"extend": "_donuts"}
-ZZ["irish"] = {"extend": "_donuts"}
-ZZ["jetzt"] = {"extend": "_donuts"}
-ZZ["jewelry"] = {"extend": "_donuts"}
-ZZ["kaufen"] = {"extend": "_donuts"}
-ZZ["kitchen"] = {"extend": "_donuts"}
-ZZ["land"] = {"extend": "_donuts"}
-ZZ["lawyer"] = {"extend": "_donuts"}
-ZZ["lease"] = {"extend": "_donuts"}
-ZZ["legal"] = {"extend": "_donuts"}
-ZZ["life"] = {"extend": "_donuts"}
-ZZ["lighting"] = {"extend": "_donuts"}
-ZZ["limited"] = {"extend": "_donuts"}
-ZZ["limo"] = {"extend": "_donuts"}
-ZZ["live"] = {"extend": "_donuts"}
-ZZ["loans"] = {"extend": "_donuts"}
-ZZ["ltd"] = {"extend": "_donuts"}
-ZZ["maison"] = {"extend": "_donuts"}
-ZZ["management"] = {"extend": "_donuts"}
-ZZ["market"] = {"extend": "_donuts"}
-ZZ["marketing"] = {"extend": "_donuts"}
-ZZ["mba"] = {"extend": "_donuts"}
-ZZ["media"] = {"extend": "_donuts"}
-ZZ["memorial"] = {"extend": "_donuts"}
-ZZ["moda"] = {"extend": "_donuts"}
-ZZ["money"] = {"extend": "_donuts"}
-ZZ["mortgage"] = {"extend": "_donuts"}
-ZZ["movie"] = {"extend": "_donuts"}
-ZZ["navy"] = {"extend": "_donuts"}
-ZZ["network"] = {"extend": "_donuts"}
-ZZ["news"] = {"extend": "_donuts"}
-ZZ["ninja"] = {"extend": "_donuts"}
-ZZ["partners"] = {"extend": "_donuts"}
-ZZ["parts"] = {"extend": "_donuts"}
-ZZ["pet"] = {"extend": "_donuts"}
-ZZ["photography"] = {"extend": "_donuts"}
-ZZ["photos"] = {"extend": "_donuts"}
-ZZ["pictures"] = {"extend": "_donuts"}
-ZZ["pizza"] = {"extend": "_donuts"}
-ZZ["place"] = {"extend": "_donuts"}
-ZZ["plumbing"] = {"extend": "_donuts"}
-ZZ["plus"] = {"extend": "_donuts"}
-ZZ["productions"] = {"extend": "_donuts"}
-ZZ["properties"] = {"extend": "_donuts"}
-ZZ["pub"] = {"extend": "_donuts"}
-ZZ["recipes"] = {"extend": "_donuts"}
-ZZ["rehab"] = {"extend": "_donuts"}
-ZZ["reise"] = {"extend": "_donuts"}
-ZZ["reisen"] = {"extend": "_donuts"}
-ZZ["rentals"] = {"extend": "_donuts"}
-ZZ["repair"] = {"extend": "_donuts"}
-ZZ["report"] = {"extend": "_donuts"}
-ZZ["republican"] = {"extend": "_donuts"}
-ZZ["restaurant"] = {"extend": "_donuts"}
-ZZ["reviews"] = {"extend": "_donuts"}
-ZZ["rip"] = {"extend": "_donuts"}
-ZZ["rocks"] = {"extend": "_donuts"}
-ZZ["run"] = {"extend": "_donuts"}
-ZZ["sale"] = {"extend": "_donuts"}
-ZZ["salon"] = {"extend": "_donuts"}
-ZZ["sarl"] = {"extend": "_donuts"}
-ZZ["school"] = {"extend": "_donuts"}
-ZZ["schule"] = {"extend": "_donuts"}
-ZZ["services"] = {"extend": "_donuts"}
-ZZ["shoes"] = {"extend": "_donuts"}
-ZZ["shopping"] = {"extend": "_donuts"}
-ZZ["show"] = {"extend": "_donuts"}
-ZZ["singles"] = {"extend": "_donuts"}
-ZZ["soccer"] = {"extend": "_donuts"}
-ZZ["social"] = {"extend": "_donuts"}
-ZZ["software"] = {"extend": "_donuts"}
-ZZ["solar"] = {"extend": "_donuts"}
-ZZ["solutions"] = {"extend": "_donuts"}
-ZZ["studio"] = {"extend": "_donuts"}
-ZZ["style"] = {"extend": "_donuts"}
-ZZ["supplies"] = {"extend": "_donuts"}
-ZZ["supply"] = {"extend": "_donuts"}
-ZZ["support"] = {"extend": "_donuts"}
-ZZ["surgery"] = {"extend": "_donuts"}
-ZZ["systems"] = {"extend": "_donuts"}
-ZZ["tax"] = {"extend": "_donuts"}
-ZZ["taxi"] = {"extend": "_donuts"}
-ZZ["team"] = {"extend": "_donuts"}
-ZZ["technology"] = {"extend": "_donuts"}
-ZZ["tennis"] = {"extend": "_donuts"}
-ZZ["theater"] = {"extend": "_donuts"}
-ZZ["tienda"] = {"extend": "_donuts"}
-ZZ["tips"] = {"extend": "_donuts"}
-ZZ["tires"] = {"extend": "_donuts"}
-ZZ["today"] = {"extend": "_donuts"}
-ZZ["tools"] = {"extend": "_donuts"}
-ZZ["tours"] = {"extend": "_donuts"}
-ZZ["town"] = {"extend": "_donuts"}
-ZZ["toys"] = {"extend": "_donuts"}
-ZZ["training"] = {"extend": "_donuts"}
-ZZ["travel"] = {"extend": "_donuts"}
-ZZ["university"] = {"extend": "_donuts"}
-ZZ["vacations"] = {"extend": "_donuts"}
-ZZ["ventures"] = {"extend": "_donuts"}
-ZZ["vet"] = {"extend": "_donuts"}
-ZZ["viajes"] = {"extend": "_donuts"}
-ZZ["video"] = {"extend": "_donuts"}
-ZZ["villas"] = {"extend": "_donuts"}
-ZZ["vin"] = {"extend": "_donuts"}
-ZZ["vision"] = {"extend": "_donuts"}
-ZZ["voyage"] = {"extend": "_donuts"}
-ZZ["watch"] = {"extend": "_donuts"}
-ZZ["wine"] = {"extend": "_donuts"}
-ZZ["works"] = {"extend": "_donuts"}
-ZZ["world"] = {"extend": "_donuts"}
-ZZ["wtf"] = {"extend": "_donuts"}
-ZZ["zone"] = {"extend": "_donuts"}
+academy = {"extend": "_donuts"}
+accountants = {"extend": "_donuts"}
+actor = {"extend": "_donuts"}
+agency = {"extend": "_donuts"}
+airforce = {"extend": "_donuts"}
+apartments = {"extend": "_donuts"}
+army = {"extend": "_donuts"}
+associates = {"extend": "_donuts"}
+attorney = {"extend": "_donuts"}
+auction = {"extend": "_donuts"}
+band = {"extend": "_donuts"}
+bargains = {"extend": "_donuts"}
+bike = {"extend": "_donuts"}
+bingo = {"extend": "_donuts"}
+boutique = {"extend": "_donuts"}
+builders = {"extend": "_donuts"}
+business = {"extend": "_donuts"}
+cab = {"extend": "_donuts"}
+cafe = {"extend": "_donuts"}
+camera = {"extend": "_donuts"}
+camp = {"extend": "_donuts"}
+capital = {"extend": "_donuts"}
+cards = {"extend": "_donuts"}
+careers = {"extend": "_donuts"}
+care = {"extend": "_donuts"}
+cash = {"extend": "_donuts"}
+casino = {"extend": "_donuts"}
+catering = {"extend": "_donuts"}
+center = {"extend": "_donuts"}
+charity = {"extend": "_donuts"}
+chat = {"extend": "_donuts"}
+cheap = {"extend": "_donuts"}
+church = {"extend": "_donuts"}
+city = {"extend": "_donuts"}
+claims = {"extend": "_donuts"}
+cleaning = {"extend": "_donuts"}
+clinic = {"extend": "_donuts"}
+clothing = {"extend": "_donuts"}
+coach = {"extend": "_donuts"}
+codes = {"extend": "_donuts"}
+coffee = {"extend": "_donuts"}
+community = {"extend": "_donuts"}
+company = {"extend": "_donuts"}
+computer = {"extend": "_donuts"}
+condos = {"extend": "_donuts"}
+construction = {"extend": "_donuts"}
+consulting = {"extend": "_donuts"}
+contact = {"extend": "_donuts"}
+contractors = {"extend": "_donuts"}
+cool = {"extend": "_donuts"}
+coupons = {"extend": "_donuts"}
+creditcard = {"extend": "_donuts"}
+credit = {"extend": "_donuts"}
+cruises = {"extend": "_donuts"}
+dance = {"extend": "_donuts"}
+dating = {"extend": "_donuts"}
+deals = {"extend": "_donuts"}
+degree = {"extend": "_donuts"}
+delivery = {"extend": "_donuts"}
+democrat = {"extend": "_donuts"}
+dental = {"extend": "_donuts"}
+dentist = {"extend": "_donuts"}
+diamonds = {"extend": "_donuts"}
+digital = {"extend": "_donuts"}
+direct = {"extend": "_donuts"}
+directory = {"extend": "_donuts"}
+discount = {"extend": "_donuts"}
+doctor = {"extend": "_donuts"}
+dog = {"extend": "_donuts"}
+domains = {"extend": "_donuts"}
+education = {"extend": "_donuts"}
+email = {"extend": "_donuts"}
+energy = {"extend": "_donuts"}
+engineer = {"extend": "_donuts"}
+engineering = {"extend": "_donuts"}
+enterprises = {"extend": "_donuts"}
+equipment = {"extend": "_donuts"}
+estate = {"extend": "_donuts"}
+events = {"extend": "_donuts"}
+exchange = {"extend": "_donuts"}
+expert = {"extend": "_donuts"}
+exposed = {"extend": "_donuts"}
+express = {"extend": "_donuts"}
+fail = {"extend": "_donuts"}
+family = {"extend": "_donuts"}
+fan = {"extend": "_donuts"}
+farm = {"extend": "_donuts"}
+finance = {"extend": "_donuts"}
+financial = {"extend": "_donuts"}
+fish = {"extend": "_donuts"}
+fitness = {"extend": "_donuts"}
+flights = {"extend": "_donuts"}
+florist = {"extend": "_donuts"}
+football = {"extend": "_donuts"}
+forsale = {"extend": "_donuts"}
+foundation = {"extend": "_donuts"}
+fund = {"extend": "_donuts"}
+furniture = {"extend": "_donuts"}
+futbol = {"extend": "_donuts"}
+fyi = {"extend": "_donuts"}
+gallery = {"extend": "_donuts"}
+games = {"extend": "_donuts"}
+gifts = {"extend": "_donuts"}
+gives = {"extend": "_donuts"}
+glass = {"extend": "_donuts"}
+gmbh = {"extend": "_donuts"}
+gold = {"extend": "_donuts"}
+golf = {"extend": "_donuts"}
+graphics = {"extend": "_donuts"}
+gratis = {"extend": "_donuts"}
+gripe = {"extend": "_donuts"}
+group = {"extend": "_donuts"}
+guide = {"extend": "_donuts"}
+guru = {"extend": "_donuts"}
+haus = {"extend": "_donuts"}
+healthcare = {"extend": "_donuts"}
+hockey = {"extend": "_donuts"}
+holdings = {"extend": "_donuts"}
+holiday = {"extend": "_donuts"}
+hospital = {"extend": "_donuts"}
+house = {"extend": "_donuts"}
+immobilien = {"extend": "_donuts"}
+immo = {"extend": "_donuts"}
+industries = {"extend": "_donuts"}
+institute = {"extend": "_donuts"}
+insure = {"extend": "_donuts"}
+international = {"extend": "_donuts"}
+investments = {"extend": "_donuts"}
+irish = {"extend": "_donuts"}
+jetzt = {"extend": "_donuts"}
+jewelry = {"extend": "_donuts"}
+kaufen = {"extend": "_donuts"}
+kitchen = {"extend": "_donuts"}
+land = {"extend": "_donuts"}
+lawyer = {"extend": "_donuts"}
+lease = {"extend": "_donuts"}
+legal = {"extend": "_donuts"}
+life = {"extend": "_donuts"}
+lighting = {"extend": "_donuts"}
+limited = {"extend": "_donuts"}
+limo = {"extend": "_donuts"}
+live = {"extend": "_donuts"}
+loans = {"extend": "_donuts"}
+ltd = {"extend": "_donuts"}
+maison = {"extend": "_donuts"}
+management = {"extend": "_donuts"}
+market = {"extend": "_donuts"}
+marketing = {"extend": "_donuts"}
+mba = {"extend": "_donuts"}
+media = {"extend": "_donuts"}
+memorial = {"extend": "_donuts"}
+moda = {"extend": "_donuts"}
+money = {"extend": "_donuts"}
+mortgage = {"extend": "_donuts"}
+movie = {"extend": "_donuts"}
+navy = {"extend": "_donuts"}
+network = {"extend": "_donuts"}
+news = {"extend": "_donuts"}
+ninja = {"extend": "_donuts"}
+partners = {"extend": "_donuts"}
+parts = {"extend": "_donuts"}
+pet = {"extend": "_donuts"}
+photography = {"extend": "_donuts"}
+photos = {"extend": "_donuts"}
+pictures = {"extend": "_donuts"}
+pizza = {"extend": "_donuts"}
+place = {"extend": "_donuts"}
+plumbing = {"extend": "_donuts"}
+plus = {"extend": "_donuts"}
+productions = {"extend": "_donuts"}
+properties = {"extend": "_donuts"}
+pub = {"extend": "_donuts"}
+recipes = {"extend": "_donuts"}
+rehab = {"extend": "_donuts"}
+reise = {"extend": "_donuts"}
+reisen = {"extend": "_donuts"}
+rentals = {"extend": "_donuts"}
+repair = {"extend": "_donuts"}
+report = {"extend": "_donuts"}
+republican = {"extend": "_donuts"}
+restaurant = {"extend": "_donuts"}
+reviews = {"extend": "_donuts"}
+rip = {"extend": "_donuts"}
+rocks = {"extend": "_donuts"}
+run = {"extend": "_donuts"}
+sale = {"extend": "_donuts"}
+salon = {"extend": "_donuts"}
+sarl = {"extend": "_donuts"}
+school = {"extend": "_donuts"}
+schule = {"extend": "_donuts"}
+services = {"extend": "_donuts"}
+shoes = {"extend": "_donuts"}
+shopping = {"extend": "_donuts"}
+show = {"extend": "_donuts"}
+singles = {"extend": "_donuts"}
+soccer = {"extend": "_donuts"}
+social = {"extend": "_donuts"}
+software = {"extend": "_donuts"}
+solar = {"extend": "_donuts"}
+solutions = {"extend": "_donuts"}
+studio = {"extend": "_donuts"}
+style = {"extend": "_donuts"}
+supplies = {"extend": "_donuts"}
+supply = {"extend": "_donuts"}
+support = {"extend": "_donuts"}
+surgery = {"extend": "_donuts"}
+systems = {"extend": "_donuts"}
+tax = {"extend": "_donuts"}
+taxi = {"extend": "_donuts"}
+team = {"extend": "_donuts"}
+technology = {"extend": "_donuts"}
+tennis = {"extend": "_donuts"}
+theater = {"extend": "_donuts"}
+tienda = {"extend": "_donuts"}
+tips = {"extend": "_donuts"}
+tires = {"extend": "_donuts"}
+today = {"extend": "_donuts"}
+tools = {"extend": "_donuts"}
+tours = {"extend": "_donuts"}
+town = {"extend": "_donuts"}
+toys = {"extend": "_donuts"}
+training = {"extend": "_donuts"}
+travel = {"extend": "_donuts"}
+university = {"extend": "_donuts"}
+vacations = {"extend": "_donuts"}
+ventures = {"extend": "_donuts"}
+vet = {"extend": "_donuts"}
+viajes = {"extend": "_donuts"}
+video = {"extend": "_donuts"}
+villas = {"extend": "_donuts"}
+vin = {"extend": "_donuts"}
+vision = {"extend": "_donuts"}
+voyage = {"extend": "_donuts"}
+watch = {"extend": "_donuts"}
+wine = {"extend": "_donuts"}
+works = {"extend": "_donuts"}
+world = {"extend": "_donuts"}
+wtf = {"extend": "_donuts"}
+zone = {"extend": "_donuts"}
 
 # Registry operator: CentralNic
 # WHOIS server: whois.centralnic.com
-ZZ["_centralnic"] = {
+_centralnic = {
     "extend": "com",
     "_server": "whois.centralnic.com",
     "domain_name": r"Domain Name:\s?(.+)",
@@ -1429,75 +1435,75 @@ ZZ["_centralnic"] = {
     "status": r"Domain Status:\s?(.+)",
 }
 
-ZZ["art"] = {"extend": "_centralnic"}
-ZZ["auto"] = {"extend": "_centralnic"}
-ZZ["autos"] = {"extend": "_centralnic"}
-ZZ["baby"] = {"extend": "_centralnic"}
-ZZ["bar"] = {"extend": "_centralnic"}
-ZZ["beauty"] = {"extend": "_centralnic"}
-ZZ["best"] = {"extend": "_centralnic"}
-ZZ["blog"] = {"extend": "_centralnic"}
-ZZ["boats"] = {"extend": "_centralnic"}
-ZZ["bond"] = {"extend": "_centralnic"}
-ZZ["build"] = {"extend": "_centralnic"}
-ZZ["cam"] = {"extend": "_centralnic"}
-ZZ["car"] = {"extend": "_centralnic"}
-ZZ["cars"] = {"extend": "_centralnic"}
-ZZ["ceo"] = {"extend": "_centralnic"}
-ZZ["cfd"] = {"extend": "_centralnic"}
-ZZ["college"] = {"extend": "_centralnic"}
-ZZ["coop"] = {"extend": "_centralnic"}
-ZZ["cyou"] = {"extend": "_centralnic"}
-ZZ["dealer"] = {"extend": "_centralnic"}
-ZZ["desi"] = {"extend": "_centralnic"}
-ZZ["fans"] = {"extend": "_centralnic"}
-ZZ["feedback"] = {"extend": "_centralnic"}
-ZZ["forum"] = {"extend": "_centralnic"}
-ZZ["frl"] = {"extend": "_centralnic"}
-ZZ["fun"] = {"extend": "_centralnic"}
-ZZ["gent"] = {"extend": "_centralnic"}
-ZZ["hair"] = {"extend": "_centralnic"}
-ZZ["homes"] = {"extend": "_centralnic"}
-ZZ["host"] = {"extend": "_centralnic"}
-ZZ["icu"] = {"extend": "_centralnic"}
-ZZ["inc"] = {"extend": "_centralnic"}
-ZZ["kred"] = {"extend": "_centralnic"}
-ZZ["london"] = {"extend": "_centralnic"}
-ZZ["luxury"] = {"extend": "_centralnic"}
-ZZ["makeup"] = {"extend": "_centralnic"}
-ZZ["monster"] = {"extend": "_centralnic"}
-ZZ["motorcycles"] = {"extend": "_centralnic"}
-ZZ["online"] = {"extend": "_centralnic"}
-ZZ["ooo"] = {"extend": "_centralnic"}
-ZZ["press"] = {"extend": "_centralnic"}
-ZZ["protection"] = {"extend": "_centralnic"}
-ZZ["qpon"] = {"extend": "_centralnic"}
-ZZ["quest"] = {"extend": "_centralnic"}
-ZZ["reit"] = {"extend": "_centralnic"}
-ZZ["rent"] = {"extend": "_centralnic"}
-ZZ["rest"] = {"extend": "_centralnic"}
-ZZ["saarland"] = {"extend": "_centralnic"}
-ZZ["sbs"] = {"extend": "_centralnic"}
-ZZ["security"] = {"extend": "_centralnic"}
-ZZ["site"] = {"extend": "_centralnic"}
-ZZ["skin"] = {"extend": "_centralnic"}
-ZZ["space"] = {"extend": "_centralnic"}
-ZZ["storage"] = {"extend": "_centralnic"}
-ZZ["store"] = {"extend": "_centralnic"}
-ZZ["tech"] = {"extend": "_centralnic"}
-ZZ["theatre"] = {"extend": "_centralnic"}
-ZZ["tickets"] = {"extend": "_centralnic"}
-ZZ["uno"] = {"extend": "_centralnic"}
-ZZ["website"] = {"extend": "_centralnic"}
-ZZ["xyz"] = {"extend": "_centralnic"}
-ZZ["yachts"] = {"extend": "_centralnic"}
-ZZ["zuerich"] = {"extend": "_centralnic"}
+art = {"extend": "_centralnic"}
+auto = {"extend": "_centralnic"}
+autos = {"extend": "_centralnic"}
+baby = {"extend": "_centralnic"}
+bar = {"extend": "_centralnic"}
+beauty = {"extend": "_centralnic"}
+best = {"extend": "_centralnic"}
+blog = {"extend": "_centralnic"}
+boats = {"extend": "_centralnic"}
+bond = {"extend": "_centralnic"}
+build = {"extend": "_centralnic"}
+cam = {"extend": "_centralnic"}
+car = {"extend": "_centralnic"}
+cars = {"extend": "_centralnic"}
+ceo = {"extend": "_centralnic"}
+cfd = {"extend": "_centralnic"}
+college = {"extend": "_centralnic"}
+coop = {"extend": "_centralnic"}
+cyou = {"extend": "_centralnic"}
+dealer = {"extend": "_centralnic"}
+desi = {"extend": "_centralnic"}
+fans = {"extend": "_centralnic"}
+feedback = {"extend": "_centralnic"}
+forum = {"extend": "_centralnic"}
+frl = {"extend": "_centralnic"}
+fun = {"extend": "_centralnic"}
+gent = {"extend": "_centralnic"}
+hair = {"extend": "_centralnic"}
+homes = {"extend": "_centralnic"}
+host = {"extend": "_centralnic"}
+icu = {"extend": "_centralnic"}
+inc = {"extend": "_centralnic"}
+kred = {"extend": "_centralnic"}
+london = {"extend": "_centralnic"}
+luxury = {"extend": "_centralnic"}
+makeup = {"extend": "_centralnic"}
+monster = {"extend": "_centralnic"}
+motorcycles = {"extend": "_centralnic"}
+online = {"extend": "_centralnic"}
+ooo = {"extend": "_centralnic"}
+press = {"extend": "_centralnic"}
+protection = {"extend": "_centralnic"}
+qpon = {"extend": "_centralnic"}
+quest = {"extend": "_centralnic"}
+reit = {"extend": "_centralnic"}
+rent = {"extend": "_centralnic"}
+rest = {"extend": "_centralnic"}
+saarland = {"extend": "_centralnic"}
+sbs = {"extend": "_centralnic"}
+security = {"extend": "_centralnic"}
+site = {"extend": "_centralnic"}
+skin = {"extend": "_centralnic"}
+space = {"extend": "_centralnic"}
+storage = {"extend": "_centralnic"}
+store = {"extend": "_centralnic"}
+tech = {"extend": "_centralnic"}
+theatre = {"extend": "_centralnic"}
+tickets = {"extend": "_centralnic"}
+uno = {"extend": "_centralnic"}
+website = {"extend": "_centralnic"}
+xyz = {"extend": "_centralnic"}
+yachts = {"extend": "_centralnic"}
+zuerich = {"extend": "_centralnic"}
 
 # mboot added start
 # note i extract the whois server for each toplevel domain using: https://github.com/jophy/iana_tld_list
 # of which i am a contributer
 
-ZZ["ac"] = {
+ac = {
     "extend": None,
     "domain_name": r"Domain Name:\s+(.+)",
     "registrar": r"Registrar:\s+(.+)",
@@ -1509,7 +1515,7 @@ ZZ["ac"] = {
     "expiration_date": r"Registry Expiry Date:\s+(.+)",
 }
 
-ZZ["ae"] = {
+ae = {
     "extend": "ar",
     "domain_name": r"Domain Name:\s+(.+)",
     "registrar": r"Registrar Name:\s+(.+)",
@@ -1521,27 +1527,27 @@ ZZ["ae"] = {
     "updated_date": None,
 }
 
-ZZ["aero"] = {
+aero = {
     "extend": "ac",
     "_server": "whois.aero",
     "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
 
-ZZ["af"] = {
+af = {
     "extend": "ac",
 }
 
-ZZ["ag"] = {
+ag = {
     "extend": "ac",
 }
 
-ZZ["bet"] = {
+bet = {
     "extend": "ac",
     "_server": "whois.nic.bet",
 }
 
-ZZ["bg"] = {
+bg = {
     "extend": None,
     "_server": "whois.register.bg",
     "domain_name": r"DOMAIN\s+NAME:\s+(.+)",
@@ -1554,7 +1560,7 @@ ZZ["bg"] = {
     "registrant_country": None,
 }
 
-ZZ["bid"] = {
+bid = {
     "extend": "ac",
     "_server": "whois.nic.bid",
 }
@@ -1563,7 +1569,7 @@ ZZ["bid"] = {
 # WHOIS server: whois.nic.bj
 # by: https://github.com/LickosA
 
-ZZ["bj"] = {
+bj = {
     "_server": "whois.nic.bj",
     "extend": "com",
     "domain_name": r"Domain Name:\s?(.+)",
@@ -1575,22 +1581,22 @@ ZZ["bj"] = {
     "name_servers": r"Name Server:\s+(\S+)\n",
 }
 
-ZZ["buzz"] = {
+buzz = {
     "extend": "amsterdam",
 }
 
-ZZ["casa"] = {
+casa = {
     "extend": "ac",
     "registrant_country": r"Registrant Country:\s+(.+)",
 }
 
-ZZ["cd"] = {
+cd = {
     "extend": "ac",
     "_server": "whois.nic.cd",
     "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
-ZZ["cf"] = {
+cf = {
     "extend": None,
     "domain_name": None,
     "name_servers": r"Domain Nameservers:\n(?:(.+)\n)(?:(.+)\n)?(?:(.+)\n)?(?:(.+)\n)?",
@@ -1603,80 +1609,80 @@ ZZ["cf"] = {
     "_slowdown": 5,
 }
 
-ZZ["design"] = {
+design = {
     "extend": "ac",
 }
 
-ZZ["eus"] = {
+eus = {
     "extend": "ac",
 }
 
-ZZ["ge"] = {
+ge = {
     "_server": "whois.nic.ge",
     "extend": "ac",
     "updated_date": None,
 }
 
-ZZ["gq"] = {
+gq = {
     "extend": "ml",
     "_server": "whois.domino.gq",
 }
 
-ZZ["la"] = {
+la = {
     "extend": "com",
 }
 
-ZZ["lol"] = {
+lol = {
     "extend": "amsterdam",
 }
 
-ZZ["love"] = {
+love = {
     "extend": "ac",
     "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
-ZZ["ly"] = {
+ly = {
     "extend": "ac",
     "_server": "whois.nic.ly",
     "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
-ZZ["com.ly"] = {
+com_ly = {
     "extend": "ly",  # host -t ns <domain> often has more nameservers then output of whois
 }
 
-ZZ["ma"] = {
+ma = {
     "extend": "ac",
     "_server": "whois.registre.ma",
     "registrar": r"Sponsoring Registrar:\s*(.+)",
 }
 
-ZZ["mg"] = {
+mg = {
     "extend": "ac",
     "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
-ZZ["moe"] = {
+moe = {
     "extend": "ac",
     "registrant_country": r"Registrant\s+Country:\s+(.+)",
 }
 
-ZZ["ng"] = {
+ng = {
     "_server": "whois.nic.net.ng",
     "extend": "ac",
     "registrant_country": r"Registrant Country:\s+(.+)",
 }
 
-ZZ["ong"] = {
+ong = {
     "extend": "ac",
     "registrant_country": r"Registrant Country:\s+(.+)",
 }
 
-ZZ["pics"] = {
+pics = {
     "extend": "ac",
 }
 
-ZZ["re"] = {
+re = {
     "extend": "ac",
     "registrant_country": None,
     "domain_name": r"domain:\s+(.+)",
@@ -1689,7 +1695,7 @@ ZZ["re"] = {
     "registrant_country": None,
 }
 
-ZZ["ro"] = {
+ro = {
     "extend": None,
     "domain_name": r"\s+Domain name:\s+(.+)",
     "registrar": r"\s+Registrar:\s+(.+)",
@@ -1701,7 +1707,7 @@ ZZ["ro"] = {
     "updated_date": None,
 }
 
-ZZ["rs"] = {
+rs = {
     "domain_name": r"Domain name:\s+(.+)",
     "registrar": r"Registrar:\s+(.+)",
     "status": r"Domain status:\s(.+)",
@@ -1713,7 +1719,7 @@ ZZ["rs"] = {
 }
 
 # singapore
-ZZ["sg"] = {
+sg = {
     "_server": "whois.sgnic.sg",
     "registrar": r"Registrar:\s+(.+)",
     "domain_name": r"\s+Domain name:\s+(.+)",
@@ -1726,23 +1732,23 @@ ZZ["sg"] = {
     # make sure the dnssec is not matched
 }
 
-ZZ["srl"] = {
+srl = {
     "_server": "whois.afilias-srs.net",
     "extend": "ac",
     "registrant_country": r"Registrant Country:\s+(.+)",
 }
 
-ZZ["su"] = {
+su = {
     "extend": "ru",
 }
 
-ZZ["td"] = {
+td = {
     "_server": "whois.nic.td",
     "extend": "ac",
     "registrant_country": r"Registrant Country:\s+(.+)",
 }
 
-ZZ["tw"] = {
+tw = {
     "extend": None,
     "domain_name": r"Domain Name:\s+(.+)",
     "creation_date": r"\s+Record created on\s+(.+)",
@@ -1754,11 +1760,11 @@ ZZ["tw"] = {
     "name_servers": r"Domain servers in listed order:\s*(\S+)[ \t]*\r?\n(?:\s+(\S+)[ \t]*\r?\n)?(?:\s+(\S+)[ \t]*\r?\n)?(?:\s+(\S+)[ \t]*\r?\n)?",
 }
 
-ZZ["com.tw"] = {
+com_tw = {
     "extend": "tw",
 }
 
-ZZ["ug"] = {
+ug = {
     "_server": "whois.co.ug",
     "domain_name": r"Domain name:\s+(.+)",
     "creation_date": r"Registered On:\s+(.+)",
@@ -1770,15 +1776,15 @@ ZZ["ug"] = {
     "registrar": None,
 }
 
-ZZ["co.ug"] = {
+co_ug = {
     "extend": "ug",
 }
 
-ZZ["ca.ug"] = {
+ca_ug = {
     "extend": "ug",
 }
 
-ZZ["ws"] = {
+ws = {
     "extend": None,
     "domain_name": r"Domain Name:\s+(.+)",
     "creation_date": r"Creation Date:\s+(.+)",
@@ -1790,7 +1796,7 @@ ZZ["ws"] = {
     "registrant_country": None,
 }
 
-ZZ["re"] = {
+re = {
     "domain_name": r"domain:\s+(.+)",
     "status": r"status:\s+(.+)",
     "registrar": r"registrar:\s+(.+)",
@@ -1801,7 +1807,7 @@ ZZ["re"] = {
     "registrant_country": None,
 }
 
-ZZ["bo"] = {
+bo = {
     "domain_name": r"\s*NOMBRE DE DOMINIO:\s+(.+)",
     "registrant_country": r"País:\s+(.+)",
     "creation_date": r"Fecha de activación:\s+(.+)",
@@ -1813,9 +1819,9 @@ ZZ["bo"] = {
     "updated_date": None,
 }
 
-ZZ["com.bo"] = {"extend": "bo"}
+com_bo = {"extend": "bo"}
 
-ZZ["hr"] = {
+hr = {
     "domain_name": r"Domain Name:\s+(.+)",
     "name_servers": r"Name Server:\s+(.+)",
     "creation_date": r"Creation Date:\s+(.+)",
@@ -1832,62 +1838,62 @@ ZZ["hr"] = {
 
 # Registry operator: Zodiac Wang Limited
 # WHOIS server: whois.gtld.knet.cn
-ZZ["_gtldKnet"] = {
+_gtldKnet = {
     "extend": "com",
     "_server": "whois.gtld.knet.cn",
     "admin": r"Admin\s*Name:\s+(.+)",
 }
 
-ZZ["wang"] = {"extend": "_gtldKnet"}
-ZZ["八卦"] = {"extend": "_gtldKnet"}
-ZZ["商城"] = {"extend": "_gtldKnet"}
-ZZ["网店"] = {"extend": "_gtldKnet"}
+wang = {"extend": "_gtldKnet"}
+八卦 = {"extend": "_gtldKnet"}
+商城 = {"extend": "_gtldKnet"}
+网店 = {"extend": "_gtldKnet"}
 
-ZZ["accountant"] = {"extend": "com", "_server": "whois.nic.accountant"}
-ZZ["cricket"] = {"extend": "com", "_server": "whois.nic.cricket"}
-ZZ["date"] = {"extend": "com", "_server": "whois.nic.date"}
-ZZ["faith"] = {"extend": "com", "_server": "whois.nic.faith"}
-ZZ["hiphop"] = {"extend": "com", "_server": "whois.nic.hiphop"}
-ZZ["loan"] = {"extend": "com", "_server": "whois.nic.loan"}
-ZZ["party"] = {"extend": "com", "_server": "whois.nic.party"}
-ZZ["racing"] = {"extend": "com", "_server": "whois.nic.racing"}
-ZZ["ren"] = {"extend": "com", "_server": "whois.nic.ren"}
-ZZ["review"] = {"extend": "com", "_server": "whois.nic.review"}
-ZZ["science"] = {"extend": "com", "_server": "whois.nic.science"}
-ZZ["webcam"] = {"extend": "com", "_server": "whois.nic.webcam"}
-ZZ["fashion"] = {"extend": "com", "_server": "whois.nic.fashion"}
+accountant = {"extend": "com", "_server": "whois.nic.accountant"}
+cricket = {"extend": "com", "_server": "whois.nic.cricket"}
+date = {"extend": "com", "_server": "whois.nic.date"}
+faith = {"extend": "com", "_server": "whois.nic.faith"}
+hiphop = {"extend": "com", "_server": "whois.nic.hiphop"}
+loan = {"extend": "com", "_server": "whois.nic.loan"}
+party = {"extend": "com", "_server": "whois.nic.party"}
+racing = {"extend": "com", "_server": "whois.nic.racing"}
+ren = {"extend": "com", "_server": "whois.nic.ren"}
+review = {"extend": "com", "_server": "whois.nic.review"}
+science = {"extend": "com", "_server": "whois.nic.science"}
+webcam = {"extend": "com", "_server": "whois.nic.webcam"}
+fashion = {"extend": "com", "_server": "whois.nic.fashion"}
 
 # Registry operator: UNR Corp.
 # WHOIS server: whois.uniregistry.net
-ZZ["_uniregistry"] = {
+_uniregistry = {
     "extend": "com",
     "_server": "whois.uniregistry.net",
 }
 
-ZZ["help"] = {"extend": "_uniregistry"}
-ZZ["photo"] = {"extend": "_uniregistry"}
-ZZ["sexy"] = {"extend": "_uniregistry"}
-ZZ["gift"] = {"extend": "_uniregistry"}
-ZZ["tattoo"] = {"extend": "_uniregistry"}
-ZZ["property"] = {"extend": "_uniregistry"}
-ZZ["juegos"] = {"extend": "_uniregistry"}
-ZZ["hosting"] = {"extend": "_uniregistry"}
-ZZ["guitars"] = {"extend": "_uniregistry"}
-ZZ["flowers"] = {"extend": "_uniregistry"}
-ZZ["diet"] = {"extend": "_uniregistry"}
-ZZ["christmas"] = {"extend": "_uniregistry"}
-ZZ["blackfriday"] = {"extend": "_uniregistry"}
-ZZ["audio"] = {"extend": "_uniregistry"}
+help = {"extend": "_uniregistry"}
+photo = {"extend": "_uniregistry"}
+sexy = {"extend": "_uniregistry"}
+gift = {"extend": "_uniregistry"}
+tattoo = {"extend": "_uniregistry"}
+property = {"extend": "_uniregistry"}
+juegos = {"extend": "_uniregistry"}
+hosting = {"extend": "_uniregistry"}
+guitars = {"extend": "_uniregistry"}
+flowers = {"extend": "_uniregistry"}
+diet = {"extend": "_uniregistry"}
+christmas = {"extend": "_uniregistry"}
+blackfriday = {"extend": "_uniregistry"}
+audio = {"extend": "_uniregistry"}
 
 # Registry operator: TLD REGISTRY LIMITED.
 # WHOIS server: whois.teleinfo.cn
-ZZ["_teleinfo"] = {
+_teleinfo = {
     "extend": "com",
     "_server": "whois.teleinfo.cn",
 }
 
-ZZ["中文网"] = {"extend": "_teleinfo"}
-ZZ["在线"] = {"extend": "_teleinfo"}
+中文网 = {"extend": "_teleinfo"}
+在线 = {"extend": "_teleinfo"}
 
 # RESTRICTED: now known as PrivateRegistry
 # restricted domains never answer or never show information sufficient for parsing
@@ -1897,73 +1903,73 @@ ZZ["在线"] = {"extend": "_teleinfo"}
 # details can be found at:
 # (https://www.iana.org/domains/root/db/<tld>.html)
 
-ZZ["_privateReg"] = {
-    "_privateRegistry": True
+_privateReg = {
+    "_privateRegistry": True,
 }
 
-ZZ["al"] = {"extend": "_privateReg"}
-ZZ["az"] = {"extend": "_privateReg"}
-ZZ["ba"] = {"extend": "_privateReg"}
-ZZ["ch"] = {"extend": "_privateReg"}
-ZZ["cv"] = {"extend": "_privateReg"}  # Cape Verde
-ZZ["cw"] = {"extend": "_privateReg"}
-ZZ["es"] = {"extend": "_privateReg"}
-ZZ["ga"] = {"extend": "_privateReg"}
-ZZ["gr"] = {"extend": "_privateReg"}
-ZZ["hu"] = {"extend": "_privateReg"}
-ZZ["li"] = {"extend": "_privateReg"}
-ZZ["mp"] = {"extend": "_privateReg"}
-ZZ["my"] = {"extend": "_privateReg"}
-ZZ["pk"] = {"extend": "_privateReg"}
-ZZ["py"] = {"extend": "_privateReg"}  # Paraguay:https://www.iana.org/domains/root/db/py.html
-ZZ["com.py"] = {"extend": "_privateReg"}
-ZZ["sr"] = {"extend": "_privateReg"}
-ZZ["ke"] = {"extend": "_privateReg"}  # Kenia
-ZZ["co.ke"] = {"extend": "_privateReg"}
+al = {"extend": "_privateReg"}
+az = {"extend": "_privateReg"}
+ba = {"extend": "_privateReg"}
+ch = {"extend": "_privateReg"}
+cv = {"extend": "_privateReg"}  # Cape Verde
+cw = {"extend": "_privateReg"}
+es = {"extend": "_privateReg"}
+ga = {"extend": "_privateReg"}
+gr = {"extend": "_privateReg"}
+hu = {"extend": "_privateReg"}
+li = {"extend": "_privateReg"}
+mp = {"extend": "_privateReg"}
+my = {"extend": "_privateReg"}
+pk = {"extend": "_privateReg"}
+py = {"extend": "_privateReg"}  # Paraguay:https://www.iana.org/domains/root/db/py.html
+com_py = {"extend": "_privateReg"}
+sr = {"extend": "_privateReg"}
+ke = {"extend": "_privateReg"}  # Kenia
+co_ke = {"extend": "_privateReg"}
 
 # https://www.iana.org/domains/root/db/td.html
 # td = {"extend": "_privateReg"} # Chad (French: Tchad) made available for use in 1997.
 
-ZZ["tk"] = {"extend": "_privateReg"}
-ZZ["to"] = {"extend": "_privateReg"}  #
-ZZ["uy"] = {"extend": "_privateReg"}  # Uruguay
-ZZ["va"] = {"extend": "_privateReg"}  # This TLD has no whois server.
-ZZ["vu"] = {"extend": "_privateReg"}  # all dates 1970 , no furter relevant info
-ZZ["vn"] = {"extend": "_privateReg"}
+tk = {"extend": "_privateReg"}
+to = {"extend": "_privateReg"}  #
+uy = {"extend": "_privateReg"}  # Uruguay
+va = {"extend": "_privateReg"}  # This TLD has no whois server.
+vu = {"extend": "_privateReg"}  # all dates 1970 , no furter relevant info
+vn = {"extend": "_privateReg"}
 #
-ZZ["zw"] = {"extend": "_privateReg"}  # Zimbabwe ; # This TLD has no whois server
-ZZ["com.zw"] = {"extend": "zw"}
-ZZ["org.zw"] = {"extend": "zw"}
+zw = {"extend": "_privateReg"}  # Zimbabwe ; # This TLD has no whois server
+com_zw = {"extend": "zw"}
+org_zw = {"extend": "zw"}
 
 # Nepal
-ZZ["np"] = {
+np = {
     "extend": "_privateReg"
 }  # This TLD has no whois server, but you can access the whois database at https://www.mos.com.np/
-ZZ["com.np"] = {"extend": "np"}
+com_np = {"extend": "np"}
 
 # Ecuador
-ZZ["ec"] = {"extend": "_privateReg"}
-ZZ["com.ec"] = {"extend": "ec"}
-ZZ["gob.ec"] = {"extend": "ec"}
+ec = {"extend": "_privateReg"}
+com_ec = {"extend": "ec"}
+gob_ec = {"extend": "ec"}
 
 # https://umbrella.cisco.com/blog/on-the-trail-of-malicious-dynamic-dns-domains
-ZZ["hopto.org"] = {"extend": "_privateReg"}  # dynamic dns without any whois
-ZZ["duckdns.org"] = {"extend": "_privateReg"}  # dynamic dns without any whois
+hopto_org = {"extend": "_privateReg"}  # dynamic dns without any whois
+duckdns_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 # changeip_com = {"extend": "_privateReg"}  # dynamic dns without any whois
 # dnsdynamic_org = {"extend": "_privateReg"}  # dynamic dns without any whois
-ZZ["noip.com"] = {"extend": "_privateReg"}  # dynamic dns without any whois
-ZZ["noip.org"] = {"extend": "_privateReg"}  # dynamic dns without any whois
+noip_com = {"extend": "_privateReg"}  # dynamic dns without any whois
+noip_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 # freedns_afraid_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 # dyndns_com = {"extend": "_privateReg"}  # dynamic dns without any whois
 # sitelutions_com = {"extend": "_privateReg"}  # dynamic dns without any whois
 # 3322_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 
 # https://en.wikipedia.org/wiki/.onion, a "official" fake domain
-ZZ["onion"] = {"extend": "_privateReg"}
+onion = {"extend": "_privateReg"}
 
 # backend registry for domain names ending in GG, JE, and AS.
 # lines may have \r actually before \n , updated all 3 domains return all nameservers
-ZZ["gg"] = {
+gg = {
     "domain_name": r"Domain:\s*\n\s+(.+)",
     "status": r"Domain Status:\s*\n\s+(.+)",
     "registrar": r"Registrar:\s*\n\s+(.+)",
@@ -1974,10 +1980,10 @@ ZZ["gg"] = {
     "registrant_country": None,
 }
 
-ZZ["as"] = {"extend": "gg"}
-ZZ["je"] = {"extend": "gg"}
+as_ = {"extend": "gg"}
+je = {"extend": "gg"}
 
-ZZ["sn"] = {
+sn = {
     "_server": "whois.nic.sn",
     "domain_name": r"Nom de domaine:\s+(.+)",
     "status": r"Statut:\s+(.+)",
@@ -1989,7 +1995,7 @@ ZZ["sn"] = {
     "registrant_country": None,
 }
 
-ZZ["si"] = {
+si = {
     "domain_name": r"domain:\s+(.+)",
     "status": r"status:\s+(.+)",
     "registrar": r"registrar:\s+(.+)",
@@ -2000,23 +2006,23 @@ ZZ["si"] = {
     "registrant_country": None,
 }
 
-ZZ["do"] = {"extend": "_privateReg"}
-ZZ["com.do"] = {"extend": "_privateReg"}
-ZZ["cx"] = {"extend": "com"}
-ZZ["dz"] = {"extend": "_privateReg"}
-ZZ["gd"] = {"extend": "com"}
-ZZ["mn"] = {"extend": "com"}
-ZZ["tl"] = {"extend": "com"}
-ZZ["gay"] = {"extend": "com", "_server": "whois.nic.gay"}
-ZZ["tt"] = {"extend": "_privateReg"}
-ZZ["mo"] = {
+do = {"extend": "_privateReg"}
+com_do = {"extend": "_privateReg"}
+cx = {"extend": "com"}
+dz = {"extend": "_privateReg"}
+gd = {"extend": "com"}
+mn = {"extend": "com"}
+tl = {"extend": "com"}
+gay = {"extend": "com", "_server": "whois.nic.gay"}
+tt = {"extend": "_privateReg"}
+mo = {
     "extend": "com",
     "creation_date": r"created on\s+(.+)",
     "expiration_date": r"expires on\s+(.+)",
     "name_servers": r"Domain name servers:\s*\-+(?:\s*(\S+)\n)(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?(?:\s*(\S+)\n)?",
 }
-ZZ["com.mo"] = {"extend": "mo"}
-ZZ["st"] = {
+com_mo = {"extend": "mo"}
+st = {
     # .ST domains can now be registered with many different competing registrars. and hence different formats
     # >>> line appears quite early, valid info after would have been suppressed with the ^>>> cleanup rule: switched off
     "extend": "com",
@@ -2024,31 +2030,31 @@ ZZ["st"] = {
     "registrant": r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n",
 }
 
-ZZ["so"] = {"extend": "com"}
-ZZ["nrw"] = {"extend": "com"}
-ZZ["lat"] = {"extend": "com"}
-ZZ["realestate"] = {"_server": "whois.nic.realestate", "extend": "com"}
-ZZ["ph"] = {"extend": "_privateReg"}
-ZZ["com.ph"] = {"extend": "ph"}
-ZZ["org.ph"] = {"extend": "ph"}
-ZZ["net.ph"] = {"extend": "ph"}
-ZZ["zm"] = {"extend": "com"}
-ZZ["sy"] = {"extend": "_privateReg", "_server": "whois.tld.sy"}
-ZZ["tr"] = {"extend": "_privateReg"}
-ZZ["onl"] = {"extend": "com"}
-ZZ["blue"] = {"extend": "com"}
-ZZ["garden"] = {"extend": "com", "_server": "whois.nic.garden"}
-ZZ["promo"] = {"extend": "com", "_server": "whois.nic.promo"}
+so = {"extend": "com"}
+nrw = {"extend": "com"}
+lat = {"extend": "com"}
+realestate = {"_server": "whois.nic.realestate", "extend": "com"}
+ph = {"extend": "_privateReg"}
+com_ph = {"extend": "ph"}
+org_ph = {"extend": "ph"}
+net_ph = {"extend": "ph"}
+zm = {"extend": "com"}
+sy = {"extend": "_privateReg", "_server": "whois.tld.sy"}
+tr = {"extend": "_privateReg"}
+onl = {"extend": "com"}
+blue = {"extend": "com"}
+garden = {"extend": "com", "_server": "whois.nic.garden"}
+promo = {"extend": "com", "_server": "whois.nic.promo"}
 
-ZZ["pyc"] = {"extend": "com"}
+pyc_ = {"extend": "com"}
 
-ZZ["mn"] = {"extend": "com", "_server": "whois.nic.mn"}
+mn = {"extend": "com", "_server": "whois.nic.mn"}
 
-ZZ["africa"] = {"extend": "com", "_server": "whois.nic.africa"}
+africa = {"extend": "com", "_server": "whois.nic.africa"}
 
-ZZ["green"] = {"extend": "com"}
+green = {"extend": "com"}
 
-ZZ["mk"] = {
+mk = {
     "extend": None,
     "_server": "whois.marnet.mk",
     "domain_name": r"domain:\s?(.+)",
@@ -2066,18 +2072,18 @@ ZZ["mk"] = {
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
-ZZ["observer"] = {"extend": "com", "_server": "whois.nic.observer"}
-ZZ["one"] = {"extend": "com", "_server": "whois.nic.one"}
-ZZ["page"] = {"extend": "com", "_server": "whois.nic.google"}
+observer = {"extend": "com", "_server": "whois.nic.observer"}
+one = {"extend": "com", "_server": "whois.nic.one"}
+page = {"extend": "com", "_server": "whois.nic.google"}
 
-ZZ["bf"] = {
+bf = {
     "extend": "com",
     "_server": "whois.nic.bf",
     "registrant": r"Registrant Name:\s?(.+)",
 }
-ZZ["bz"] = {"extend": "_privateReg"}
+bz = {"extend": "_privateReg"}
 
-ZZ["si"] = {
+si = {
     "extend": None,
     "_server": "whois.register.si",
     "domain_name": r"domain:\s?(.+)",
@@ -2095,9 +2101,9 @@ ZZ["si"] = {
     "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
 }
 
-ZZ["sx"] = {"extend": "com", "_server": "whois.sx"}
+sx = {"extend": "com", "_server": "whois.sx"}
 
-ZZ["tc"] = {
+tc = {
     "extend": "com",
     "_server": "whois.nic.tc",
     "domain_name": r"Domain Name:\s?(.+)",
@@ -2108,7 +2114,7 @@ ZZ["tc"] = {
     "status": r"Domain Status:\s?(.+)",
 }
 
-ZZ["wf"] = {
+wf = {
     "extend": "com",
     "_server": "whois.nic.wf",
     "domain_name": r"domain:\s?(.+)",
@@ -2122,11 +2128,11 @@ ZZ["wf"] = {
     "status": r"\nstatus:\s?(.+)",
 }
 
-ZZ["lk"] = {"extend": "_privateReg"}  # Sri Lanka, whois.nic.lk exists but does not answer
-ZZ["eg"] = {"extend": "_privateReg"}  # Egipt
-ZZ["com.eg"] = {"extend": "_privateReg"}  # Egipt
+lk = {"extend": "_privateReg"}  # Sri Lanka, whois.nic.lk exists but does not answer
+eg = {"extend": "_privateReg"}  # Egipt
+com_eg = {"extend": "_privateReg"}  # Egipt
 
-ZZ["mo"] = {
+mo = {
     "extend": "com",
     "_server": "whois.monic.mo",
     "name_servers": r"Domain name servers:\s+-+\s+(\S+)\n(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?",
@@ -2134,7 +2140,7 @@ ZZ["mo"] = {
     "expiration_date": r"Record expires on (.+)",
 }
 
-ZZ["ph"] = {"extend": "_privateReg"}
+ph = {"extend": "_privateReg"}
 
-ZZ["vc"] = {"extend": "com"}
-ZZ["cm"] = {"extend": "com"}
+vc = {"extend": "com"}
+cm = {"extend": "com"}

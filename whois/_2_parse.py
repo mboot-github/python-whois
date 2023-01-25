@@ -3,59 +3,12 @@ import sys
 
 from typing import Any, Dict, Optional, List
 
+from ._0_init_tld import TLD_RE
+
 from .exceptions import FailedParsingWhoisOutput
 from .exceptions import WhoisQuotaExceeded
 
-from . import tld_regexpr
-
 Verbose = True
-
-TLD_RE: Dict[str, Any] = {}
-
-
-def get_tld_re(tld: str) -> Any:
-    if tld in TLD_RE:
-        return TLD_RE[tld]
-
-    if tld == "in":
-        # is this actually used ?
-        if Verbose:
-            print("Verbose: directly returning tld: in_ for tld: in", file=sys.stderr)
-        return "in_"
-
-    v = getattr(tld_regexpr, tld)
-
-    extend = v.get("extend")
-    if extend:
-        e = get_tld_re(extend)  # call recursive
-        tmp = e.copy()
-        tmp.update(v)  # and merge results in tmp with caller data in v
-        # The update() method updates the dictionary with the elements
-        # from another dictionary object or from an iterable of key/value pairs.
-    else:
-        tmp = v
-
-    # finally we dont want to propagate the extend data
-    # as it is only used to recursivly populate the dataset
-    if "extend" in tmp:
-        del tmp["extend"]
-
-    # we want now to exclude _server hints
-    tld_re = dict(
-        (k, re.compile(v, re.IGNORECASE) if (isinstance(v, str) and k[0] != "_") else v) for k, v in tmp.items()
-    )
-
-    # meta domains start with _: examples _centralnic and _donuts
-    if tld[0] != "_":
-        TLD_RE[tld] = tld_re
-
-    return tld_re
-
-
-# now fetch all defined data in
-# The dir() method returns the list of valid attributes of the passed object
-
-[get_tld_re(tld) for tld in dir(tld_regexpr) if tld[0] != "_"]
 
 
 def cleanupWhoisResponse(
