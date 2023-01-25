@@ -893,8 +893,8 @@ ZZ["ru"] = {
 # In the Domain Name System it has the ASCII DNS name xn--p1ai.
 
 ZZ["ru.rf"] = {"extend": "ru", "_server": "whois.tcinet.ru"}
-ZZ["РФ"] = {"extend": "ru",  "_server": "whois.tcinet.ru"}
-ZZ["xn--p1ai"] = {"extend": "ru",  "_server": "whois.tcinet.ru"}
+ZZ["рф"] = {"extend": "ru", "_server": "whois.tcinet.ru"}
+ZZ["xn--p1ai"] = {"extend": "ru", "_server": "whois.tcinet.ru"}
 
 ZZ["sa"] = {
     "extend": "com",
@@ -1820,15 +1820,15 @@ ZZ["_gtldKnet"] = {
 
 ZZ["wang"] = {"extend": "_gtldKnet"}
 
-# we DONT have xn--45q11c 八卦 (gossip)
+# we DONT have xn--45q11c 八卦 (gossip) fix
 ZZ["八卦"] = {"extend": "_gtldKnet"}
 ZZ["xn--45q11c"] = {"extend": "_gtldKnet"}
 
-# we DONT have xn--czru2d 商城 (mall)
+# we DONT have xn--czru2d 商城 (mall) fix
 ZZ["商城"] = {"extend": "_gtldKnet"}
 ZZ["xn--czru2d"] = {"extend": "_gtldKnet"}
 
-# we DONT have xn--hxt814e 网店 (webshop)
+# we DONT have xn--hxt814e 网店 (webshop) fix
 ZZ["网店"] = {"extend": "_gtldKnet"}
 ZZ["xn--hxt814e"] = {"extend": "_gtldKnet"}
 
@@ -1875,10 +1875,10 @@ ZZ["_teleinfo"] = {
     "_server": "whois.teleinfo.cn",
 }
 
-# we DONT have xn--fiq228c5hs 中文网 (website)
+# we DONT have xn--fiq228c5hs 中文网 (website) fix
 ZZ["中文网"] = {"extend": "_teleinfo"}
 ZZ["xn--fiq228c5hs"] = {"extend": "_teleinfo"}
-# we DONT have xn--3ds443g 在线 (online)
+# we DONT have xn--3ds443g 在线 (online) fix
 ZZ["在线"] = {"extend": "_teleinfo"}
 ZZ["xn--3ds443g"] = {"extend": "_teleinfo"}
 

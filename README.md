@@ -79,6 +79,7 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
 2023-01-25: maarten_boot
  * convert the tld file to a Dict, we now no longer need a mappper for python keywords or second level domains.
  * utf8 level domains also need no mapper anymore an can be added as is
+ * added xn-- tlds for all known utf-8 domains we currently have
  * a example override program is shown how to redefine existing tld's or add new tld's not yet supported by the package version (testExtend.py)
 
 ## Support
