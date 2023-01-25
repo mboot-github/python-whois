@@ -892,9 +892,9 @@ ZZ["ru"] = {
 # Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
 # In the Domain Name System it has the ASCII DNS name xn--p1ai.
 
-ZZ["ru.rf"] = {"extend": "ru"}
-ZZ["РФ"] = {"extend": "ru"}
-ZZ["xn--p1ai"] = {"extend": "ru"}
+ZZ["ru.rf"] = {"extend": "ru", "_server": "whois.tcinet.ru"}
+ZZ["РФ"] = {"extend": "ru",  "_server": "whois.tcinet.ru"}
+ZZ["xn--p1ai"] = {"extend": "ru",  "_server": "whois.tcinet.ru"}
 
 ZZ["sa"] = {
     "extend": "com",
