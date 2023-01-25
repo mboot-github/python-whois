@@ -2130,3 +2130,8 @@ ZZ["ph"] = {"extend": "_privateReg"}
 
 ZZ["vc"] = {"extend": "com"}
 ZZ["cm"] = {"extend": "com"}
+
+# russian speaking community
+ZZ["xn--p1acf"] = {"extend": "ru", "_server": "whois.nic.xn--p1acf"}
+ZZ["РУС"] = {"extend": "ru", "_server": "whois.nic.xn--p1acf"}
+ZZ["рус"] = {"extend": "ru", "_server": "whois.nic.xn--p1acf"}
