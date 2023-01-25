@@ -40,3 +40,6 @@ DONE
 
   -  add nic to default test group for makeTestdataAll.sh
 
+  -  convert the list of tld to Dict
+  -  allow override or change and adding new domains without needing a new version directly
+  -  tested with existing testdomains, all reponses will now respond with the true tld not the one with a underscore

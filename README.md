@@ -76,6 +76,11 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
 2023-01-18: sorrowless
  * add an opportunity to specify maximum cache age
 
+2023-01-25: maarten_boot
+ * convert the tld file to a Dict, we now no longer need a mappper for python keywords or second level domains.
+ * utf8 level domains also need no mapper anymore an can be added as is
+ * a example override program is shown how to redefine existing tld's or add new tld's not yet supported by the package version (testExtend.py)
+
 ## Support
  * Python 3.x is supported.
  * Python 2.x IS NOT supported.

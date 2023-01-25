@@ -289,17 +289,11 @@ ZZ["com.tr"] = {
     "status": None,
 }
 
-ZZ["edu.tr"] = {
-    "extend": "com.tr"
-}
+ZZ["edu.tr"] = {"extend": "com.tr"}
 
-ZZ["org.tr"] = {
-    "extend": "com.tr"
-}
+ZZ["org.tr"] = {"extend": "com.tr"}
 
-ZZ["net.tr"] = {
-    "extend": "com.tr"
-}
+ZZ["net.tr"] = {"extend": "com.tr"}
 
 ZZ["co.il"] = {
     "extend": "com",
@@ -314,7 +308,7 @@ ZZ["co.il"] = {
     "status": r"status:\s*(.+)",
 }
 
-ZZ["co.jp"] = { # is redefined later with english
+ZZ["co.jp"] = {  # is redefined later with english
     "extend": "jp",
     "domain_name": r"\[ドメイン名\]\s?(.+)",
     "creation_date": r"\[登録年月\]\s?(.+)",
@@ -322,13 +316,9 @@ ZZ["co.jp"] = { # is redefined later with english
     "updated_date": r"\[最終更新\]\s?(.+)",
 }
 
-ZZ["courses"] = {
-    "extend": "com"
-}
+ZZ["courses"] = {"extend": "com"}
 
-ZZ["cr"] = {
-    "extend": "cz"
-}
+ZZ["cr"] = {"extend": "cz"}
 
 ZZ["cz"] = {
     "extend": "com",
@@ -353,9 +343,7 @@ ZZ["de"] = {
 }
 
 # Developer
-ZZ["dev"] = {
-    "extend": "com"
-}
+ZZ["dev"] = {"extend": "com"}
 
 # Denmark
 ZZ["dk"] = {
@@ -605,7 +593,7 @@ ZZ["ed.jp"] = {"extend": "co.jp"}
 ZZ["gr.jp"] = {"extend": "co.jp"}
 ZZ["lg.jp"] = {"extend": "co.jp"}
 ZZ["geo.jp"] = {"extend": "co.jp"}
-ZZ["kiwi"] = {    "extend": "com"}
+ZZ["kiwi"] = {"extend": "com"}
 
 ZZ["kg"] = {
     "domain_name": r"Domain\s+(\S+)",
@@ -904,9 +892,9 @@ ZZ["ru"] = {
 # Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
 # In the Domain Name System it has the ASCII DNS name xn--p1ai.
 
-ZZ["ru.rf"] = {
-    "extend": "ru",
-}
+ZZ["ru.rf"] = {"extend": "ru"}
+ZZ["РФ"] = {"extend": "ru"}
+ZZ["xn--p1ai"] = {"extend": "ru"}
 
 ZZ["sa"] = {
     "extend": "com",
@@ -1079,16 +1067,10 @@ ZZ["edu.ua"] = {
     "extend": "ua",
     "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)",
 }
-ZZ["com.ua"] = {
-    "extend": "ua"
-}
-ZZ["net.ua"] = {
-    "extend": "ua"
-}
+ZZ["com.ua"] = {"extend": "ua"}
+ZZ["net.ua"] = {"extend": "ua"}
 
-ZZ["lviv.ua"] = {
-    "extend": "com"
-}
+ZZ["lviv.ua"] = {"extend": "com"}
 
 ZZ["uk"] = {
     "extend": "com",
@@ -1100,9 +1082,7 @@ ZZ["uk"] = {
     "status": r"Registration status:\n\s*(.+)",
 }
 
-ZZ["us"] = {
-    "extend": "name"
-}
+ZZ["us"] = {"extend": "name"}
 
 ZZ["uz"] = {
     "extend": "com",
@@ -1839,9 +1819,18 @@ ZZ["_gtldKnet"] = {
 }
 
 ZZ["wang"] = {"extend": "_gtldKnet"}
+
+# we DONT have xn--45q11c 八卦 (gossip)
 ZZ["八卦"] = {"extend": "_gtldKnet"}
+ZZ["xn--45q11c"] = {"extend": "_gtldKnet"}
+
+# we DONT have xn--czru2d 商城 (mall)
 ZZ["商城"] = {"extend": "_gtldKnet"}
+ZZ["xn--czru2d"] = {"extend": "_gtldKnet"}
+
+# we DONT have xn--hxt814e 网店 (webshop)
 ZZ["网店"] = {"extend": "_gtldKnet"}
+ZZ["xn--hxt814e"] = {"extend": "_gtldKnet"}
 
 ZZ["accountant"] = {"extend": "com", "_server": "whois.nic.accountant"}
 ZZ["cricket"] = {"extend": "com", "_server": "whois.nic.cricket"}
@@ -1886,8 +1875,13 @@ ZZ["_teleinfo"] = {
     "_server": "whois.teleinfo.cn",
 }
 
+# we DONT have xn--fiq228c5hs 中文网 (website)
 ZZ["中文网"] = {"extend": "_teleinfo"}
+ZZ["xn--fiq228c5hs"] = {"extend": "_teleinfo"}
+# we DONT have xn--3ds443g 在线 (online)
 ZZ["在线"] = {"extend": "_teleinfo"}
+ZZ["xn--3ds443g"] = {"extend": "_teleinfo"}
+
 
 # RESTRICTED: now known as PrivateRegistry
 # restricted domains never answer or never show information sufficient for parsing
@@ -1897,9 +1891,7 @@ ZZ["在线"] = {"extend": "_teleinfo"}
 # details can be found at:
 # (https://www.iana.org/domains/root/db/<tld>.html)
 
-ZZ["_privateReg"] = {
-    "_privateRegistry": True
-}
+ZZ["_privateReg"] = {"_privateRegistry": True}
 
 ZZ["al"] = {"extend": "_privateReg"}
 ZZ["az"] = {"extend": "_privateReg"}

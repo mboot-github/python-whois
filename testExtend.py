@@ -3,6 +3,15 @@ import whois
 
 Verbose = True
 
+"""
+initial testing had errors for these
+we DONT have xn--3ds443g 在线 (online)
+we DONT have xn--45q11c 八卦 (gossip)
+we DONT have xn--czru2d 商城 (mall)
+we DONT have xn--fiq228c5hs 中文网 (website)
+we DONT have xn--hxt814e 网店 (webshop)
+"""
+
 
 def t1(domain: str, text: str):
     print(f"{text}: {domain}")
