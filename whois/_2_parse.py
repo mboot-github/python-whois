@@ -86,6 +86,8 @@ def handleShortResponse(
     # NOTE: from here s is lowercase only
     # ---------------------------------
     noneStrings = [
+        "the domain has not been registered",
+        "no match found for",
         "no matching record",
         "not found",
         "no data found",
@@ -98,6 +100,7 @@ def handleShortResponse(
         "no whois server is known for this kind of object",
         "nameserver not found",
         "malformed request",  # this means this domain is not in whois as it is on top of a registered domain
+        "no match",
     ]
 
     for i in noneStrings:
