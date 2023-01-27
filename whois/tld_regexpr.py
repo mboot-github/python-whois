@@ -2652,3 +2652,9 @@ ZZ["you"] = {"_server": "whois.nic.you", "extend": "com"}
 ZZ["zappos"] = {"_server": "whois.nic.zappos", "extend": "com"}
 
 ZZ['amfam'] = {'_server': 'whois.nic.amfam', 'extend': 'com'}
+ZZ['lplfinancial'] = {'_server': 'whois.nic.lplfinancial', 'extend': 'com'} # auto-detected via IANA tld
+ZZ['okinawa'] = {'_server': 'whois.nic.okinawa', 'extend': 'com'} # auto-detected via IANA tld
+ZZ['ryukyu'] = {'_server': 'whois.nic.ryukyu', 'extend': 'com'} # auto-detected via IANA tld
+ZZ['softbank'] = {'_server': 'whois.nic.softbank', 'extend': 'com'} # auto-detected via IANA tld
+
+ZZ["gov"] = { "extend": "com"} # only 2 or 3 fields are actually returned
