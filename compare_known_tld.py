@@ -67,34 +67,35 @@ for name in dataList:
 found = {}
 for tld in dataList2:
     data, status = i.getInfoOnOneTld(tld)
-    # print(status, data)
 
-    if data and "whois" in data and data["whois"] and data["whois"] != "NULL":
-        wh = data["whois"]
-        if wh.endswith(f".{tld}"):
-            dd = wh.split(".")[-2:]
-        else:
-            dd = ["meta", tld]
+    xtest = data and ("whois" in data) and (data["whois"]) and (data["whois"] != "NULL")
+    if not xtest:
+        print(f"no whois info for tld: {tld} {data}")
+        continue
 
-        zz = _do_whois_query(
-            dd,
-            ignore_returncode=False,
-            server=wh,
-        )
-
-        pp = {"_server": wh, "extend": "com"}
-        aDictToTestOverride = {tld: pp}
-
-        whois.mergeExternalDictWithRegex(aDictToTestOverride)
-        try:
-            d = whois.query(".".join(dd))
-            if d:
-                print(d.__dict__)
-                if len(d.name_servers) > 0:
-                    found[tld] = pp
-                    print(f"## ZZ['{tld}'] = {found[tld]} # auto-detected via IANA tld")
-        except Exception as e:
-            print(e)
-
+    wh = data["whois"]
+    if wh.endswith(f".{tld}"):
+        dd = wh.split(".")[-2:]
     else:
-        print(f"no whois info for tld: {tld}\n", data)
+        dd = ["meta", tld]
+
+    print(f"try: {tld}")
+    zz = _do_whois_query(
+        dd,
+        ignore_returncode=False,
+        server=wh,
+    )
+
+    pp = {"_server": wh, "extend": "com"}
+    aDictToTestOverride = {tld: pp}
+
+    whois.mergeExternalDictWithRegex(aDictToTestOverride)
+    try:
+        d = whois.query(".".join(dd))
+        if d:
+            print(d.__dict__)
+            if len(d.name_servers) > 0:
+                found[tld] = pp
+                print(f"## ZZ['{tld}'] = {found[tld]} # auto-detected via IANA tld")
+    except Exception as e:
+        print(e)
