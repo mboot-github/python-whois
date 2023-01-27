@@ -82,6 +82,9 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * added xn-- tlds for all known utf-8 domains we currently have
  * we can now add new domains on the fly or change them:  whois.mergeExternalDictWithRegex(aDictToOverride) see example testExtend.py
 
+2023-01-27: maarten_boot
+ * add autodetect via iana tld file (this has only tld's)
+
 ## Support
  * Python 3.x is supported.
  * Python 2.x IS NOT supported.
