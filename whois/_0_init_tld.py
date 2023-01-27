@@ -14,6 +14,7 @@ from .exceptions import (
 
 Verbose = False
 TLD_RE: Dict[str, Any] = {}
+REG_COLLECTION_BY_KEY: Dict = {}
 
 
 def validTlds():
@@ -70,7 +71,9 @@ def get_tld_re(tld: str, override: bool = False) -> Any:
 
     # we want now to exclude _server hints
     tld_re = dict(
-        (k, re.compile(v, re.IGNORECASE) if (isinstance(v, str) and k[0] != "_") else v) for k, v in tmp.items()
+        # (k, re.compile(v, re.IGNORECASE) if (isinstance(v, str) and k[0] != "_") else v) for k, v in tmp.items()
+        # dont recompile each re by themselves, reuse existing compiled re
+        (k, REG_COLLECTION_BY_KEY[k][v] if (isinstance(v, str) and k[0] != "_") else v) for k, v in tmp.items()
     )
 
     # meta domains start with _: examples _centralnic and _donuts
@@ -109,11 +112,41 @@ def initOne(tld, override: bool = False):
     if Verbose:
         print(f"{tld} -> {tld2}", file=sys.stderr)
 
+def buildRegCollection(zz: Dict):
+    regCollection = {}
+    # get all regexes
+    for name in zz:
+        # print(name)
+        z = zz[name]
+        for key in z:
+            if key is None:
+                continue
+
+            if key.startswith("_"):
+                continue
+
+            if key in ["extend"]:
+                continue
+
+            if key not in regCollection:
+                regCollection[key] = {}
+
+            reg = z[key]
+            if reg is None:
+                continue
+
+            regCollection[key][reg] = None
+            if isinstance(reg, str):
+                regCollection[key][reg] = re.compile(reg, flags=re.IGNORECASE)
+
+    return regCollection
 
 def initOnImport():
+    global REG_COLLECTION_BY_KEY
     # here we run the import processing
     # we load all tld's on import so we dont lose time later
     # we keep ZZ so we can later reuse it if we want to aoverrid or update tld's
+    REG_COLLECTION_BY_KEY= buildRegCollection(ZZ)
     override = False
     for tld in ZZ.keys():
         initOne(tld, override)
