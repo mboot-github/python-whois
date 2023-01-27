@@ -58,7 +58,7 @@ for tld in dataList:
     # print(data)
 
     if data and "whois" in data and data["whois"] and data["whois"] != "NULL":
-        wh = data['whois']
+        wh = data["whois"]
         # print(tld, wh, data, status)
         if wh.endswith(f".{tld}"):
             dd = wh.split(".")[-2:]
@@ -73,8 +73,8 @@ for tld in dataList:
         )
         # print(zz)
 
-        pp = { "_server": wh, "extend": "com"}
-        aDictToTestOverride = { tld: pp }
+        pp = {"_server": wh, "extend": "com"}
+        aDictToTestOverride = {tld: pp}
 
         whois.mergeExternalDictWithRegex(aDictToTestOverride)
         try:
