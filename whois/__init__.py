@@ -1,3 +1,31 @@
+import sys
+from functools import wraps
+from typing import (
+    Optional,
+    List,
+    Dict,
+)
+
+from ._1_query import do_query
+from ._2_parse import do_parse
+from ._3_adjust import Domain
+from ._0_init_tld import (
+    ZZ,
+    TLD_RE,
+    validTlds,
+    filterTldToSupportedPattern,
+    mergeExternalDictWithRegex,
+)
+
+from .exceptions import (
+    UnknownTld,
+    FailedParsingWhoisOutput,
+    UnknownDateFormat,
+    WhoisCommandFailed,
+    WhoisPrivateRegistry,
+    WhoisQuotaExceeded,
+)
+
 """
     Python module/library for retrieving WHOIS information of domains.
 
@@ -24,168 +52,16 @@
     2020-09-14 00:00:00
 
 """
-__all__ = ["query", "get"]
+__all__ = [
+    "query",
+    "get",
+    "validTlds",
+    "mergeExternalDictWithRegex",
+]
 
-import sys
-from functools import wraps
-from typing import Optional, List, Dict
-
-from ._1_query import do_query
-from ._2_parse import do_parse, TLD_RE
-from ._3_adjust import Domain
-from .exceptions import (
-    UnknownTld,
-    FailedParsingWhoisOutput,
-    UnknownDateFormat,
-    WhoisCommandFailed,
-    WhoisPrivateRegistry,
-    WhoisQuotaExceeded,
-)
 
 CACHE_FILE = None
 SLOW_DOWN = 0
-
-Map2Underscore = {
-    ".co.za": "co_za",  # south africa
-    ".web.za": "web_za",  # south africa
-    ".org.za": "org_za",  # south africa
-    ".net.za": "net_za",  # south africa
-    #
-    ".com.eg": "com_eg",  # egypt
-    ".ac.uk": "ac_uk",
-    ".co.uk": "co_uk",
-    ".co.il": "co_il",
-    # uganda
-    ".ca.ug": "ca_ug",
-    ".co.ug": "co_ug",
-    # th
-    ".co.th": "co_th",
-    ".in.th": "in_th",
-    # .jp
-    ".ac.jp": "ac_jp",
-    ".ad.jp": "ad_jp",
-    ".co.jp": "co_jp",
-    ".ed.jp": "ed_jp",
-    ".go.jp": "go_jp",
-    ".gr.jp": "gr_jp",
-    ".lg.jp": "lg_jp",
-    ".ne.jp": "ne_jp",
-    ".or.jp": "or_jp",
-    ".geo.jp": "geo_jp",
-    #
-    ".com.au": "com_au",
-    ".com.sg": "com_sg",
-    ".com.do": "com_do",
-    ".com.mo": "com_mo",
-    # ph
-    ".com.ph": "com_ph",
-    ".org.ph": "org_ph",
-    ".net.ph": "net_ph",
-    #
-    # TÜRKİYE (formerly Turkey)
-    ".com.tr": "com_tr",
-    ".edu.tr": "edu_tr",
-    ".org.tr": "org_tr",
-    ".net.tr": "net_tr",
-    #
-    ".edu.ua": "edu_ua",
-    ".com.ua": "com_ua",
-    ".net.ua": "net_ua",
-    ".lviv.ua": "lviv_ua",
-    # dynamic dns without whois
-    ".hopto.org": "hopto_org",
-    ".duckdns.org": "duckdns_org",
-    ".no-ip.com": "noip_com",
-    ".no-ip.org": "noip_org",
-    # 2022-06-20: mboot
-    ".ac.th": "ac_th",
-    ".co.ke": "co_ke",
-    ".com.bo": "com_bo",
-    ".com.ly": "com_ly",
-    ".com.tw": "com_tw",
-    ".com.np": "com_np",
-    ".go.th": "go_th",
-    ".com.ec": "com_ec",
-    ".gob.ec": "gob_ec",
-    ".co.zw": "com_zw",
-    ".org.zw": "org_zw",
-    ".com.py": "com_py",
-}
-
-PythonKeyWordMap = {
-    "global": "global_",
-    ".id": "id_",
-    ".in": "in_",
-    ".is": "is_",
-    ".as": "as_",
-}
-
-Utf8Map = {
-    ".xn--p1ai": "ru_rf",
-    ".xn--p1acf": "pyc_",  # .РУС
-}
-
-
-def validTlds():
-    # --------------------------------------
-    # we should map back to valid tld without underscore
-    # but remove the starting . from the real domain
-    rmap = {}  # build a reverse dict from the original tld translation maps
-    for i in Map2Underscore:
-        rmap[Map2Underscore[i]] = i.lstrip(".")
-
-    for i in PythonKeyWordMap:
-        rmap[PythonKeyWordMap[i]] = i.lstrip(".")
-
-    for i in Utf8Map:
-        rmap[Utf8Map[i]] = i.lstrip(".")
-
-    # --------------------------------------
-    tlds = []
-    for tld in TLD_RE.keys():
-        if tld in rmap:
-            tlds.append(rmap[tld])
-        else:
-            tlds.append(tld)
-    return sorted(tlds)
-
-
-def filterTldToSupportedPattern(
-    domain: str,
-    d: List[str],
-    verbose: bool = False,
-) -> str:
-    # the moment we have a valid tld we can leave:
-    # no need for else or elif anymore
-    # that is the "leave early" paradigm
-    # also known as "dont overstay your welcome" or "don't linger"
-
-    tld = None
-
-    if len(d) > 2:
-        for i in Map2Underscore:
-            if domain.endswith(i):
-                tld = Map2Underscore[i]
-                return tld
-
-    for i in PythonKeyWordMap:
-        if domain.endswith(i):
-            tld = PythonKeyWordMap[i]
-            return tld
-
-    for i in Utf8Map:
-        if domain.endswith(i):
-            tld = Utf8Map[i]
-            return tld
-
-    if domain.endswith(".name"):
-        # some special case with xxx.name -> domain=xxx.name and tld is name
-        d[0] = "domain=" + d[0]
-        tld = d[-1]
-        return tld
-
-    # just take the last item as the top level
-    return d[-1]
 
 
 def internationalizedDomainNameToPunyCode(d: List[str]) -> List[str]:

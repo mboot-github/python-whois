@@ -1,6 +1,0 @@
-
-test domain: <<<<<<<<<< meta.rk >>>>>>>>>>>>>>>>>>>>
-Domain: meta.rk; Exception: UnknownTld; Error: The TLD rk is currently not supported by this package. Use validTlds() to see what toplevel domains are supported.
-
-# ========================
-UnknownTld meta.rk The TLD rk is currently not supported by this package. Use validTlds() to see what toplevel domains are supported.
