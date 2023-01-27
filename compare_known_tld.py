@@ -38,40 +38,49 @@ i = IANA(
     forceDownloadTld=forceDownloadTld,
 )
 
+# ge python whois known tld's and second level domains
 known = sorted(whois.validTlds())
 
+# get iana data
 URL = "https://data.iana.org/TLD/tlds-alpha-by-domain.txt"
 response = urllib.request.urlopen(URL)
 data = response.read().decode("utf-8").lower()
 dataList = sorted(data.splitlines())
 
+# filter out known names and try to detect names not known by iana
 for name in known:
-    # print(name)
     if name in dataList:
-        del dataList[dataList.index(name)]
+        continue
+    if "." in name:
+        continue
+    if name not in dataList:
+        print(f"{name} tld name from python_whois is not known in IANA list")
+        continue
 
-# Try to auto detect new domaisn via IANA and some known common regex lists like .com
+dataList2 = []
+for name in dataList:
+    if name in known:
+        continue
+    dataList2.append(name)
 
+# Try to auto detect new domains via IANA and some known common regex lists like .com
 found = {}
-for tld in dataList:
+for tld in dataList2:
     data, status = i.getInfoOnOneTld(tld)
-    # print(data)
+    # print(status, data)
 
     if data and "whois" in data and data["whois"] and data["whois"] != "NULL":
         wh = data["whois"]
-        # print(tld, wh, data, status)
         if wh.endswith(f".{tld}"):
             dd = wh.split(".")[-2:]
         else:
             dd = ["meta", tld]
 
-        # print(dd)
         zz = _do_whois_query(
             dd,
             ignore_returncode=False,
             server=wh,
         )
-        # print(zz)
 
         pp = {"_server": wh, "extend": "com"}
         aDictToTestOverride = {tld: pp}
@@ -87,8 +96,5 @@ for tld in dataList:
         except Exception as e:
             print(e)
 
-for tld in found:
-    print(f"## ZZ['{tld}'] = {found[tld]} # auto-detected via IANA tld")
-
-# TODO
-# also make a list of all tld (without dot in them) that no longer exists in iana, we can remove them
+    else:
+        print(f"no whois info for tld: {tld}\n", data)

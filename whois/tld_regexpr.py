@@ -1951,6 +1951,8 @@ ZZ["noip.org"] = {"extend": "_privateReg"}  # dynamic dns without any whois
 # 3322_org = {"extend": "_privateReg"}  # dynamic dns without any whois
 
 # https://en.wikipedia.org/wiki/.onion, a "official" fake domain
+# https://www.rfc-editor.org/rfc/rfc7686.html
+# .onion names are used to provide access to end to end encrypted, secure, anonymized services;
 ZZ["onion"] = {"extend": "_privateReg"}
 
 # backend registry for domain names ending in GG, JE, and AS.
@@ -2648,3 +2650,5 @@ ZZ["yoga"] = {"_server": "whois.nic.yoga", "extend": "com"}
 ZZ["yokohama"] = {"_server": "whois.nic.yokohama", "extend": "com"}
 ZZ["you"] = {"_server": "whois.nic.you", "extend": "com"}
 ZZ["zappos"] = {"_server": "whois.nic.zappos", "extend": "com"}
+
+ZZ['amfam'] = {'_server': 'whois.nic.amfam', 'extend': 'com'}
