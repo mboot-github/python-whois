@@ -2662,11 +2662,10 @@ ZZ["softbank"] = {"_server": "whois.nic.softbank", "extend": "com"}  # auto-dete
 
 ZZ["gov"] = {"extend": "com"}  # only 2 or 3 fields are actually returned
 
-ZZ["tm"] = { # Turkmenistan
+ZZ["tm"] = {  # Turkmenistan
     "extend": "com",
     "domain_name": r"Domain\s*:\s*(.+)",
     "expiration_date": r"Expiry\s*:\s*(\d+-\d+-\d+)",
     "name_servers": r"NS\s+\d+\s+:\s*(\S+)",
     "status": r"Status\s*:\s*(.+)",
-
 }
