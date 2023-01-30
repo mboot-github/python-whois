@@ -1472,7 +1472,7 @@ ZZ["theatre"] = {"extend": "_centralnic"}
 ZZ["tickets"] = {"extend": "_centralnic"}
 ZZ["uno"] = {"extend": "_centralnic"}
 ZZ["website"] = {"extend": "_centralnic"}
-ZZ["xyz"] = {"extend": "_centralnic"}
+ZZ["xyz"] = {"extend": "_centralnic", "_server": "whois.nic.xyz"}
 ZZ["yachts"] = {"extend": "_centralnic"}
 ZZ["zuerich"] = {"extend": "_centralnic"}
 
