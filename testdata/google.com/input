@@ -32,12 +32,12 @@ Tech State/Province: CA
 Tech Country: US
 Tech Email: Select Request Email Form at https://domains.markmonitor.com/whois/google.com
 Name Server: ns1.google.com
-Name Server: ns2.google.com
-Name Server: ns3.google.com
 Name Server: ns4.google.com
+Name Server: ns3.google.com
+Name Server: ns2.google.com
 DNSSEC: unsigned
 URL of the ICANN WHOIS Data Problem Reporting System: http://wdprs.internic.net/
->>> Last update of WHOIS database: 2023-01-04T14:55:04+0000 <<<
+>>> Last update of WHOIS database: 2023-01-27T13:04:53+0000 <<<
 
 For more information on WHOIS status codes, please visit:
   https://www.icann.org/resources/pages/epp-status-codes

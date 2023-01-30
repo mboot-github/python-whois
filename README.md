@@ -84,6 +84,9 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
 
 2023-01-27: maarten_boot
  * add autodetect via iana tld file (this has only tld's)
+ * add a central collection of all compiled regexes and reuse them: REG_COLLECTION_BY_KEY in _0_init_tld.py
+ * refresh testdata now that tld has dot instead of _ if more then one level
+ * add additional strings meaning domain does not exist
 
 ## Support
  * Python 3.x is supported.

@@ -15,6 +15,7 @@ getDomains()
         meta.co.jp # jp has [registrar] type keywords not registrar:
         meta.kr # has both korean and english text
         meta.com.tr # has utf 8 response text and different formatting style
+        hello.xyz # has sometimes IANA Source beginning on mac
     )
 }
 

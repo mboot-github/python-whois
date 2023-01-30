@@ -50,11 +50,16 @@ def do_query(
     k = ".".join(dl)
 
     if cache_file:
+        if verbose:
+            print(f"using cache file: {cache_file}", file=sys.stderr)
         cache_load(cache_file)
 
     # actually also whois uses cache, so if you really dont want to use cache
     # you should also pass the --force-lookup flag (on linux)
     if force or k not in CACHE or CACHE[k][0] < time.time() - cache_age:
+        if verbose:
+            print(f"force = {force}", file=sys.stderr)
+
         # slow down before so we can force individual domains at a slower tempo
         if slow_down:
             time.sleep(slow_down)
@@ -159,6 +164,8 @@ def _do_whois_query(
         return testWhoisPythonFromStaticTestData(dl, ignore_returncode, server, verbose)
 
     cmd = makeWhoisCommandToRun(dl, server, verbose)
+    if verbose:
+        print(cmd, file=sys.stderr)
 
     # LANG=en is added to make the ".jp" output consist across all environments
     p = subprocess.Popen(
@@ -169,6 +176,9 @@ def _do_whois_query(
     )
 
     r = p.communicate()[0].decode(errors="ignore")
+    if verbose:
+        print(r, file=sys.stderr)
+
     if ignore_returncode is False and p.returncode not in [0, 1]:
         raise WhoisCommandFailed(r)
 

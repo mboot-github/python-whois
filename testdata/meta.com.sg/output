@@ -1,7 +1,7 @@
 
 test domain: <<<<<<<<<< meta.com.sg >>>>>>>>>>>>>>>>>>>>
 name               str               'meta.com.sg'
-tld                str               'com_sg'
+tld                str               'com.sg'
 registrar          str               'SINGNET PTE LTD'
 registrant_country str               ''
 creation_date      datetime.datetime 1998-12-03 17:04:50

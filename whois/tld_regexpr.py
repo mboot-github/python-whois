@@ -19,7 +19,7 @@ ZZ: Dict = {}
 # Commercial TLD - Original Big 7
 ZZ["com"] = {
     "extend": None,
-    "domain_name": r"Domain Name:\s?(.+)",
+    "domain_name": r"Domain Name\s*:\s*(.+)",
     "registrar": r"Registrar:\s?(.+)",
     "registrant": r"Registrant\s*Organi(?:s|z)ation:\s?(.+)",
     "registrant_country": r"Registrant Country:\s?(.+)",
@@ -265,6 +265,9 @@ ZZ["cn"] = {
     "registrant": r"Registrant:\s?(.+)",
     "creation_date": r"Registration Time:\s?(.+)",
     "expiration_date": r"Expiration Time:\s?(.+)",
+}
+ZZ["com.cn"] = {
+    "extend": "cn",
 }
 
 ZZ["co"] = {
@@ -2658,3 +2661,13 @@ ZZ["ryukyu"] = {"_server": "whois.nic.ryukyu", "extend": "com"}  # auto-detected
 ZZ["softbank"] = {"_server": "whois.nic.softbank", "extend": "com"}  # auto-detected via IANA tld
 
 ZZ["gov"] = {"extend": "com"}  # only 2 or 3 fields are actually returned
+
+ZZ["tm"] = {  # Turkmenistan
+    "extend": "com",
+    "domain_name": r"Domain\s*:\s*(.+)",
+    "expiration_date": r"Expiry\s*:\s*(\d+-\d+-\d+)",
+    "name_servers": r"NS\s+\d+\s+:\s*(\S+)",
+    "status": r"Status\s*:\s*(.+)",
+}
+
+ZZ["com.tm"] = {"extend": "tm"}
