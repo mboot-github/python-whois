@@ -137,6 +137,10 @@ def buildRegCollection(zz: Dict):
             if reg is None:
                 continue
 
+            if reg in regCollection[key] and regCollection[key][reg] is not None:
+                # we already have a compiled regex, no need to do it again
+                continue
+
             regCollection[key][reg] = None
             if isinstance(reg, str):
                 regCollection[key][reg] = re.compile(reg, flags=re.IGNORECASE)

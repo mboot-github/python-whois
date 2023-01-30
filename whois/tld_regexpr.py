@@ -19,7 +19,7 @@ ZZ: Dict = {}
 # Commercial TLD - Original Big 7
 ZZ["com"] = {
     "extend": None,
-    "domain_name": r"Domain Name:\s?(.+)",
+    "domain_name": r"Domain Name\s*:\s*(.+)",
     "registrar": r"Registrar:\s?(.+)",
     "registrant": r"Registrant\s*Organi(?:s|z)ation:\s?(.+)",
     "registrant_country": r"Registrant Country:\s?(.+)",
@@ -265,6 +265,9 @@ ZZ["cn"] = {
     "registrant": r"Registrant:\s?(.+)",
     "creation_date": r"Registration Time:\s?(.+)",
     "expiration_date": r"Expiration Time:\s?(.+)",
+}
+ZZ["com.cn"] = {
+    "extend": "cn",
 }
 
 ZZ["co"] = {

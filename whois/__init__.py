@@ -77,7 +77,11 @@ def result2dict(func):
     return _inner
 
 
-def fromDomainStringToTld(domain: str, internationalized: bool, verbose: bool = False):
+def fromDomainStringToTld(
+    domain: str,
+    internationalized: bool,
+    verbose: bool = False,
+):
     domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
     d = domain.split(".")
     if verbose:
@@ -90,6 +94,8 @@ def fromDomainStringToTld(domain: str, internationalized: bool, verbose: bool = 
         return None, None
 
     tld = filterTldToSupportedPattern(domain, d, verbose)
+    if verbose:
+        print(f"filterTldToSupportedPattern returns tld: {tld}", file=sys.stderr)
 
     if internationalized and isinstance(internationalized, bool):
         d = internationalizedDomainNameToPunyCode(d)
@@ -177,6 +183,16 @@ def doUnsupportedTldAnyway(
     )
 
 
+LastWhois: Dict = {
+    "Try": [],
+}
+
+
+def get_last_raw_whois_data():
+    global LastWhois
+    return LastWhois
+
+
 def query(
     domain: str,
     force: bool = False,
@@ -209,6 +225,7 @@ def query(
     return_raw_text_for_unsupported_tld:
                         if the tld is unsupported, just try it anyway but return only the raw text.
     """
+    global LastWhois
 
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
     return_raw_text_for_unsupported_tld = bool(return_raw_text_for_unsupported_tld)
@@ -240,7 +257,7 @@ def query(
     # but if the tld is yyy.zzz we should only try xxx.yyy.zzz
 
     cache_file = cache_file or CACHE_FILE
-    tldLevel = tld.split("_")  # note while the top level domain may have a . the tld has a _ ( co.uk becomes co_uk )
+    tldLevel = tld.split(".")  # note while the top level domain may have a . the tld has a _ ( co.uk becomes co_uk )
     while 1:
         whois_str = do_query(
             dl=dl,
@@ -252,6 +269,12 @@ def query(
             server=server,
             verbose=verbose,
         )
+        tryMe = {
+            "Domain": ".".join(dl),
+            "rawData": whois_str,
+            "server": server,
+        }
+        LastWhois["Try"].append(tryMe)
 
         data = do_parse(
             whois_str=whois_str,
