@@ -2669,3 +2669,5 @@ ZZ["tm"] = {  # Turkmenistan
     "name_servers": r"NS\s+\d+\s+:\s*(\S+)",
     "status": r"Status\s*:\s*(.+)",
 }
+
+ZZ["com.tm"] = {"extend": "tm"}
