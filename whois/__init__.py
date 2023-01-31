@@ -187,7 +187,6 @@ LastWhois: Dict = {
     "Try": [],
 }
 
-
 def get_last_raw_whois_data():
     global LastWhois
     return LastWhois
@@ -226,6 +225,7 @@ def query(
                         if the tld is unsupported, just try it anyway but return only the raw text.
     """
     global LastWhois
+    LastWhois["Try"] = [] # init on start of query
 
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
     return_raw_text_for_unsupported_tld = bool(return_raw_text_for_unsupported_tld)

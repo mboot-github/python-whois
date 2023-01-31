@@ -186,6 +186,7 @@ def testItem(d: str, printgetRawWhoisResult: bool = False):
 
     if w is None:
         print("None")
+        print("\n", whois.get_last_raw_whois_data())
         return
 
     # the 3 date time items can be None if not present or a datetime string
@@ -204,6 +205,7 @@ def testItem(d: str, printgetRawWhoisResult: bool = False):
         else:
             print((ss + "%s") % (k, xType(v), v))
 
+    print("\n", whois.get_last_raw_whois_data())
 
 def errorItem(d, e, what="Generic"):
     if what not in Failures:
