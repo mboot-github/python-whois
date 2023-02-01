@@ -101,6 +101,7 @@ def handleShortResponse(
         "nameserver not found",
         "malformed request",  # this means this domain is not in whois as it is on top of a registered domain
         "no match",
+        "registration of this domain is restricted",
     ]
 
     for i in noneStrings:

@@ -207,6 +207,7 @@ def testItem(d: str, printgetRawWhoisResult: bool = False):
 
     print("\n", whois.get_last_raw_whois_data())
 
+
 def errorItem(d, e, what="Generic"):
     if what not in Failures:
         Failures[what] = {}
