@@ -29,16 +29,19 @@ def filterTldToSupportedPattern(
     # we have max 2 levels so first check if the last 2 are in our list
     tld = f"{d[-2]}.{d[-1]}"
     if tld in ZZ:
-        print(f"we have {tld}", file=sys.stderr)
+        if verbose:
+            print(f"we have {tld}", file=sys.stderr)
         return tld
 
     # if not check if the last item  we have
     tld = f"{d[-1]}"
     if tld in ZZ:
-        print(f"we have {tld}", file=sys.stderr)
+        if verbose:
+            print(f"we have {tld}", file=sys.stderr)
         return tld
 
-    print(f"we DONT have {tld}", file=sys.stderr)
+    if verbose:
+        print(f"we DONT have {tld}", file=sys.stderr)
 
     # if not fail
     a = f"The TLD {tld} is currently not supported by this package."
