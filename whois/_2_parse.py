@@ -10,6 +10,57 @@ from .exceptions import WhoisQuotaExceeded
 
 Verbose = True
 
+NONESTRINGS: List = [
+    "the domain has not been registered",
+    "no match found for",
+    "no matching record",
+    "not found",
+    "no data found",
+    "no entries found",
+    "status: free",
+    "no such domain",
+    "the queried object does not exist",
+    "domain you requested is not known",
+    "status: available",
+    "no whois server is known for this kind of object",
+    "nameserver not found",
+    "malformed request",  # this means this domain is not in whois as it is on top of a registered domain
+    "no match",
+    "registration of this domain is restricted",
+    "restricted",
+    "this domain is currently available"
+]
+
+QUOTASTRINGS = [
+    "limit exceeded",
+    "quota exceeded",
+    "try again later",
+    "please try again",
+    "exceeded the maximum allowable number",
+    "can temporarily not be answered",
+    "please try again.",
+    "queried interval is too short",
+    "number of allowed queries exceeded",
+]
+
+
+def NoneStrings() -> List:
+    return sorted(NONESTRINGS)
+
+
+def NoneStringsAdd(aString: str):
+    if aString and isinstance(aString, str) and len(aString) > 0:
+        NONESTRINGS.append(aString)
+
+
+def QuotaStrings() -> List:
+    return sorted(QUOTASTRINGS)
+
+
+def QuotaStringsAdd(aString: str):
+    if aString and isinstance(aString, str) and len(aString) > 0:
+        NONESTRINGS.append(aString)
+
 
 def cleanupWhoisResponse(
     whois_str: str,
@@ -85,25 +136,7 @@ def handleShortResponse(
 
     # NOTE: from here s is lowercase only
     # ---------------------------------
-    noneStrings = [
-        "the domain has not been registered",
-        "no match found for",
-        "no matching record",
-        "not found",
-        "no data found",
-        "no entries found",
-        "status: free",
-        "no such domain",
-        "the queried object does not exist",
-        "domain you requested is not known",
-        "status: available",
-        "no whois server is known for this kind of object",
-        "nameserver not found",
-        "malformed request",  # this means this domain is not in whois as it is on top of a registered domain
-        "no match",
-        "registration of this domain is restricted",
-    ]
-
+    noneStrings = NoneStrings()
     for i in noneStrings:
         if i in s:
             return None
@@ -111,28 +144,16 @@ def handleShortResponse(
     # ---------------------------------
     # is there any error string in the result
     if s.count("error"):
+        if verbose:
+            print("i see 'error' in the result, return: None", file=sys.stderr)
         return None
 
     # ---------------------------------
-    quotaStrings = [
-        "limit exceeded",
-        "quota exceeded",
-        "try again later",
-        "please try again",
-        "exceeded the maximum allowable number",
-        "can temporarily not be answered",
-        "please try again.",
-        "queried interval is too short",
-    ]
-
+    quotaStrings = QuotaStrings()
     for i in quotaStrings:
         if i in s:
             raise WhoisQuotaExceeded(whois_str)
 
-    # ---------------------------------
-    # ToDo:  Name or service not known
-
-    # ---------------------------------
     raise FailedParsingWhoisOutput(whois_str)
 
 
