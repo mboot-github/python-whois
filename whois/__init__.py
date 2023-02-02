@@ -7,7 +7,14 @@ from typing import (
 )
 
 from ._1_query import do_query
-from ._2_parse import do_parse
+from ._2_parse import (
+    do_parse,
+    NoneStrings,
+    NoneStringsAdd,
+    QuotaStrings,
+    QuotaStringsAdd,
+)
+
 from ._3_adjust import Domain
 from ._0_init_tld import (
     ZZ,
@@ -57,6 +64,10 @@ __all__ = [
     "get",
     "validTlds",
     "mergeExternalDictWithRegex",
+    "NoneStrings",
+    "NoneStringsAdd",
+    "QuotaStrings",
+    "QuotaStringsAdd",
 ]
 
 
