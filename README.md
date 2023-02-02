@@ -91,6 +91,7 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
 2023-02-02: maarten_boot
  * whois.QuotaStringsAdd(str) to add additional strings for over quota detection. whois.QuotaStrings() lists the current configured strings
  * whois.NoneStringsAdd(str) to add additional string for NoSuchDomainExists detection (whois.query() retuning None). whois.NoneStrings() lsts the current configured strings
+ * suppress messages to stderr if not verbose=True
 
 ## Support
  * Python 3.x is supported.
