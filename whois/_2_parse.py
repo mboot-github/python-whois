@@ -28,6 +28,7 @@ NONESTRINGS: List = [
     "no match",
     "registration of this domain is restricted",
     "restricted",
+    "this domain is currently available"
 ]
 
 QUOTASTRINGS = [
