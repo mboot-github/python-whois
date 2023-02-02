@@ -27,6 +27,7 @@ NONESTRINGS: List = [
     "malformed request",  # this means this domain is not in whois as it is on top of a registered domain
     "no match",
     "registration of this domain is restricted",
+    "restricted",
 ]
 
 QUOTASTRINGS = [
@@ -38,6 +39,7 @@ QUOTASTRINGS = [
     "can temporarily not be answered",
     "please try again.",
     "queried interval is too short",
+    "number of allowed queries exceeded",
 ]
 
 
