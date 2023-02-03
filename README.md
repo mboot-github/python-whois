@@ -3,7 +3,7 @@ A Python package for retrieving WHOIS information of domains.
 This package will not support querying ip CIDR ranges or AS information
 
 ## Features
- * Python wrapper for Linux "whois" command.
+ * Python wrapper for the "whois" cli command of your operating system.
  * Simple interface to access parsed WHOIS data for a given domain.
  * Able to extract data for all the popular TLDs (com, org, net, biz, info, pl, jp, uk, nz,  ...).
  * Query a WHOIS server directly instead of going through an intermediate web service like many others do.
@@ -16,10 +16,16 @@ This package will not support querying ip CIDR ranges or AS information
  * allow for optional cleaning the whois response before extracting information
  * optionally allow IDN's to be translated to Punycode
 
+## Dependencies
+  * please install also the command line "whois" of your distribution
+  * this library parses the output of the "whois" cli command of your operating system
+
 ## Help Wanted
 Your contributions are welcome, look for the Help wanted tag https://github.com/DannyCork/python-whois/labels/help%20wanted
 
 ## Usage example
+
+Install the cli `whois` of your operating system if it is not present already
 
 Install `whois` package from your distribution (e.g apt install whois)
 
