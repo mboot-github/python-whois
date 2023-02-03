@@ -1,5 +1,6 @@
 # whois
 A Python package for retrieving WHOIS information of domains.
+This package will not support querying ip CIDR ranges or AS information
 
 ## Features
  * Python wrapper for Linux "whois" command.
