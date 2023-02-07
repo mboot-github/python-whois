@@ -132,6 +132,7 @@ def makeWhoisCommandToRun(
 
     if server:
         return [wh, domain, "-h", server]
+        # return [wh, domain, "-i", "-d", "-h", server]
     return [wh, domain]
 
 

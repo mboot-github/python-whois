@@ -187,23 +187,28 @@ def doExtractPattensIanaFromWhoisString(tld: str, r: Dict, whois_str: str, verbo
         zz = re.findall(v, whois_str)
         if zz:
             if verbose:
-                print(tld, zz, file=sys.stderr)
+                print(f"parsing iana data only for tld: {tld}, {zz}", file=sys.stderr)
             r[k] = zz
     return r
 
 
 def doSourceIana(tld: str, r: Dict, whois_str: str, verbose: bool = False) -> str:
     # here we can handle the example.com and example.net permanent IANA domains
+    k = "source:       IANA"
 
     if verbose:
-        msg = "i have seen source: IANA"
+        msg = f"i have seen {k}"
         print(msg, file=sys.stderr)
 
-    whois_splitted = whois_str.split("source:       IANA")
-    if len(whois_splitted) == 2 and whois_splitted[1].strip() != "":
+    whois_splitted = whois_str.split(k)
+    z = len(whois_splitted)
+    if z > 2:
+        return k.join(whois_splitted[1:]), None
+
+    if z == 2 and whois_splitted[1].strip() != "":
         # if we see source: IANA and the part after is not only whitespace
         if verbose:
-            msg = f"after IANA: {whois_splitted[1]}"
+            msg = f"after: {k} we see not only whitespace: {whois_splitted[1]}"
             print(msg, file=sys.stderr)
 
         return whois_splitted[1], None
