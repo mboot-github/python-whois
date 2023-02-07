@@ -47,14 +47,14 @@ class Domain:
             return
 
         self.name = data["domain_name"][0].strip().lower()
-        self.tld = data["tld"]
+        self.tld = data["tld"].lower()
 
         self.registrar = data["registrar"][0].strip()
         self.registrant_country = data["registrant_country"][0].strip()
 
-        self.creation_date = str_to_date(data["creation_date"][0], self.tld.lower())
-        self.expiration_date = str_to_date(data["expiration_date"][0], self.tld.lower())
-        self.last_updated = str_to_date(data["updated_date"][0], self.tld.lower())
+        self.creation_date = str_to_date(data["creation_date"][0], self.tld, verbose=verbose)
+        self.expiration_date = str_to_date(data["expiration_date"][0], self.tld, verbose=verbose)
+        self.last_updated = str_to_date(data["updated_date"][0], self.tld, verbose=verbose)
 
         self.status = data["status"][0].strip()
         self.statuses = sorted(  # sorted added to get predictable output during test
@@ -183,8 +183,11 @@ CUSTOM_DATE_FORMATS = {
 }
 
 
-def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datetime]:
+def str_to_date(text: str, tld: Optional[str] = None, verbose: bool = False) -> Optional[datetime.datetime]:
     text = text.strip().lower()
+
+    if verbose:
+        print(f"tld: {tld}; str_to_date: {text}", file=sys.stderr)
 
     noDate = [
         "not defined",
@@ -197,7 +200,11 @@ def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datet
     # replace japan standard time to +0900 (%z format)
     text = text.replace("(jst)", "(+0900)")
     text = re.sub(r"(\+[0-9]{2}):([0-9]{2})", "\\1\\2", text)
-    text = re.sub(r"(\+[0-9]{2})$", "\\1:00", text)
+
+    # text = re.sub(r"(\+[0-9]{2})$", "\\1:00", text)
+    # text = re.sub(r"(\+[0-9]{2})$", "\\100", text) # python 3.6 does not parse : in the timezone offset
+    if re.search(r"(\+[0-9]{2})$", text):
+        text = text + "00"
 
     # strip trailing space and comment
     text = re.sub(r"(\ #.*)", "", text)
@@ -221,8 +228,15 @@ def str_to_date(text: str, tld: Optional[str] = None) -> Optional[datetime.datet
 
     for f in DATE_FORMATS:
         try:
-            return datetime.datetime.strptime(text, f).astimezone().replace(tzinfo=None)
-        except ValueError:
+            if verbose:
+                print(f"try with {f} on text: {text}", file=sys.stderr)
+            z = datetime.datetime.strptime(text, f)
+            z = z.astimezone()
+            z = z.replace(tzinfo=None)
+            return z
+        except ValueError as v:
+            if verbose:
+                print(f"{v}", file=sys.stderr)
             pass
 
     raise UnknownDateFormat("Unknown date format: '%s'" % text)
