@@ -2670,4 +2670,5 @@ ZZ["tm"] = {  # Turkmenistan
     "status": r"Status\s*:\s*(.+)",
 }
 
-ZZ["com.tm"] = {"extend": "tm"}
+ZZ["com.tm"] = {"extend": "tm", "_privateRegistry": True}
+ZZ["ac.ug"] = {"extend": "ug", "_privateRegistry": True}
