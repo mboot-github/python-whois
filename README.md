@@ -101,5 +101,5 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * suppress messages to stderr if not verbose=True
 
 ## Support
- * Python 3.x is supported.
+ * Python 3.x is supported for x >= 6
  * Python 2.x IS NOT supported.
