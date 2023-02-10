@@ -7,7 +7,7 @@ This package will not support querying ip CIDR ranges or AS information
  * Simple interface to access parsed WHOIS data for a given domain.
  * Able to extract data for all the popular TLDs (com, org, net, biz, info, pl, jp, uk, nz,  ...).
  * Query a WHOIS server directly instead of going through an intermediate web service like many others do.
- * Works with Python 3.x.
+ * Works with Python >= 3.6
  * All dates as datetime objects.
  * Possibility to cache results.
  * Verbose output on stderr during debugging to see how the internal functions are doing their work
