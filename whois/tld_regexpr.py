@@ -60,6 +60,9 @@ ZZ["co.uk"] = {
     "registrant": r"Registrant:\n\s+(.+)",  # example meta.co.uk has a registrar google.co.uk has not
 }
 
+ZZ["org.uk"] = {"extend": "co.uk"}
+ZZ["gov.uk"] = {"extend": "ac.uk"}
+
 # United Arab Emirates
 # ae = {    "extend": "ar"}
 # redefined below
@@ -2672,3 +2675,22 @@ ZZ["tm"] = {  # Turkmenistan
 
 ZZ["com.tm"] = {"extend": "tm", "_privateRegistry": True}
 ZZ["ac.ug"] = {"extend": "ug", "_privateRegistry": True}
+
+# venezuela
+ZZ["ve"] = {
+    "extend": "com",
+    "_server": "whois.nic.ve",
+    "domain_name": r"domain\s*:\s?(.+)",
+    "registrar": r"registrar:\s?(.+)",
+    "registrant": "registrant:\s?(.+)",
+    "creation_date": r"created:\s?(.+)",
+    "expiration_date": r"expire:\s?(.+)",
+    "updated_date": r"changed\s*:\s?(.+)",
+    "name_servers": r"nserver:\s*(.+)\s*",
+}
+ZZ["com.ve"] = {"extend": "ve"}
+ZZ["co.ve"] = {"extend": "ve"}
+ZZ["info.ve"] = {"extend": "ve"}
+ZZ["net.ve"] = {"extend": "ve"}
+ZZ["org.ve"] = {"extend": "ve"}
+ZZ["web.ve"] = {"extend": "ve"}
