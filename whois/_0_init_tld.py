@@ -118,7 +118,7 @@ def initOne(tld, override: bool = False):
 
 
 def buildRegCollection(zz: Dict):
-    regCollection = {}
+    regCollection: Dict = {}
     # get all regexes
     for name in zz:
         # print(name)

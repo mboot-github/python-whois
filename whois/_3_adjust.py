@@ -10,21 +10,21 @@ PYTHON_VERSION = sys.version_info[0]
 
 class Domain:
     # make sure all fields actually exist allways
-    name: str = None
-    tld = None
-    registrar = None
-    registrant_country = None
+    name: Optional[str] = None
+    tld: Optional[str] = None
+    registrar: Optional[str] = None
+    registrant_country: Optional[str] = None
 
     creation_date = None
     expiration_date = None
     last_updated = None
 
-    status = None
+    status: Optional[str] = None
     statuses: List = []
 
-    dnssec = None
-    name_servers = []
-    owner = None
+    dnssec: bool = False
+    name_servers: List = []
+    owner: Optional[str] = None
     abuse_contact = None
     reseller = None
     registrant = None
