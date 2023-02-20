@@ -4,6 +4,7 @@ from typing import (
     Optional,
     List,
     Dict,
+    Tuple,
 )
 
 from ._1_query import do_query
@@ -94,7 +95,7 @@ def fromDomainStringToTld(
     verbose: bool = False,
 ):
     domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
-    d = domain.split(".")
+    d: List[str] = domain.split(".")
     if verbose:
         print(d, file=sys.stderr)
 
@@ -104,7 +105,7 @@ def fromDomainStringToTld(
     if len(d) == 1:
         return None, None
 
-    tld = filterTldToSupportedPattern(domain, d, verbose)
+    tld: str = filterTldToSupportedPattern(domain, d, verbose)
     if verbose:
         print(f"filterTldToSupportedPattern returns tld: {tld}", file=sys.stderr)
 
@@ -157,7 +158,7 @@ def doSlowdownHintForThisTld(tld: str, thisTld, slow_down: int, verbose: bool = 
 
 def doUnsupportedTldAnyway(
     tld: str,
-    dl: Dict,
+    dl: List[str],
     ignore_returncode: bool = False,
     slow_down: int = 0,
     server: Optional[str] = None,
@@ -178,7 +179,7 @@ def doUnsupportedTldAnyway(
     # we will only return minimal data
     data = {
         "tld": tld,
-        "domain_name": "",
+        "domain_name": [],
     }
     data["domain_name"] = [".".join(dl)]  # note the fields are default all array, except tld
 

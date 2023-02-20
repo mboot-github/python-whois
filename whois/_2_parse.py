@@ -1,7 +1,13 @@
 import re
 import sys
 
-from typing import Any, Dict, Optional, List
+from typing import (
+    Any,
+    Dict,
+    Optional,
+    List,
+    Tuple,
+)
 
 from ._0_init_tld import TLD_RE
 
@@ -192,7 +198,7 @@ def doExtractPattensIanaFromWhoisString(tld: str, r: Dict, whois_str: str, verbo
     return r
 
 
-def doSourceIana(tld: str, r: Dict, whois_str: str, verbose: bool = False) -> str:
+def doSourceIana(tld: str, r: Dict, whois_str: str, verbose: bool = False) -> Tuple[str, Optional[Dict[str, Any]]]:
     # here we can handle the example.com and example.net permanent IANA domains
     k = "source:       IANA"
 

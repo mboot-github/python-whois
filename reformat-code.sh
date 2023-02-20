@@ -19,6 +19,8 @@ main()
 {
     ls *.py >/dev/null 2>/dev/null && doIt
     # ./test.py
+    mypy whois
+    mypy --install-types --non-interactive --namespace-packages whois
 }
 
 main
