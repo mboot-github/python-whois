@@ -2682,7 +2682,7 @@ ZZ["ve"] = {
     "_server": "whois.nic.ve",
     "domain_name": r"domain\s*:\s?(.+)",
     "registrar": r"registrar:\s?(.+)",
-    "registrant": "registrant:\s?(.+)",
+    "registrant": r"registrant:\s?(.+)",
     "creation_date": r"created:\s?(.+)",
     "expiration_date": r"expire:\s?(.+)",
     "updated_date": r"changed\s*:\s?(.+)",
