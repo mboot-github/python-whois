@@ -4,7 +4,7 @@ import sys
 import os
 import platform
 import json
-from .exceptions import WhoisCommandFailed
+from .exceptions import WhoisCommandFailed, WhoisCommandTimeout
 
 from typing import Dict, List, Optional, Tuple
 
@@ -46,6 +46,7 @@ def do_query(
     ignore_returncode: bool = False,
     server: Optional[str] = None,
     verbose: bool = False,
+    timeout: float = None,
 ) -> str:
     k = ".".join(dl)
 
@@ -72,6 +73,7 @@ def do_query(
                 ignore_returncode=ignore_returncode,
                 server=server,
                 verbose=verbose,
+                timeout=timeout,
             ),
         )
 
@@ -158,6 +160,7 @@ def _do_whois_query(
     ignore_returncode: bool,
     server: Optional[str] = None,
     verbose: bool = False,
+    timeout: float = None,
 ) -> str:
     # if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
     # this wasy we can actually implemnt a test run with known data in and expected data out
@@ -176,7 +179,11 @@ def _do_whois_query(
         env={"LANG": "en"} if dl[-1] in ".jp" else None,
     )
 
-    r = p.communicate()[0].decode(errors="ignore")
+    try:
+        r = p.communicate(timeout=timeout)[0].decode(errors="ignore")
+    except subprocess.TimeoutExpired:
+        raise WhoisCommandTimeout()
+
     if verbose:
         print(r, file=sys.stderr)
 

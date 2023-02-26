@@ -218,6 +218,7 @@ def query(
     internationalized: bool = False,
     include_raw_whois_text: bool = False,
     return_raw_text_for_unsupported_tld: bool = False,
+    timeout: float = None,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -236,6 +237,8 @@ def query(
                         if reqested the full response is also returned.
     return_raw_text_for_unsupported_tld:
                         if the tld is unsupported, just try it anyway but return only the raw text.
+    timeout:
+                        timeout in seconds for the whois command to return a result.
     """
     global LastWhois
     LastWhois["Try"] = []  # init on start of query
@@ -281,6 +284,7 @@ def query(
             ignore_returncode=ignore_returncode,
             server=server,
             verbose=verbose,
+            timeout=timeout,
         )
         tryMe = {
             "Domain": ".".join(dl),

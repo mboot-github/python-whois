@@ -23,3 +23,7 @@ class WhoisPrivateRegistry(Exception):
     # almost no info is returned or there is no cli whois server at all:
     # see: https://www.iana.org/domains/root/db/<tld>.html
     pass
+
+
+class WhoisCommandTimeout(Exception):
+    pass
