@@ -32,6 +32,7 @@ from .exceptions import (
     WhoisCommandFailed,
     WhoisPrivateRegistry,
     WhoisQuotaExceeded,
+    WhoisCommandTimeout,
 )
 
 """
