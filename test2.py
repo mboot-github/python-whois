@@ -176,12 +176,15 @@ def xType(x):
 def testItem(d: str, printgetRawWhoisResult: bool = False):
     global PrintGetRawWhoisResult
 
+    timout=30 # seconds
+
     w = whois.query(
         d,
         ignore_returncode=IgnoreReturncode,
         verbose=Verbose,
         internationalized=True,
         include_raw_whois_text=PrintGetRawWhoisResult,
+        timeout=timout,
     )
 
     if w is None:
@@ -250,6 +253,8 @@ def testDomains(aList):
             errorItem(d, e, what="WhoisQuotaExceeded")
         except whois.WhoisPrivateRegistry as e:
             errorItem(d, e, what="WhoisPrivateRegistry")
+        except whois.WhoisCommandTimeout as e:
+            errorItem(d, e, what="WhoisCommandTimeout")
         # except Exception as e:
         #    errorItem(d, e, what="Generic")
 
