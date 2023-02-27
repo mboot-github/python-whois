@@ -182,6 +182,9 @@ def _do_whois_query(
     try:
         r = p.communicate(timeout=timeout)[0].decode(errors="ignore")
     except subprocess.TimeoutExpired:
+        # Kill the child process & flush any output buffers
+        p.kill()
+        p.communicate()
         raise WhoisCommandTimeout()
 
     if verbose:
