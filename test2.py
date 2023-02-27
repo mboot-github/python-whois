@@ -176,7 +176,7 @@ def xType(x):
 def testItem(d: str, printgetRawWhoisResult: bool = False):
     global PrintGetRawWhoisResult
 
-    timout=30 # seconds
+    timout = 30  # seconds
 
     w = whois.query(
         d,
