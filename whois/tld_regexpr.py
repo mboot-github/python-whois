@@ -2694,3 +2694,5 @@ ZZ["info.ve"] = {"extend": "ve"}
 ZZ["net.ve"] = {"extend": "ve"}
 ZZ["org.ve"] = {"extend": "ve"}
 ZZ["web.ve"] = {"extend": "ve"}
+
+ZZ["gt"] = {"extend": "_privateReg"}
