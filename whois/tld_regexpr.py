@@ -2696,3 +2696,21 @@ ZZ["org.ve"] = {"extend": "ve"}
 ZZ["web.ve"] = {"extend": "ve"}
 
 ZZ["gt"] = {"extend": "_privateReg"}
+ZZ["yt"] = {"extend": "re","_server": "whois.nic.yt"}
+ZZ["pm"] = {"extend": "re","_server": "whois.nic.pm"}
+ZZ["tf"] = {"extend": "re","_server": "whois.nic.tf"}
+ZZ["sb"] = {"extend": "com", "_server": "whois.nic.net.sb"}
+ZZ["lc"] = {"extend": "com", "_server": "whois2.afilias-grs.net"}
+ZZ["tube"] = {"extend": "com", "_server": "whois.nic.tube"}
+ZZ["md"] = {"extend": "ug", "_server": "whois.nic.md"}
+ZZ["ki"] = {"extend": "com", "_server": "whois.nic.ki"}
+ZZ["lu"] = {
+    "extend": "com",
+    "_server": "whois.dns.lu",
+    "domain_name": r"domainname\s*:\s?(.+)",
+    "registrar": r"registrar-name:\s?(.+)",
+    "name_servers": r"nserver:\s*(.+)\s*",
+    "status": r"domaintype\s*:\s*(.+)",
+    "registrant_country": r"org-country\s*:\s?(.+)",
+}
+ZZ["health"] = {"extend": "com", "_server": "whois.nic.health"}
