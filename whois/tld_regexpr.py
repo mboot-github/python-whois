@@ -2718,4 +2718,5 @@ ZZ["health"] = {"extend": "com", "_server": "whois.nic.health"}
 ZZ["bd"] = {"extend": "_privateReg"}  # Bangladesh
 ZZ["gov.bd"] = {"extend": "bd"}
 ZZ["net.bd"] = {"extend": "bd"}
+ZZ["com.bd"] = {"extend": "bd"}
 ZZ["ac.bd"] = {"extend": "bd"}
