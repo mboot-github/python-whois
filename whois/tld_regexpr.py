@@ -2696,9 +2696,9 @@ ZZ["org.ve"] = {"extend": "ve"}
 ZZ["web.ve"] = {"extend": "ve"}
 
 ZZ["gt"] = {"extend": "_privateReg"}
-ZZ["yt"] = {"extend": "re","_server": "whois.nic.yt"}
-ZZ["pm"] = {"extend": "re","_server": "whois.nic.pm"}
-ZZ["tf"] = {"extend": "re","_server": "whois.nic.tf"}
+ZZ["yt"] = {"extend": "re", "_server": "whois.nic.yt"}
+ZZ["pm"] = {"extend": "re", "_server": "whois.nic.pm"}
+ZZ["tf"] = {"extend": "re", "_server": "whois.nic.tf"}
 ZZ["sb"] = {"extend": "com", "_server": "whois.nic.net.sb"}
 ZZ["lc"] = {"extend": "com", "_server": "whois2.afilias-grs.net"}
 ZZ["tube"] = {"extend": "com", "_server": "whois.nic.tube"}
@@ -2714,3 +2714,8 @@ ZZ["lu"] = {
     "registrant_country": r"org-country\s*:\s?(.+)",
 }
 ZZ["health"] = {"extend": "com", "_server": "whois.nic.health"}
+
+ZZ["bd"] = {"extend": "_privateReg"}  # Bangladesh
+ZZ["gov.bd"] = {"extend": "bd"}
+ZZ["net.bd"] = {"extend": "bd"}
+ZZ["ac.bd"] = {"extend": "bd"}
