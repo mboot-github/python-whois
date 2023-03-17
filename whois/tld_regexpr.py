@@ -1036,7 +1036,6 @@ ZZ["trade"] = {
 }
 
 ZZ["tv"] = {
-    "_server": "whois.nic.tv",
     "extend": "com",
     "_server": "whois.nic.tv",
     "domain_name": r"Domain Name:\s?(.+)",
@@ -2722,3 +2721,11 @@ ZZ["gov.bd"] = {"extend": "bd"}
 ZZ["net.bd"] = {"extend": "bd"}
 ZZ["com.bd"] = {"extend": "bd"}
 ZZ["ac.bd"] = {"extend": "bd"}
+
+ZZ["do"] = {"extend": "bzh", "_server": "whois.nic.do"}
+ZZ["ls"] = {"extend": "cz", "_server": "whois.nic.ls"}
+
+
+
+
+
