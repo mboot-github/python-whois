@@ -2721,3 +2721,11 @@ ZZ["gov.bd"] = {"extend": "bd"}
 ZZ["net.bd"] = {"extend": "bd"}
 ZZ["com.bd"] = {"extend": "bd"}
 ZZ["ac.bd"] = {"extend": "bd"}
+
+ZZ["do"] = {"extend": "bzh", "_server": "whois.nic.do"}
+ZZ["ls"] = {"extend": "cz", "_server": "whois.nic.ls"}
+
+
+
+
+
