@@ -1036,7 +1036,6 @@ ZZ["trade"] = {
 }
 
 ZZ["tv"] = {
-    "_server": "whois.nic.tv",
     "extend": "com",
     "_server": "whois.nic.tv",
     "domain_name": r"Domain Name:\s?(.+)",
