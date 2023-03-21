@@ -1193,7 +1193,7 @@ ZZ["cash"] = {"extend": "_donuts"}
 ZZ["casino"] = {"extend": "_donuts"}
 ZZ["catering"] = {"extend": "_donuts"}
 ZZ["center"] = {"extend": "_donuts"}
-ZZ["charity"] = {"extend": "_donuts", "_server": "whois.nic.charity" }
+ZZ["charity"] = {"extend": "_donuts", "_server": "whois.nic.charity"}
 ZZ["chat"] = {"extend": "_donuts"}
 ZZ["cheap"] = {"extend": "_donuts"}
 ZZ["church"] = {"extend": "_donuts"}
@@ -1259,7 +1259,7 @@ ZZ["flights"] = {"extend": "_donuts"}
 ZZ["florist"] = {"extend": "_donuts"}
 ZZ["football"] = {"extend": "_donuts"}
 ZZ["forsale"] = {"extend": "_donuts"}
-ZZ["foundation"] = {"extend": "_donuts", "_server":"whois.nic.foundation"}
+ZZ["foundation"] = {"extend": "_donuts", "_server": "whois.nic.foundation"}
 ZZ["fund"] = {"extend": "_donuts"}
 ZZ["furniture"] = {"extend": "_donuts"}
 ZZ["futbol"] = {"extend": "_donuts"}
@@ -2730,14 +2730,12 @@ ZZ["ps"] = {"extend": "com"}
 ZZ["sl"] = {"extend": "com", "_server": "whois.nic.sl"}
 ZZ["sd"] = {"extend": "com", "_server": "whois.sdnic.sd"}
 ZZ["sm"] = {
-        "extend": "rs", 
-        "_server": "whois.nic.sm",
-        "domain_name": r"Domain Name:\s+(.+)",
-        "status": r"Status:\s(.+)",
-        "name_servers": r"DNS Servers:\s+(.+)",
-        }
+    "extend": "rs",
+    "_server": "whois.nic.sm",
+    "domain_name": r"Domain Name:\s+(.+)",
+    "status": r"Status:\s(.+)",
+    "name_servers": r"DNS Servers:\s+(.+)",
+}
 ZZ["et"] = {"extend": "com", "_server": "whois.ethiotelecom.et"}
 ZZ["mq"] = {"extend": "si", "_server": "whois.mediaserv.net"}
 ZZ["gf"] = {"extend": "si", "_server": "whois.mediaserv.net"}
-
-
