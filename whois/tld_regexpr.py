@@ -2725,7 +2725,18 @@ ZZ["ac.bd"] = {"extend": "bd"}
 ZZ["do"] = {"extend": "bzh", "_server": "whois.nic.do"}
 ZZ["ls"] = {"extend": "cz", "_server": "whois.nic.ls"}
 
-
-
+ZZ["ps"] = {"extend": "com"}
+ZZ["sl"] = {"extend": "com", "_server": "whois.nic.sl"}
+ZZ["sd"] = {"extend": "com", "_server": "whois.sdnic.sd"}
+ZZ["sm"] = {
+        "extend": "rs", 
+        "_server": "whois.nic.sm",
+        "domain_name": r"Domain Name:\s+(.+)",
+        "status": r"Status:\s(.+)",
+        "name_servers": r"DNS Servers:\s+(.+)",
+        }
+ZZ["et"] = {"extend": "com", "_server": "whois.ethiotelecom.et"}
+ZZ["mq"] = {"extend": "si", "_server": "whois.mediaserv.net"}
+ZZ["gf"] = {"extend": "si", "_server": "whois.mediaserv.net"}
 
 
