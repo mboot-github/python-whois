@@ -1809,7 +1809,7 @@ ZZ["hr"] = {
     "updated_date": r"Updated Date:\s+(.+)",
     "status": None,
     "registrar": None,
-    "expiration_date": None,
+    "expiration_date": r"Registrar Registration Expiration Date:\s+(.+)",
     "registrant_country": None,
 }
 
