@@ -1125,6 +1125,7 @@ ZZ["win"] = {
 
 ZZ["work"] = {
     "extend": "com",
+    "_server": "whois.nic.work",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
     "creation_date": r"Creation Date:\s?(.+)",
@@ -1192,7 +1193,7 @@ ZZ["cash"] = {"extend": "_donuts"}
 ZZ["casino"] = {"extend": "_donuts"}
 ZZ["catering"] = {"extend": "_donuts"}
 ZZ["center"] = {"extend": "_donuts"}
-ZZ["charity"] = {"extend": "_donuts"}
+ZZ["charity"] = {"extend": "_donuts", "_server": "whois.nic.charity" }
 ZZ["chat"] = {"extend": "_donuts"}
 ZZ["cheap"] = {"extend": "_donuts"}
 ZZ["church"] = {"extend": "_donuts"}
