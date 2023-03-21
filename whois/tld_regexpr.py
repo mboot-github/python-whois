@@ -1125,6 +1125,7 @@ ZZ["win"] = {
 
 ZZ["work"] = {
     "extend": "com",
+    "_server": "whois.nic.work",
     "domain_name": r"Domain Name:\s?(.+)",
     "registrar": r"Registrar:\s*(.+)",
     "creation_date": r"Creation Date:\s?(.+)",
@@ -1192,7 +1193,7 @@ ZZ["cash"] = {"extend": "_donuts"}
 ZZ["casino"] = {"extend": "_donuts"}
 ZZ["catering"] = {"extend": "_donuts"}
 ZZ["center"] = {"extend": "_donuts"}
-ZZ["charity"] = {"extend": "_donuts"}
+ZZ["charity"] = {"extend": "_donuts", "_server": "whois.nic.charity" }
 ZZ["chat"] = {"extend": "_donuts"}
 ZZ["cheap"] = {"extend": "_donuts"}
 ZZ["church"] = {"extend": "_donuts"}
@@ -1258,7 +1259,7 @@ ZZ["flights"] = {"extend": "_donuts"}
 ZZ["florist"] = {"extend": "_donuts"}
 ZZ["football"] = {"extend": "_donuts"}
 ZZ["forsale"] = {"extend": "_donuts"}
-ZZ["foundation"] = {"extend": "_donuts"}
+ZZ["foundation"] = {"extend": "_donuts", "_server":"whois.nic.foundation"}
 ZZ["fund"] = {"extend": "_donuts"}
 ZZ["furniture"] = {"extend": "_donuts"}
 ZZ["futbol"] = {"extend": "_donuts"}
@@ -1809,7 +1810,7 @@ ZZ["hr"] = {
     "updated_date": r"Updated Date:\s+(.+)",
     "status": None,
     "registrar": None,
-    "expiration_date": None,
+    "expiration_date": r"Registrar Registration Expiration Date:\s+(.+)",
     "registrant_country": None,
 }
 
@@ -2725,7 +2726,18 @@ ZZ["ac.bd"] = {"extend": "bd"}
 ZZ["do"] = {"extend": "bzh", "_server": "whois.nic.do"}
 ZZ["ls"] = {"extend": "cz", "_server": "whois.nic.ls"}
 
-
-
+ZZ["ps"] = {"extend": "com"}
+ZZ["sl"] = {"extend": "com", "_server": "whois.nic.sl"}
+ZZ["sd"] = {"extend": "com", "_server": "whois.sdnic.sd"}
+ZZ["sm"] = {
+        "extend": "rs", 
+        "_server": "whois.nic.sm",
+        "domain_name": r"Domain Name:\s+(.+)",
+        "status": r"Status:\s(.+)",
+        "name_servers": r"DNS Servers:\s+(.+)",
+        }
+ZZ["et"] = {"extend": "com", "_server": "whois.ethiotelecom.et"}
+ZZ["mq"] = {"extend": "si", "_server": "whois.mediaserv.net"}
+ZZ["gf"] = {"extend": "si", "_server": "whois.mediaserv.net"}
 
 
