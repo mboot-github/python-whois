@@ -928,15 +928,15 @@ ZZ["shop"] = {
 }
 
 ZZ["se"] = {
-    "extend": None,
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "registrant_country": None,
-    "creation_date": r"created:\s?(.+)",
-    "expiration_date": r"expires:\s?(.+)",
-    "updated_date": r"modified:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"status:\s?(.+)",
+	"extend": None,
+	"domain_name": r"domain:\s?(.+)",
+	"registrar": r"registrar:\s?(.+)",
+	"registrant_country": None,
+	"creation_date": r"created:\s+(\d{4}-\d{2}-\d{2})",
+	"expiration_date": r"expires:\s+(\d{4}-\d{2}-\d{2})",
+	"updated_date": r"modified:\s+(\d{4}-\d{2}-\d{2})",
+	"name_servers": r"nserver:\s*(.+)",
+	"status": r"status:\s?(.+)",
 }
 
 # Singapore - Commercial sub-domain
