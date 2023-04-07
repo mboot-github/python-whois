@@ -2024,6 +2024,7 @@ ZZ["st"] = {
     "extend": "com",
     "registrant_country": r"registrant-country:\s+(\S+)",
     "registrant": r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n",
+    "expiration_date": r"Expiration\s+Date:\s?(.+)",
 }
 
 ZZ["so"] = {"extend": "com"}

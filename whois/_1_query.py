@@ -191,6 +191,10 @@ def _do_whois_query(
         print(r, file=sys.stderr)
 
     if ignore_returncode is False and p.returncode not in [0, 1]:
+        # network error, "fgets: Connection reset by peer" fix, ignore 
+        if "fgets: Connection reset by peer" in r:
+            return r.replace("fgets: Connection reset by peer", "")
+
         raise WhoisCommandFailed(r)
 
     return r
