@@ -194,6 +194,9 @@ def _do_whois_query(
         # network error, "fgets: Connection reset by peer" fix, ignore
         if "fgets: Connection reset by peer" in r:
             return r.replace("fgets: Connection reset by peer", "")
+        # connect: Connection refused
+        elif "connect: Connection refused" in r:
+            return r.replace("connect: Connection refused", "")
 
         raise WhoisCommandFailed(r)
 
