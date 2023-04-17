@@ -15,6 +15,7 @@ This package will not support querying ip CIDR ranges or AS information
  * raise a exception on PrivateRegistry tld's where we know the tld and know we don't know anything
  * allow for optional cleaning the whois response before extracting information
  * optionally allow IDN's to be translated to Punycode
+ * optional specify the whois command on query(...,cmd="whois") as in: https://github.com/gen1us2k/python-whois/
 
 ## Dependencies
   * please install also the command line "whois" of your distribution

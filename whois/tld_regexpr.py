@@ -24,7 +24,7 @@ ZZ["com"] = {
     "registrant": r"Registrant\s*Organi(?:s|z)ation:\s?(.+)",
     "registrant_country": r"Registrant Country:\s?(.+)",
     "creation_date": r"Creation Date:[ \t]*([^\n]*)",
-    "expiration_date": r"Registry Expiry Date:[ \t]*([^\n]*)",
+    "expiration_date": r"(?:Expiry|Expiration) Date:[ \t]*([^\n]*)",  # Expiration Date
     "updated_date": r"Updated Date:[\t ]*([^\n]*)",
     "name_servers": r"Name Server:\s*(.+)\s*",  # host -t ns <domain> often has more nameservers then the output of whois
     "status": r"Status:\s?(.+)",
