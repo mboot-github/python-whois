@@ -130,6 +130,7 @@ DATE_FORMATS = [
     "%Y-%m-%d",  # 2000-01-02
     "%Y.%m.%d",  # 2000.01.02
     "%Y/%m/%d",  # 2005/05/30
+    "%b-%Y",  # aug-1996
     "before %b-%Y",  # before aug-1996
     "before %Y%m%d",  # before 19950101
     "%Y.%m.%d %H:%M:%S",  # 2002.09.19 13:00:00
@@ -177,6 +178,7 @@ DATE_FORMATS = [
     "%d %B %Y at %H:%M:%S.%f",  # 07 january 2020 at 23:38:30.772
     "%Y-%m-%d %H:%M:%S.%f %Z",  # 2022-09-18 22:38:18.0 UTC (sn Senegal),
     "%a %b %d %H:%M:%S %Y",  # Thu Oct 21 05:54:20 2032 (kg Kyrgyzstan)
+    "%m-%d-%Y",  # 03-28-2013 # is ambivalent for all days <=12
 ]
 
 CUSTOM_DATE_FORMATS = {
