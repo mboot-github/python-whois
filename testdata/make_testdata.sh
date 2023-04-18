@@ -10,7 +10,6 @@ getDomains()
         xs4all.nl # has multiline nameserver and multiline registrar; outout has no nameservers should be 2
         meta.com.sg # has mail
         meta.com # have emails
-        google.com # have emails
         meta.jp # jp has [registrar] type keywords not registrar:
         meta.co.jp # jp has [registrar] type keywords not registrar:
         meta.kr # has both korean and english text

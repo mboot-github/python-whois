@@ -47,6 +47,7 @@ def do_query(
     server: Optional[str] = None,
     verbose: bool = False,
     timeout: float = None,
+    wh: str = "whois",
 ) -> str:
     k = ".".join(dl)
 
@@ -74,6 +75,7 @@ def do_query(
                 server=server,
                 verbose=verbose,
                 timeout=timeout,
+                wh=wh,
             ),
         )
 
@@ -106,15 +108,15 @@ def makeWhoisCommandToRun(
     dl: List[str],
     server: Optional[str] = None,
     verbose: bool = False,
+    wh: str = "whois",
 ):
     domain = ".".join(dl)
-    wh = "whois"  # default 'whois'
 
     if platform.system() == "Windows":
         # Usage: whois [-v] domainname [whois.server]
 
         if os.path.exists("whois.exe"):
-            wh = r".\whois.exe "
+            wh = r".\whois.exe"
         else:
             find = False
             paths = os.environ["path"].split(";")
@@ -161,13 +163,14 @@ def _do_whois_query(
     server: Optional[str] = None,
     verbose: bool = False,
     timeout: float = None,
+    wh: str = "whois",
 ) -> str:
     # if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
     # this wasy we can actually implemnt a test run with known data in and expected data out
     if os.getenv("TEST_WHOIS_PYTHON"):
         return testWhoisPythonFromStaticTestData(dl, ignore_returncode, server, verbose)
 
-    cmd = makeWhoisCommandToRun(dl, server, verbose)
+    cmd = makeWhoisCommandToRun(dl=dl, server=server, verbose=verbose, wh=wh)
     if verbose:
         print(cmd, file=sys.stderr)
 

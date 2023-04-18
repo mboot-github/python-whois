@@ -15,6 +15,7 @@ This package will not support querying ip CIDR ranges or AS information
  * raise a exception on PrivateRegistry tld's where we know the tld and know we don't know anything
  * allow for optional cleaning the whois response before extracting information
  * optionally allow IDN's to be translated to Punycode
+ * optional specify the whois command on query(...,cmd="whois") as in: https://github.com/gen1us2k/python-whois/
 
 ## Dependencies
   * please install also the command line "whois" of your distribution
@@ -87,7 +88,7 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * convert the tld file to a Dict, we now no longer need a mappper for python keywords or second level domains.
  * utf8 level domains also need no mapper anymore an can be added as is with a translation to xn--<something>
  * added xn-- tlds for all known utf-8 domains we currently have
- * we can now add new domains on the fly or change them:  whois.mergeExternalDictWithRegex(aDictToOverride) see example testExtend.py
+ * we can now add new domains on the fly or change them:  whois.mergeExternalDictWithRegex(aDictToOverride) see example exampleExtend.py
 
 2023-01-27: maarten_boot
  * add autodetect via iana tld file (this has only tld's)

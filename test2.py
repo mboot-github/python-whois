@@ -208,7 +208,7 @@ def testItem(d: str, printgetRawWhoisResult: bool = False):
         else:
             print((ss + "%s") % (k, xType(v), v))
 
-    print("\n", whois.get_last_raw_whois_data())
+    # print("\n", whois.get_last_raw_whois_data())
 
 
 def errorItem(d, e, what="Generic"):

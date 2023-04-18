@@ -5,7 +5,7 @@ tld                str               'com'
 registrar          str               'RegistrarSafe, LLC'
 registrant_country str               'US'
 creation_date      datetime.datetime 1991-01-21 05:00:00
-expiration_date    NoneType          None
+expiration_date    datetime.datetime 2032-01-22 05:00:00
 last_updated       datetime.datetime 2023-01-25 20:09:06
 status             str               'clientDeleteProhibited https://www.icann.org/epp#clientDeleteProhibited'
 statuses           list              ['clientDeleteProhibited https://www.icann.org/epp#clientDeleteProhibited', 'clientTransferProhibited https://www.icann.org/epp#clientTransferProhibited', 'clientUpdateProhibited https://www.icann.org/epp#clientUpdateProhibited', 'serverDeleteProhibited https://www.icann.org/epp#serverDeleteProhibited', 'serverTransferProhibited https://www.icann.org/epp#serverTransferProhibited', 'serverUpdateProhibited https://www.icann.org/epp#serverUpdateProhibited']

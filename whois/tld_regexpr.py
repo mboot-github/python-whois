@@ -24,7 +24,7 @@ ZZ["com"] = {
     "registrant": r"Registrant\s*Organi(?:s|z)ation:\s?(.+)",
     "registrant_country": r"Registrant Country:\s?(.+)",
     "creation_date": r"Creation Date:[ \t]*([^\n]*)",
-    "expiration_date": r"Registry Expiry Date:[ \t]*([^\n]*)",
+    "expiration_date": r"(?:Expiry|Expiration) Date:[ \t]*([^\n]*)",  # Expiration Date
     "updated_date": r"Updated Date:[\t ]*([^\n]*)",
     "name_servers": r"Name Server:\s*(.+)\s*",  # host -t ns <domain> often has more nameservers then the output of whois
     "status": r"Status:\s?(.+)",
@@ -898,9 +898,18 @@ ZZ["ru"] = {
 # Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
 # In the Domain Name System it has the ASCII DNS name xn--p1ai.
 
-ZZ["ru.rf"] = {"extend": "ru", "_server": "whois.tcinet.ru"}
-ZZ["рф"] = {"extend": "ru", "_server": "whois.tcinet.ru"}
-ZZ["xn--p1ai"] = {"extend": "ru", "_server": "whois.tcinet.ru"}
+ZZ["ru.rf"] = {
+    "extend": "ru",
+    "_server": "whois.tcinet.ru",
+}
+ZZ["рф"] = {
+    "extend": "ru",
+    "_server": "whois.tcinet.ru",
+}
+ZZ["xn--p1ai"] = {
+    "extend": "ru",
+    "_server": "whois.tcinet.ru",
+}
 
 ZZ["sa"] = {
     "extend": "com",
@@ -2143,9 +2152,9 @@ ZZ["vc"] = {"extend": "com"}
 ZZ["cm"] = {"extend": "com"}
 
 # russian speaking community
-ZZ["xn--p1acf"] = {"extend": "ru", "_server": "whois.nic.xn--p1acf"}
-ZZ["РУС"] = {"extend": "ru", "_server": "whois.nic.xn--p1acf"}
-ZZ["рус"] = {"extend": "ru", "_server": "whois.nic.xn--p1acf"}
+ZZ["xn--p1acf"] = {"extend": "com"}
+ZZ["РУС"] = {"extend": "com"}
+ZZ["рус"] = {"extend": "com"}
 
 ZZ["vig"] = {"extend": "com", "_server": "whois.afilias-srs.net"}
 
@@ -2740,3 +2749,19 @@ ZZ["sm"] = {
 ZZ["et"] = {"extend": "com", "_server": "whois.ethiotelecom.et"}
 ZZ["mq"] = {"extend": "si", "_server": "whois.mediaserv.net"}
 ZZ["gf"] = {"extend": "si", "_server": "whois.mediaserv.net"}
+
+#    elif domain.endswith('.онлайн') or domain.endswith('.xn--80asehdb'):
+#        tld = 'ru_online'
+
+ZZ["ru_online"] = {
+    "extend": "com",
+    # "expiration_date": r"Registry Expiry Date:\s?(.+)",
+}
+ZZ["xn--80asehdb"] = {
+    "extend": "com",
+    # "expiration_date": r"Registry Expiry Date:\s?(.+)",
+}
+ZZ["онлайн"] = {
+    "extend": "com",
+    # "expiration_date": r"Registry Expiry Date:\s?(.+)",
+}

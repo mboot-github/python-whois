@@ -164,6 +164,7 @@ def doUnsupportedTldAnyway(
     slow_down: int = 0,
     server: Optional[str] = None,
     verbose: bool = False,
+    wh: str = "whois",
 ):
     include_raw_whois_text = True
 
@@ -175,6 +176,7 @@ def doUnsupportedTldAnyway(
         ignore_returncode=ignore_returncode,
         server=server,
         verbose=verbose,
+        wh=wh,
     )
 
     # we will only return minimal data
@@ -220,6 +222,7 @@ def query(
     include_raw_whois_text: bool = False,
     return_raw_text_for_unsupported_tld: bool = False,
     timeout: float = None,
+    cmd: str = "whois",
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -244,6 +247,8 @@ def query(
     global LastWhois
     LastWhois["Try"] = []  # init on start of query
 
+    wh: str = cmd  # make it compatible with python-whois-extended
+
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
     return_raw_text_for_unsupported_tld = bool(return_raw_text_for_unsupported_tld)
 
@@ -260,6 +265,7 @@ def query(
             slow_down=slow_down,
             server=server,
             verbose=verbose,
+            wh=wh,
         )
 
     verifyPrivateREgistry(thisTld)  # may raise WhoisPrivateRegistry
