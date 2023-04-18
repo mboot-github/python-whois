@@ -88,7 +88,7 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * convert the tld file to a Dict, we now no longer need a mappper for python keywords or second level domains.
  * utf8 level domains also need no mapper anymore an can be added as is with a translation to xn--<something>
  * added xn-- tlds for all known utf-8 domains we currently have
- * we can now add new domains on the fly or change them:  whois.mergeExternalDictWithRegex(aDictToOverride) see example testExtend.py
+ * we can now add new domains on the fly or change them:  whois.mergeExternalDictWithRegex(aDictToOverride) see example exampleExtend.py
 
 2023-01-27: maarten_boot
  * add autodetect via iana tld file (this has only tld's)
