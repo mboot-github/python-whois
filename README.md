@@ -2,6 +2,15 @@
 A Python package for retrieving WHOIS information of domains.
 This package will not support querying ip CIDR ranges or AS information
 
+## NOTE
+* 2023-04-25: mboot
+    * when DannyCork returns he can decide on the future of this repo.
+    * in his absence future development will take place in: https://github.com/mboot-github/WhoisDomain
+    * and new pypi releases will come from: https://pypi.org/project/whoisdomain/
+    * efforts will be made to keep the v1.x.y version of whoisdomain compatible with this repo
+    * changes will be verified and back copied also here for the time being
+
+
 ## Features
  * Python wrapper for the "whois" cli command of your operating system.
  * Simple interface to access parsed WHOIS data for a given domain.

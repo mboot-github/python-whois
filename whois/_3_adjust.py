@@ -20,10 +20,10 @@ class Domain:
     last_updated = None
 
     status: Optional[str] = None
-    statuses: List = []
+    statuses: List[str] = []
 
     dnssec: bool = False
-    name_servers: List = []
+    name_servers: List[str] = []
     owner: Optional[str] = None
     abuse_contact = None
     reseller = None

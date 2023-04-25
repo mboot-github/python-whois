@@ -1,6 +1,9 @@
-from typing import Dict
+from typing import (
+    Dict,
+    Any,
+)
 
-ZZ: Dict = {}
+ZZ: Dict[str, Any] = {}
 
 # elements starting with _
 # are meta patterns and are not processed as domains

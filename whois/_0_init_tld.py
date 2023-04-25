@@ -12,12 +12,12 @@ from .exceptions import (
     UnknownTld,
 )
 
-Verbose = False
-TLD_RE: Dict[str, Any] = {}
-REG_COLLECTION_BY_KEY: Dict = {}
+Verbose: bool = False
+TLD_RE: Dict[str, Dict[str, Any]] = {}
+REG_COLLECTION_BY_KEY: Dict[str, Any] = {}
 
 
-def validTlds():
+def validTlds() -> List[str]:
     return sorted(TLD_RE.keys())
 
 
@@ -50,7 +50,7 @@ def filterTldToSupportedPattern(
     raise UnknownTld(msg)
 
 
-def get_tld_re(tld: str, override: bool = False) -> Any:
+def get_tld_re(tld: str, override: bool = False) -> Dict[str, Any]:
     if override is False:
         if tld in TLD_RE:
             return TLD_RE[tld]
@@ -87,7 +87,7 @@ def get_tld_re(tld: str, override: bool = False) -> Any:
     return tld_re
 
 
-def mergeExternalDictWithRegex(aDict: Dict = {}):
+def mergeExternalDictWithRegex(aDict: Dict[str, Any] = {}) -> None:
     # merge in ZZ, this extends ZZ with new tld's and overrides existing tld's
     for tld in aDict.keys():
         ZZ[tld] = aDict[tld]
@@ -98,7 +98,7 @@ def mergeExternalDictWithRegex(aDict: Dict = {}):
         initOne(tld, override)
 
 
-def initOne(tld, override: bool = False):
+def initOne(tld: str, override: bool = False) -> None:
     if tld[0] == "_":  # skip meta domain patterns , these are not domains just handles we reuse
         return
 
@@ -117,8 +117,9 @@ def initOne(tld, override: bool = False):
         print(f"{tld} -> {tld2}", file=sys.stderr)
 
 
-def buildRegCollection(zz: Dict):
-    regCollection: Dict = {}
+def buildRegCollection(zz: Dict[str, Any]) -> Dict[str, Any]:
+    regCollection: Dict[str, Any] = {}
+
     # get all regexes
     for name in zz:
         # print(name)
@@ -151,7 +152,7 @@ def buildRegCollection(zz: Dict):
     return regCollection
 
 
-def initOnImport():
+def initOnImport() -> None:
     global REG_COLLECTION_BY_KEY
     # here we run the import processing
     # we load all tld's on import so we dont lose time later

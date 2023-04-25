@@ -1,10 +1,13 @@
 import sys
 from functools import wraps
 from typing import (
+    cast,
     Optional,
     List,
     Dict,
     Tuple,
+    Any,
+    Callable,
 )
 
 from ._1_query import do_query
@@ -14,11 +17,18 @@ from ._2_parse import (
     NoneStringsAdd,
     QuotaStrings,
     QuotaStringsAdd,
+    cleanupWhoisResponse,
 )
 
-from ._3_adjust import Domain
-from ._0_init_tld import (
+from ._3_adjust import (
+    Domain,
+)
+
+from .tld_regexpr import (
     ZZ,
+)
+
+from ._0_init_tld import (
     TLD_RE,
     validTlds,
     filterTldToSupportedPattern,
@@ -35,66 +45,49 @@ from .exceptions import (
     WhoisCommandTimeout,
 )
 
-"""
-    Python module/library for retrieving WHOIS information of domains.
-
-    By DDarko.org  ddarko@ddarko.org  http://ddarko.org/
-    License MIT  http://www.opensource.org/licenses/mit-license.php
-
-    Usage example
-    >>> import whois
-    >>> domain = whois.query('google.com')
-    >>> print(domain.__dict__)  # print(whois.get('google.com'))
-
-    {
-        'expiration_date':  datetime.datetime(2020, 9, 14, 0, 0),
-        'last_updated':     datetime.datetime(2011, 7, 20, 0, 0),
-        'registrar':        'MARKMONITOR INC.',
-        'name':             'google.com',
-        'creation_date':    datetime.datetime(1997, 9, 15, 0, 0)
-    }
-
-    >>> print(domain.name)
-    google.com
-
-    >>> print(domain.expiration_date)
-    2020-09-14 00:00:00
-
-"""
 __all__ = [
-    "query",
-    "get",
+    "UnknownTld",
+    "FailedParsingWhoisOutput",
+    "UnknownDateFormat",
+    "WhoisCommandFailed",
+    "WhoisPrivateRegistry",
+    "WhoisQuotaExceeded",
+    "WhoisCommandTimeout",
+    "cleanupWhoisResponse",
     "validTlds",
-    "mergeExternalDictWithRegex",
-    "NoneStrings",
-    "NoneStringsAdd",
-    "QuotaStrings",
-    "QuotaStringsAdd",
+    "TLD_RE",
+    "get_last_raw_whois_data",
 ]
-
 
 CACHE_FILE = None
 SLOW_DOWN = 0
 
+LastWhois: Dict[str, Any] = {
+    "Try": [],
+}
 
-def internationalizedDomainNameToPunyCode(d: List[str]) -> List[str]:
+
+# PRIVATE
+
+
+def _internationalizedDomainNameToPunyCode(d: List[str]) -> List[str]:
     return [k.encode("idna").decode() or k for k in d]
 
 
-def result2dict(func):
+def _result2dict(func: Any) -> Any:
     @wraps(func)
-    def _inner(*args, **kw):
+    def _inner(*args: str, **kw: Any) -> Dict[str, Any]:
         r = func(*args, **kw)
         return r and vars(r) or {}
 
     return _inner
 
 
-def fromDomainStringToTld(
+def _fromDomainStringToTld(
     domain: str,
     internationalized: bool,
     verbose: bool = False,
-):
+) -> Tuple[Optional[str], Optional[List[str]]]:
     domain = domain.lower().strip().rstrip(".")  # Remove the trailing dot to support FQDN.
     d: List[str] = domain.split(".")
     if verbose:
@@ -111,7 +104,7 @@ def fromDomainStringToTld(
         print(f"filterTldToSupportedPattern returns tld: {tld}", file=sys.stderr)
 
     if internationalized and isinstance(internationalized, bool):
-        d = internationalizedDomainNameToPunyCode(d)
+        d = _internationalizedDomainNameToPunyCode(d)
 
     if verbose:
         print(tld, d, file=sys.stderr)
@@ -119,25 +112,39 @@ def fromDomainStringToTld(
     return tld, d
 
 
-def validateWeKnowTheToplevelDomain(tld, return_raw_text_for_unsupported_tld: bool = False):  # may raise UnknownTld
+def _validateWeKnowTheToplevelDomain(
+    tld: str,
+    return_raw_text_for_unsupported_tld: bool = False,
+) -> Optional[Dict[str, Any]]:
+    # may raise UnknownTld
     if tld not in TLD_RE.keys():
         if return_raw_text_for_unsupported_tld:
             return None
+
         a = f"The TLD {tld} is currently not supported by this package."
         b = "Use validTlds() to see what toplevel domains are supported."
         msg = f"{a} {b}"
         raise UnknownTld(msg)
+
     return TLD_RE.get(tld)
 
 
-def verifyPrivateREgistry(thisTld: Dict):  # may raise WhoisPrivateRegistry
+def _verifyPrivateREgistry(
+    thisTld: Dict[str, Any],
+) -> None:
+    # may raise WhoisPrivateRegistry
     # signal we know the tld but it has no whos or does not respond with any information
     if thisTld.get("_privateRegistry"):
         msg = "This tld has either no whois server or responds only with minimal information"
         raise WhoisPrivateRegistry(msg)
 
 
-def doServerHintsForThisTld(tld: str, thisTld: Dict, server: Optional[str], verbose: bool = False):
+def _doServerHintsForThisTld(
+    tld: str,
+    thisTld: Dict[str, Any],
+    server: Optional[str],
+    verbose: bool = False,
+) -> Optional[str]:
     # allow server hints using "_server" from the tld_regexpr.py file
     thisTldServer = thisTld.get("_server")
     if server is None and thisTldServer:
@@ -147,7 +154,12 @@ def doServerHintsForThisTld(tld: str, thisTld: Dict, server: Optional[str], verb
     return server
 
 
-def doSlowdownHintForThisTld(tld: str, thisTld, slow_down: int, verbose: bool = False) -> int:
+def _doSlowdownHintForThisTld(
+    tld: str,
+    thisTld: Dict[str, Any],
+    slow_down: int,
+    verbose: bool = False,
+) -> int:
     # allow a configrable slowdown for some tld's
     slowDown = thisTld.get("_slowdown")
     if slow_down == 0 and slowDown and slowDown > 0:
@@ -157,7 +169,7 @@ def doSlowdownHintForThisTld(tld: str, thisTld, slow_down: int, verbose: bool = 
     return slow_down
 
 
-def doUnsupportedTldAnyway(
+def _doUnsupportedTldAnyway(
     tld: str,
     dl: List[str],
     ignore_returncode: bool = False,
@@ -165,7 +177,7 @@ def doUnsupportedTldAnyway(
     server: Optional[str] = None,
     verbose: bool = False,
     wh: str = "whois",
-):
+) -> Optional[Domain]:
     include_raw_whois_text = True
 
     # we will not hunt for possible valid first level domains as we have no actual feedback
@@ -198,12 +210,10 @@ def doUnsupportedTldAnyway(
     )
 
 
-LastWhois: Dict = {
-    "Try": [],
-}
+# PUBLIC
 
 
-def get_last_raw_whois_data():
+def get_last_raw_whois_data() -> Dict[str, Any]:
     global LastWhois
     return LastWhois
 
@@ -217,11 +227,11 @@ def query(
     ignore_returncode: bool = False,
     server: Optional[str] = None,
     verbose: bool = False,
-    with_cleanup_results=False,
+    with_cleanup_results: bool = False,
     internationalized: bool = False,
     include_raw_whois_text: bool = False,
     return_raw_text_for_unsupported_tld: bool = False,
-    timeout: float = None,
+    timeout: Optional[float] = None,
     cmd: str = "whois",
 ) -> Optional[Domain]:
     """
@@ -252,13 +262,21 @@ def query(
     assert isinstance(domain, str), Exception("`domain` - must be <str>")
     return_raw_text_for_unsupported_tld = bool(return_raw_text_for_unsupported_tld)
 
-    tld, dl = fromDomainStringToTld(domain, internationalized, verbose)
+    tld, dl = _fromDomainStringToTld(
+        domain,
+        internationalized,
+        verbose,
+    )
     if tld is None:
         return None
 
-    thisTld = validateWeKnowTheToplevelDomain(tld, return_raw_text_for_unsupported_tld)  # may raise UnknownTld
+    dl = cast(List[str], dl)
+    thisTld = _validateWeKnowTheToplevelDomain(
+        tld,
+        return_raw_text_for_unsupported_tld,
+    )  # may raise UnknownTld
     if thisTld is None:
-        return doUnsupportedTldAnyway(
+        return _doUnsupportedTldAnyway(
             tld,
             dl,
             ignore_returncode=ignore_returncode,
@@ -268,11 +286,11 @@ def query(
             wh=wh,
         )
 
-    verifyPrivateREgistry(thisTld)  # may raise WhoisPrivateRegistry
-    server = doServerHintsForThisTld(tld, thisTld, server, verbose)
+    _verifyPrivateREgistry(thisTld)  # may raise WhoisPrivateRegistry
+    server = _doServerHintsForThisTld(tld, thisTld, server, verbose)
 
     slow_down = slow_down or SLOW_DOWN
-    slow_down = doSlowdownHintForThisTld(tld, thisTld, slow_down, verbose)
+    slow_down = _doSlowdownHintForThisTld(tld, thisTld, slow_down, verbose)
 
     # if the tld is a multi level we should not move further down than the tld itself
     # we currently allow progressive lookups until we find something:
@@ -330,4 +348,4 @@ def query(
 
 
 # Add get function to support return result in dictionary form
-get = result2dict(query)
+get = _result2dict(query)
