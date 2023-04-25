@@ -46,7 +46,7 @@ def do_query(
     ignore_returncode: bool = False,
     server: Optional[str] = None,
     verbose: bool = False,
-    timeout: float = None,
+    timeout: Optional[float] = None,
     wh: str = "whois",
 ) -> str:
     k = ".".join(dl)
@@ -85,7 +85,9 @@ def do_query(
     return CACHE[k][1]
 
 
-def tryInstallMissingWhoisOnWindows(verbose: bool = False):
+def tryInstallMissingWhoisOnWindows(
+    verbose: bool = False,
+) -> None:
     """
     Windows 'whois' command wrapper
     https://docs.microsoft.com/en-us/sysinternals/downloads/whois
@@ -109,7 +111,7 @@ def makeWhoisCommandToRun(
     server: Optional[str] = None,
     verbose: bool = False,
     wh: str = "whois",
-):
+) -> List[str]:
     domain = ".".join(dl)
 
     if platform.system() == "Windows":
@@ -162,7 +164,7 @@ def _do_whois_query(
     ignore_returncode: bool,
     server: Optional[str] = None,
     verbose: bool = False,
-    timeout: float = None,
+    timeout: Optional[float] = None,
     wh: str = "whois",
 ) -> str:
     # if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
