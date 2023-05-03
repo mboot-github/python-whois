@@ -4,6 +4,8 @@ import os
 import re
 import getopt
 import sys
+import json
+
 from typing import (
     Optional,
     Tuple,
@@ -12,9 +14,12 @@ from typing import (
     Dict,
 )
 
-#import whoisdomain as whois  # to be compatible with dannycork
-import whois
+import whoisdomain as whois  # to be compatible with dannycork
 
+# if we are not running as test2.py run in a simplistic way
+SIMPLISTIC: bool = False
+
+PrintJson: bool = False
 Verbose: bool = False
 PrintGetRawWhoisResult: bool = False
 Ruleset: bool = False
@@ -185,8 +190,9 @@ class ResponseCleaner:
 
 
 def prepItem(d: str) -> None:
-    print("")
-    print(f"test domain: <<<<<<<<<< {d} >>>>>>>>>>>>>>>>>>>>")
+    if PrintJson is False:
+        print("")
+        print(f"test domain: <<<<<<<<<< {d} >>>>>>>>>>>>>>>>>>>>")
 
 
 def xType(x: Any) -> str:
@@ -209,6 +215,7 @@ def testItem(
         internationalized=True,
         include_raw_whois_text=PrintGetRawWhoisResult,
         timeout=timout,
+        simplistic=SIMPLISTIC,
     )
 
     if w is None:
@@ -225,12 +232,26 @@ def testItem(
     # if we return not None: the elements that ars always there ars domain_name , tld, dnssec
 
     wd = w.__dict__
+    if PrintJson is True:
+        for f in ["creation_date", "expiration_date", "last_updated"]:
+            if f in wd:
+                wd[f] = f"{wd[f]}"
+        print(json.dumps(wd))
+        return
+
     for k, v in wd.items():
-        ss = "%-18s %-17s "
-        if isinstance(v, str):
-            print((ss + "'%s'") % (k, xType(v), v))
+        if SIMPLISTIC:
+            ss = "%-18s "
+            if isinstance(v, str):
+                print((ss + "'%s'") % (k, v))
+            else:
+                print((ss + "%s") % (k, v))
         else:
-            print((ss + "%s") % (k, xType(v), v))
+            ss = "%-18s %-17s "
+            if isinstance(v, str):
+                print((ss + "'%s'") % (k, xType(v), v))
+            else:
+                print((ss + "%s") % (k, xType(v), v))
 
     # print("\n", whois.get_last_raw_whois_data())
 
@@ -358,57 +379,70 @@ def usage() -> None:
     print(
         f"""
 {name}
-    [ -v | --verbose ]
-        # set verbose to True, this will be forwarded to whois.query
+    [ -h | --usage ]
+        print this text and exit
 
-    [ -I | --IgnoreReturncode ]
-        # sets the IgnoreReturncode to True, this will be forwarded to whois.query
-
-    [ -a | --all]
-        # test all existing tld currently supported,
-
-    [ -d <domain> | --domain = <domain> " ]
-        # only analyze the given domains
-        # the option can be repeated to specify more then one domain
-
-    [ -f <filename> | --file = <filename> " ]
-        # use the named file to test all domains (one domain per line)
-        # lines starting with # or empty lines are skipped, anything after the domain is ignored
-        # the option can be repeated to specify more then one file
-
-    [ -D <directory> | --Directory = <directory> " ]
-        # use the named directory, ald use all files ending in .txt as files containing domains
-        # files are processed as in the -f option so comments and empty lines are skipped
-        # the option can be repeated to specify more then one directory
-
-    [ -p | --print ]
-    also print text containing the raw output of whois
-
-    [ -R | --Ruleset ]
-    dump the ruleset for the tld and exit
+    [ -V | --Version ]
+        print the build version string
+        and exit
 
     [ -S | --SupportedTld ]
-    print all supported top level domains we know and exit
+        print all known top level domains
+        and exit
+
+    [ -a | --all]
+        test all existing tld currently supported
+        and exit
+
+    [ -f <filename> | --file = <filename> " ]
+        use the named file to test all domains (one domain per line)
+        lines starting with # or empty lines are skipped, anything after the domain is ignored
+        the option can be repeated to specify more then one file
+        exits after processing all the files
+
+    [ -D <directory> | --Directory = <directory> " ]
+        use the named directory, ald use all files ending in .txt as files containing domains
+        files are processed as in the -f option so comments and empty lines are skipped
+        the option can be repeated to specify more then one directory
+        exits after processing all the dirs
+
+    [ -d <domain> | --domain = <domain> " ]
+        only analyze the given domains
+        the option can be repeated to specify more domain's
+
+    [ -v | --verbose ]
+        set verbose to True,
+        verbose output will be printed on stderr only
+
+    [ -j | --json ]
+        print each result as json
+
+    [ -I | --IgnoreReturncode ]
+        sets the IgnoreReturncode to True,
+
+    [ -p | --print ]
+        also print text containing the raw output of the cli whois
+
+    [ -R | --Ruleset ]
+        dump the ruleset for the requested tld and exit
+        should be combined with -d to specify tld's
 
     [ -C <file> | --Cleanup <file> ]
-    read the input file specified and run the same cleanup as in whois.query , then exit
-
-    # options are exclusive and without any options the {name} program does nothing
-
-    # test one specific file with verbose and IgnoreReturncode
-    example: {name} -v -I -f tests/ok-domains.txt 2>2 >out
-
-    # test one specific directory with verbose and IgnoreReturncode
-    example: {name} -v -I -D tests 2>2 >out
+        read the input file specified and run the same cleanup as in whois.query,
+        then exit
 
     # test two domains with verbose and IgnoreReturncode
-    example: {name} -v -I -d meta.org -d meta.com 2>2 >out
+    example: {name} -v -I -d meta.org -d meta.com
 
     # test all supported tld's with verbose and IgnoreReturncode
-    example: {name} -v -I -a 2>2 >out
+    example: {name} -v -I -a
 
-    # test nothing
-    example: {name} -v -I 2>2 >out
+    # test one specific file with verbose and IgnoreReturncode
+    example: {name} -v -I -f tests/ok-domains.txt
+
+    # test one specific directory with verbose and IgnoreReturncode
+    example: {name} -v -I -D tests
+
 """
     )
 
@@ -432,20 +466,34 @@ def showFailures() -> None:
 
 
 def main() -> None:
+    global PrintJson
     global Verbose
     global IgnoreReturncode
     global PrintGetRawWhoisResult
     global Ruleset
+    global SIMPLISTIC
+
+    name: str = os.path.basename(sys.argv[0])
+    if name == "test2.py":
+        SIMPLISTIC = False
+    else:
+        SIMPLISTIC = True
+
+    if 0:
+        print(name, SIMPLISTIC)
+        exit(0)
 
     try:
         opts, args = getopt.getopt(
             sys.argv[1:],
-            "RSpvIhaf:d:D:r:H:C:",
+            "jRSpvVIhaf:d:D:r:H:C:",
             [
+                "json",
                 "Ruleset",
                 "SupportedTld",
                 "print",
                 "verbose",
+                "Version",
                 "IgnoreReturncode",
                 "all",
                 "file=",
@@ -482,6 +530,10 @@ def main() -> None:
                 print(tld)
             sys.exit(0)
 
+        if opt in ("-V", "Version"):
+            print(whois.getVersion())
+            sys.exit(0)
+
         if opt == "-h":
             usage()
             sys.exit(0)
@@ -502,6 +554,9 @@ def main() -> None:
 
         if opt in ("-p", "--print"):
             PrintGetRawWhoisResult = True
+
+        if opt in ("-j", "--json"):
+            PrintJson = True
 
         if opt in ("-R", "--Ruleset"):
             Ruleset = True
@@ -551,34 +606,30 @@ def main() -> None:
         allMetaTld = makeMetaAllCurrentTld(allHaving, allRegex)
         testDomains(allMetaTld)
         showFailures()
-        return
+        sys.exit(0)
 
     if len(dirs):
         fileData = {}
-        print("## ===== TEST DIRECTORIES")
         for dName in dirs:
             getTestFilesAll(dName, fileData)
         for testFile in fileData:
-            print(f"## ===== TEST FILE: {testFile}")
             testDomains(fileData[testFile])
         showFailures()
-        return
+        sys.exit(0)
 
     if len(files):
         fileData = {}
-        print("## ===== TEST FILES")
         for testFile in files:
             getTestFileOne(testFile, fileData)
         for testFile in fileData:
-            print(f"## ===== TEST FILE: {testFile}")
             testDomains(fileData[testFile])
         showFailures()
-        return
+        sys.exit(0)
 
     if len(domains):
         testDomains(domains)
         showFailures()
-        return
+        sys.exit(0)
 
     usage()
     sys.exit(0)

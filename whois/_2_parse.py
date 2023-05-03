@@ -280,6 +280,7 @@ def do_parse(
     dl: List[str],
     verbose: bool = False,
     with_cleanup_results: bool = False,
+    simplistic: bool = False,
 ) -> Optional[Dict[str, Any]]:
 
     whois_str = cleanupWhoisResponse(
