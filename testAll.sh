@@ -12,4 +12,5 @@
 
 # all tld's that produce no output (None), we also show the raw try data
 
-./test2.py -a 2>2 | tee 1
+./test3.py -V | tee 1
+./test3.py -a 2>2 | tee -a 1
