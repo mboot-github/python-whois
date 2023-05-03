@@ -48,6 +48,7 @@ def do_query(
     verbose: bool = False,
     timeout: Optional[float] = None,
     wh: str = "whois",
+    simplistic: bool = False,
 ) -> str:
     k = ".".join(dl)
 
@@ -76,6 +77,7 @@ def do_query(
                 verbose=verbose,
                 timeout=timeout,
                 wh=wh,
+                simplistic=simplistic,
             ),
         )
 
@@ -166,6 +168,7 @@ def _do_whois_query(
     verbose: bool = False,
     timeout: Optional[float] = None,
     wh: str = "whois",
+    simplistic: bool = False,
 ) -> str:
     # if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
     # this wasy we can actually implemnt a test run with known data in and expected data out
@@ -202,6 +205,9 @@ def _do_whois_query(
         # connect: Connection refused
         elif "connect: Connection refused" in r:
             return r.replace("connect: Connection refused", "")
+
+        if simplistic:
+            return r
 
         raise WhoisCommandFailed(r)
 

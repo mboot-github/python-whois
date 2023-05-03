@@ -1,4 +1,5 @@
 import sys
+import os
 from functools import wraps
 from typing import (
     cast,
@@ -45,6 +46,10 @@ from .exceptions import (
     WhoisCommandTimeout,
 )
 
+from .version import (
+    VERSION,
+)
+
 __all__ = [
     "UnknownTld",
     "FailedParsingWhoisOutput",
@@ -57,7 +62,19 @@ __all__ = [
     "validTlds",
     "TLD_RE",
     "get_last_raw_whois_data",
+    "VERSION",
+    "getVersion",
 ]
+
+WHOISDOMAIN: str = ""
+if os.getenv("WHOISDOMAIN"):
+    WHOISDOMAIN = str(os.getenv("WHOISDOMAIN"))
+
+WD = WHOISDOMAIN.upper().split(":")
+
+SIMPLISTIC = False
+if "SIMPISTIC" in WD:
+    SIMPLISTIC = True
 
 CACHE_FILE = None
 SLOW_DOWN = 0
@@ -177,6 +194,7 @@ def _doUnsupportedTldAnyway(
     server: Optional[str] = None,
     verbose: bool = False,
     wh: str = "whois",
+    simplistic: bool = False,
 ) -> Optional[Domain]:
     include_raw_whois_text = True
 
@@ -189,6 +207,7 @@ def _doUnsupportedTldAnyway(
         server=server,
         verbose=verbose,
         wh=wh,
+        simplistic=simplistic,
     )
 
     # we will only return minimal data
@@ -233,6 +252,7 @@ def query(
     return_raw_text_for_unsupported_tld: bool = False,
     timeout: Optional[float] = None,
     cmd: str = "whois",
+    simplistic: bool = False,
 ) -> Optional[Domain]:
     """
     force=True          Don't use cache.
@@ -251,8 +271,9 @@ def query(
                         if reqested the full response is also returned.
     return_raw_text_for_unsupported_tld:
                         if the tld is unsupported, just try it anyway but return only the raw text.
-    timeout:
-                        timeout in seconds for the whois command to return a result.
+    timeout:            timeout in seconds for the whois command to return a result.
+    cmd:                explicitly specify the path to the whois you want to use.
+    simplistic:         when simplistic is True we return None for most exceptions and dont pass info why we have no data.
     """
     global LastWhois
     LastWhois["Try"] = []  # init on start of query
@@ -275,6 +296,7 @@ def query(
         tld,
         return_raw_text_for_unsupported_tld,
     )  # may raise UnknownTld
+
     if thisTld is None:
         return _doUnsupportedTldAnyway(
             tld,
@@ -284,6 +306,7 @@ def query(
             server=server,
             verbose=verbose,
             wh=wh,
+            simplistic=simplistic,
         )
 
     _verifyPrivateREgistry(thisTld)  # may raise WhoisPrivateRegistry
@@ -310,7 +333,9 @@ def query(
             server=server,
             verbose=verbose,
             timeout=timeout,
+            simplistic=simplistic,
         )
+
         tryMe = {
             "Domain": ".".join(dl),
             "rawData": whois_str,
@@ -324,6 +349,7 @@ def query(
             dl=dl,
             verbose=verbose,
             with_cleanup_results=with_cleanup_results,
+            simplistic=simplistic,
         )
 
         # do we have a result and does it have a domain name
@@ -349,3 +375,7 @@ def query(
 
 # Add get function to support return result in dictionary form
 get = _result2dict(query)
+
+
+def getVersion() -> str:
+    return VERSION
