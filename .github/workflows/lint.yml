@@ -16,4 +16,4 @@ jobs:
           python -m pip install --upgrade pip
           pip install mypy
       - name: Run mypy
-        run: mypy --implicit-optional --install-types --non-interactive --namespace-packages whois
+        run: mypy --strict whois
