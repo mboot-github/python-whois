@@ -30,6 +30,9 @@ This package will not support querying ip CIDR ranges or AS information
   * please install also the command line "whois" of your distribution
   * this library parses the output of the "whois" cli command of your operating system
 
+## Docker
+ * docker pull mbootgithub/whoisdomain:latest
+ 
 ## Help Wanted
 Your contributions are welcome, look for the Help wanted tag https://github.com/DannyCork/python-whois/labels/help%20wanted
 
