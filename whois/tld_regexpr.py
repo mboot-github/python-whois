@@ -2084,6 +2084,14 @@ ZZ["mk"] = {
 ZZ["observer"] = {"extend": "com", "_server": "whois.nic.observer"}
 ZZ["one"] = {"extend": "com", "_server": "whois.nic.one"}
 ZZ["page"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["esq"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["dad"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["foo"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["mov"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["nexus"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["phd"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["prof"] = {"extend": "com", "_server": "whois.nic.google"}
+ZZ["zip"] = {"extend": "com", "_server": "whois.nic.google"}
 
 ZZ["bf"] = {
     "extend": "com",
