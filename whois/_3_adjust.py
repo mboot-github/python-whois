@@ -5,11 +5,11 @@ from .exceptions import UnknownDateFormat
 
 from typing import Any, List, Dict, Optional
 
-PYTHON_VERSION = sys.version_info[0]
+# PYTHON_VERSION = sys.version_info[0]
 
 
 class Domain:
-    # make sure all fields actually exist allways
+    # mandatory fields we expect always to be present (but can be None or '')
     name: Optional[str] = None
     tld: Optional[str] = None
     registrar: Optional[str] = None
@@ -24,52 +24,29 @@ class Domain:
 
     dnssec: bool = False
     name_servers: List[str] = []
+
+    # optional fields
     owner: Optional[str] = None
     abuse_contact = None
     reseller = None
     registrant = None
     admin = None
+    emails: List[str] = []
 
-    def __init__(
+    def _cleanupArray(
+        self,
+        data: List[str],
+    ) -> List[str]:
+        if "" in data:
+            index = data.index("")
+            data.pop(index)
+        return data
+
+    def _doNameservers(
         self,
         data: Dict[str, Any],
-        whois_str: Optional[str] = None,
-        verbose: bool = False,
-        include_raw_whois_text: bool = False,
-        return_raw_text_for_unsupported_tld: bool = False,
-    ):
-        if include_raw_whois_text and whois_str is not None:
-            self.text = whois_str
-
-        if return_raw_text_for_unsupported_tld is True:
-            self.tld = data["tld"]
-            self.name = data["domain_name"][0].strip().lower()
-            return
-
-        self.name = data["domain_name"][0].strip().lower()
-        self.tld = data["tld"].lower()
-
-        self.registrar = data["registrar"][0].strip()
-        self.registrant_country = data["registrant_country"][0].strip()
-
-        self.creation_date = str_to_date(data["creation_date"][0], self.tld, verbose=verbose)
-        self.expiration_date = str_to_date(data["expiration_date"][0], self.tld, verbose=verbose)
-        self.last_updated = str_to_date(data["updated_date"][0], self.tld, verbose=verbose)
-
-        self.status = data["status"][0].strip()
-        self.statuses = sorted(  # sorted added to get predictable output during test
-            list(  # list(set(...))) to deduplicate results
-                set(
-                    [s.strip() for s in data["status"]],
-                ),
-            ),
-        )
-
-        self.dnssec = data["DNSSEC"]
-
-        # ----------------------------
-        # name_servers
-        tmp = []
+    ) -> None:
+        tmp: List[str] = []
         for x in data["name_servers"]:
             if isinstance(x, str):
                 tmp.append(x.strip().lower())
@@ -78,13 +55,9 @@ class Domain:
             for y in x:
                 tmp.append(y.strip().lower())
 
-        if 0:
-            if verbose:
-                print(tmp, file=sys.stderr)
-
         self.name_servers = []
         for x in tmp:
-            x = x.strip(" .")  # remove ant leading or trailing spaces and/or dots
+            x = x.strip(" .")  # remove any leading or trailing spaces and/or dots
             if x:
                 if " " in x:
                     x, _ = x.split(" ", 1)
@@ -94,8 +67,27 @@ class Domain:
                 if x not in self.name_servers:
                     self.name_servers.append(x)
         self.name_servers = sorted(self.name_servers)
-        # ----------------------------
 
+    def _doStatus(
+        self,
+        data: Dict[str, Any],
+    ) -> None:
+        self.status = data["status"][0].strip()
+        self.statuses = sorted(  # sorted added to get predictable output during test
+            list(  # list(set(...))) to deduplicate results
+                set(
+                    [s.strip() for s in data["status"]],
+                ),
+            ),
+        )
+        if "" in self.statuses:
+            self.statuses = self._cleanupArray(self.statuses)
+
+    def _doOptionalFields(
+        self,
+        data: Dict[str, Any],
+    ) -> None:
+        # optional fiels
         if "owner" in data:
             self.owner = data["owner"][0].strip()
 
@@ -119,6 +111,46 @@ class Domain:
                     ),
                 ),
             )
+            if "" in self.emails:
+                self.emails = self._cleanupArray(self.emails)
+
+    def __init__(
+        self,
+        data: Dict[str, Any],
+        whois_str: Optional[str] = None,
+        verbose: bool = False,
+        include_raw_whois_text: bool = False,
+        return_raw_text_for_unsupported_tld: bool = False,
+        exeptionStr: Optional[str] = None,
+    ):
+        if include_raw_whois_text and whois_str is not None:
+            self.text = whois_str
+
+        if exeptionStr is not None:
+            self._exception = exeptionStr
+            return
+
+        self.name = data["domain_name"][0].strip().lower()
+        self.tld = data["tld"].lower()
+
+        if return_raw_text_for_unsupported_tld is True:
+            return
+
+        # process mandatory fields that we expact always to be present even if we have None or ''
+        self.registrar = data["registrar"][0].strip()
+        self.registrant_country = data["registrant_country"][0].strip()
+
+        # date time items
+        self.creation_date = str_to_date(data["creation_date"][0], self.tld, verbose=verbose)
+        self.expiration_date = str_to_date(data["expiration_date"][0], self.tld, verbose=verbose)
+        self.last_updated = str_to_date(data["updated_date"][0], self.tld, verbose=verbose)
+
+        self.dnssec = data["DNSSEC"]
+        self._doStatus(data)
+        self._doNameservers(data)
+
+        # optional fiels
+        self._doOptionalFields(data)
 
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
@@ -186,7 +218,11 @@ CUSTOM_DATE_FORMATS = {
 }
 
 
-def str_to_date(text: str, tld: Optional[str] = None, verbose: bool = False) -> Optional[datetime.datetime]:
+def str_to_date(
+    text: str,
+    tld: Optional[str] = None,
+    verbose: bool = False,
+) -> Optional[datetime.datetime]:
     text = text.strip().lower()
 
     if verbose:
@@ -227,7 +263,14 @@ def str_to_date(text: str, tld: Optional[str] = None, verbose: bool = False) -> 
     # 07 january 2020 at 23:38:30.772
     # %d %B %Y at %H:%M %S.%f
     if tld and tld in CUSTOM_DATE_FORMATS:
-        return datetime.datetime.strptime(text, CUSTOM_DATE_FORMATS[tld]).astimezone().replace(tzinfo=None)
+        return (
+            datetime.datetime.strptime(
+                text,
+                CUSTOM_DATE_FORMATS[tld],
+            )
+            .astimezone()
+            .replace(tzinfo=None)
+        )
 
     for f in DATE_FORMATS:
         try:

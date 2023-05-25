@@ -9,12 +9,12 @@ from .exceptions import WhoisCommandFailed, WhoisCommandTimeout
 from typing import Dict, List, Optional, Tuple
 
 
-PYTHON_VERSION = sys.version_info[0]
+# PYTHON_VERSION = sys.version_info[0]
 CACHE: Dict[str, Tuple[int, str]] = {}
 CACHE_MAX_AGE = 60 * 60 * 48  # 48h
 
 
-def cache_load(cf: str) -> None:
+def _cache_load(cf: str) -> None:
     if not os.path.isfile(cf):
         return
 
@@ -29,12 +29,152 @@ def cache_load(cf: str) -> None:
     f.close()
 
 
-def cache_save(cf: str) -> None:
+def _cache_save(cf: str) -> None:
     global CACHE
 
     f = open(cf, "w")
     json.dump(CACHE, f)
     f.close()
+
+
+def _testWhoisPythonFromStaticTestData(
+    dl: List[str],
+    ignore_returncode: bool,
+    server: Optional[str] = None,
+    verbose: bool = False,
+) -> str:
+    domain = ".".join(dl)
+    testDir = os.getenv("TEST_WHOIS_PYTHON")
+    pathToTestFile = f"{testDir}/{domain}/input"
+    if os.path.exists(pathToTestFile):
+        with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
+            # make sure the data is treated exactly the same as the output of Popen
+            return f.read().decode(errors="ignore")
+
+    raise WhoisCommandFailed("")
+
+
+def _tryInstallMissingWhoisOnWindows(
+    verbose: bool = False,
+) -> None:
+    """
+    Windows 'whois' command wrapper
+    https://docs.microsoft.com/en-us/sysinternals/downloads/whois
+    """
+    folder = os.getcwd()
+    copy_command = r"copy \\live.sysinternals.com\tools\whois.exe " + folder
+    if verbose:
+        print("downloading dependencies", file=sys.stderr)
+        print(copy_command, file=sys.stderr)
+
+    subprocess.call(
+        copy_command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
+    )
+
+
+def _makeWhoisCommandToRun(
+    dl: List[str],
+    server: Optional[str] = None,
+    verbose: bool = False,
+    wh: str = "whois",
+) -> List[str]:
+    domain = ".".join(dl)
+
+    if " " in wh:
+        whList = wh.split(" ")
+    else:
+        whList = [wh]
+
+    if platform.system() == "Windows":
+        if wh == "whois":  # only if the use did not specify what whois to use
+            if os.path.exists("whois.exe"):
+                wh = r".\whois.exe"
+            else:
+                find = False
+                paths = os.environ["path"].split(";")
+                for path in paths:
+                    wpath = os.path.join(path, "whois.exe")
+                    if os.path.exists(wpath):
+                        wh = wpath
+                        find = True
+                        break
+
+                if not find:
+                    _tryInstallMissingWhoisOnWindows(verbose)
+        whList = [wh]
+
+        if server:
+            return whList + ["-v", "-nobanner", domain, server]
+        return whList + ["-v", "-nobanner", domain]
+
+    # not windows
+    if server:
+        return whList + [domain, "-h", server]
+    return whList + [domain]
+
+
+def _do_whois_query(
+    dl: List[str],
+    ignore_returncode: bool,
+    server: Optional[str] = None,
+    verbose: bool = False,
+    timeout: Optional[float] = None,
+    wh: str = "whois",
+    simplistic: bool = False,
+) -> str:
+    # if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
+    # this wasy we can actually implemnt a test run with known data in and expected data out
+    if os.getenv("TEST_WHOIS_PYTHON"):
+        return _testWhoisPythonFromStaticTestData(dl, ignore_returncode, server, verbose)
+
+    cmd = _makeWhoisCommandToRun(
+        dl=dl,
+        server=server,
+        verbose=verbose,
+        wh=wh,
+    )
+    if verbose:
+        print(cmd, wh, file=sys.stderr)
+
+    # LANG=en is added to make the ".jp" output consist across all environments
+    p = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        env={"LANG": "en"} if dl[-1] in ".jp" else None,
+    )
+
+    try:
+        r = p.communicate(timeout=timeout)[0].decode(errors="ignore")
+    except subprocess.TimeoutExpired:
+        # Kill the child process & flush any output buffers
+        p.kill()
+        p.communicate()
+        raise WhoisCommandTimeout(f"timeout: query took more then {timeout} seconds")
+
+    if verbose:
+        print(r, file=sys.stderr)
+
+    if ignore_returncode is False and p.returncode not in [0, 1]:
+        # network error, "fgets: Connection reset by peer" fix, ignore
+        if "fgets: Connection reset by peer" in r:
+            return r.replace("fgets: Connection reset by peer", "")
+        # connect: Connection refused
+        elif "connect: Connection refused" in r:
+            return r.replace("connect: Connection refused", "")
+
+        if simplistic:
+            return r
+
+        raise WhoisCommandFailed(r)
+
+    return r
+
+
+# PUBLIC
 
 
 def do_query(
@@ -55,7 +195,7 @@ def do_query(
     if cache_file:
         if verbose:
             print(f"using cache file: {cache_file}", file=sys.stderr)
-        cache_load(cache_file)
+        _cache_load(cache_file)
 
     # actually also whois uses cache, so if you really dont want to use cache
     # you should also pass the --force-lookup flag (on linux)
@@ -82,133 +222,6 @@ def do_query(
         )
 
         if cache_file:
-            cache_save(cache_file)
+            _cache_save(cache_file)
 
     return CACHE[k][1]
-
-
-def tryInstallMissingWhoisOnWindows(
-    verbose: bool = False,
-) -> None:
-    """
-    Windows 'whois' command wrapper
-    https://docs.microsoft.com/en-us/sysinternals/downloads/whois
-    """
-    folder = os.getcwd()
-    copy_command = r"copy \\live.sysinternals.com\tools\whois.exe " + folder
-    if verbose:
-        print("downloading dependencies", file=sys.stderr)
-        print(copy_command, file=sys.stderr)
-
-    subprocess.call(
-        copy_command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        shell=True,
-    )
-
-
-def makeWhoisCommandToRun(
-    dl: List[str],
-    server: Optional[str] = None,
-    verbose: bool = False,
-    wh: str = "whois",
-) -> List[str]:
-    domain = ".".join(dl)
-
-    if platform.system() == "Windows":
-        # Usage: whois [-v] domainname [whois.server]
-
-        if os.path.exists("whois.exe"):
-            wh = r".\whois.exe"
-        else:
-            find = False
-            paths = os.environ["path"].split(";")
-            for path in paths:
-                wpath = os.path.join(path, "whois.exe")
-                if os.path.exists(wpath):
-                    wh = wpath
-                    find = True
-                    break
-
-            if not find:
-                tryInstallMissingWhoisOnWindows(verbose)
-
-        if server:
-            return [wh, "-v", "-nobanner", domain, server]
-        return [wh, "-v", "-nobanner", domain]
-
-    if server:
-        return [wh, domain, "-h", server]
-        # return [wh, domain, "-i", "-d", "-h", server]
-    return [wh, domain]
-
-
-def testWhoisPythonFromStaticTestData(
-    dl: List[str],
-    ignore_returncode: bool,
-    server: Optional[str] = None,
-    verbose: bool = False,
-) -> str:
-    domain = ".".join(dl)
-    testDir = os.getenv("TEST_WHOIS_PYTHON")
-    pathToTestFile = f"{testDir}/{domain}/input"
-    if os.path.exists(pathToTestFile):
-        with open(pathToTestFile, mode="rb") as f:  # switch to binary mode as that is what Popen uses
-            # make sure the data is treated exactly the same as the output of Popen
-            return f.read().decode(errors="ignore")
-
-    raise WhoisCommandFailed("")
-
-
-def _do_whois_query(
-    dl: List[str],
-    ignore_returncode: bool,
-    server: Optional[str] = None,
-    verbose: bool = False,
-    timeout: Optional[float] = None,
-    wh: str = "whois",
-    simplistic: bool = False,
-) -> str:
-    # if getenv[TEST_WHOIS_PYTON] fake whois by reading static data from a file
-    # this wasy we can actually implemnt a test run with known data in and expected data out
-    if os.getenv("TEST_WHOIS_PYTHON"):
-        return testWhoisPythonFromStaticTestData(dl, ignore_returncode, server, verbose)
-
-    cmd = makeWhoisCommandToRun(dl=dl, server=server, verbose=verbose, wh=wh)
-    if verbose:
-        print(cmd, file=sys.stderr)
-
-    # LANG=en is added to make the ".jp" output consist across all environments
-    p = subprocess.Popen(
-        cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        env={"LANG": "en"} if dl[-1] in ".jp" else None,
-    )
-
-    try:
-        r = p.communicate(timeout=timeout)[0].decode(errors="ignore")
-    except subprocess.TimeoutExpired:
-        # Kill the child process & flush any output buffers
-        p.kill()
-        p.communicate()
-        raise WhoisCommandTimeout()
-
-    if verbose:
-        print(r, file=sys.stderr)
-
-    if ignore_returncode is False and p.returncode not in [0, 1]:
-        # network error, "fgets: Connection reset by peer" fix, ignore
-        if "fgets: Connection reset by peer" in r:
-            return r.replace("fgets: Connection reset by peer", "")
-        # connect: Connection refused
-        elif "connect: Connection refused" in r:
-            return r.replace("connect: Connection refused", "")
-
-        if simplistic:
-            return r
-
-        raise WhoisCommandFailed(r)
-
-    return r
