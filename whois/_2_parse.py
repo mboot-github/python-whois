@@ -12,8 +12,14 @@ from typing import (
 
 from ._0_init_tld import TLD_RE
 
-from .exceptions import FailedParsingWhoisOutput
-from .exceptions import WhoisQuotaExceeded
+from ._3_adjust import (
+    Domain,
+)
+
+from .exceptions import (
+    FailedParsingWhoisOutput,
+    WhoisQuotaExceeded,
+)
 
 Verbose: bool = True
 
@@ -51,81 +57,14 @@ QUOTASTRINGS: List[str] = [
 ]
 
 
-def NoneStrings() -> List[str]:
-    return sorted(NONESTRINGS)
-
-
-def NoneStringsAdd(aString: str) -> None:
-    if aString and isinstance(aString, str) and len(aString) > 0:
-        NONESTRINGS.append(aString)
-
-
-def QuotaStrings() -> List[str]:
-    return sorted(QUOTASTRINGS)
-
-
-def QuotaStringsAdd(aString: str) -> None:
-    if aString and isinstance(aString, str) and len(aString) > 0:
-        NONESTRINGS.append(aString)
-
-
-def cleanupWhoisResponse(
-    whois_str: str,
-    verbose: bool = False,
-    with_cleanup_results: bool = False,
-) -> str:
-    tmp2: List[str] = []
-
-    # note we cannot do yet rstrip() on the lines as many registrars use \r and even trailing whitespace after entries
-    # as the resulting matches are all stripped of leading and trailing whitespace this currently is fixed there
-    # and relaxes the regexes: you will often see a capture with (.*)
-    # we would have to fix all regexes to allow stripping all trailing whitespace
-    # it would make many matches easier though.
-
-    skipFromHere = False
-    tmp: List[str] = whois_str.split("\n")
-    for line in tmp:
-        if skipFromHere is True:
-            continue
-
-        # some servers respond with: % Quota exceeded in the comment section (lines starting with %)
-        if "quota exceeded" in line.lower():
-            raise WhoisQuotaExceeded(whois_str)
-
-        if with_cleanup_results is True and line.startswith("%"):  # only remove if requested
-            continue
-
-        if "REDACTED FOR PRIVACY" in line:  # these lines contibute nothing so ignore
-            continue
-
-        if (
-            "Please query the RDDS service of the Registrar of Record" in line
-        ):  # these lines contibute nothing so ignore
-            continue
-
-        # regular responses may at the end have meta info starting with a line >>> some texte <<<
-        # similar trailing info exists with lines starting with -- but we wil handle them later
-        # unfortunalery we have domains (google.st) that have this early at the top
-        if 0:
-            if line.startswith(">>>"):
-                skipFromHere = True
-                continue
-
-        if line.startswith("Terms of Use:"):  # these lines contibute nothing so ignore
-            continue
-
-        tmp2.append(line.strip("\r"))
-
-    return "\n".join(tmp2)
-
-
-def handleShortResponse(
+def _handleShortResponse(
     tld: str,
     dl: List[str],
     whois_str: str,
     verbose: bool = False,
-) -> None:
-    # returns None or raises one of (WhoisQuotaExceeded, FailedParsingWhoisOutput)
+    simplistic: bool = False,
+    include_raw_whois_text: bool = False,
+) -> Optional[Domain]:
     if verbose:
         d = ".".join(dl)
         print(f"line count < 5:: {tld} {d} {whois_str}", file=sys.stderr)
@@ -160,12 +99,31 @@ def handleShortResponse(
     quotaStrings = QuotaStrings()
     for i in quotaStrings:
         if i in s:
+            if simplistic:
+                msg = "WhoisQuotaExceeded"
+                return Domain(
+                    data={},
+                    whois_str=whois_str,
+                    verbose=verbose,
+                    include_raw_whois_text=include_raw_whois_text,
+                    exeptionStr=msg,
+                )
             raise WhoisQuotaExceeded(whois_str)
+
+    if simplistic:
+        msg = "FailedParsingWhoisOutput"
+        return Domain(
+            data={},
+            whois_str=whois_str,
+            verbose=verbose,
+            include_raw_whois_text=include_raw_whois_text,
+            exeptionStr=msg,
+        )
 
     raise FailedParsingWhoisOutput(whois_str)
 
 
-def doDnsSec(
+def _doDnsSec(
     whois_str: str,
 ) -> bool:
     whois_dnssec: Any = whois_str.split("DNSSEC:")
@@ -176,7 +134,7 @@ def doDnsSec(
     return False
 
 
-def doIfServerNameLookForDomainName(
+def _doIfServerNameLookForDomainName(
     whois_str: str,
     verbose: bool = False,
 ) -> str:
@@ -189,7 +147,7 @@ def doIfServerNameLookForDomainName(
     return whois_str
 
 
-def doExtractPattensIanaFromWhoisString(
+def _doExtractPattensIanaFromWhoisString(
     tld: str,
     r: Dict[str, Any],
     whois_str: str,
@@ -210,7 +168,7 @@ def doExtractPattensIanaFromWhoisString(
     return r
 
 
-def doExtractPattensFromWhoisString(
+def _doExtractPattensFromWhoisString(
     tld: str,
     r: Dict[str, Any],
     whois_str: str,
@@ -229,7 +187,7 @@ def doExtractPattensFromWhoisString(
     return r
 
 
-def doSourceIana(
+def _doSourceIana(
     tld: str,
     r: Dict[str, Any],
     whois_str: str,
@@ -256,7 +214,7 @@ def doSourceIana(
         return whois_splitted[1], None
 
     # try to parse this as a IANA domain as after is only whitespace
-    r = doExtractPattensFromWhoisString(
+    r = _doExtractPattensFromWhoisString(
         tld,
         r,
         whois_str,
@@ -264,7 +222,7 @@ def doSourceIana(
     )  # set default values
 
     # now handle the actual format if this whois response
-    r = doExtractPattensIanaFromWhoisString(
+    r = _doExtractPattensIanaFromWhoisString(
         tld,
         r,
         whois_str,
@@ -274,6 +232,79 @@ def doSourceIana(
     return whois_str, r
 
 
+# PUBLIC
+
+
+def cleanupWhoisResponse(
+    whois_str: str,
+    verbose: bool = False,
+    with_cleanup_results: bool = False,
+    withRedacted: bool = False,
+) -> str:
+    tmp2: List[str] = []
+
+    # note we cannot do yet rstrip() on the lines as many registrars use \r and even trailing whitespace after entries
+    # as the resulting matches are all stripped of leading and trailing whitespace this currently is fixed there
+    # and relaxes the regexes: you will often see a capture with (.*)
+    # we would have to fix all regexes to allow stripping all trailing whitespace
+    # it would make many matches easier though.
+
+    skipFromHere = False
+    tmp: List[str] = whois_str.split("\n")
+    for line in tmp:
+        if skipFromHere is True:
+            continue
+
+        # some servers respond with: % Quota exceeded in the comment section (lines starting with %)
+        if "quota exceeded" in line.lower():
+            raise WhoisQuotaExceeded(whois_str)
+
+        if with_cleanup_results is True and line.startswith("%"):  # only remove if requested
+            continue
+
+        if withRedacted is False:
+            if "REDACTED FOR PRIVACY" in line:  # these lines contibute nothing so ignore
+                continue
+
+        if (
+            "Please query the RDDS service of the Registrar of Record" in line
+        ):  # these lines contibute nothing so ignore
+            continue
+
+        # regular responses may at the end have meta info starting with a line >>> some texte <<<
+        # similar trailing info exists with lines starting with -- but we wil handle them later
+        # unfortunalery we have domains (google.st) that have this early at the top
+        if 0:
+            if line.startswith(">>>"):
+                skipFromHere = True
+                continue
+
+        if line.startswith("Terms of Use:"):  # these lines contibute nothing so ignore
+            continue
+
+        tmp2.append(line.strip("\r"))
+
+    return "\n".join(tmp2)
+
+
+def NoneStrings() -> List[str]:
+    return sorted(NONESTRINGS)
+
+
+def NoneStringsAdd(aString: str) -> None:
+    if aString and isinstance(aString, str) and len(aString) > 0:
+        NONESTRINGS.append(aString)
+
+
+def QuotaStrings() -> List[str]:
+    return sorted(QUOTASTRINGS)
+
+
+def QuotaStringsAdd(aString: str) -> None:
+    if aString and isinstance(aString, str) and len(aString) > 0:
+        NONESTRINGS.append(aString)
+
+
 def do_parse(
     whois_str: str,
     tld: str,
@@ -281,31 +312,41 @@ def do_parse(
     verbose: bool = False,
     with_cleanup_results: bool = False,
     simplistic: bool = False,
-) -> Optional[Dict[str, Any]]:
+    include_raw_whois_text: bool = False,
+    withRedacted: bool = False,
+) -> Any:
 
     whois_str = cleanupWhoisResponse(
         whois_str=whois_str,
         verbose=verbose,
         with_cleanup_results=with_cleanup_results,
+        withRedacted=withRedacted,
     )
 
     if whois_str.count("\n") < 5:
-        # return handleShortResponse(tld, dl, whois_str, verbose)
-        handleShortResponse(tld, dl, whois_str, verbose)
-        return None
+        result = _handleShortResponse(  # may raise:    FailedParsingWhoisOutput,    WhoisQuotaExceeded,
+            tld=tld,
+            dl=dl,
+            whois_str=whois_str,
+            verbose=verbose,
+            simplistic=simplistic,
+            include_raw_whois_text=include_raw_whois_text,
+        )
+        return result
 
+    # this is the beginning of the return data
     r: Dict[str, Any] = {
         "tld": tld,
-        "DNSSEC": doDnsSec(whois_str),
+        "DNSSEC": _doDnsSec(whois_str),
     }
 
     if "source:       IANA" in whois_str:  # prepare for handling historical IANA domains
-        whois_str, ianaDomain = doSourceIana(tld, r, whois_str, verbose)
+        whois_str, ianaDomain = _doSourceIana(tld, r, whois_str, verbose)
         if ianaDomain is not None:
             ianaDomain = cast(Optional[Dict[str, Any]], ianaDomain)
             return ianaDomain
 
     if "Server Name" in whois_str:  # handle old type Server Name (not very common anymore)
-        whois_str = doIfServerNameLookForDomainName(whois_str, verbose)
+        whois_str = _doIfServerNameLookForDomainName(whois_str, verbose)
 
-    return doExtractPattensFromWhoisString(tld, r, whois_str, verbose)
+    return _doExtractPattensFromWhoisString(tld, r, whois_str, verbose)
