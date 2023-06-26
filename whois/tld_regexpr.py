@@ -1161,6 +1161,16 @@ ZZ["org.za"] = {"extend": "za", "_server": "org-whois.registry.net.za"}
 ZZ["net.za"] = {"extend": "za", "_server": "net-whois.registry.net.za"}
 ZZ["co.za"] = {"extend": "za", "_server": "coza-whois.registry.net.za"}
 
+ZZ["ke"] = {
+    "extend": "com",
+    "_server": "whois.kenic.or.ke",
+}
+
+ZZ["co.ke"] = {"extend": "ke"}
+ZZ["or.ke"] = {"extend": "ke"}
+ZZ["ac.ke"] = {"extend": "ke"}
+ZZ["go.ke"] = {"extend": "ke"}
+
 ZZ["gy"] = {"extend": "com"}
 
 # Multiple initialization
@@ -1933,8 +1943,6 @@ ZZ["pk"] = {"extend": "_privateReg"}
 ZZ["py"] = {"extend": "_privateReg"}  # Paraguay:https://www.iana.org/domains/root/db/py.html
 ZZ["com.py"] = {"extend": "_privateReg"}
 ZZ["sr"] = {"extend": "_privateReg"}
-ZZ["ke"] = {"extend": "_privateReg"}  # Kenia
-ZZ["co.ke"] = {"extend": "_privateReg"}
 
 # https://www.iana.org/domains/root/db/td.html
 # td = {"extend": "_privateReg"} # Chad (French: Tchad) made available for use in 1997.
