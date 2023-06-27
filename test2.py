@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
 
-from whoisdomain.main import main
+from whois.main import main
 
 main()
