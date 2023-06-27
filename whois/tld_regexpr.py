@@ -1175,10 +1175,18 @@ ZZ["gy"] = {"extend": "com"}
 
 # Multiple initialization
 ZZ["ca"] = {"extend": "bank"}
-ZZ["rw"] = {
-    "extend": "com",
-    "_server": "whois.ricta.org.rw"
-}
+
+# Rwanda: https://en.wikipedia.org/wiki/.rw
+ZZ["rw"] = {"extend": "com", "_server": "whois.ricta.org.rw"}
+ZZ[".co.rw"] = {"extend": "rw"}
+ZZ[".org.rw"] = {"extend": "rw"}
+ZZ[".net.rw"] = {"extend": "rw"}
+ZZ[".ac.rw"] = {"extend": "rw"}
+ZZ[".gov.rw"] = {"extend": "rw"}
+ZZ[".mil.rw"] = {"extend": "rw"}
+ZZ[".coop.rw"] = {"extend": "rw"}
+# ZZ[".ltd.rw"] = {"extend": "rw"} # unclear, no longer in https://publicsuffix.org/list/public_suffix_list.dat 2023-06-27 mboot
+
 ZZ["mu"] = {"extend": "bank"}
 ZZ["mu"] = {"extend": "bank"}
 
