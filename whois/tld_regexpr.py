@@ -1161,16 +1161,18 @@ ZZ["org.za"] = {"extend": "za", "_server": "org-whois.registry.net.za"}
 ZZ["net.za"] = {"extend": "za", "_server": "net-whois.registry.net.za"}
 ZZ["co.za"] = {"extend": "za", "_server": "coza-whois.registry.net.za"}
 
-ZZ["ke"] = {
-    "extend": "com",
-    "_server": "whois.kenic.or.ke",
-}
-
-ZZ["co.ke"] = {"extend": "ke"}
-ZZ["or.ke"] = {"extend": "ke"}
+# Kenia
+# ke : http://www.kenic.or.ke/index.php/en/ke-domains/ke-domains
+ZZ["ke"] = {"extend": "com", "_server": "whois.kenic.or.ke"}
 ZZ["ac.ke"] = {"extend": "ke"}
+ZZ["co.ke"] = {"extend": "ke"}
 ZZ["go.ke"] = {"extend": "ke"}
-
+ZZ["info.ke"] = {"extend": "ke"}
+ZZ["me.ke"] = {"extend": "ke"}
+ZZ["mobi.ke"] = {"extend": "ke"}
+ZZ["ne.ke"] = {"extend": "ke"}
+ZZ["or.ke"] = {"extend": "ke"}
+ZZ["sc.ke"] = {"extend": "ke"}
 ZZ["gy"] = {"extend": "com"}
 
 # Multiple initialization
