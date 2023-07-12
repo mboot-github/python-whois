@@ -7,9 +7,9 @@ registrant_country str               'IS'
 creation_date      datetime.datetime 2014-03-20 15:01:22
 expiration_date    datetime.datetime 2024-03-20 23:59:59
 last_updated       datetime.datetime 2023-03-14 09:24:32
+dnssec             bool              False
 status             str               'clientTransferProhibited https://icann.org/epp#clientTransferProhibited'
 statuses           list              ['clientTransferProhibited https://icann.org/epp#clientTransferProhibited']
-dnssec             bool              False
 name_servers       list              ['dns1.registrar-servers.com', 'dns2.registrar-servers.com']
 registrant         str               'Privacy service provided by Withheld for Privacy ehf'
 emails             list              ['abuse@namecheap.com']

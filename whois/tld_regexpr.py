@@ -383,7 +383,7 @@ ZZ["edu"] = {
     "creation_date": r"Domain record activated:\s?(.+)",
     "updated_date": r"Domain record last updated:\s?(.+)",
     "expiration_date": r"Domain expires:\s?(.+)",
-    "name_servers": r"Name Servers:\s?\t(.+)\n\t(.+)\n",
+    "name_servers": r"Name Servers:\s?(?:\t(.+)\n)(?:\t(.+)\n)?(?:\t(.+)\n)?(?:\t(.+)\n)?(?:\t(.+)\n)?(?:\t(.+)\n)?(?:\t(.+)\n)?(?:\t(.+)\n)?(?:\t(.+)\n)?(?:\t(.+)\n)?",
 }
 
 # estonian
