@@ -1,0 +1,11 @@
+example.com # has iana source
+example.net # has iana source
+example.org # has no iana source
+hello.xyz   # has sometimes IANA Source beginning on mac
+meta.co.jp  # jp has [registrar] type keywords not registrar:
+meta.com    # have emails
+meta.com.tr # has utf 8 response text and different formatting style
+meta.co.uk  # has multiline for all relevant fields and 4 nameservers; should be fixed output has only 2
+meta.jp     # jp has [registrar] type keywords not registrar:
+meta.kr     # has both korean and english text
+xs4all.nl   # has multiline nameserver and multiline registrar; outout has no nameservers should be 2
