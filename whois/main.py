@@ -14,11 +14,13 @@ from typing import (
     Dict,
 )
 
-# import whoisdomain as whois  # to be compatible with dannycork
 import whois  # to be compatible with dannycork
+
+# import whoisdomain as whois  # to be compatible with dannycork
 
 # if we are not running as test2.py run in a simplistic way
 SIMPLISTIC: bool = False
+WithRedacted: bool = False
 
 PrintJson: bool = False
 Verbose: bool = False
@@ -206,8 +208,10 @@ def testItem(
     printgetRawWhoisResult: bool = False,
 ) -> None:
     global PrintGetRawWhoisResult
+    global SIMPLISTIC
+    global WithRedacted
 
-    timout = 30  # seconds
+    timeout = 30  # seconds
 
     w = whois.query(
         d,
@@ -215,8 +219,9 @@ def testItem(
         verbose=Verbose,
         internationalized=True,
         include_raw_whois_text=PrintGetRawWhoisResult,
-        timeout=timout,
+        timeout=timeout,
         simplistic=SIMPLISTIC,
+        withRedacted=WithRedacted,
     )
 
     if w is None:
@@ -473,16 +478,13 @@ def main() -> None:
     global PrintGetRawWhoisResult
     global Ruleset
     global SIMPLISTIC
+    global WithRedacted
 
     name: str = os.path.basename(sys.argv[0])
     if name == "test2.py":
         SIMPLISTIC = False
     else:
         SIMPLISTIC = True
-
-    if 0:
-        print(name, SIMPLISTIC)
-        exit(0)
 
     try:
         opts, args = getopt.getopt(
@@ -503,6 +505,7 @@ def main() -> None:
                 "reg=",
                 "having=",
                 "Cleanup=",
+                "withRedacted",
             ],
         )
     except getopt.GetoptError:
@@ -538,6 +541,9 @@ def main() -> None:
         if opt == "-h":
             usage()
             sys.exit(0)
+
+        if opt in ("--withRedacted"):
+            WithRedacted = True
 
         if opt in ("-a", "--all"):
             testAllTld = True
@@ -597,13 +603,15 @@ def main() -> None:
             if domain not in domains:
                 domains.append(domain)
 
+    if Verbose:
+        print(f"{name} SIMPLISTIC: {SIMPLISTIC}", file=sys.stderr)
+
     if Ruleset is True and len(domains):
         for domain in domains:
             ShowRuleset(domain)
         sys.exit(0)
 
     if testAllTld:
-        print("## ===== TEST CURRENT TLD's")
         allMetaTld = makeMetaAllCurrentTld(allHaving, allRegex)
         testDomains(allMetaTld)
         showFailures()
