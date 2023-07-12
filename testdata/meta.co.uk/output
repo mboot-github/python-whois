@@ -7,10 +7,10 @@ registrant_country str               ''
 creation_date      datetime.datetime 2001-11-01 00:00:00
 expiration_date    datetime.datetime 2029-11-01 00:00:00
 last_updated       datetime.datetime 2022-07-28 00:00:00
+dnssec             bool              False
 status             str               'Registered until expiry date.'
 statuses           list              ['Registered until expiry date.']
-dnssec             bool              False
 name_servers       list              ['a.ns.facebook.com', 'b.ns.facebook.com', 'c.ns.facebook.com', 'd.ns.facebook.com']
 owner              str               ''
 registrant         str               'Meta Platforms, Inc.'
-emails             list              ['']
+emails             list              []

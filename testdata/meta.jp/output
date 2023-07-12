@@ -7,9 +7,9 @@ registrant_country str               ''
 creation_date      datetime.datetime 2009-07-10 00:00:00
 expiration_date    datetime.datetime 2023-07-31 00:00:00
 last_updated       datetime.datetime 2022-07-31 18:05:08
+dnssec             bool              False
 status             str               'Active'
 statuses           list              ['Active']
-dnssec             bool              False
 name_servers       list              ['ns.meta.jp']
 registrant         str               'METATECHNO INC.'
 emails             list              ['itjpnc@meta.co.jp']

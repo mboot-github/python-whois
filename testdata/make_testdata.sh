@@ -37,7 +37,7 @@ makeDataForDomain()
     tee "./$str/input"
 
     # dump the expected output as output
-    ../bin/test2.py -d "$str" |
+    ../test2.py -d "$str" |
     tee "./$str/output"
 
     # dump the nameservers via host
