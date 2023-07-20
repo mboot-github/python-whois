@@ -258,6 +258,7 @@ def _doOneLookup(
     with_cleanup_results: bool = False,
     include_raw_whois_text: bool = False,
     timeout: Optional[float] = None,
+    parse_partial_response: bool = False,
     wh: str = "whois",
     simplistic: bool = False,
     withRedacted: bool = False,
@@ -274,6 +275,7 @@ def _doOneLookup(
             server=server,
             verbose=verbose,
             timeout=timeout,
+            parse_partial_response=parse_partial_response,
             wh=wh,
             simplistic=simplistic,
         )
@@ -344,6 +346,7 @@ def query(
     include_raw_whois_text: bool = False,
     return_raw_text_for_unsupported_tld: bool = False,
     timeout: Optional[float] = None,
+    parse_partial_response: bool = False,
     cmd: str = "whois",
     simplistic: bool = False,
     withRedacted: bool = False,
@@ -366,6 +369,8 @@ def query(
     return_raw_text_for_unsupported_tld:
                         if the tld is unsupported, just try it anyway but return only the raw text.
     timeout:            timeout in seconds for the whois command to return a result.
+    parse_partial_response:
+                        try to parse partial response when cmd timed out (stdbuf should be in PATH for best results)
     cmd:                explicitly specify the path to the whois you want to use.
     simplistic:         when simplistic is True we return None for most exceptions and dont pass info why we have no data.
     withRedacted:       show redacted output , default no redacted data is shown
@@ -464,6 +469,7 @@ def query(
             with_cleanup_results=with_cleanup_results,
             include_raw_whois_text=include_raw_whois_text,
             timeout=timeout,
+            parse_partial_response=parse_partial_response,
             wh=wh,
             simplistic=simplistic,
             withRedacted=withRedacted,

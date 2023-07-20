@@ -27,18 +27,18 @@ NONESTRINGS: List[str] = [
     "the domain has not been registered",
     "no match found for",
     "no matching record",
+    "no match",
     "not found",
     "no data found",
     "no entries found",
-    "status: free",
+    # "status: free", # we should not interprete the result if there is a result
     "no such domain",
     "the queried object does not exist",
     "domain you requested is not known",
-    "status: available",
+    # "status: available", # we should not interprete the result if there is a result
     "no whois server is known for this kind of object",
     "nameserver not found",
     "malformed request",  # this means this domain is not in whois as it is on top of a registered domain
-    "no match",
     "registration of this domain is restricted",
     "restricted",
     "this domain is currently available",
@@ -288,7 +288,7 @@ def cleanupWhoisResponse(
 
 
 def NoneStrings() -> List[str]:
-    return sorted(NONESTRINGS)
+    return NONESTRINGS
 
 
 def NoneStringsAdd(aString: str) -> None:
@@ -297,7 +297,7 @@ def NoneStringsAdd(aString: str) -> None:
 
 
 def QuotaStrings() -> List[str]:
-    return sorted(QUOTASTRINGS)
+    return QUOTASTRINGS
 
 
 def QuotaStringsAdd(aString: str) -> None:
