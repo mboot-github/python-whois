@@ -289,6 +289,7 @@ ZZ["com.au"] = {
 
 ZZ["com.tr"] = {
     "extend": "com",
+    "_server":"whois.trabis.gov.tr"
     "domain_name": r"\*\* Domain Name:\s?(.+)",
     "registrar": r"Organization Name\s+:\s?(.+)",
     "registrant": r"\*\* Registrant:\s+?(.+)",
@@ -305,6 +306,11 @@ ZZ["edu.tr"] = {"extend": "com.tr"}
 ZZ["org.tr"] = {"extend": "com.tr"}
 
 ZZ["net.tr"] = {"extend": "com.tr"}
+
+ZZ["gov.tr"] = {
+    "extend": "com.tr",
+    "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?"
+    }
 
 ZZ["co.il"] = {
     "extend": "com",
@@ -1940,12 +1946,10 @@ ZZ["xn--3ds443g"] = {"extend": "_teleinfo"}
 ZZ["_privateReg"] = {"_privateRegistry": True}
 
 ZZ["al"] = {"extend": "_privateReg"}
-ZZ["az"] = {"extend": "_privateReg"}
 ZZ["ba"] = {"extend": "_privateReg"}
 ZZ["ch"] = {"extend": "_privateReg"}
 ZZ["cv"] = {"extend": "_privateReg"}  # Cape Verde
 ZZ["cw"] = {"extend": "_privateReg"}
-ZZ["es"] = {"extend": "_privateReg"}
 ZZ["ga"] = {"extend": "_privateReg"}
 ZZ["gr"] = {"extend": "_privateReg"}
 ZZ["hu"] = {"extend": "_privateReg"}
@@ -1998,6 +2002,32 @@ ZZ["noip.org"] = {"extend": "_privateReg"}  # dynamic dns without any whois
 # https://www.rfc-editor.org/rfc/rfc7686.html
 # .onion names are used to provide access to end to end encrypted, secure, anonymized services;
 ZZ["onion"] = {"extend": "_privateReg"}
+
+ZZ["az"] = {
+    "extend": None,
+    "_server":"whois.iana.org",
+    "registrant": r"organisation:\s?(.+)",
+    "creation_date": r"created:\s?(.+)",
+    "updated_date": r"changed:\s?(.+)",
+    "name_servers": r"nserver:\s*(.+)\s*",
+    "expiration_date": None,
+    "status": r"status:\s?(.+)",
+    "e-mail": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+    "registrant_country": None,
+
+}
+ZZ["es"] = {
+    "extend": None,
+    "_server":"whois.iana.org",
+    "registrant": r"organisation:\s?(.+)",
+    "creation_date": r"created:\s?(.+)",
+    "updated_date": r"changed:\s?(.+)",
+    "expiration_date": None,
+    "name_servers": r"nserver:\s*(.+)\s*",
+    "status": r"status:\s?(.+)",
+    "e-mail": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+    "registrant_country": None,
+}
 
 # backend registry for domain names ending in GG, JE, and AS.
 # lines may have \r actually before \n , updated all 3 domains return all nameservers
