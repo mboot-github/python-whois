@@ -77,6 +77,7 @@ __all__ = [
     "QuotaStrings",
     "QuotaStringsAdd",
     "cleanupWhoisResponse",
+    "getTestHint",
 ]
 
 WHOISDOMAIN: str = ""
@@ -178,6 +179,7 @@ def _doServerHintsForThisTld(
     server: Optional[str],
     verbose: bool = False,
 ) -> Optional[str]:
+    # note _server hints currently are not passes down when using "extend", that may have been my error during the initial implementation
     # allow server hints using "_server" from the tld_regexpr.py file
     thisTldServer = thisTld.get("_server")
     if server is None and thisTldServer:
@@ -495,3 +497,14 @@ get = _result2dict(query)
 
 def getVersion() -> str:
     return VERSION
+
+
+def getTestHint(tld: str) -> Optional[str]:
+    if tld not in ZZ:
+        return None
+
+    k: str = "_test"
+    if k not in ZZ[tld]:
+        return None
+
+    return str(ZZ[tld][k])

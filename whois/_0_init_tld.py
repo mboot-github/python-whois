@@ -128,10 +128,10 @@ def buildRegCollection(zz: Dict[str, Any]) -> Dict[str, Any]:
             if key is None:
                 continue
 
-            if key.startswith("_"):
+            if key.startswith("_"):  # skip meta keys, they are not regexes
                 continue
 
-            if key in ["extend"]:
+            if key in ["extend"]:  # this actually should have been a meta key: "_extend"
                 continue
 
             if key not in regCollection:
