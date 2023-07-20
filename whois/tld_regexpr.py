@@ -298,22 +298,21 @@ ZZ["com.tr"] = {
     "creation_date": r"Created on\.+:\s?(.+).",
     "expiration_date": r"Expires on\.+:\s?(.+).",  # note the trailing . on both dates fields
     "updated_date": "",
-    # "name_servers": r"\*\* Domain Servers:\n(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)\n?",
     "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?",  # allow for ip addresses after the name server
     "status": None,
     "_server": "whois.trabis.gov.tr",
-    # "_test": "googl.com.tr"
+    "_test": "google.com.tr",
 }
 
 ZZ["gov.tr"] = {
     "extend": "com.tr",
-    # "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?", # this has ip addresses after the nameserver
-    # "_test": "www.turkiye.gov.tr",
+    "_server": "whois.trabis.gov.tr",
+    "_test": "www.turkiye.gov.tr",
 }
 
-ZZ["edu.tr"] = {"extend": "com.tr"}
-ZZ["org.tr"] = {"extend": "com.tr"}
-ZZ["net.tr"] = {"extend": "com.tr"}
+ZZ["edu.tr"] = {"extend": "com.tr", "_server": "whois.trabis.gov.tr", "_test": "anadolu.edu.tr"}
+ZZ["org.tr"] = {"extend": "com.tr", "_server": "whois.trabis.gov.tr", "_test": "dergipark.org.tr"}
+ZZ["net.tr"] = {"extend": "com.tr", "_server": "whois.trabis.gov.tr", "_test": "trt.net.tr"}
 
 
 ZZ["co.il"] = {

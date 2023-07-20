@@ -114,7 +114,8 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * suppress messages to stderr if not verbose=True
 
 2023-07-20: maarten_boot
-* sync with https://github.com/mboot-github/WhoisDomain (gov.tr), (com.ru, msk.ru, spb.ru), (option to preserve partial output after timeout)
+* sync with https://github.com/mboot-github/WhoisDomain; 1.20230720.1; (gov.tr), (com.ru, msk.ru, spb.ru), (option to preserve partial output after timeout)
+* sync with https://github.com/mboot-github/WhoisDomain; 1.20230720.2; add t_test hint support; fix some server hints
 
 ## Support
  * Python 3.x is supported for x >= 6
