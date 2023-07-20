@@ -14,9 +14,8 @@ from typing import (
     Dict,
 )
 
-import whois  # to be compatible with dannycork
-
 # import whoisdomain as whois  # to be compatible with dannycork
+import whois
 
 # if we are not running as test2.py run in a simplistic way
 SIMPLISTIC: bool = False

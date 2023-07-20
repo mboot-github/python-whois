@@ -24,7 +24,7 @@ ZZ["com"] = {
     "extend": None,
     "domain_name": r"Domain Name\s*:\s*(.+)",
     "registrar": r"Registrar:\s?(.+)",
-    "registrant": r"Registrant\s*Organi(?:s|z)ation:\s?(.+)",
+    "registrant": r"Registrant\s*Organi(?:s|z)ation:([^\n]*)",  # this seems to match Registrant Street: if Registrant Organization: is empty
     "registrant_country": r"Registrant Country:\s?(.+)",
     "creation_date": r"Creation Date:[ \t]*([^\n]*)",
     "expiration_date": r"(?:Expiry|Expiration) Date:[ \t]*([^\n]*)",  # Expiration Date
@@ -287,6 +287,8 @@ ZZ["com.au"] = {
     "extend": "au",
 }
 
+ZZ["tr"] = {"extend": "_privateReg"}  # whois.nic.tr is an alias for whois.trabis.gov.tr.
+
 ZZ["com.tr"] = {
     "extend": "com",
     "domain_name": r"\*\* Domain Name:\s?(.+)",
@@ -296,15 +298,23 @@ ZZ["com.tr"] = {
     "creation_date": r"Created on\.+:\s?(.+).",
     "expiration_date": r"Expires on\.+:\s?(.+).",  # note the trailing . on both dates fields
     "updated_date": "",
-    "name_servers": r"\*\* Domain Servers:\n(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)\n?",
+    # "name_servers": r"\*\* Domain Servers:\n(?:(\S+)\n)(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)\n?",
+    "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?",  # allow for ip addresses after the name server
     "status": None,
+    "_server": "whois.trabis.gov.tr",
+    # "_test": "googl.com.tr"
+}
+
+ZZ["gov.tr"] = {
+    "extend": "com.tr",
+    # "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?", # this has ip addresses after the nameserver
+    # "_test": "www.turkiye.gov.tr",
 }
 
 ZZ["edu.tr"] = {"extend": "com.tr"}
-
 ZZ["org.tr"] = {"extend": "com.tr"}
-
 ZZ["net.tr"] = {"extend": "com.tr"}
+
 
 ZZ["co.il"] = {
     "extend": "com",
@@ -664,10 +674,14 @@ ZZ["lt"] = {
 }
 
 ZZ["lv"] = {
-    "extend": "ru",
-    "creation_date": r"Registered:\s*(.+)\n",
+    "extend": "com",
+    "domain_name": r"domain:\s*(.+)",
+    "creation_date": r"Registered:\s*(.+)\n",  # actually there seem to be no dates
     "updated_date": r"Changed:\s*(.+)\n",
+    "expiration_date": r"paid-till:\s*(.+)",
+    "name_servers": r"nserver:\s*(.+)",
     "status": r"Status:\s?(.+)",
+    "_server": "whois.nic.lv",
 }
 
 ZZ["me"] = {
@@ -893,28 +907,25 @@ ZZ["red"] = {
 
 ZZ["ru"] = {
     "extend": "com",
-    "domain_name": r"\ndomain:\s*(.+)",
-    "creation_date": r"\ncreated:\s*(.+)",
-    "expiration_date": r"\npaid-till:\s*(.+)",
-    "name_servers": r"\nnserver:\s*(.+)",
-    "status": r"\nstate:\s*(.+)",
+    "domain_name": r"domain:\s*(.+)",
+    "creation_date": r"created:\s*(.+)",
+    "expiration_date": r"paid-till:\s*(.+)",
+    "name_servers": r"nserver:\s*(.+)",
+    "status": r"state:\s*(.+)",
+    "_server": "whois.tcinet.ru",
 }
+ZZ["com.ru"] = {"extend": "ru", "_server": "whois.nic.ru"}  # test: mining.com.ru
+
+# Russian city sub-domains
+ZZ["msk.ru"] = {"extend": "com.ru"}  # test with: mining.msk.ru
+ZZ["spb.ru"] = {"extend": "com.ru"}  # test with iac.spb.ru
 
 # Rossíyskaya Federátsiya) is the Cyrillic country code top-level domain for the Russian Federation,
 # In the Domain Name System it has the ASCII DNS name xn--p1ai.
 
-ZZ["ru.rf"] = {
-    "extend": "ru",
-    "_server": "whois.tcinet.ru",
-}
-ZZ["рф"] = {
-    "extend": "ru",
-    "_server": "whois.tcinet.ru",
-}
-ZZ["xn--p1ai"] = {
-    "extend": "ru",
-    "_server": "whois.tcinet.ru",
-}
+ZZ["ru.rf"] = {"extend": "ru"}
+ZZ["рф"] = {"extend": "ru"}
+ZZ["xn--p1ai"] = {"extend": "ru"}
 
 ZZ["sa"] = {
     "extend": "com",
@@ -1161,23 +1172,10 @@ ZZ["org.za"] = {"extend": "za", "_server": "org-whois.registry.net.za"}
 ZZ["net.za"] = {"extend": "za", "_server": "net-whois.registry.net.za"}
 ZZ["co.za"] = {"extend": "za", "_server": "coza-whois.registry.net.za"}
 
-# Kenia
-# ke : http://www.kenic.or.ke/index.php/en/ke-domains/ke-domains
-ZZ["ke"] = {"extend": "com", "_server": "whois.kenic.or.ke"}
-ZZ["ac.ke"] = {"extend": "ke"}
-ZZ["co.ke"] = {"extend": "ke"}
-ZZ["go.ke"] = {"extend": "ke"}
-ZZ["info.ke"] = {"extend": "ke"}
-ZZ["me.ke"] = {"extend": "ke"}
-ZZ["mobi.ke"] = {"extend": "ke"}
-ZZ["ne.ke"] = {"extend": "ke"}
-ZZ["or.ke"] = {"extend": "ke"}
-ZZ["sc.ke"] = {"extend": "ke"}
 ZZ["gy"] = {"extend": "com"}
 
 # Multiple initialization
 ZZ["ca"] = {"extend": "bank"}
-
 # Rwanda: https://en.wikipedia.org/wiki/.rw
 ZZ["rw"] = {"extend": "com", "_server": "whois.ricta.org.rw"}
 ZZ[".co.rw"] = {"extend": "rw"}
@@ -1957,6 +1955,19 @@ ZZ["py"] = {"extend": "_privateReg"}  # Paraguay:https://www.iana.org/domains/ro
 ZZ["com.py"] = {"extend": "_privateReg"}
 ZZ["sr"] = {"extend": "_privateReg"}
 
+# Kenia
+# ke : http://www.kenic.or.ke/index.php/en/ke-domains/ke-domains
+ZZ["ke"] = {"extend": "com", "_server": "whois.kenic.or.ke"}
+ZZ["ac.ke"] = {"extend": "ke"}
+ZZ["co.ke"] = {"extend": "ke"}
+ZZ["go.ke"] = {"extend": "ke"}
+ZZ["info.ke"] = {"extend": "ke"}
+ZZ["me.ke"] = {"extend": "ke"}
+ZZ["mobi.ke"] = {"extend": "ke"}
+ZZ["ne.ke"] = {"extend": "ke"}
+ZZ["or.ke"] = {"extend": "ke"}
+ZZ["sc.ke"] = {"extend": "ke"}
+
 # https://www.iana.org/domains/root/db/td.html
 # td = {"extend": "_privateReg"} # Chad (French: Tchad) made available for use in 1997.
 
@@ -2073,7 +2084,6 @@ ZZ["org.ph"] = {"extend": "ph"}
 ZZ["net.ph"] = {"extend": "ph"}
 ZZ["zm"] = {"extend": "com"}
 ZZ["sy"] = {"extend": "_privateReg", "_server": "whois.tld.sy"}
-ZZ["tr"] = {"extend": "_privateReg"}
 ZZ["onl"] = {"extend": "com"}
 ZZ["blue"] = {"extend": "com"}
 ZZ["garden"] = {"extend": "com", "_server": "whois.nic.garden"}

@@ -32,7 +32,7 @@ This package will not support querying ip CIDR ranges or AS information
 
 ## Docker
  * docker pull mbootgithub/whoisdomain:latest
- 
+
 ## Help Wanted
 Your contributions are welcome, look for the Help wanted tag https://github.com/DannyCork/python-whois/labels/help%20wanted
 
@@ -112,6 +112,9 @@ Raise an issue https://github.com/DannyCork/python-whois/issues/new
  * whois.QuotaStringsAdd(str) to add additional strings for over quota detection. whois.QuotaStrings() lists the current configured strings
  * whois.NoneStringsAdd(str) to add additional string for NoSuchDomainExists detection (whois.query() retuning None). whois.NoneStrings() lsts the current configured strings
  * suppress messages to stderr if not verbose=True
+
+2023-07-20: maarten_boot
+* sync with https://github.com/mboot-github/WhoisDomain (gov.tr), (com.ru, msk.ru, spb.ru), (option to preserve partial output after timeout)
 
 ## Support
  * Python 3.x is supported for x >= 6
