@@ -289,7 +289,7 @@ ZZ["com.au"] = {
 
 ZZ["com.tr"] = {
     "extend": "com",
-    "_server":"whois.trabis.gov.tr"
+    "_server": "whois.trabis.gov.tr",
     "domain_name": r"\*\* Domain Name:\s?(.+)",
     "registrar": r"Organization Name\s+:\s?(.+)",
     "registrant": r"\*\* Registrant:\s+?(.+)",
@@ -309,8 +309,8 @@ ZZ["net.tr"] = {"extend": "com.tr"}
 
 ZZ["gov.tr"] = {
     "extend": "com.tr",
-    "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?"
-    }
+    "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?",
+}
 
 ZZ["co.il"] = {
     "extend": "com",
@@ -2005,7 +2005,7 @@ ZZ["onion"] = {"extend": "_privateReg"}
 
 ZZ["az"] = {
     "extend": None,
-    "_server":"whois.iana.org",
+    "_server": "whois.iana.org",
     "registrant": r"organisation:\s?(.+)",
     "creation_date": r"created:\s?(.+)",
     "updated_date": r"changed:\s?(.+)",
@@ -2014,11 +2014,10 @@ ZZ["az"] = {
     "status": r"status:\s?(.+)",
     "e-mail": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
     "registrant_country": None,
-
 }
 ZZ["es"] = {
     "extend": None,
-    "_server":"whois.iana.org",
+    "_server": "whois.iana.org",
     "registrant": r"organisation:\s?(.+)",
     "creation_date": r"created:\s?(.+)",
     "updated_date": r"changed:\s?(.+)",
