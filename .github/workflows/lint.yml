@@ -17,4 +17,4 @@ jobs:
           pip install mypy tld
           python3 -m pip install types-redis
       - name: Run mypy
-        run: mypy --strict *.py whoisdomain
+        run: mypy --strict *.py whois
