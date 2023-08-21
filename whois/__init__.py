@@ -74,6 +74,7 @@ __all__ = [
     # from init_tld
     "validTlds",
     "TLD_RE",
+    "mergeExternalDictWithRegex",
     # from version
     "VERSION",
     # from parameterContext
