@@ -13,7 +13,7 @@ we DONT have xn--hxt814e 网店 (webshop)
 """
 
 
-def t1(domain: str, text: str):
+def t1(domain: str, text: str) -> None:
     print(f"{text}: {domain}")
     try:
         d = whois.query(domain)
@@ -25,7 +25,7 @@ def t1(domain: str, text: str):
         print(domain, e)
 
 
-def xMain():
+def xMain() -> None:
     aDictToTestOverride = {
         "si": {  # changing a existing one
             "domain_name": r"domain:\s+(.+)",

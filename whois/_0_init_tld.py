@@ -12,45 +12,17 @@ from .exceptions import (
     UnknownTld,
 )
 
+# from .parameterContext import ParameterContext # not needed yet here
+
 Verbose: bool = False
 TLD_RE: Dict[str, Dict[str, Any]] = {}
 REG_COLLECTION_BY_KEY: Dict[str, Any] = {}
 
 
-def validTlds() -> List[str]:
-    return sorted(TLD_RE.keys())
-
-
-def filterTldToSupportedPattern(
-    domain: str,
-    d: List[str],
-    verbose: bool = False,
-) -> str:
-    # we have max 2 levels so first check if the last 2 are in our list
-    tld = f"{d[-2]}.{d[-1]}"
-    if tld in ZZ:
-        if verbose:
-            print(f"we have {tld}", file=sys.stderr)
-        return tld
-
-    # if not check if the last item  we have
-    tld = f"{d[-1]}"
-    if tld in ZZ:
-        if verbose:
-            print(f"we have {tld}", file=sys.stderr)
-        return tld
-
-    if verbose:
-        print(f"we DONT have {tld}", file=sys.stderr)
-
-    # if not fail
-    a = f"The TLD {tld} is currently not supported by this package."
-    b = "Use validTlds() to see what toplevel domains are supported."
-    msg = f"{a} {b}"
-    raise UnknownTld(msg)
-
-
-def get_tld_re(tld: str, override: bool = False) -> Dict[str, Any]:
+def _get_tld_re(
+    tld: str,
+    override: bool = False,
+) -> Dict[str, Any]:
     if override is False:
         if tld in TLD_RE:
             return TLD_RE[tld]
@@ -59,7 +31,7 @@ def get_tld_re(tld: str, override: bool = False) -> Dict[str, Any]:
 
     extend = v.get("extend")
     if extend:
-        e = get_tld_re(extend)  # call recursive
+        e = _get_tld_re(extend)  # call recursive
         tmp = e.copy()
         tmp.update(v)  # and merge results in tmp with caller data in v
         # The update() method updates the dictionary with the elements
@@ -87,22 +59,14 @@ def get_tld_re(tld: str, override: bool = False) -> Dict[str, Any]:
     return tld_re
 
 
-def mergeExternalDictWithRegex(aDict: Dict[str, Any] = {}) -> None:
-    # merge in ZZ, this extends ZZ with new tld's and overrides existing tld's
-    for tld in aDict.keys():
-        ZZ[tld] = aDict[tld]
-
-    # reprocess te regexes we newly defined or overrode
-    override = True
-    for tld in aDict.keys():
-        initOne(tld, override)
-
-
-def initOne(tld: str, override: bool = False) -> None:
+def _initOne(
+    tld: str,
+    override: bool = False,
+) -> None:
     if tld[0] == "_":  # skip meta domain patterns , these are not domains just handles we reuse
         return
 
-    what = get_tld_re(tld, override)
+    what = _get_tld_re(tld, override)
 
     # test if the string is identical after idna conversion
     d = tld.split(".")
@@ -117,7 +81,9 @@ def initOne(tld: str, override: bool = False) -> None:
         print(f"{tld} -> {tld2}", file=sys.stderr)
 
 
-def buildRegCollection(zz: Dict[str, Any]) -> Dict[str, Any]:
+def _buildRegCollection(
+    zz: Dict[str, Any],
+) -> Dict[str, Any]:
     regCollection: Dict[str, Any] = {}
 
     # get all regexes
@@ -152,15 +118,65 @@ def buildRegCollection(zz: Dict[str, Any]) -> Dict[str, Any]:
     return regCollection
 
 
-def initOnImport() -> None:
+def _initOnImport() -> None:
     global REG_COLLECTION_BY_KEY
     # here we run the import processing
     # we load all tld's on import so we dont lose time later
     # we keep ZZ so we can later reuse it if we want to aoverrid or update tld's
-    REG_COLLECTION_BY_KEY = buildRegCollection(ZZ)
+    REG_COLLECTION_BY_KEY = _buildRegCollection(ZZ)
     override = False
     for tld in ZZ.keys():
-        initOne(tld, override)
+        _initOne(tld, override)
 
 
-initOnImport()
+# ========================================
+# external use
+
+
+def filterTldToSupportedPattern(
+    domain: str,
+    d: List[str],
+    verbose: bool = False,
+) -> str:
+    # we have max 2 levels so first check if the last 2 are in our list
+    tld = f"{d[-2]}.{d[-1]}"
+    if tld in ZZ:
+        if verbose:
+            print(f"we have {tld}", file=sys.stderr)
+        return tld
+
+    # if not check if the last item  we have
+    tld = f"{d[-1]}"
+    if tld in ZZ:
+        if verbose:
+            print(f"we have {tld}", file=sys.stderr)
+        return tld
+
+    if verbose:
+        print(f"we DONT have {tld}", file=sys.stderr)
+
+    # if not fail
+    a = f"The TLD {tld} is currently not supported by this package."
+    b = "Use validTlds() to see what toplevel domains are supported."
+    msg = f"{a} {b}"
+    raise UnknownTld(msg)
+
+
+def mergeExternalDictWithRegex(
+    aDict: Dict[str, Any] = {},
+) -> None:
+    # merge in ZZ, this extends ZZ with new tld's and overrides existing tld's
+    for tld in aDict.keys():
+        ZZ[tld] = aDict[tld]
+
+    # reprocess te regexes we newly defined or overrode
+    override = True
+    for tld in aDict.keys():
+        _initOne(tld, override)
+
+
+def validTlds() -> List[str]:
+    return sorted(TLD_RE.keys())
+
+
+_initOnImport()

@@ -29,6 +29,7 @@ Ruleset: bool = False
 Failures: Dict[str, Any] = {}
 IgnoreReturncode: bool = False
 TestAllTld: bool = False
+TestRunOnly: bool = False
 
 
 class ResponseCleaner:
@@ -207,23 +208,26 @@ def testItem(
     d: str,
     printgetRawWhoisResult: bool = False,
 ) -> None:
+    global IgnoreReturncode
+    global Verbose
     global PrintGetRawWhoisResult
     global SIMPLISTIC
     global WithRedacted
+
     global TestAllTld
+    global TestRunOnly
 
-    timeout = 30  # seconds
-
-    w = whois.query(
-        d,
+    pc = whois.ParameterContext(
         ignore_returncode=IgnoreReturncode,
         verbose=Verbose,
         internationalized=True,
         include_raw_whois_text=PrintGetRawWhoisResult,
-        timeout=timeout,
         simplistic=SIMPLISTIC,
         withRedacted=WithRedacted,
     )
+
+    # use the new query (can also simply use q2()
+    w = whois.query(domain=d, pc=pc)
 
     if w is None:
         print("None")
@@ -348,30 +352,65 @@ def getAllCurrentTld() -> List[str]:
     return whois.validTlds()
 
 
+def appendHintOrMeta(
+    rr: List[str],
+    allRegex: Optional[str],
+    tld: str,
+) -> None:
+    global TestAllTld
+    global TestRunOnly
+
+    if TestAllTld is True:
+        hint = whois.getTestHint(tld)
+        hint = hint if hint else f"meta.{tld}"
+        rr.append(f"{hint}")
+    else:
+        rr.append(f"meta.{tld}")
+
+
+def appendHint(
+    rr: List[str],
+    allRegex: Optional[str],
+    tld: str,
+) -> None:
+    global TestAllTld
+    global TestRunOnly
+
+    if TestAllTld is True:
+        hint = whois.getTestHint(tld)
+        if hint:
+            rr.append(f"{hint}")
+
+
 def makeMetaAllCurrentTld(
     allHaving: Optional[str] = None,
     allRegex: Optional[str] = None,
 ) -> List[str]:
-    global TestAllTld
-
-    def appendHint(
-        allRegex: Optional[str],
-        tld: str,
-    ) -> None:
-        if TestAllTld is True:
-            hint = whois.getTestHint(tld)
-            hint = hint if hint else f"meta.{tld}"
-            rr.append(f"{hint}")
-        else:
-            rr.append(f"meta.{tld}")
 
     rr: List[str] = []
     for tld in getAllCurrentTld():
-        if allRegex:
-            if re.search(allRegex, tld):
-                appendHint(allRegex, tld)
-        else:
-            appendHint(allRegex, tld)
+        if allRegex is None:
+            appendHintOrMeta(rr, allRegex, tld)
+            continue
+
+        if re.search(allRegex, tld):
+            appendHintOrMeta(rr, allRegex, tld)
+
+    return rr
+
+
+def makeTestAllCurrentTld(
+    allHaving: Optional[str] = None,
+    allRegex: Optional[str] = None,
+) -> List[str]:
+
+    rr: List[str] = []
+    for tld in getAllCurrentTld():
+        if allRegex is None:
+            appendHint(rr, allRegex, tld)
+            continue
+        if re.search(allRegex, tld):
+            appendHint(rr, allRegex, tld)
 
     return rr
 
@@ -494,7 +533,7 @@ def main() -> None:
     global SIMPLISTIC
     global WithRedacted
     global TestAllTld
-
+    global TestRunOnly
     name: str = os.path.basename(sys.argv[0])
     if name == "test2.py":
         SIMPLISTIC = False
@@ -504,8 +543,10 @@ def main() -> None:
     try:
         opts, args = getopt.getopt(
             sys.argv[1:],
-            "jRSpvVIhaf:d:D:r:H:C:",
+            "TtjRSpvVIhaf:d:D:r:H:C:",
             [
+                "Testing",
+                "test",
                 "json",
                 "Ruleset",
                 "SupportedTld",
@@ -580,6 +621,20 @@ def main() -> None:
         if opt in ("-j", "--json"):
             PrintJson = True
 
+        if opt in ("-T", "--Testing"):
+            whois.setMyCache(
+                whois.DBMCache(
+                    dbmFile="testfile.dbm",
+                    verbose=Verbose,
+                ),
+            )
+
+        if opt in ("-t", "--test"):
+            # collect all _test entries defined and only run those,
+            # o not run the default meta.tld
+            TestAllTld = True
+            TestRunOnly = True
+
         if opt in ("-R", "--Ruleset"):
             Ruleset = True
 
@@ -627,8 +682,11 @@ def main() -> None:
         sys.exit(0)
 
     if TestAllTld:
-        allMetaTld = makeMetaAllCurrentTld(allHaving, allRegex)
-        testDomains(allMetaTld)
+        if TestRunOnly is False:
+            testDomains(makeMetaAllCurrentTld(allHaving, allRegex))
+        else:
+            testDomains(makeTestAllCurrentTld(allHaving, allRegex))
+
         showFailures()
         sys.exit(0)
 
@@ -660,4 +718,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+
     main()

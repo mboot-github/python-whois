@@ -7,13 +7,14 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-      - name: Set up Python 3.x
+      - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
-          python-version: 3.x
+          python-version: 3.9
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mypy
+          pip install mypy tld
+          python3 -m pip install types-redis
       - name: Run mypy
-        run: mypy --strict whois
+        run: mypy --strict *.py whois
