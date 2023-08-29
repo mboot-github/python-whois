@@ -4,40 +4,15 @@ from typing import (
     Any,
     List,
     Dict,
-    Optional,
 )
-
-from .parameterContext import ParameterContext
 
 from .handleDateStrings import str_to_date
 
+from .context.parameterContext import ParameterContext
+from .context.dataContext import DataContext
+
 
 class Domain:
-    # mandatory: fields we expect always to be present (but can be None or '')
-    name: Optional[str] = None
-    tld: Optional[str] = None
-    registrar: Optional[str] = None
-    registrant_country: Optional[str] = None
-
-    creation_date = None
-    expiration_date = None
-    last_updated = None
-
-    status: Optional[str] = None
-    statuses: List[str] = []
-
-    dnssec: bool = False
-    name_servers: List[str] = []
-
-    # optional: fields that may not be present at all, many have no regex
-    owner: Optional[str] = None
-    abuse_contact = None
-    reseller = None
-    registrant = None
-    admin = None
-    emails: List[str] = []
-    _exception: Optional[str] = None
-
     def _cleanupArray(
         self,
         data: List[str],
@@ -60,7 +35,7 @@ class Domain:
             for y in x:
                 tmp.append(y.strip().lower())
 
-        self.name_servers = []
+        self.name_servers: List[str] = []
         for x in tmp:
             x = x.strip(" .")  # remove any leading or trailing spaces and/or dots
             if x:
@@ -78,8 +53,12 @@ class Domain:
         data: Dict[str, Any],
     ) -> None:
         self.status = data["status"][0].strip()
-        self.statuses = sorted(  # sorted added to get predictable output during test
-            list(  # list(set(...))) to deduplicate results
+
+        # sorted added to get predictable output during test
+        # list(set(...))) to deduplicate results
+
+        self.statuses = sorted(
+            list(
                 set(
                     [s.strip() for s in data["status"]],
                 ),
@@ -92,7 +71,8 @@ class Domain:
         self,
         data: Dict[str, Any],
     ) -> None:
-        # optional fiels
+        # optional fields
+
         if "owner" in data:
             self.owner = data["owner"][0].strip()
 
@@ -103,14 +83,20 @@ class Domain:
             self.reseller = data["reseller"][0].strip()
 
         if "registrant" in data:
-            self.registrant = data["registrant"][0].strip()
+            if "registrant_organization" in data:
+                self.registrant = data["registrant_organization"][0].strip()
+            else:
+                self.registrant = data["registrant"][0].strip()
 
         if "admin" in data:
             self.admin = data["admin"][0].strip()
 
         if "emails" in data:
-            self.emails = sorted(  # sorted added to get predictable output during test
-                list(  # list(set(...))) to deduplicate results
+            # sorted added to get predictable output during test
+            # list(set(...))) to deduplicate results
+
+            self.emails = sorted(
+                list(
                     set(
                         [s.strip() for s in data["emails"]],
                     ),
@@ -121,49 +107,47 @@ class Domain:
 
     def __init__(
         self,
-        data: Dict[str, Any],
         pc: ParameterContext,
-        whoisStr: Optional[str] = None,
-        exeptionStr: Optional[str] = None,
+        dc: DataContext,
     ):
-        if pc.include_raw_whois_text and whoisStr is not None:
-            self.text = whoisStr
+        if pc.include_raw_whois_text and dc.whoisStr is not None:
+            self.text = dc.whoisStr
 
-        if exeptionStr is not None:
-            self._exception = exeptionStr
+        if dc.exeptionStr is not None:
+            self._exception = dc.exeptionStr
             return
 
-        self.name = data["domain_name"][0].strip().lower()
-        self.tld = data["tld"].lower()
+        self.name = dc.data["domain_name"][0].strip().lower()
+        self.tld = dc.data["tld"].lower()
 
         if pc.return_raw_text_for_unsupported_tld is True:
             return
 
         # process mandatory fields that we expect always to be present
         # even if we have None or ''
-        self.registrar = data["registrar"][0].strip()
-        self.registrant_country = data["registrant_country"][0].strip()
+        self.registrar = dc.data["registrar"][0].strip()
+        self.registrant_country = dc.data["registrant_country"][0].strip()
 
         # date time items
         self.creation_date = str_to_date(
-            data["creation_date"][0],
+            dc.data["creation_date"][0],
             self.tld,
             verbose=pc.verbose,
         )
         self.expiration_date = str_to_date(
-            data["expiration_date"][0],
+            dc.data["expiration_date"][0],
             self.tld,
             verbose=pc.verbose,
         )
         self.last_updated = str_to_date(
-            data["updated_date"][0],
+            dc.data["updated_date"][0],
             self.tld,
             verbose=pc.verbose,
         )
 
-        self.dnssec = data["DNSSEC"]
-        self._doStatus(data)
-        self._doNameservers(data)
+        self.dnssec = dc.data["DNSSEC"]
+        self._doStatus(dc.data)
+        self._doNameservers(dc.data)
 
-        # optional fiels
-        self._doOptionalFields(data)
+        # optional fields
+        self._doOptionalFields(dc.data)

@@ -1,5 +1,4 @@
 import re
-import sys
 
 from typing import (
     Dict,
@@ -7,14 +6,13 @@ from typing import (
     Any,
 )
 
-from .tld_regexpr import ZZ
 from .exceptions import (
     UnknownTld,
 )
 
-# from .parameterContext import ParameterContext # not needed yet here
+from .tldDb.tld_regexpr import ZZ
 
-Verbose: bool = False
+
 TLD_RE: Dict[str, Dict[str, Any]] = {}
 REG_COLLECTION_BY_KEY: Dict[str, Any] = {}
 
@@ -44,12 +42,10 @@ def _get_tld_re(
     if "extend" in tmp:
         del tmp["extend"]
 
-    # we want now to exclude _server hints
+    # we want now to exclude andy key starting with _ like _server,_test, ...
+    # dont recompile each re by themselves, reuse existing compiled re
     tld_re = dict(
-        # (k, re.compile(v, re.IGNORECASE) if (isinstance(v, str) and k[0] != "_") else v) for k, v in tmp.items()
-        # dont recompile each re by themselves, reuse existing compiled re
-        (k, REG_COLLECTION_BY_KEY[k][v] if (isinstance(v, str) and k[0] != "_") else v)
-        for k, v in tmp.items()
+        (k, REG_COLLECTION_BY_KEY[k][v] if (isinstance(v, str) and k[0] != "_") else v) for k, v in tmp.items()
     )
 
     # meta domains start with _: examples _centralnic and _donuts
@@ -77,8 +73,6 @@ def _initOne(
 
     # also automatically see if we can internationalize the domains to the official ascii string
     TLD_RE[tld2] = what
-    if Verbose:
-        print(f"{tld} -> {tld2}", file=sys.stderr)
 
 
 def _buildRegCollection(
@@ -141,19 +135,12 @@ def filterTldToSupportedPattern(
     # we have max 2 levels so first check if the last 2 are in our list
     tld = f"{d[-2]}.{d[-1]}"
     if tld in ZZ:
-        if verbose:
-            print(f"we have {tld}", file=sys.stderr)
         return tld
 
     # if not check if the last item  we have
     tld = f"{d[-1]}"
     if tld in ZZ:
-        if verbose:
-            print(f"we have {tld}", file=sys.stderr)
         return tld
-
-    if verbose:
-        print(f"we DONT have {tld}", file=sys.stderr)
 
     # if not fail
     a = f"The TLD {tld} is currently not supported by this package."
@@ -169,7 +156,7 @@ def mergeExternalDictWithRegex(
     for tld in aDict.keys():
         ZZ[tld] = aDict[tld]
 
-    # reprocess te regexes we newly defined or overrode
+    # reprocess the regexes we newly defined or overrode
     override = True
     for tld in aDict.keys():
         _initOne(tld, override)

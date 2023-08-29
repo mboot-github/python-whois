@@ -105,6 +105,12 @@ ParamsStringJson: str = """
     "optional": true,
     "default": 30.0,
     "help": "timeout in seconds for the whois command to return a result."
+  },
+  "tryInstallMissingWhoisOnWindows": {
+    "type": "bool",
+    "default": false,
+    "optional": true,
+    "help": "allow auto install of sysinternals whois on windows if no whois found"
   }
 }
 """

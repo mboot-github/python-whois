@@ -4,7 +4,7 @@ from typing import (
     Any,
 )
 
-from .parameterContext import ParameterContext
+from .context.parameterContext import ParameterContext
 
 LastWhois: Dict[str, Any] = {}
 

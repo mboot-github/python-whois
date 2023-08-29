@@ -1,15 +1,13 @@
 #! /usr/bin/env python3
 import re
-import sys
+
+# import sys
 import datetime
 from .exceptions import UnknownDateFormat
 
 from typing import (
     Optional,
 )
-
-# from .parameterContext import ParameterContext
-
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [
@@ -83,9 +81,6 @@ def str_to_date(
 ) -> Optional[datetime.datetime]:
     text = text.strip().lower()
 
-    if verbose:
-        print(f"tld: {tld}; str_to_date: {text}", file=sys.stderr)
-
     noDate = [
         "not defined",
         "n/a",
@@ -132,15 +127,12 @@ def str_to_date(
 
     for f in DATE_FORMATS:
         try:
-            if verbose:
-                print(f"try with {f} on text: {text}", file=sys.stderr)
             z = datetime.datetime.strptime(text, f)
             z = z.astimezone()
             z = z.replace(tzinfo=None)
             return z
         except ValueError as v:
-            if verbose:
-                print(f"{v}", file=sys.stderr)
+            _ = v
             pass
 
     raise UnknownDateFormat("Unknown date format: '%s'" % text)

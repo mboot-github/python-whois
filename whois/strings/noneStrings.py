@@ -22,6 +22,7 @@ NONESTRINGS: List[str] = [
     "registration of this domain is restricted",
     "restricted",
     "this domain is currently available",
+    "el dominio no se encuentra registrado",
 ]
 
 
