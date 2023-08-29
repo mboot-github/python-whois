@@ -8,9 +8,11 @@ from typing import (
     Any,
 )
 
-from .simpleCacheWithFile import SimpleCacheWithFile
-from .parameterContext import ParameterContext
 from .whoisCliInterface import WhoisCliInterface
+
+from .cache.simpleCacheWithFile import SimpleCacheWithFile
+from .context.parameterContext import ParameterContext
+from .context.dataContext import DataContext
 
 # actually also whois uses cache, so if you really dont want to use cache
 # you should also pass the --force-lookup flag (on linux)
@@ -32,6 +34,7 @@ def setMyCache(myCache: Any) -> None:
 
 def _initDefaultCache(
     pc: ParameterContext,
+    dc: DataContext,
 ) -> Any:
     global CACHE_STUB
 
@@ -59,10 +62,11 @@ def _initDefaultCache(
 def _getNewDataForKey(
     dList: List[str],
     pc: ParameterContext,
+    dc: DataContext,
 ) -> str:
     wci = WhoisCliInterface(
-        dList=dList,
         pc=pc,
+        dc=dc,
     )
     return wci.executeWhoisQueryOrReturnFileData()
 
@@ -71,8 +75,12 @@ def _getNewDataForKey(
 def doWhoisAndReturnString(
     dList: List[str],
     pc: ParameterContext,
+    dc: DataContext,
 ) -> str:
-    cache = _initDefaultCache(pc)
+    cache = _initDefaultCache(
+        pc=pc,
+        dc=dc,
+    )
     keyString = ".".join(dList)
 
     if pc.verbose:
@@ -83,7 +91,11 @@ def doWhoisAndReturnString(
         if oldData is not None:
             return str(oldData)
 
-    newData = _getNewDataForKey(dList=dList, pc=pc)
+    newData = _getNewDataForKey(
+        dList=dList,
+        pc=pc,
+        dc=dc,
+    )
     cache.put(keyString, newData)
 
     return newData

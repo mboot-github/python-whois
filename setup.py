@@ -10,7 +10,20 @@ setup(
     download_url="https://github.com/DannyCork/python-whois/releases/latest",
     url="https://github.com/DannyCork/python-whois/",
     platforms=["any"],
-    packages=["whois"],
+    package_dir={
+        "whois": "whois",
+        "whois.tldDb": "whois/tldDb",
+        "whois.context": "whois/context",
+        "whois.cache": "whois/cache",
+        "whois.strings": "whois/strings",
+    },
+    packages=[
+        "whois",
+        "whois.tldDb",
+        "whois.context",
+        "whois.cache",
+        "whois.strings",
+    ],
     keywords=[
         "Python",
         "whois",
