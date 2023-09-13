@@ -4,9 +4,9 @@ from typing import (
     Any,
     Dict,
     Optional,
-    # Tuple,
     List,
-    Union,
+    # Union,
+    Tuple,
     # cast,
 )
 
@@ -16,100 +16,150 @@ import sys
 from .exceptions import (
     FailedParsingWhoisOutput,
     WhoisQuotaExceeded,
+    WhoisPrivateRegistry,
 )
 
-from ._0_init_tld import TLD_RE
 from .domain import Domain
-
 from .strings.noneStrings import NoneStrings
 from .strings.quotaStrings import QuotaStrings
+from .strings.ignoreStrings import IgnoreStrings
+
 from .context.parameterContext import ParameterContext
 from .context.dataContext import DataContext
+from .helpers import get_TLD_RE
 
 
 class WhoisParser:
     def __init__(
         self,
-        tldString: str,
         pc: ParameterContext,
         dc: DataContext,
     ) -> None:
-        self.tldString = tldString
         self.pc = pc
         self.dc = dc
-        self.dc.whoisStr = str(self.dc.whoisStr)
-        #
-        self.resultDict: Dict[str, Any] = {
-            "tld": tldString,
-            "DNSSEC": self._doDnsSec(),
-        }
-        self.cleanupWhoisResponse()
+        self.dom: Optional[Domain] = None
 
     def _doExtractPattensIanaFromWhoisString(
         self,
     ) -> None:
-        # now handle the actual format if this whois response
+        # now handle the actual format for this whois response
         iana = {
             "domain_name": r"domain:\s?([^\n]+)",
             "registrar": r"organisation:\s?([^\n]+)",
             "creation_date": r"created:\s?([^\n]+)",
         }
 
-        for k, v in iana.items():
-            zz = re.findall(v, str(self.dc.whoisStr))
-            if zz:
+        for key, val in iana.items():
+            result = re.findall(val, str(self.dc.whoisStr))
+            if not result:
+                continue
+
+            self.resultDict[key] = result
+            if self.pc.verbose:
+                print(f"DEBUG: parsing iana data only for tld: {self.dc.tldString}, {result}", file=sys.stderr)
+
+    def _doExtractPattensFromWhoisString_old(
+        self,
+    ) -> None:
+        empty = [""]  # Historical: we use 'empty string' as default, not None
+
+        for key, compiledRe in self.dc.thisTld.items():
+            if key.startswith("_"):
+                # skip meta element like: _server or _privateRegistry
+                continue
+
+            self.resultDict[key] = empty  # set a default
+            if compiledRe:
+                # here we apply the regex patterns
+                self.resultDict[key] = compiledRe.findall(self.dc.whoisStr) or empty
                 if self.pc.verbose:
-                    print(f"parsing iana data only for tld: {self.tldString}, {zz}", file=sys.stderr)
-                self.resultDict[k] = zz
+                    print(f"{key}, {self.resultDict[key]}", file=sys.stderr)
 
     def _doExtractPattensFromWhoisString(
         self,
     ) -> None:
-        # here we apply the regex patterns
-        # use TLD_RE["com"] as default if a regex is missing
-        for k, v in TLD_RE.get(self.tldString, TLD_RE["com"]).items():
-            if k.startswith("_"):
+        empty = [""]  # Historical: we use 'empty string' as default, not None , or []
+
+        sData: List[str] = []
+        splitter = self.dc.thisTld.get("_split")
+        if splitter:
+            sData = splitter(self.dc.whoisStr, self.pc.verbose)
+            if self.pc.verbose and sData != []:
+                for item in sData:
+                    print("DEBUG: split data", item, file=sys.stderr)
+
+        for key, val in self.dc.thisTld.items():
+            if key.startswith("_"):
                 # skip meta element like: _server or _privateRegistry
                 continue
 
-            # Historical: here we use 'empty string' as default, not None
-            if v is None:
-                self.resultDict[k] = [""]
-            else:
-                self.resultDict[k] = v.findall(self.dc.whoisStr) or [""]
+            self.resultDict[key] = empty  # set a default
+            if val is None:
+                continue
+
+            if callable(val):
+                # vcall the curry function we created in tld_regexpr.py
+                self.resultDict[key] = val(self.dc.whoisStr, sData, self.pc.verbose) or empty
+                if self.pc.verbose:
+                    print(
+                        f"DEBUG: _doExtractPattensFromWhoisString: call indirect {val} {key}, {self.resultDict[key]}",
+                        file=sys.stderr,
+                    )
+                continue
+
+            if isinstance(val, str):
+                # we still support plain strings also
+                self.resultDict[key] = re.findall(val, self.dc.whoisStr, flags=re.IGNORECASE) or empty
+                if self.pc.verbose:
+                    print(f"DEBUG _doExtractPattensFromWhoisStringstr: {key}, {self.resultDict[key]}", file=sys.stderr)
+                continue
+
+            if self.pc.verbose:
+                print(f"DEBUG: UNKNOWN: _doExtractPattensFromWhoisString {key}, {val}", file=sys.stderr)
 
     def _doSourceIana(
         self,
-    ) -> Optional[Dict[str, Any]]:
+    ) -> Optional[Domain]:
         self.dc.whoisStr = str(self.dc.whoisStr)
 
         # here we can handle the example.com and example.net permanent IANA domains
         k: str = "source:       IANA"
 
         if self.pc.verbose:
-            msg: str = f"i have seen {k}"
+            msg: str = f"DEBUG: i have seen {k}"
             print(msg, file=sys.stderr)
 
         whois_splitted: List[str] = self.dc.whoisStr.split(k)
         z: int = len(whois_splitted)
         if z > 2:
-
             self.dc.whoisStr = k.join(whois_splitted[1:])
-            return None
+            self.dom = None
+            return self.dom
 
         if z == 2 and whois_splitted[1].strip() != "":
             # if we see source: IANA and the part after is not only whitespace
             if self.pc.verbose:
-                msg = f"after: {k} we see not only whitespace: {whois_splitted[1]}"
+                msg = f"DEBUG: after: {k} we see not only whitespace: {whois_splitted[1]}"
                 print(msg, file=sys.stderr)
 
             self.dc.whoisStr = whois_splitted[1]
-            return None
+            self.dom = None
+            return self.dom
 
         self._doExtractPattensFromWhoisString()  # try to parse this as a IANA domain as after is only whitespace
         self._doExtractPattensIanaFromWhoisString()  # now handle the actual format if this whois response
 
-        return self.resultDict
+        self.dc.data = self.resultDict
+        if self.dc.data["domain_name"][0]:
+            assert self.dom is not None
+            self.dom.init(
+                pc=self.pc,
+                dc=self.dc,
+            )
+            return self.dom
+
+        self.dom = None
+        return self.dom
 
     def _doIfServerNameLookForDomainName(self) -> None:
         if self.dc.whoisStr is None:
@@ -120,7 +170,7 @@ class WhoisParser:
             return
 
         if self.pc.verbose:
-            msg = "i have seen Server Name:, looking for Domain Name:"
+            msg = "DEBUG: i have seen Server Name:, looking for Domain Name:"
             print(msg, file=sys.stderr)
 
         # this changes the whoisStr, we may want to keep the original as extra
@@ -135,7 +185,7 @@ class WhoisParser:
         whoisDnsSecList: List[str] = self.dc.whoisStr.split("DNSSEC:")
         if len(whoisDnsSecList) >= 2:
             if self.pc.verbose:
-                msg = "i have seen dnssec: {whoisDnsSecStr}"
+                msg = "DEGUG: i have seen dnssec: {whoisDnsSecStr}"
                 print(msg, file=sys.stderr)
 
             whoisDnsSecStr: str = whoisDnsSecList[1].split("\n")[0]
@@ -148,10 +198,11 @@ class WhoisParser:
         self,
     ) -> Optional[Domain]:
         if self.dc.whoisStr is None:
-            return None
+            self.dom = None
+            return self.dom
 
         if self.pc.verbose:
-            print(f"shortResponse:: {self.tldString} {self.dc.whoisStr}", file=sys.stderr)
+            print(f"DEBUG: shortResponse:: {self.dc.tldString} {self.dc.whoisStr}", file=sys.stderr)
 
         # TODO: some short responses are actually valid:
         # lookfor Domain: and Status but all other fields are missing so the regexec could fail
@@ -169,14 +220,16 @@ class WhoisParser:
         noneStrings = NoneStrings()
         for i in noneStrings:
             if i in s:
-                return None
+                self.dom = None
+                return self.dom
 
         # ---------------------------------
         # is there any error string in the result
         if s.count("error"):
             if self.pc.verbose:
-                print("i see 'error' in the result, return: None", file=sys.stderr)
-            return None
+                print("DEBUG: i see 'error' in the result, return: None", file=sys.stderr)
+            self.dom = None
+            return self.dom
 
         # ---------------------------------
         quotaStrings = QuotaStrings()
@@ -186,24 +239,29 @@ class WhoisParser:
                     msg = "WhoisQuotaExceeded"
                     self.dc.exeptionStr = msg
 
-                    return Domain(
+                    assert self.dom is not None
+                    self.dom.init(
                         pc=self.pc,
                         dc=self.dc,
                     )
+                    return self.dom
+
                 raise WhoisQuotaExceeded(self.dc.whoisStr)
 
         if self.pc.simplistic:
             msg = "FailedParsingWhoisOutput"
             self.dc.exeptionStr = msg
 
-            return Domain(
+            assert self.dom is not None
+            self.dom.init(
                 pc=self.pc,
                 dc=self.dc,
             )
+            return self.dom
 
         raise FailedParsingWhoisOutput(self.dc.whoisStr)
 
-    def cleanupWhoisResponse(
+    def _cleanupWhoisResponse(
         self,
     ) -> str:
         tmp2: List[str] = []
@@ -215,43 +273,103 @@ class WhoisParser:
             if "quota exceeded" in line.lower():
                 raise WhoisQuotaExceeded(self.dc.whoisStr)
 
+            if ":101: no entries found" in line.lower():  # google.co.cz has a response longer than 5 but no data
+                break
+
             if self.pc.with_cleanup_results is True and line.startswith("%"):  # only remove if requested
                 continue
 
             if self.pc.withRedacted is False:
+                for item in IgnoreStrings():
+                    if item in line:  # note we do not use ignorecase currently here
+                        continue
+
                 if "REDACTED FOR PRIVACY" in line:  # these lines contibute nothing so ignore
                     continue
 
-            if (
-                "Please query the RDDS service of the Registrar of Record" in line
-            ):  # these lines contibute nothing so ignore
+            if "Please query the RDDS service of the Registrar of Record" in line:  # these lines contibute nothing so ignore
                 continue
 
             if line.startswith("Terms of Use:"):  # these lines contibute nothing so ignore
                 continue
 
-            tmp2.append(line.strip("\r"))
+            # we can now remove \r as all regexecs have been cleaned and strip all trailing whitespace
+            tmp2.append(line.strip("\r").rstrip())
 
         self.dc.whoisStr = "\n".join(tmp2)
         return self.dc.whoisStr
 
-    def parse(
+    # public
+
+    def verifyPrivateRegistry(
         self,
-    ) -> Union[Optional[Dict[str, Any]], Optional[Domain]]:
-        # ) -> Tuple[Union[Optional[Dict[str, Any]], Optional[Domain]], str]:
+    ) -> bool:
+        # may raise WhoisPrivateRegistry
+        # we know the tld but it has no whois or does not respond with any information
+        if not self.dc.thisTld.get("_privateRegistry"):
+            return False
+
+        if self.pc.simplistic is False:
+            msg = "WhoisPrivateRegistry"
+            raise WhoisPrivateRegistry(msg)
+
+        return True
+
+    def doServerHintsForThisTld(
+        self,
+    ) -> None:
+        # note _server are currently passed down when using "extend", 2023-09-04 mboot
+        server = self.dc.thisTld.get("_server")
+        if self.pc.server is None and server:
+            self.pc.server = server
+
+    def doSlowdownHintForThisTld(
+        self,
+    ) -> int:
+        self.pc.slow_down = self.pc.slow_down or 0
+
+        slowDown = self.dc.thisTld.get("_slowdown")
+        if slowDown:
+            if self.pc.slow_down == 0 and int(slowDown) > 0:
+                self.pc.slow_down = int(slowDown)
+
+        if self.pc.verbose and int(self.pc.slow_down):
+            print(f"DEBUG: using _slowdown hint {self.pc.slow_down} for tld: {self.dc.tldString}", file=sys.stderr)
+
+        return int(self.pc.slow_down)
+
+    def getThisTld(self, tldString: str) -> None:
+        self.dc.thisTld = get_TLD_RE().get(tldString, {})
+        if self.pc.verbose:
+            print(self.dc.thisTld, file=sys.stderr)
+
+    def init(
+        self,
+    ) -> None:
         self.dc.whoisStr = str(self.dc.whoisStr)
 
-        if self.dc.whoisStr.count("\n") < 5:
-            result1 = self._handleShortResponse()  # may raise: FailedParsingWhoisOutput, WhoisQuotaExceeded,
-            return result1
-            #  return result1, self.dc.whoisStr
+        self.resultDict: Dict[str, Any] = {
+            "tld": str(self.dc.tldString),
+            "DNSSEC": self._doDnsSec(),
+        }
+        self._cleanupWhoisResponse()
+
+    def parse(
+        self,
+        dom: Optional[Domain],
+    ) -> Tuple[Optional[Domain], bool]:
+        self.dc.whoisStr = str(self.dc.whoisStr)
+        self.dom = dom
+
+        if self.dc.whoisStr.count("\n") < self.pc.shortResponseLen:
+            self.dom = self._handleShortResponse()  # may raise: FailedParsingWhoisOutput, WhoisQuotaExceeded,
+            return self.dom, True
 
         if "source:       IANA" in self.dc.whoisStr:
             # historical IANA domains
-            result2 = self._doSourceIana()
-            if result2 is not None:
-                return result2
-                # return result2, self.dc.whoisStr
+            self.dom = self._doSourceIana()
+            if self.dom is not None:
+                return self.dom, True
 
         if "Server Name" in self.dc.whoisStr:
             # old type Server Name (not very common anymore)
@@ -259,5 +377,14 @@ class WhoisParser:
 
         self._doExtractPattensFromWhoisString()
 
-        # return self.resultDict, self.dc.whoisStr
-        return self.resultDict
+        # do we have a result and does it have a domain name
+        self.dc.data = self.resultDict
+        if self.dc.data["domain_name"][0]:
+            assert self.dom is not None
+            self.dom.init(
+                pc=self.pc,
+                dc=self.dc,
+            )
+            return self.dom, True
+
+        return None, False

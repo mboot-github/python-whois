@@ -12,10 +12,6 @@ from typing import (
 
 
 class SimpleCacheBase:
-    # verbose: bool = False
-    # memCache: Dict[str, Tuple[float, str]] = {}
-    # cacheMaxAge: int = 60 * 60 * 48
-
     def __init__(
         self,
         verbose: bool = False,
@@ -26,7 +22,7 @@ class SimpleCacheBase:
         self.cacheMaxAge: int = cacheMaxAge
 
         if self.verbose:
-            print("init SimpleCacheBase", file=sys.stderr)
+            print("DEBUG cache init SimpleCacheBase", file=sys.stderr)
 
     def put(
         self,
@@ -34,9 +30,7 @@ class SimpleCacheBase:
         data: str,
     ) -> str:
         if self.verbose:
-            print(f"put: {keyString}", file=sys.stderr)
-
-        # print(f"put: {keyString}", file=sys.stderr)
+            print(f"DEBUG: cache put: {keyString}", file=sys.stderr)
 
         # store the currentTime and data tuple (time, data)
         self.memCache[keyString] = (
@@ -50,9 +44,7 @@ class SimpleCacheBase:
         keyString: str,
     ) -> Optional[str]:
         if self.verbose:
-            print(f"get: {keyString}", file=sys.stderr)
-        # print(f"get: {keyString}", file=sys.stderr)
-        # print(f"verbose: {self.verbose}", file=sys.stderr)
+            print(f"DEBUG cache get: {keyString}", file=sys.stderr)
 
         cData = self.memCache.get(keyString)
         if cData is None:
@@ -64,7 +56,10 @@ class SimpleCacheBase:
         hasExpired = cData[0] < (t - self.cacheMaxAge)
         if hasExpired is True:
             if self.verbose:
-                print(f"get: data has expired {keyString} {cData[0]}, {t}, {self.cacheMaxAge}", file=sys.stderr)
+                print(
+                    f"DEBUG: cache get: data has expired {keyString} {cData[0]}, {t}, {self.cacheMaxAge}",
+                    file=sys.stderr,
+                )
             return None
 
         return cData[1]

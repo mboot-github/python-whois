@@ -12,7 +12,6 @@ try:
     HAS_REDIS = True
 except Exception as e:
     _ = e
-    pass
 
 if HAS_REDIS:
 

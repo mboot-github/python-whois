@@ -1,9 +1,20 @@
 from typing import (
     Dict,
     Any,
+    # Callable,
 )
 
-# NOTE: _server is not inherited down stream, currently
+from .finders import (
+    newLineSplit,
+    R,
+    findFromToAndLookFor,
+    findFromToAndLookForWithFindFirst,
+    findInSplitedLookForHavingFindFirst,
+)
+
+
+# 2023-09-03 mboot, all _items are inherited, confirmed
+# only _<domains> as meta domains do net end up in the database
 
 # ======================================
 # Interesting for future enhancements:
@@ -11,23 +22,23 @@ from typing import (
 # https://github.com/rfc1036/whois/blob/next/new_gtlds_list
 # seems the most up to date and maintained
 
-# =================================================================
-# Often we want to repeat regex patterns,
-#   ( typically with nameservers or status fields )
-#   that becomes unreadable very fast.
-# Allow for a simplification that expands on usage and
-#   allow forcing the first to be mandatory as default,
-#   but overridable when needed
-
 
 def xStr(what: str, times: int = 1, firstMandatory: bool = True) -> str:
+    # =================================================================
+    # Often we want to repeat regex patterns,
+    #   ( typically with nameservers or status fields )
+    #   that becomes unreadable very fast.
+    # Allow for a simplification that expands on usage and
+    #   allow forcing the first to be mandatory as default,
+    #   but overridable when needed
+
     if times < 1:
         return ""
 
     if firstMandatory and what[-1] == "?":
         return what[:-1] + (what * (times - 1))
-    else:
-        return what * times
+
+    return what * times
 
 
 # =================================================================
@@ -49,25 +60,25 @@ ZZ["_uniregistry"] = {"extend": "com", "_server": "whois.uniregistry.net"}  # up
 ZZ["_donuts"] = {
     "extend": "com",
     "_server": "whois.donuts.co",
-    "registrant": r"Registrant Organization:\s?(.+)",
-    "status": r"Domain Status:\s?(.+)",
+    "registrant": R(r"Registrant Organization:\s?(.+)"),
+    "status": R(r"Domain Status:\s?(.+)"),
 }  # updated all downstream
 
 ZZ["_centralnic"] = {
     "extend": "com",
     "_server": "whois.centralnic.com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Domain Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Domain Status:\s?(.+)"),
 }  # updated all downstream
 
 ZZ["_gtldKnet"] = {
     "extend": "com",
     "_server": "whois.gtld.knet.cn",
-    "admin": r"Admin\s*Name:\s+(.+)",
+    "admin": R(r"Admin\s*Name:\s+(.+)"),
     "_test": None,
 }  # updated all downstream
 
@@ -75,58 +86,58 @@ ZZ["_gtldKnet"] = {
 # start of regular entries, simple domains are at the end
 
 ZZ["com"] = {
-    "domain_name": r"Domain Name\s*:\s*(.+)",
-    "registrar": r"Registrar:\s?(.+)",
-    "registrant": r"Registrant\s*Organi(?:s|z)ation:([^\n]*)",
-    "registrant_country": r"Registrant Country:\s?(.+)",
-    "creation_date": r"Creation Date:[ \t]*([^\n]*)",
-    "expiration_date": r"(?:Expiry|Expiration) Date:[ \t]*([^\n]*)",
-    "updated_date": r"Updated Date:[\t ]*([^\n]*)",
-    "name_servers": r"Name Server:\s*(.+)\s*",
-    "status": r"Status:\s?(.+)",
-    "emails": r"([\w\.-]+@[\w\.-]+\.[\w]{2,4})",
+    "domain_name": R(r"Domain Name\s*:\s*(.+)"),
+    "registrar": R(r"Registrar:\s?(.+)"),
+    "registrant": R(r"Registrant\s*Organi(?:s|z)ation:([^\n]*)"),
+    "registrant_country": R(r"Registrant Country:\s?(.+)"),
+    "creation_date": R(r"Creation Date:[ \t]*([^\n]*)"),
+    "expiration_date": R(r"(?:Expiry|Expiration) Date:[ \t]*([^\n]*)"),
+    "updated_date": R(r"Updated Date:[\t ]*([^\n]*)"),
+    "name_servers": R(r"Name Server:\s*(.+)\s*"),
+    "status": R(r"Status:\s?(.+)"),
+    "emails": R(r"([\w\.-]+@[\w\.-]+\.[\w]{2,4})"),
     "_test": "google.com",
 }
 
 # United Kingdom - academic sub-domain
 ZZ["ac.uk"] = {
     "extend": "uk",
-    "domain_name": r"Domain:\n\s?(.+)",
-    "owner": r"Domain Owner:\n\s?(.+)",
-    "registrar": r"Registered By:\n\s?(.+)",
-    "registrant": r"Registered Contact:\n\s*(.+)",
-    "expiration_date": r"Renewal date:\n\s*(.+)",
-    "updated_date": r"Entry updated:\n\s*(.+)",
-    "creation_date": r"Entry created:\n\s?(.+)",
-    "name_servers": r"Servers:\s*(.+)\t\n\s*(.+)\t\n",
+    "domain_name": R(r"Domain:\n\s?(.+)"),
+    "owner": R(r"Domain Owner:\n\s?(.+)"),
+    "registrar": R(r"Registered By:\n\s?(.+)"),
+    "registrant": R(r"Registered Contact:\n\s*(.+)"),
+    "expiration_date": R(r"Renewal date:\n\s*(.+)"),
+    "updated_date": R(r"Entry updated:\n\s*(.+)"),
+    "creation_date": R(r"Entry created:\n\s?(.+)"),
+    "name_servers": R(r"Servers:\s*(.+)\t\n\s*(.+)\t\n"),
     "_test": "imperial.ac.uk",
 }
 
 ZZ["co.uk"] = {
     "extend": "uk",
-    "domain_name": r"Domain name:\s+(.+)",
-    "registrar": r"Registrar:\s+(.+)",
-    "status": r"Registration status:\s*(.+)",
-    "creation_date": r"Registered on:(.+)",
-    "expiration_date": r"Expiry date:(.+)",
-    "updated_date": r"Last updated:(.+)",
-    "owner": r"Domain Owner:\s+(.+)",
-    "registrant": r"Registrant:\n\s+(.+)",
+    "domain_name": R(r"Domain name:\s+(.+)"),
+    "registrar": R(r"Registrar:\s+(.+)"),
+    "status": R(r"Registration status:\s*(.+)"),
+    "creation_date": R(r"Registered on:(.+)"),
+    "expiration_date": R(r"Expiry date:(.+)"),
+    "updated_date": R(r"Last updated:(.+)"),
+    "owner": R(r"Domain Owner:\s+(.+)"),
+    "registrant": R(r"Registrant:\n\s+(.+)"),
     "_test": "livedns.co.uk",
 }
 
 # Armenia
 ZZ["am"] = {
-    "domain_name": r"Domain name:\s+(.+)",
+    "domain_name": R(r"Domain name:\s+(.+)"),
     "_server": "whois.amnic.net",
-    "status": r"Status:\s(.+)",
-    "registrar": r"Registrar:\s+(.+)",
-    "registrant": r"Registrant:\s+(.+)",
-    "registrant_country": r"Registrant:\n.+\n.+\n.+\n\s+(.+)",
-    "creation_date": r"Registered:\s+(.+)",
-    "expiration_date": r"Expires:\s+(.+)",
-    "updated_date": r"Last modified:\s+(.+)",
-    "name_servers": r"DNS servers.*:\n%s" % xStr(r"(?:\s+(\S+)\n)?", 4),
+    "status": R(r"Status:\s(.+)"),
+    "registrar": R(r"Registrar:\s+(.+)"),
+    "registrant": R(r"Registrant:\s+(.+)"),
+    "registrant_country": R(r"Registrant:\n.+\n.+\n.+\n\s+(.+)"),
+    "creation_date": R(r"Registered:\s+(.+)"),
+    "expiration_date": R(r"Expires:\s+(.+)"),
+    "updated_date": R(r"Last modified:\s+(.+)"),
+    "name_servers": R(r"DNS servers.*:\n%s" % xStr(r"(?:\s+(\S+)\n)?", 4)),
     "_test": "amnic.net",
 }
 
@@ -134,13 +145,12 @@ ZZ["am"] = {
 ZZ["amsterdam"] = {
     "extend": "com",
     "_server": "whois.nic.amsterdam",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Domain Status:\s?(.+)",
-    "server": "whois.nic.amsterdam",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Domain Status:\s?(.+)"),
     "_test": "nic.amsterdam",
 }
 
@@ -148,12 +158,12 @@ ZZ["amsterdam"] = {
 ZZ["ar"] = {
     "extend": "com",
     "_server": "whois.nic.ar",
-    "domain_name": r"domain\s*:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "creation_date": r"registered:\s?(.+)",
-    "expiration_date": r"expire:\s?(.+)",
-    "updated_date": r"changed\s*:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)\s*",
+    "domain_name": R(r"domain\s*:\s?(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
+    "creation_date": R(r"registered:\s?(.+)"),
+    "expiration_date": R(r"expire:\s?(.+)"),
+    "updated_date": R(r"changed\s*:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)\s*"),
     "_test": "nic.ar",
 }
 
@@ -161,313 +171,357 @@ ZZ["ar"] = {
 ZZ["at"] = {
     "extend": "com",
     "_server": "whois.nic.at",
-    "domain_name": r"domain:\s?(.+)",
-    "updated_date": r"changed:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "registrant": r"registrant:\s?(.+)",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "updated_date": R(r"changed:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
+    # "registrant": R(r"registrant:\s?(.+)"),
+    "registrant": findInSplitedLookForHavingFindFirst(
+        findFirst=r"registrant:\s?(.+)",
+        lookForStr=r"nic-hdl:\s*{}\n",
+        extract=r"organization:\s*([^\n]*)\n",
+    ),
+    "registrant_country": findInSplitedLookForHavingFindFirst(
+        findFirst=r"registrant:\s?(.+)",
+        lookForStr=r"nic-hdl:\s*{}\n",
+        extract=r"country:\s*([^\n]*)\n",
+    ),
     "_test": "nic.at",
+    "_split": newLineSplit(),
 }
 
 ZZ["ax"] = {
     "extend": "com",
     "_server": "whois.ax",
-    "domain_name": r"domain\.+:\s*(\S+)",
-    "registrar": r"registrar\.+:\s*(.+)",
-    "creation_date": r"created\.+:\s*(\S+)",
-    "expiration_date": r"expires\.+:\s*(\S+)",
-    "updated_date": r"modified\.+:\s?(\S+)",
-    "name_servers": r"nserver\.+:\s*(\S+)",
-    "status": r"status\.+:\s*(\S+)",
-    "registrant": r"Holder\s+name\.+:\s*(.+)\r?\n",  # not always present see meta.ax and google.ax
-    "registrant_country": r"country\.+:\s*(.+)\r?\n",  # not always present see meta.ax and google.ax
+    "domain_name": R(r"domain\.+:\s*(\S+)"),
+    "registrar": R(r"registrar\.+:\s*(.+)"),
+    "creation_date": R(r"created\.+:\s*(\S+)"),
+    "expiration_date": R(r"expires\.+:\s*(\S+)"),
+    "updated_date": R(r"modified\.+:\s?(\S+)"),
+    "name_servers": R(r"nserver\.+:\s*(\S+)"),
+    "status": R(r"status\.+:\s*(\S+)"),
+    "registrant": R(r"Holder\s+name\.+:\s*(.+)\r?\n"),  # not always present see meta.ax and google.ax
+    "registrant_country": R(r"country\.+:\s*(.+)\r?\n"),  # not always present see meta.ax and google.ax
 }
 
 ZZ["bank"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
 }
 
 ZZ["be"] = {
     "extend": "pl",
-    "domain_name": r"\nDomain:\s*(.+)",
-    "registrar": r"Company Name:\n?(.+)",
-    "creation_date": r"Registered:\s*(.+)\n",
-    "status": r"Status:\s?(.+)",
-    "name_servers": r"Nameservers:(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?\n\n",
+    "domain_name": R(r"\nDomain:\s*(.+)"),
+    "registrar": R(r"Company Name:\n?(.+)"),
+    "creation_date": R(r"Registered:\s*(.+)\n"),
+    "status": R(r"Status:\s?(.+)"),
+    "name_servers": R(r"Nameservers:(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?(?:\n[ \t]+(\S+))?\n\n"),
 }
 
 ZZ["biz"] = {
     "extend": "com",
-    "registrar": r"Registrar:\s?(.+)",
-    "registrant": r"Registrant Organization:\s?(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
+    "registrar": R(r"Registrar:\s?(.+)"),
+    "registrant": R(r"Registrant Organization:\s?(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
     "status": None,
 }
 
 ZZ["br"] = {
     "extend": "com",
     "_server": "whois.registro.br",
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": "nic.br",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R("nic.br"),
     "registrant": None,
-    "owner": r"owner:\s?(.+)",
-    "creation_date": r"created:\s?(.+)",
-    "expiration_date": r"expires:\s?(.+)",
-    "updated_date": r"changed:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"status:\s?(.+)",
+    "owner": R(r"owner:\s?(.+)"),
+    "creation_date": R(r"created:\s?(.+)"),
+    "expiration_date": R(r"expires:\s?(.+)"),
+    "updated_date": R(r"changed:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "status": R(r"status:\s?(.+)"),
     "_test": "registro.br",
 }
 
 ZZ["by"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s*(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "registrant": r"Org:\s*(.+)",
-    "registrant_country": r"Country:\s*(.+)",
-    "creation_date": r"Creation Date:\s*(.+)",
-    "expiration_date": r"Expiration Date:\s*(.+)",
-    "updated_date": r"Updated Date:\s*(.+)",
-    "name_servers": r"Name Server:\s+(\S+)\n",
+    "domain_name": R(r"Domain Name:\s*(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "registrant": R(r"Org:\s*(.+)"),
+    "registrant_country": R(r"Country:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s*(.+)"),
+    "expiration_date": R(r"Expiration Date:\s*(.+)"),
+    "updated_date": R(r"Updated Date:\s*(.+)"),
+    "name_servers": R(r"Name Server:\s+(\S+)\n"),
 }
 
 # Brittany (French Territory)
 ZZ["bzh"] = {
     "extend": "fr",
-    "domain_name": r"Domain Name:\s*(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "registrant": r"Registrant Organization:\s*(.+)",
-    "registrant_country": r"Registrant Country:\s*(.*)",
-    "creation_date": r"Creation Date:\s*(.*)",
-    "expiration_date": r"Registry Expiry Date:\s*(.*)",
-    "updated_date": r"Updated Date:\s*(.*)",
-    "name_servers": r"Name Server:\s*(.*)",
-    "status": r"Domain Status:\s*(.*)",
+    "_server": "whois.nic.bzh",
+    "domain_name": R(r"Domain Name:\s*(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "registrant": R(r"Registrant Organization:\s*(.+)"),
+    "registrant_country": R(r"Registrant Country:\s*(.*)"),
+    "creation_date": R(r"Creation Date:\s*(.*)"),
+    "expiration_date": R(r"Registry Expiry Date:\s*(.*)"),
+    "updated_date": R(r"Updated Date:\s*(.*)"),
+    "name_servers": R(r"Name Server:\s*(.*)"),
+    "status": R(r"Domain Status:\s*(.*)"),
+    "_test": "pik.bzh",
 }
 
 ZZ["cc"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
 }
 
 ZZ["cl"] = {
     "extend": "com",
-    "registrar": "nic.cl",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Expiration Date:\s?(.+)",
-    "name_servers": r"Name Server:\s*(.+)\s*",
+    "registrar": R("nic.cl"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Expiration Date:\s?(.+)"),
+    "name_servers": R(r"Name Server:\s*(.+)\s*"),
 }
 
 ZZ["cn"] = {
     "extend": "com",
-    "registrar": r"Sponsoring Registrar:\s?(.+)",
-    "registrant": r"Registrant:\s?(.+)",
-    "creation_date": r"Registration Time:\s?(.+)",
-    "expiration_date": r"Expiration Time:\s?(.+)",
+    "registrar": R(r"Sponsoring Registrar:\s?(.+)"),
+    "registrant": R(r"Registrant:\s?(.+)"),
+    "creation_date": R(r"Registration Time:\s?(.+)"),
+    "expiration_date": R(r"Expiration Time:\s?(.+)"),
 }
 
 ZZ["com.tr"] = {
     "extend": "com",
     "_server": "whois.trabis.gov.tr",
-    "domain_name": r"\*\* Domain Name:\s?(.+)",
-    "registrar": r"Organization Name\s+:\s?(.+)",
-    "registrant": r"\*\* Registrant:\s+?(.+)",
+    "domain_name": R(r"\*\* Domain Name:\s?(.+)"),
+    "registrar": R(r"Organization Name\s+:\s?(.+)"),
+    "registrant": R(r"\*\* Registrant:\s+?(.+)"),
     "registrant_country": None,
-    "creation_date": r"Created on\.+:\s?(.+).",
-    "expiration_date": r"Expires on\.+:\s?(.+).",  # note the trailing . on both dates fields
-    "updated_date": "",
-    "name_servers": r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?",  # allow for ip addresses after the name server
+    "creation_date": R(r"Created on\.+:\s?(.+)."),
+    "expiration_date": R(r"Expires on\.+:\s?(.+)."),  # note the trailing . on both dates fields
+    "updated_date": None,
+    "name_servers": R(r"\*\* Domain Servers:\n(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?(?:(\S+).*\n)?"),  # allow for ip addresses after the name server
     "status": None,
     "_test": "google.com.tr",
 }
 
 ZZ["co.il"] = {
     "extend": "com",
-    "domain_name": r"domain:\s*(.+)",
-    "registrar": r"registrar name:\s*(.+)",
+    "domain_name": R(r"domain:\s*(.+)"),
+    "registrar": R(r"registrar name:\s*(.+)"),
     "registrant": None,
     "registrant_country": None,
     "creation_date": None,
-    "expiration_date": r"validity:\s*(.+)",
+    "expiration_date": R(r"validity:\s*(.+)"),
     "updated_date": None,
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"status:\s*(.+)",
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "status": R(r"status:\s*(.+)"),
 }
 
+ZZ["co.cz"] = {"extend": "cz"}
 ZZ["cz"] = {
     "extend": "com",
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "registrant": r"registrant:\s?(.+)",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
+    # "registrant": R(r"registrant:\s?(.+)"),
     "registrant_country": None,
-    "creation_date": r"registered:\s?(.+)",
-    "expiration_date": r"expire:\s?(.+)",
-    "updated_date": r"changed:\s?(.+)",
-    "name_servers": r"nserver:\s+(\S+)",
-    "status": r"status:\s*(.+)",
+    "creation_date": R(r"registered:\s?(.+)"),
+    "expiration_date": R(r"expire:\s?(.+)"),
+    "updated_date": R(r"changed:\s?(.+)"),
+    "name_servers": R(r"nserver:\s+(\S+)"),
+    "status": R(r"status:\s*(.+)"),
+    "registrant": findInSplitedLookForHavingFindFirst(
+        findFirst=r"registrant:\s?(.+)",
+        lookForStr=r"contact:\s*{}\n",
+        extract=r"org:\s*([^\n]*)\n",
+    ),
+    "_split": newLineSplit(),
 }
 
 ZZ["de"] = {
     "extend": "com",
-    "domain_name": r"\ndomain:\s*(.+)",
-    "updated_date": r"\nChanged:\s?(.+)",
-    "name_servers": r"Nserver:\s*(.+)",
+    "domain_name": R(r"\ndomain:\s*(.+)"),
+    "updated_date": R(r"\nChanged:\s?(.+)"),
+    "name_servers": R(r"Nserver:\s*(.+)"),
 }
 
 # Denmark
 ZZ["dk"] = {
-    "domain_name": r"Domain:\s?(.+)",
+    "domain_name": R(r"Domain:\s?(.+)"),
     "registrar": None,
-    "registrant": r"Registrant\s*Handle:\s*\w*\s*Name:\s?(.+)",
-    "registrant_country": r"Country:\s?(.+)",
-    "creation_date": r"Registered:\s?(.+)",
-    "expiration_date": r"Expires:\s?(.+)",
+    "registrant": R(r"Registrant\s*Handle:\s*\w*\s*Name:\s?(.+)"),
+    "registrant_country": R(r"Country:\s?(.+)"),
+    "creation_date": R(r"Registered:\s?(.+)"),
+    "expiration_date": R(r"Expires:\s?(.+)"),
     "updated_date": None,
-    "name_servers": r"Hostname:\s*(.+)\s*",
-    "status": r"Status:\s?(.+)",
+    "name_servers": R(r"Hostname:\s*(.+)\s*"),
+    "status": R(r"Status:\s?(.+)"),
     "emails": None,
 }
 
 ZZ["edu"] = {
     "extend": "com",
-    "registrant": r"Registrant:\s*(.+)",
-    "creation_date": r"Domain record activated:\s?(.+)",
-    "updated_date": r"Domain record last updated:\s?(.+)",
-    "expiration_date": r"Domain expires:\s?(.+)",
-    "name_servers": r"Name Servers:\s?%s" % xStr(r"(?:\t(.+)\n)?", 10),
+    "registrant": R(r"Registrant:\s*(.+)"),
+    "creation_date": R(r"Domain record activated:\s?(.+)"),
+    "updated_date": R(r"Domain record last updated:\s?(.+)"),
+    "expiration_date": R(r"Domain expires:\s?(.+)"),
+    "name_servers": R(r"Name Servers:\s?%s" % xStr(r"(?:\t(.+)\n)?", 10)),
     "_test": "rutgers.edu",
 }
 
 # estonian
 ZZ["ee"] = {
     "extend": "com",
-    "domain_name": r"Domain:\nname:\s+(.+\.ee)\n",
-    "registrar": r"Registrar:\nname:\s+(.+)\n",
-    "registrant": r"Registrant:\nname:\s+(.+)\n",
-    "registrant_country": r"Registrant:(?:\n+.+\n*)*country:\s+(.+)\n",
-    "creation_date": r"Domain:(?:\n+.+\n*)*registered:\s+(.+)\n",
-    "expiration_date": r"Domain:(?:\n+.+\n*)*expire:\s+(.+)\n",
-    "updated_date": r"Domain:(?:\n+.+\n*)*changed:\s+(.+)\n",
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"Domain:(?:\n+.+\n*)*status:\s+(.+)\n",
+    "domain_name": R(r"Domain:\nname:\s+(.+\.ee)\n"),
+    "registrar": R(r"Registrar:\nname:\s+(.+)\n"),
+    "registrant": R(r"Registrant:\nname:\s+(.+)\n"),
+    "registrant_country": R(r"Registrant:(?:\n+.+\n*)*country:\s+(.+)\n"),
+    "creation_date": R(r"Domain:(?:\n+.+\n*)*registered:\s+(.+)\n"),
+    "expiration_date": R(r"Domain:(?:\n+.+\n*)*expire:\s+(.+)\n"),
+    "updated_date": R(r"Domain:(?:\n+.+\n*)*changed:\s+(.+)\n"),
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "status": R(r"Domain:(?:\n+.+\n*)*status:\s+(.+)\n"),
 }
 
 ZZ["eu"] = {
     "extend": "com",
     "_server": "whois.eu",
-    "registrar": r"Name:\s?(.+)",
-    "domain_name": r"\nDomain:\s*(.+)",
-    "name_servers": r"Name servers:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?",
+    "registrar": R(r"Name:\s?(.+)"),
+    "domain_name": R(r"\nDomain:\s*(.+)"),
+    "name_servers": R(r"Name servers:\n(?:\s+(\S+)\n)(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)?(?:\s+(\S+)\n)\n?"),
 }
 
 ZZ["fi"] = {
-    "domain_name": r"domain\.+:\s?(.+)",
-    "registrar": r"registrar\.+:\s?(.+)",
-    "registrant_country": None,
-    "creation_date": r"created\.+:\s?(.+)",
-    "expiration_date": r"expires\.+:\s?(.+)",
-    "updated_date": r"modified\.+:\s?(.+)",
-    "name_servers": r"nserver\.+:\s*(.+)",
-    "status": r"status\.+:\s?(.+)",
+    "domain_name": R(r"domain\.+:\s?(.+)"),
+    "registrar": R(r"registrar\.+:\s?(.+)"),
+    "creation_date": R(r"created\.+:\s?(.+)"),
+    "expiration_date": R(r"expires\.+:\s?(.+)"),
+    "updated_date": R(r"modified\.+:\s?(.+)"),
+    "name_servers": R(r"nserver\.+:\s*(.+)"),
+    "status": R(r"status\.+:\s?(.+)"),
+    "registrant": R(r"Holder\s*\n\s*name\.*:\s*([^\n]*)\n"),
+    "registrant_country": R(r"\ncountry\.*:\s*([^\n]*)\n"),
 }
 
 ZZ["fr"] = {
     "extend": "com",
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": r"registrar:\s*(.+)",
-    "registrant": r"contact:\s?(.+)",
-    "registrant_organization": r"type:\s+ORGANIZATION\scontact:\s+(.*)",
-    "creation_date": r"created:\s?(.+)",
-    "expiration_date": r"Expiry Date:\s?(.+)",
-    "updated_date": r"last-update:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"status:\s?(.+)",
-    "registrant_country": r"Country:\s?(.+)",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R(r"registrar:\s*(.+)"),
+    # "registrant": R(r"contact:\s?(.+)"),
+    # "registrant_organization": R(r"type:\s+ORGANIZATION\scontact:\s+(.*)"),
+    "creation_date": R(r"created:\s?(.+)"),
+    "expiration_date": R(r"Expiry Date:\s?(.+)"),
+    "updated_date": R(r"last-update:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "status": R(r"status:\s?(.+)"),
+    # "registrant_country": R(r"Country:\s?(.+)"),
     "_test": "sfr.fr",
+    "registrant": findFromToAndLookForWithFindFirst(
+        findFirst=r"holder-c:\s*([^\n]*)\n",
+        fromStr=r"nic-hdl:\s*{}\n",
+        toStr=r"\n\n",
+        lookForStr=r"contact:\s*([^\n]*)\n",
+    ),
+    "registrant_country": findFromToAndLookForWithFindFirst(
+        findFirst=r"holder-c:\s*([^\n]*)\n",
+        fromStr=r"nic-hdl:\s*{}\n",
+        toStr=r"\n\n",
+        lookForStr=r"country:\s*([^\n]*)\n",
+    ),
 }
 
 # Hong Kong
 ZZ["hk"] = {
     "extend": "com",
     "_server": "whois.hkirc.hk",
-    "domain_name": r"Domain Name:\s+(.+)",
-    "registrar": r"Registrar Name:\s?(.+)",
-    "registrant": r"Company English Name.*:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
+    "registrar": R(r"Registrar Name:\s?(.+)"),
+    "registrant": R(r"Company English Name.*:\s?(.+)"),
     "registrant_country": None,
-    "creation_date": r"Domain Name Commencement Date:\s?(.+)",
-    "expiration_date": r"Expiry Date:\s?(.+)",
+    "creation_date": R(r"Domain Name Commencement Date:\s?(.+)"),
+    "expiration_date": R(r"Expiry Date:\s?(.+)"),
     "updated_date": None,
     #  name servers have trailing whitespace, lines are \n only
-    "name_servers": r"Name Servers Information:\s*(?:(\S+)[ \t]*\n)(?:(\S+)[ \t]*\n)?(?:(\S+)[ \t]*\n)?(?:(\S+)[ \t]*\n)?",
+    "name_servers": R(r"Name Servers Information:\s*(?:(\S+)[ \t]*\n)(?:(\S+)[ \t]*\n)?(?:(\S+)[ \t]*\n)?(?:(\S+)[ \t]*\n)?"),
     "status": None,
     "_test": "hkirc.hk",
 }
 
 ZZ["id"] = {
     "extend": "com",
-    "registrar": r"Sponsoring Registrar Organization:\s?(.+)",
-    "creation_date": r"Created On:\s?(.+)",
-    "expiration_date": r"Expiration Date:\s?(.+)",
-    "updated_date": r"Last Updated On:\s?(.+)$",
+    "registrar": R(r"Sponsoring Registrar Organization:\s?(.+)"),
+    "creation_date": R(r"Created On:\s?(.+)"),
+    "expiration_date": R(r"Expiration Date:\s?(.+)"),
+    "updated_date": R(r"Last Updated On:\s?(.+)$"),
 }
 
 ZZ["im"] = {
-    "domain_name": r"Domain Name:\s+(.+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
     "status": None,
     "registrar": None,
     "registrant_country": None,
-    "creation_date": "",
-    "expiration_date": r"Expiry Date:\s?(.+)",
-    "updated_date": "",
-    "name_servers": r"Name Server:(.+)",
+    "creation_date": None,
+    "expiration_date": R(r"Expiry Date:\s?(.+)"),
+    "updated_date": None,
+    "name_servers": R(r"Name Server:(.+)"),
+    "registrant": R(r"Domain Owners / Registrant\s*\n\s*Name:\s*([^\n]*)\n"),
 }
 
 ZZ["ir"] = {
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": "nic.ir",
+    "_server": "whois.nic.ir",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R("nic.ir"),
     "registrant_country": None,
     "creation_date": None,
     "status": None,
-    "expiration_date": r"expire-date:\s?(.+)",
-    "updated_date": r"last-updated:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)\s*",
+    "expiration_date": R(r"expire-date:\s?(.+)"),
+    "updated_date": R(r"last-updated:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)\s*"),
+    "_test": "nic.ir",
 }
 
 ZZ["is"] = {
     "extend": "com",
-    "domain_name": r"domain:\s?(.+)",
+    "_server": "whois.isnic.is",
+    "domain_name": R(r"domain:\s?(.+)"),
     "registrar": None,
-    "registrant": r"registrant:\s?(.+)",
+    # "registrant": R(r"registrant:\s?(.+)"),
     "registrant_country": None,
-    "creation_date": r"created:\s?(.+)",
-    "expiration_date": r"expires:\s?(.+)",
+    "creation_date": R(r"created:\s?(.+)"),
+    "expiration_date": R(r"expires:\s?(.+)"),
     "updated_date": None,
-    "name_servers": r"nserver:\s?(.+)",
+    "name_servers": R(r"nserver:\s?(.+)"),
     "status": None,
+    "registrant": findInSplitedLookForHavingFindFirst(
+        findFirst=r"registrant:\s?(.+)",
+        lookForStr=r"nic-hdl:\s*{}\n",
+        extract=r"role:\s*([^\n]*)\n",
+    ),
+    "_split": newLineSplit(),
+    "_test": "isnic.is",
 }
 
 ZZ["it"] = {
     "extend": "com",
-    "domain_name": r"Domain:\s?(.+)",
-    "registrar": r"Registrar\s*Organization:\s*(.+)",
-    "registrant": r"Registrant\s*Organization:\s*(.+)",
-    "creation_date": r"Created:\s?(.+)",
-    "expiration_date": r"Expire Date:\s?(.+)",
-    "updated_date": r"Last Update:\s?(.+)",
-    "name_servers": r"Nameservers(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"Domain:\s?(.+)"),
+    "registrar": R(r"Registrar\s*Organization:\s*(.+)"),
+    "registrant": R(r"Registrant\s*Organization:\s*(.+)"),
+    "creation_date": R(r"Created:\s?(.+)"),
+    "expiration_date": R(r"Expire Date:\s?(.+)"),
+    "updated_date": R(r"Last Update:\s?(.+)"),
+    "name_servers": R(r"Nameservers(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?"),
+    "status": R(r"Status:\s?(.+)"),
 }
 
 # The Japanese whois servers always return English unless a Japanese locale is specified in the user's LANG environmental variable.
@@ -476,124 +530,128 @@ ZZ["it"] = {
 #   To suppress Japanese output, add'/e' at the end of command, e.g. 'whois -h whois.jprs.jp xxx/e'.
 #
 ZZ["jp"] = {
-    "domain_name": r"\[Domain Name\]\s?(.+)",
-    "registrar": r"\[ (.+) database provides information on network administration. Its use is    \]",
-    "registrant": r"\[Registrant\]\s?(.+)",
+    "domain_name": R(r"\[Domain Name\]\s?(.+)"),
+    "registrar": R(r"\[ (.+) database provides information on network administration. Its use is    \]"),
+    "registrant": R(r"\[Registrant\]\s?(.+)"),
     "registrant_country": None,
-    "creation_date": r"\[Created on\]\s?(.+)",
-    "expiration_date": r"\[Expires on\]\s?(.+)",
-    "updated_date": r"\[Last Updated\]\s?(.+)",
-    "name_servers": r"\[Name Server\]\s*(.+)",
-    "status": r"\[Status\]\s?(.+)",
-    "emails": r"([\w\.-]+@[\w\.-]+\.[\w]{2,4})",
+    "creation_date": R(r"\[Created on\]\s?(.+)"),
+    "expiration_date": R(r"\[Expires on\]\s?(.+)"),
+    "updated_date": R(r"\[Last Updated\]\s?(.+)"),
+    "name_servers": R(r"\[Name Server\]\s*(.+)"),
+    "status": R(r"\[Status\]\s?(.+)"),
+    "emails": R(r"([\w\.-]+@[\w\.-]+\.[\w]{2,4})"),
 }
 
 ZZ["co.jp"] = {
     "extend": "jp",
-    "creation_date": r"\[Registered Date\]\s?(.+)",
+    "creation_date": R(r"\[Registered Date\]([^\n]*)\n"),  # possibly use Connected date
     "expiration_date": None,
-    "updated_date": r"\[Last Update\]\s?(.+)",
-    "status": r"\[State\]\s?(.+)",
+    "updated_date": R(r"\[Last Update\]([^\n]*)\n"),
+    "status": R(r"\[State\]\s?(.+)"),
 }
 
 ZZ["kg"] = {
-    "domain_name": r"Domain\s+(\S+)",
-    "registrar": r"Billing\sContact:\n.*\n\s+Name:\s(.+)\n",
+    "domain_name": R(r"Domain\s+(\S+)"),
+    "registrar": R(r"Billing\sContact:\n.*\n\s+Name:\s(.+)\n"),
     "registrant_country": None,
-    "expiration_date": r"Record expires on:\s+(.+)",
-    "creation_date": r"Record created:\s+(.+)",
-    "updated_date": r"Record last updated on:\s+(.+)",
-    "name_servers": r"Name servers in the listed order:\n\n(?:(\S+)[ \t]*\S*\n)(?:(\S+)[ \t]*\S*\n)?(?:(\S+)[ \t]*\S*\n)?\n",
-    "status": r"Domain\s+\S+\s+\((\S+)\)",
+    "expiration_date": R(r"Record expires on:\s+(.+)"),
+    "creation_date": R(r"Record created:\s+(.+)"),
+    "updated_date": R(r"Record last updated on:\s+(.+)"),
+    "name_servers": R(r"Name servers in the listed order:\n\n(?:(\S+)[ \t]*\S*\n)(?:(\S+)[ \t]*\S*\n)?(?:(\S+)[ \t]*\S*\n)?\n"),
+    "status": R(r"Domain\s+\S+\s+\((\S+)\)"),
+    "registrant": R(r"Administrative\sContact:\n.*\n\s+Name:\s(.+)\n"),
 }
 
 ZZ["kr"] = {
     "extend": "com",
     "_server": "whois.kr",
-    "domain_name": r"Domain Name\s*:\s?(.+)",
-    "registrar": r"Authorized Agency\s*:\s*(.+)",
-    "registrant": r"Registrant\s*:\s*(.+)",
-    "creation_date": r"Registered Date\s*:\s?(.+)",
-    "expiration_date": r"Expiration Date\s*:\s?(.+)",
-    "updated_date": r"Last Updated Date\s*:\s?(.+)",
-    "status": r"status\s*:\s?(.+)",
-    "name_servers": r"Host Name\s+:\s+(\S+)\n",
+    "domain_name": R(r"Domain Name\s*:\s?(.+)"),
+    "registrar": R(r"Authorized Agency\s*:\s*(.+)"),
+    "registrant": R(r"Registrant\s*:\s*(.+)"),
+    "creation_date": R(r"Registered Date\s*:\s?(.+)"),
+    "expiration_date": R(r"Expiration Date\s*:\s?(.+)"),
+    "updated_date": R(r"Last Updated Date\s*:\s?(.+)"),
+    "status": R(r"status\s*:\s?(.+)"),
+    "name_servers": R(r"Host Name\s+:\s+(\S+)\n"),
 }
 
 ZZ["kz"] = {
-    "domain_name": r"Domain name\.+:\s(.+)",
-    "registrar": r"Current Registar:\s(.+)",
-    "registrant_country": r"Country\.+:\s?(.+)",
+    "domain_name": R(r"Domain name\.+:\s(.+)"),
+    "registrar": R(r"Current Registar:\s(.+)"),
+    "registrant_country": R(r"Country\.+:\s?(.+)"),
     "expiration_date": None,
-    "creation_date": r"Domain created:\s(.+)",
-    "updated_date": r"Last modified :\s(.+)",
-    "name_servers": r"ary server\.+:\s+(\S+)",
-    "status": r"Domain status :(?:\s+([^\n]+)\n)",
+    "creation_date": R(r"Domain created:\s(.+)"),
+    "updated_date": R(r"Last modified :\s(.+)"),
+    "name_servers": R(r"ary server\.+:\s+(\S+)"),
+    "status": R(r"Domain status :(?:\s+([^\n]+)\n)"),
+    "registrant": R(r"Organization Using Domain Name\s*\n.*\n\s*Organization Name\.*:\s*([^\n]*)\n"),
 }
 
 ZZ["lt"] = {
     "extend": "com",
-    "domain_name": r"Domain:\s?(.+)",
-    "creation_date": r"Registered:\s?(.+)",
-    "expiration_date": r"Expires:\s?(.+)",
-    "name_servers": r"Nameserver:\s*(.+)\s*",
-    "status": r"\nStatus:\s?(.+)",
+    "domain_name": R(r"Domain:\s?(.+)"),
+    "creation_date": R(r"Registered:\s?(.+)"),
+    "expiration_date": R(r"Expires:\s?(.+)"),
+    "name_servers": R(r"Nameserver:\s*(.+)\s*"),
+    "status": R(r"\nStatus:\s?(.+)"),
 }
 
 ZZ["lv"] = {
     "extend": "com",
     "_server": "whois.nic.lv",
-    "domain_name": r"domain:\s*(.+)",
-    "creation_date": r"Registered:\s*(.+)\n",  # actually there seem to be no dates
-    "updated_date": r"Changed:\s*(.+)\n",
-    "expiration_date": r"paid-till:\s*(.+)",
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"domain:\s*(.+)"),
+    "creation_date": R(r"Registered:\s*(.+)\n"),  # actually there seem to be no dates
+    "updated_date": R(r"Changed:\s*(.+)\n"),
+    "expiration_date": R(r"paid-till:\s*(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "status": R(r"Status:\s?(.+)"),
     "_test": "nic.lv",
 }
 
 ZZ["me"] = {
     "extend": "biz",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Expiry Date:\s?(.+)",
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Expiry Date:\s?(.+)"),
     "updated_date": None,  # some entries have no date string but not always
-    "name_servers": r"Name Server:\s*(\S+)\r?\n",
-    "status": r"Domain Status:\s?(.+)",
+    "name_servers": R(r"Name Server:\s*(\S+)\r?\n"),
+    "status": R(r"Domain Status:\s?(.+)"),
 }
 
 ZZ["ml"] = {
     "extend": "com",
-    "domain_name": r"Domain name:\s*([^(i|\n)]+)",
-    "registrar": r"(?<=Owner contact:\s)[\s\S]*?Organization:(.*)",
-    "registrant_country": r"(?<=Owner contact:\s)[\s\S]*?Country:(.*)",
-    "registrant": r"(?<=Owner contact:\s)[\s\S]*?Name:(.*)",
-    "creation_date": r"Domain registered: *(.+)",
-    "expiration_date": r"Record will expire on: *(.+)",
-    "name_servers": r"Domain Nameservers:\s*(.+)\n\s*(.+)\n",
+    "domain_name": R(r"Domain name:\s*([^(i|\n)]+)"),
+    "registrar": R(r"(?<=Owner contact:\s)[\s\S]*?Organization:(.*)"),
+    "registrant_country": R(r"(?<=Owner contact:\s)[\s\S]*?Country:(.*)"),
+    "registrant": R(r"(?<=Owner contact:\s)[\s\S]*?Name:(.*)"),
+    "creation_date": R(r"Domain registered: *(.+)"),
+    "expiration_date": R(r"Record will expire on: *(.+)"),
+    "name_servers": R(r"Domain Nameservers:\s*(.+)\n\s*(.+)\n"),
 }
 
 ZZ["mx"] = {
-    "domain_name": r"Domain Name:\s?(.+)",
-    "creation_date": r"Created On:\s?(.+)",
-    "expiration_date": r"Expiration Date:\s?(.+)",
-    "updated_date": r"Last Updated On:\s?(.+)",
-    "registrar": r"Registrar:\s?(.+)",
-    "name_servers": r"\sDNS:\s*(.+)",
-    "registrant_country": None,
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "creation_date": R(r"Created On:\s?(.+)"),
+    "expiration_date": R(r"Expiration Date:\s?(.+)"),
+    "updated_date": R(r"Last Updated On:\s?(.+)"),
+    "registrar": R(r"Registrar:\s?(.+)"),
+    "name_servers": R(r"\sDNS:\s*(.+)"),
+    "registrant_country": R(r"\n\s*Country:\s*([^\n]*)\n"),
     "status": None,
+    "registrant": R(r"\nRegistrant:\s*\n\s*Name:\s([^\n]*)\n"),
 }
+ZZ["com.mx"] = {"extend": "mx"}
 
 # New-Caledonia (French Territory)
 ZZ["nc"] = {
     "extend": "fr",
-    "domain_name": r"Domain\s*:\s(.+)",
-    "registrar": r"Registrar\s*:\s(.+)",
-    "registrant": r"Registrant name\s*:\s(.+)",
+    "domain_name": R(r"Domain\s*:\s(.+)"),
+    "registrar": R(r"Registrar\s*:\s(.+)"),
+    "registrant": R(r"Registrant name\s*:\s(.+)"),
     "registrant_country": None,
-    "creation_date": r"Created on\s*:\s(.*)",
-    "expiration_date": r"Expires on\s*:\s(.*)",
-    "updated_date": r"Last updated on\s*:\s(.*)",
-    "name_servers": r"Domain server [0-9]{1,}\s*:\s(.*)",
+    "creation_date": R(r"Created on\s*:\s(.*)"),
+    "expiration_date": R(r"Expires on\s*:\s(.*)"),
+    "updated_date": R(r"Last updated on\s*:\s(.*)"),
+    "name_servers": R(r"Domain server [0-9]{1,}\s*:\s(.*)"),
     "status": None,
 }
 
@@ -601,117 +659,119 @@ ZZ["nl"] = {
     "extend": "com",
     "expiration_date": None,
     "registrant_country": None,
-    "domain_name": r"Domain name:\s?(.+)",
-    "name_servers": r"Domain nameservers.*:\n%s" % xStr(r"(?:\s+(\S+)\n)?", 10),
-    "reseller": r"Reseller:\s?(.+)",
-    "abuse_contact": r"Abuse Contact:\s?(.+)",
+    "domain_name": R(r"Domain name:\s?(.+)"),
+    "name_servers": R(r"Domain nameservers.*:\n%s" % xStr(r"(?:\s+(\S+)\n)?", 10)),
+    "reseller": R(r"Reseller:\s?(.+)"),
+    "abuse_contact": R(r"Abuse Contact:\s?(.+)"),
     "_test": "google.nl",
     "_slowdown": 5,
 }
 
 # Norway
 ZZ["no"] = {
-    "domain_name": r"Domain Name\.+:\s?(.+)",
-    "registrar": r"Registrar Handle\.+:\s?(.+)",
+    "domain_name": R(r"Domain Name\.+:\s?(.+)"),
+    "registrar": R(r"Registrar Handle\.+:\s?(.+)"),
     "registrant": None,
     "registrant_country": None,
-    "creation_date": r"Created:\s?(.+)",
+    "creation_date": R(r"Created:\s?(.+)"),
     "expiration_date": None,
-    "updated_date": r"Last Updated:\s?(.+)",
-    "name_servers": r"Name Server Handle\.+:\s*(.+)\s*",
+    "updated_date": R(r"Last Updated:\s?(.+)"),
+    "name_servers": R(r"Name Server Handle\.+:\s*(.+)\s*"),
     "status": None,
     "emails": None,
 }
 
 ZZ["nyc"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
 }
 
 ZZ["nz"] = {
-    "domain_name": r"domain_name:\s?(.+)",
-    "registrar": r"registrar_name:\s?(.+)",
-    "registrant": r"registrant_contact_name:\s?(.+)",
+    "domain_name": R(r"domain_name:\s?(.+)"),
+    "registrar": R(r"registrar_name:\s?(.+)"),
+    "registrant": R(r"registrant_contact_name:\s?(.+)"),
     "registrant_country": None,
-    "creation_date": r"domain_dateregistered:\s?(.+)",
-    "expiration_date": r"domain_datebilleduntil:\s?(.+)",
-    "updated_date": r"domain_datelastmodified:\s?(.+)",
-    "name_servers": r"ns_name_[0-9]{2}:\s?(.+)",
-    "status": r"query_status:\s?(.+)",
-    "emails": r"([\w\.-]+@[\w\.-]+\.[\w]{2,4})",
+    "creation_date": R(r"domain_dateregistered:\s?(.+)"),
+    "expiration_date": R(r"domain_datebilleduntil:\s?(.+)"),
+    "updated_date": R(r"domain_datelastmodified:\s?(.+)"),
+    "name_servers": R(r"ns_name_[0-9]{2}:\s?(.+)"),
+    "status": R(r"query_status:\s?(.+)"),
+    "emails": R(r"([\w\.-]+@[\w\.-]+\.[\w]{2,4})"),
 }
+
+ZZ["co.nz"] = {"extend": "com"}
 
 ZZ["org"] = {
     "extend": "com",
-    "expiration_date": r"\nRegistry Expiry Date:\s?(.+)",
-    "updated_date": r"\nLast Updated On:\s?(.+)",
-    "name_servers": r"Name Server:\s?(.+)\s*",
+    "expiration_date": R(r"\nRegistry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"\nLast Updated On:\s?(.+)"),
+    "name_servers": R(r"Name Server:\s?(.+)\s*"),
 }
 
 ZZ["pharmacy"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"status:\s?(.+)"),
 }
 
 ZZ["pl"] = {
     "extend": "uk",
-    "registrar": r"\nREGISTRAR:\s*(.+)\n",
-    "creation_date": r"\ncreated:\s*(.+)\n",
-    "updated_date": r"\nlast modified:\s*(.+)\n",
-    "expiration_date": r"\noption expiration date:\s*(.+)\n",
-    "name_servers": r"nameservers:%s" % xStr(r"(?:\s+(\S+)[^\n]*\n)?", 4),
-    "status": r"\nStatus:\n\s*(.+)",
+    "registrar": R(r"\nREGISTRAR:\s*(.+)\n"),
+    "creation_date": R(r"\ncreated:\s*(.+)\n"),
+    "updated_date": R(r"\nlast modified:\s*(.+)\n"),
+    "expiration_date": R(r"\noption expiration date:\s*(.+)\n"),
+    "name_servers": R(r"nameservers:%s" % xStr(r"(?:\s+(\S+)[^\n]*\n)?", 4)),
+    "status": R(r"\nStatus:\n\s*(.+)"),
 }
 
 ZZ["pt"] = {
     "_server": "whois.dns.pt",
     "extend": "com",
-    "domain_name": r"Domain:\s?(.+)",
+    "domain_name": R(r"Domain:\s?(.+)"),
     "registrar": None,
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Expiration Date:\s?(.+)",
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Expiration Date:\s?(.+)"),
     "updated_date": None,
-    "name_servers": r"Name Server:%s" % xStr(r"(?:\s*(\S+)[^\n]*\n)?", 2),
-    "status": r"Domain Status:\s?(.+)",
+    "name_servers": R(r"Name Server:%s" % xStr(r"(?:\s*(\S+)[^\n]*\n)?", 2)),
+    "status": R(r"Domain Status:\s?(.+)"),
     "_test": None,  # portugal never answeres, timout is all we get
 }
 
 ZZ["pw"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
 }
 
 ZZ["ru"] = {
     "extend": "com",
     "_server": "whois.tcinet.ru",
-    "domain_name": r"domain:\s*(.+)",
-    "creation_date": r"created:\s*(.+)",
-    "expiration_date": r"paid-till:\s*(.+)",
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"state:\s*(.+)",
+    "domain_name": R(r"domain:\s*(.+)"),
+    "creation_date": R(r"created:\s*(.+)"),
+    "expiration_date": R(r"paid-till:\s*(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "status": R(r"state:\s*(.+)"),
     "_test": "tcinet.ru",
 }
 
 ZZ["sa"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s*(.+\.sa)\s",
-    "registrant": r"Registrant:\n*(.+)\n",
-    "name_servers": r"Name Servers:\s*(.+)\s*(.+)?",
+    "domain_name": R(r"Domain Name:\s*(.+\.sa)\s"),
+    "registrant": R(r"Registrant:\n*(.+)\n"),
+    "name_servers": R(r"Name Servers:\s*(.+)\s*(.+)?"),
     "registrant_country": None,
     "registrar": None,
     "creation_date": None,
@@ -723,180 +783,200 @@ ZZ["sa"] = {
 
 ZZ["sh"] = {
     "extend": "com",
-    "registrant": r"\nRegistrant Organization:\s?(.+)",
-    "expiration_date": r"\nRegistry Expiry Date:\s*(.+)",
-    "status": r"\nDomain Status:\s?(.+)",
+    "registrant": R(r"\nRegistrant Organization:\s?(.+)"),
+    "expiration_date": R(r"\nRegistry Expiry Date:\s*(.+)"),
+    "status": R(r"\nDomain Status:\s?(.+)"),
 }
 
 ZZ["se"] = {
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
     "registrant_country": None,
-    "creation_date": r"created:\s+(\d{4}-\d{2}-\d{2})",
-    "expiration_date": r"expires:\s+(\d{4}-\d{2}-\d{2})",
-    "updated_date": r"modified:\s+(\d{4}-\d{2}-\d{2})",
-    "name_servers": r"nserver:\s*(.+)",
-    "status": r"status:\s?(.+)",
+    "creation_date": R(r"created:\s+(\d{4}-\d{2}-\d{2})"),
+    "expiration_date": R(r"expires:\s+(\d{4}-\d{2}-\d{2})"),
+    "updated_date": R(r"modified:\s+(\d{4}-\d{2}-\d{2})"),
+    "name_servers": R(r"nserver:\s*(.+)"),
+    "status": R(r"status:\s?(.+)"),
+    "registrant": R(r"holder:\s*([^\n]*)\n"),
 }
 
 # Singapore - Commercial sub-domain
 ZZ["com.sg"] = {
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s?(.+)",
-    "registrant": r"Registrant:\r?\n\r?\n\s*Name:\s*(.+)\r?\n",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s?(.+)"),
+    "registrant": R(r"Registrant:\r?\n\r?\n\s*Name:\s*(.+)\r?\n"),
     "registrant_country": None,
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Expiration Date:\s?(.+)",
-    "updated_date": r"Modified Date:\s?(.+)",
-    "name_servers": r"Name Servers:(?:\s+(\S+))(?:\s+(\S+))?(?:\s+(\S+))?(?:\s+([\.\w]+)\s+)?",
-    "status": r"Domain Status:\s*(.*)\r?\n",
-    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Expiration Date:\s?(.+)"),
+    "updated_date": R(r"Modified Date:\s?(.+)"),
+    "name_servers": R(r"Name Servers:(?:\s+(\S+))(?:\s+(\S+))?(?:\s+(\S+))?(?:\s+([\.\w]+)\s+)?"),
+    "status": R(r"Domain Status:\s*(.*)\r?\n"),
+    "emails": R(r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}"),
 }
 
 # Slovakia
 ZZ["sk"] = {
     "extend": "com",
-    "domain_name": r"Domain:\s?(.+)",
-    "creation_date": r"Created:\s?(.+)",
-    "expiration_date": r"Valid Until:\s?(.+)",
-    "updated_date": r"Updated:\s?(.+)",
-    "name_servers": r"Nameserver:\s*(\S+)",
-    "registrant": r"Contact:\s?(.+)",
-    "registrant_country": r"Country Code:\s?(.+)\nRegistrar:",
+    "_server": "whois.sk-nic.sk",
+    "domain_name": R(r"Domain:\s?(.+)"),
+    "creation_date": R(r"Created:\s?(.+)"),
+    "expiration_date": R(r"Valid Until:\s?(.+)"),
+    "updated_date": R(r"Updated:\s?(.+)"),
+    "name_servers": R(r"Nameserver:\s*(\S+)"),
+    "_test": "sk-nic.sk",
+    # look for Organiztion but in the proper section
+    "registrant": findFromToAndLookFor(
+        fromStr=r"Domain registrant:",
+        toStr=r"\n\n",
+        lookForStr=r"Organization:\s*([^\n]*)\n",
+    ),
+    # Country Code:
+    "registrant_country": findFromToAndLookFor(
+        fromStr=r"Domain registrant:",
+        toStr=r"\n\n",
+        lookForStr=r"Country Code:\s*([^\n]*)\n",
+    ),
+    "registrar": findFromToAndLookFor(
+        fromStr=r"\nRegistrar:",
+        toStr=r"\n\n",
+        lookForStr=r"Organization:\s*([^\n]*)\n",
+        verbose=True,
+    ),
 }
 
 ZZ["tel"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"\nRegistry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"\nRegistry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
 }
 
 # Thailand - Commercial sub-domain
 ZZ["co.th"] = {
     "_server": "whois.thnic.co.th",
     "extend": "com",
-    "registrant": r"Domain Holder Organization:\s?(.+)",
-    "registrant_country": r"Domain Holder Country:\s?(.+)",
-    "creation_date": r"Created date:\s?(.+)",
-    "expiration_date": r"Exp date:\s?(.+)",
-    "updated_date": r"Updated date:\s?(.+)",
+    "registrant": R(r"Domain Holder Organization:\s?(.+)"),
+    "registrant_country": R(r"Domain Holder Country:\s?(.+)"),
+    "creation_date": R(r"Created date:\s?(.+)"),
+    "expiration_date": R(r"Exp date:\s?(.+)"),
+    "updated_date": R(r"Updated date:\s?(.+)"),
     "_test": "thnic.co.th",
 }
 
 ZZ["tn"] = {
     "extend": "com",
-    "domain_name": r"Domain name\.+:(.+)\s*",
-    "registrar": r"Registrar\.+:(.+)\s*",
-    "registrant": r"Owner Contact\n+Name\.+:\s?(.+)",
-    "registrant_country": r"Owner Contact\n(?:.+\n)+Country\.+:\s(.+)",
-    "creation_date": r"Creation date\.+:\s?(.+)",
+    "domain_name": R(r"Domain name\.+:(.+)\s*"),
+    "registrar": R(r"Registrar\.+:(.+)\s*"),
+    "registrant": R(r"Owner Contact\n+Name\.+:\s?(.+)"),
+    "registrant_country": R(r"Owner Contact\n(?:.+\n)+Country\.+:\s(.+)"),
+    "creation_date": R(r"Creation date\.+:\s?(.+)"),
     "expiration_date": None,
     "updated_date": None,
-    "name_servers": r"DNS servers\n%s" % xStr(r"(?:Name\.+:\s*(\S+)\n)?", 4),
-    "status": r"Domain status\.+:(.+)",
+    "name_servers": R(r"DNS servers\n%s" % xStr(r"(?:Name\.+:\s*(\S+)\n)?", 4)),
+    "status": R(r"Domain status\.+:(.+)"),
 }
 
 ZZ["tv"] = {
     "extend": "com",
     "_server": "whois.nic.tv",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
     "_test": "nic.tv",
 }
 
 ZZ["tz"] = {
-    "domain_name": r"\ndomain:\s*(.+)",
-    "registrar": r"\nregistrar:\s?(.+)",
-    "registrant": r"\nregistrant:\s*(.+)",
+    "domain_name": R(r"\ndomain:\s*(.+)"),
+    "registrar": R(r"\nregistrar:\s?(.+)"),
+    "registrant": R(r"\nregistrant:\s*(.+)"),
     "registrant_country": None,
-    "creation_date": r"\ncreated:\s*(.+)",
-    "expiration_date": r"expire:\s?(.+)",
-    "updated_date": r"\nchanged:\s*(.+)",
+    "creation_date": R(r"\ncreated:\s*(.+)"),
+    "expiration_date": R(r"expire:\s?(.+)"),
+    "updated_date": R(r"\nchanged:\s*(.+)"),
     "status": None,
-    "name_servers": r"\nnserver:\s*(.+)",
+    "name_servers": R(r"\nnserver:\s*(.+)"),
 }
 
 ZZ["ua"] = {
     "extend": "com",
-    "domain_name": r"\ndomain:\s*(.+)",
-    "registrar": r"\nregistrar:\s*(.+)",
-    "registrant_country": r"\ncountry:\s*(.+)",
-    "creation_date": r"\ncreated:\s+(.+)",
-    "expiration_date": r"\nexpires:\s*(.+)",
-    "updated_date": r"\nmodified:\s*(.+)",
-    "name_servers": r"\nnserver:\s*(.+)",
-    "status": r"\nstatus:\s*(.+)",
+    "domain_name": R(r"\ndomain:\s*(.+)"),
+    "registrar": R(r"\nregistrar:\s*(.+)"),
+    "registrant_country": R(r"\ncountry:\s*(.+)"),
+    "creation_date": R(r"\ncreated:\s+(.+)"),
+    "expiration_date": R(r"\nexpires:\s*(.+)"),
+    "updated_date": R(r"\nmodified:\s*(.+)"),
+    "name_servers": R(r"\nnserver:\s*(.+)"),
+    "status": R(r"\nstatus:\s*(.+)"),
 }
 
 ZZ["uk"] = {
     "extend": "com",
-    "registrant": r"Registrant:\n\s*(.+)",
-    "creation_date": r"Registered on:\s*(.+)",
-    "expiration_date": r"Expiry date:\s*(.+)",
-    "updated_date": r"Last updated:\s*(.+)",
-    "name_servers": r"Name servers:%s\n\n" % xStr(r"(?:\n[ \t]+(\S+).*)?", 10),  # capture up to 10
-    "status": r"Registration status:\n\s*(.+)",
+    "registrant": R(r"Registrant:\n\s*(.+)"),
+    "creation_date": R(r"Registered on:\s*(.+)"),
+    "expiration_date": R(r"Expiry date:\s*(.+)"),
+    "updated_date": R(r"Last updated:\s*(.+)"),
+    "name_servers": R(r"Name servers:%s\n\n" % xStr(r"(?:\n[ \t]+(\S+).*)?", 10)),  # capture up to 10
+    "status": R(r"Registration status:\n\s*(.+)"),
 }
 
 ZZ["uz"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Expiration Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
-    "name_servers": r"Domain servers in listed order:%s\n\n" % xStr(r"(?:\n\s+(\S+))?", 4),
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Expiration Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
+    "name_servers": R(r"Domain servers in listed order:%s\n\n" % xStr(r"(?:\n\s+(\S+))?", 4)),
     # sometimes 'not.defined is returned as a nameserver (e.g. google.uz)
 }
 
 ZZ["wiki"] = {
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
 }
 
 ZZ["work"] = {
     "extend": "com",
     "_server": "whois.nic.work",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
     "_test": "nic.work",
 }
 
 ZZ["ac"] = {
-    "domain_name": r"Domain Name:\s+(.+)",
-    "registrar": r"Registrar:\s+(.+)",
-    "status": r"Domain Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(\S+)",
-    "registrant_country": r"Registrant Country:\s*(.*)\r?\n",
-    "updated_date": r"Updated Date:\s+(.+)",
-    "creation_date": r"Creation Date:\s+(.+)",
-    "expiration_date": r"Registry Expiry Date:\s+(.+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
+    "registrar": R(r"Registrar:\s+(.+)"),
+    "status": R(r"Domain Status:\s(.+)"),
+    "name_servers": R(r"Name Server:\s+(\S+)"),
+    "registrant_country": R(r"Registrant Country:\s*(.*)\r?\n"),
+    "updated_date": R(r"Updated Date:\s+(.+)"),
+    "creation_date": R(r"Creation Date:\s+(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s+(.+)"),
+    "registrant": R(r"Registrant Organization:\s*([^\n]*)\n"),
 }
 
 ZZ["ae"] = {
     "extend": "ar",
     "_server": "whois.aeda.net.ae",
-    "domain_name": r"Domain Name:\s+(.+)",
-    "registrar": r"Registrar Name:\s+(.+)",
-    "status": r"Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(\S+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
+    "registrar": R(r"Registrar Name:\s+(.+)"),
+    "status": R(r"Status:\s(.+)"),
+    "name_servers": R(r"Name Server:\s+(\S+)"),
     "registrant_country": None,
     "creation_date": None,
     "expiration_date": None,
@@ -906,9 +986,9 @@ ZZ["ae"] = {
 
 ZZ["bg"] = {
     "_server": "whois.register.bg",
-    "domain_name": r"DOMAIN\s+NAME:\s+(.+)",
-    "status": r"registration\s+status:\s(.+)",
-    "name_servers": r"NAME SERVER INFORMATION:\n%s" % xStr(r"(?:(.+)\n)?", 4),
+    "domain_name": R(r"DOMAIN\s+NAME:\s+(.+)"),
+    "status": R(r"registration\s+status:\s(.+)"),
+    "name_servers": R(r"NAME SERVER INFORMATION:\n%s" % xStr(r"(?:(.+)\n)?", 4)),
     "creation_date": None,
     "expiration_date": None,
     "updated_date": None,
@@ -920,22 +1000,22 @@ ZZ["bg"] = {
 ZZ["bj"] = {
     "_server": "whois.nic.bj",
     "extend": "com",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Registrar:\s*(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "status": r"Status:\s?(.+)",
-    "name_servers": r"Name Server:\s+(\S+)\n",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Registrar:\s*(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "status": R(r"Status:\s?(.+)"),
+    "name_servers": R(r"Name Server:\s+(\S+)\n"),
     "_test": "nic.bj",
 }
 
 ZZ["cf"] = {
     "domain_name": None,
-    "name_servers": r"Domain Nameservers:\n(?:(.+)\n)(?:(.+)\n)?(?:(.+)\n)?(?:(.+)\n)?",
-    "registrar": r"Record maintained by:\s+(.+)",
-    "creation_date": r"Domain registered:\s?(.+)",
-    "expiration_date": r"Record will expire:\s?(.+)",
+    "name_servers": R(r"Domain Nameservers:\n(?:(.+)\n)(?:(.+)\n)?(?:(.+)\n)?(?:(.+)\n)?"),
+    "registrar": R(r"Record maintained by:\s+(.+)"),
+    "creation_date": R(r"Domain registered:\s?(.+)"),
+    "expiration_date": R(r"Record will expire:\s?(.+)"),
     "updated_date": None,
     "registrant_country": None,
     # very restrictive, after a few queries it will refuse with try again later
@@ -944,297 +1024,326 @@ ZZ["cf"] = {
 
 ZZ["re"] = {
     "extend": "ac",
-    "registrant_country": None,
-    "domain_name": r"domain:\s+(.+)",
-    "registrar": r"registrar:\s+(.+)",
-    "name_servers": r"nserver:\s+(.+)",
-    "status": r"status:\s(.+)",
-    "creation_date": r"created:\s+(.+)",
-    "expiration_date": r"Expiry Date:\s+(.+)",
-    "updated_date": r"last-update:\s+(.*)",
+    "domain_name": R(r"domain:\s+(.+)"),
+    "registrar": R(r"registrar:\s+(.+)"),
+    "name_servers": R(r"nserver:\s+(.+)"),
+    "status": R(r"status:\s(.+)"),
+    "creation_date": R(r"created:\s+(.+)"),
+    "expiration_date": R(r"Expiry Date:\s+(.+)"),
+    "updated_date": R(r"last-update:\s+(.*)"),
     "registrant_country": None,
 }
 
 ZZ["ro"] = {
-    "domain_name": r"\s+Domain name:\s+(.+)",
-    "registrar": r"\s+Registrar:\s+(.+)",
-    "creation_date": r"\s+Registered On:\s+(.+)",
-    "expiration_date": r"\s+Expires On:\s+(.+)",
-    "status": r"\s+Domain Status:\s(.+)",
-    "name_servers": r"\s+NameServer:\s+(.+)",
+    "domain_name": R(r"\s+Domain name:\s+(.+)"),
+    "registrar": R(r"\s+Registrar:\s+(.+)"),
+    "creation_date": R(r"\s+Registered On:\s+(.+)"),
+    "expiration_date": R(r"\s+Expires On:\s+(.+)"),
+    "status": R(r"\s+Domain Status:\s(.+)"),
+    "name_servers": R(r"\s+NameServer:\s+(.+)"),
     "registrant_country": None,
     "updated_date": None,
 }
 
 ZZ["rs"] = {
-    "domain_name": r"Domain name:\s+(.+)",
-    "registrar": r"Registrar:\s+(.+)",
-    "status": r"Domain status:\s(.+)",
-    "creation_date": r"Registration date:\s+(.+)",
-    "expiration_date": r"Expiration date:\s+(.+)",
-    "updated_date": r"Modification date:\s+(.+)",
-    "name_servers": r"DNS:\s+(.+)",
+    "domain_name": R(r"Domain name:\s+(.+)"),
+    "registrar": R(r"Registrar:\s+(.+)"),
+    "status": R(r"Domain status:\s(.+)"),
+    "creation_date": R(r"Registration date:\s+(.+)"),
+    "expiration_date": R(r"Expiration date:\s+(.+)"),
+    "updated_date": R(r"Modification date:\s+(.+)"),
+    "name_servers": R(r"DNS:\s+(.+)"),
     "registrant_country": None,
+    "registrant": R(r"Registrant:\s*([^\n]*)\n"),
 }
 
 # Singapore
 ZZ["sg"] = {
     "_server": "whois.sgnic.sg",
-    "registrar": r"Registrar:\s+(.+)",
-    "domain_name": r"\s+Domain name:\s+(.+)",
-    "creation_date": r"\s+Creation Date:\s+(.+)",
-    "expiration_date": r"\s+Expiration Date:\s+(.+)",
-    "updated_date": r"\s+Modified Date:\s+(.+)",
-    "status": r"\s+Domain Status:\s(.+)",
+    "registrar": R(r"Registrar:\s+(.+)"),
+    "domain_name": R(r"\s+Domain name:\s+(.+)"),
+    "creation_date": R(r"\s+Creation Date:\s+(.+)"),
+    "expiration_date": R(r"\s+Expiration Date:\s+(.+)"),
+    "updated_date": R(r"\s+Modified Date:\s+(.+)"),
+    "status": R(r"\s+Domain Status:\s(.+)"),
     "registrant_country": None,
-    "name_servers": r"Name Servers:%s" % xStr(r"(?:\n[ \t]+(\S+)[^\n]*)?", 4),
+    "name_servers": R(r"Name Servers:%s" % xStr(r"(?:\n[ \t]+(\S+)[^\n]*)?", 4)),
     # make sure the dnssec is not matched
     "_test": "sgnic.sg",
 }
 
 ZZ["tw"] = {
     "_server": "whois.twnic.net.tw",
-    "domain_name": r"Domain Name:\s+(.+)",
-    "creation_date": r"\s+Record created on\s+(.+)",
-    "expiration_date": r"\s+Record expires on\s+(.+)",
-    "status": r"\s+Domain Status:\s+(.+)",
-    "registrar": r"Registration\s+Service\s+Provider:\s+(.+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
+    "creation_date": R(r"\s+Record created on\s+(.+)"),
+    "expiration_date": R(r"\s+Record expires on\s+(.+)"),
+    "status": R(r"\s+Domain Status:\s+(.+)"),
+    "registrar": R(r"Registration\s+Service\s+Provider:\s+(.+)"),
     "updated_date": None,
     "registrant_country": None,
-    "name_servers": r"Domain servers in listed order:%s" % xStr(r"(?:\s+(\S+)[ \t]*\r?\n)?", 4),
+    "name_servers": R(r"Domain servers in listed order:%s" % xStr(r"(?:\s+(\S+)[ \t]*\r?\n)?", 4)),
     "_test": "net.tw",
+    "registrant": R(r"\n\s*Registrant:[\s\n]*([^\n]*)\n*"),
 }
 
 ZZ["ug"] = {
     "_server": "whois.co.ug",
-    "domain_name": r"Domain name:\s+(.+)",
-    "creation_date": r"Registered On:\s+(.+)",
-    "expiration_date": r"Expires On:\s+(.+)",
-    "status": r"Status:\s+(.+)",
-    "name_servers": r"Nameserver:\s+(.+)",
-    "registrant_country": r"Registrant Country:\s+(.+)",
-    "updated_date": r"Renewed On:\s+(.+)",
+    "domain_name": R(r"Domain name:\s+(.+)"),
+    "creation_date": R(r"Registered On:\s+(.+)"),
+    "expiration_date": R(r"Expires On:\s+(.+)"),
+    "status": R(r"Status:\s+(.+)"),
+    "name_servers": R(r"Nameserver:\s+(.+)"),
+    "registrant_country": R(r"Registrant Country:\s+(.+)"),
+    "updated_date": R(r"Renewed On:\s+(.+)"),
     "registrar": None,
+    "registrant": R(r"Registrant Organization:\s*([^\n]*)\n"),
     "_test": "nic.co.ug",
 }
 
 ZZ["ws"] = {
-    "domain_name": r"Domain Name:\s+(.+)",
-    "creation_date": r"Creation Date:\s+(.+)",
-    "expiration_date": r"Registrar Registration Expiration Date:\s+(.+)",
-    "updated_date": r"Updated Date:\s?(.+)",
-    "registrar": r"Registrar:\s+(.+)",
-    "status": r"Domain Status:\s(.+)",
-    "name_servers": r"Name Server:\s+(.+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
+    "creation_date": R(r"Creation Date:\s+(.+)"),
+    "expiration_date": R(r"Registrar Registration Expiration Date:\s+(.+)"),
+    "updated_date": R(r"Updated Date:\s?(.+)"),
+    "registrar": R(r"Registrar:\s+(.+)"),
+    "status": R(r"Domain Status:\s(.+)"),
+    "name_servers": R(r"Name Server:\s+(.+)"),
     "registrant_country": None,
 }
 
 ZZ["re"] = {
-    "domain_name": r"domain:\s+(.+)",
-    "status": r"status:\s+(.+)",
-    "registrar": r"registrar:\s+(.+)",
-    "name_servers": r"nserver:\s+(.+)",
-    "creation_date": r"created:\s+(.+)",
-    "expiration_date": r"Expiry Date:\s+(.+)",
-    "updated_date": r"last-update:\s+(.+)",
+    "domain_name": R(r"domain:\s+(.+)"),
+    "status": R(r"status:\s+(.+)"),
+    "registrar": R(r"registrar:\s+(.+)"),
+    "name_servers": R(r"nserver:\s+(.+)"),
+    "creation_date": R(r"created:\s+(.+)"),
+    "expiration_date": R(r"Expiry Date:\s+(.+)"),
+    "updated_date": R(r"last-update:\s+(.+)"),
     "registrant_country": None,
 }
 
 ZZ["bo"] = {
-    "domain_name": r"\s*NOMBRE DE DOMINIO:\s+(.+)",
-    "registrant_country": r"País:\s+(.+)",
-    "creation_date": r"Fecha de activación:\s+(.+)",
-    "expiration_date": r"Fecha de corte:\s+(.+)",
+    "domain_name": R(r"\s*NOMBRE DE DOMINIO:\s+(.+)"),
+    "registrant_country": R(r"País:\s+(.+)"),
+    "creation_date": R(r"Fecha de activación:\s+(.+)"),
+    "expiration_date": R(r"Fecha de corte:\s+(.+)"),
     "registrar": None,
     "status": None,
     "name_servers": None,  # bo has no nameservers, use host -t ns <domain>
     "updated_date": None,
+    "registrant": R(r"CONTACTO ADMINISTRATIVO\nRazón social:\s*([^\n]*)\n"),
 }
 
 ZZ["hr"] = {
-    "domain_name": r"Domain Name:\s+(.+)",
-    "name_servers": r"Name Server:\s+(.+)",
-    "creation_date": r"Creation Date:\s+(.+)",
-    "updated_date": r"Updated Date:\s+(.+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
+    "name_servers": R(r"Name Server:\s+(.+)"),
+    "creation_date": R(r"Creation Date:\s+(.+)"),
+    "updated_date": R(r"Updated Date:\s+(.+)"),
     "status": None,
-    "registrar": None,
-    "expiration_date": r"Registrar Registration Expiration Date:\s+(.+)",
-    "registrant_country": None,
+    "registrar": R(r"Registrar:\s*([^\n]*)\n"),
+    "expiration_date": R(r"Registrar Registration Expiration Date:\s+(.+)"),
+    "registrant_country": R(r"Registrant State/Province:\s*([^\n]*)\n"),
+    "registrant": R(r"Registrant Name:\s*([^\n]*)\n"),
+    "_test": "google.hr",
 }
 
 ZZ["gg"] = {
-    "domain_name": r"Domain:\s*\n\s+(.+)",
-    "status": r"Domain Status:\s*\n\s+(.+)",
-    "registrar": r"Registrar:\s*\n\s+(.+)",
-    "name_servers": r"Name servers:(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?\n",
-    "creation_date": r"Relevant dates:\s*\n\s+Registered on(.+)",
+    "domain_name": R(r"Domain:\s*\n\s+(.+)"),
+    "status": R(r"Domain Status:\s*\n\s+(.+)"),
+    "registrar": R(r"Registrar:\s*\n\s+(.+)"),
+    "name_servers": R(r"Name servers:(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?(?:\n\s+(\S+))?\n"),
+    "creation_date": R(r"Relevant dates:\s*\n\s+Registered on(.+)"),
     "expiration_date": None,
     "updated_date": None,
     "registrant_country": None,
+    "registrant": R(r"\nregistrant:\s*\n\s*([^\n]*)\n"),
 }
 
 ZZ["sn"] = {
     "_server": "whois.nic.sn",
-    "domain_name": r"Nom de domaine:\s+(.+)",
-    "status": r"Statut:\s+(.+)",
-    "registrar": r"Registrar:\s+(.+)",
-    "name_servers": r"Serveur de noms:\s*(.+)",
-    "creation_date": r"Date de création:\s+(.+)",
-    "expiration_date": r"Date d'expiration:\s+(.+)",
-    "updated_date": r"Dernière modification:\s+(.+)",
-    "registrant_country": None,
+    "domain_name": R(r"Nom de domaine:\s+(.+)"),
+    "status": R(r"Statut:\s+(.+)"),
+    "registrar": R(r"Registrar:\s+(.+)"),
+    "name_servers": R(r"Serveur de noms:\s*(.+)"),
+    "creation_date": R(r"Date de création:\s+(.+)"),
+    "expiration_date": R(r"Date d'expiration:\s+(.+)"),
+    "updated_date": R(r"Dernière modification:\s+(.+)"),
     "_test": "nic.sn",
+    "registrant": findFromToAndLookFor(
+        fromStr=r"\n\[HOLDER\]",
+        toStr=r"\n\n",
+        lookForStr=r"Nom:\s*([^\n]*)\n",
+    ),
+    "registrant_country": findFromToAndLookFor(
+        fromStr=r"\n\[HOLDER\]",
+        toStr=r"\n\n",
+        lookForStr=r"Pays:\s*([^\n]*)\n",
+    ),
 }
 
 ZZ["si"] = {
-    "domain_name": r"domain:\s+(.+)",
-    "status": r"status:\s+(.+)",
-    "registrar": r"registrar:\s+(.+)",
-    "name_servers": r"nameserver:\s*(.+)",
-    "creation_date": r"created:\s+(.+)",
-    "expiration_date": r"expire:\s+(.+)",
+    "_server": "whois.register.si",
+    "domain_name": R(r"domain:\s+(.+)"),
+    "status": R(r"status:\s+(.+)"),
+    "registrar": R(r"registrar:\s+(.+)"),
+    "name_servers": R(r"nameserver:\s*(.+)"),
+    "creation_date": R(r"created:\s+(.+)"),
+    "expiration_date": R(r"expire:\s+(.+)"),
     "updated_date": None,
     "registrant_country": None,
+    "_test": "register.si",
 }
 
 ZZ["st"] = {
     # .ST domains can now be registered with many different competing registrars. and hence different formats
     # >>> line appears quite early, valid info after would have been suppressed with the ^>>> cleanup rule: switched off
     "extend": "com",
-    "registrant_country": r"registrant-country:\s+(\S+)",
-    "registrant": r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n",
-    "expiration_date": r"Expiration\s+Date:\s?(.+)",
+    "registrant_country": R(r"registrant-country:\s+(\S+)"),
+    "registrant": R(r"registrant-organi(?:s|z)ation:\s*(.+)\r?\n"),
+    "expiration_date": R(r"Expiration\s+Date:\s?(.+)"),
 }
 
 ZZ["mk"] = {
     "_server": "whois.marnet.mk",
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "registrant": r"registrant:\s?(.+)",
-    "registrant_country": r"Registrant Country:\s?(.+)",
-    "creation_date": r"registered:\s?(.+)",
-    "expiration_date": r"expire:\s?(.+)",
-    "updated_date": r"changed:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)\s*",
-    "status": r"Status:\s?(.+)",
-    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
+    # "registrant": R(r"registrant:\s?(.+)"),
+    "registrant_country": R(r"Registrant Country:\s?(.+)"),
+    "creation_date": R(r"registered:\s?(.+)"),
+    "expiration_date": R(r"expire:\s?(.+)"),
+    "updated_date": R(r"changed:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)\s*"),
+    "status": R(r"Status:\s?(.+)"),
+    "emails": R(r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}"),
     "_test": "marnet.mk",
+    "registrant": findInSplitedLookForHavingFindFirst(
+        findFirst=r"registrant:\s?(.+)",
+        lookForStr=r"contact:\s*{}\n",
+        extract=r"org:\s*([^\n]*)\n",
+    ),
+    "_split": newLineSplit(),
 }
 
 ZZ["si"] = {
     "_server": "whois.register.si",
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "registrant": r"registrant:\s?(.+)",
-    "registrant_country": r"Registrant Country:\s?(.+)",
-    "creation_date": r"created:\s?(.+)",
-    "expiration_date": r"expire:\s?(.+)",
-    "updated_date": r"changed:\s?(.+)",
-    "name_servers": r"nameserver:\s*(.+)\s*",
-    "status": r"Status:\s?(.+)",
-    "emails": r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
+    "registrant": R(r"registrant:\s?(.+)"),
+    "registrant_country": R(r"Registrant Country:\s?(.+)"),
+    "creation_date": R(r"created:\s?(.+)"),
+    "expiration_date": R(r"expire:\s?(.+)"),
+    "updated_date": R(r"changed:\s?(.+)"),
+    "name_servers": R(r"nameserver:\s*(.+)\s*"),
+    "status": R(r"Status:\s?(.+)"),
+    "emails": R(r"[\w\.-]+@[\w\.-]+\.[\w]{2,4}"),
     "_test": "register.si",
 }
 
 ZZ["tc"] = {
     "extend": "com",
     "_server": "whois.nic.tc",
-    "domain_name": r"Domain Name:\s?(.+)",
-    "registrar": r"Sponsoring Registrar:\s?(.+)",
-    "creation_date": r"Creation Date:\s?(.+)",
-    "expiration_date": r"Registry Expiry Date:\s?(.+)",
-    "name_servers": r"Name Server:\s*(.+)\s*",
-    "status": r"Domain Status:\s?(.+)",
+    "domain_name": R(r"Domain Name:\s?(.+)"),
+    "registrar": R(r"Sponsoring Registrar:\s?(.+)"),
+    "creation_date": R(r"Creation Date:\s?(.+)"),
+    "expiration_date": R(r"Registry Expiry Date:\s?(.+)"),
+    "name_servers": R(r"Name Server:\s*(.+)\s*"),
+    "status": R(r"Domain Status:\s?(.+)"),
     "_test": "nic.tc",
 }
 
 ZZ["wf"] = {
     "extend": "com",
     "_server": "whois.nic.wf",
-    "domain_name": r"domain:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "registrant": r"registrant:\s?(.+)",
-    "registrant_country": r"Registrant Country:\s?(.+)",
-    "creation_date": r"created:\s?(.+)",
-    "expiration_date": r"Expiry Date:\s?(.+)",
-    "updated_date": r"last-update:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)\s*",
-    "status": r"\nstatus:\s?(.+)",
+    "domain_name": R(r"domain:\s?(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
+    "registrant": R(r"registrant:\s?(.+)"),
+    "registrant_country": R(r"Registrant Country:\s?(.+)"),
+    "creation_date": R(r"created:\s?(.+)"),
+    "expiration_date": R(r"Expiry Date:\s?(.+)"),
+    "updated_date": R(r"last-update:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)\s*"),
+    "status": R(r"\nstatus:\s?(.+)"),
     "_test": "nic.wf",
 }
 
 ZZ["mo"] = {
     "extend": "com",
     "_server": "whois.monic.mo",
-    "name_servers": r"Domain name servers:\s+-+\s+(\S+)\n(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?",
-    "creation_date": r"Record created on (.+)",
-    "expiration_date": r"Record expires on (.+)",
+    "name_servers": R(r"Domain name servers:\s+-+\s+(\S+)\n(?:(\S+)\n)?(?:(\S+)\n)?(?:(\S+)\n)?"),
+    "creation_date": R(r"Record created on (.+)"),
+    "expiration_date": R(r"Record expires on (.+)"),
     "_test": "monic.mo",
 }
 
 ZZ["tm"] = {  # Turkmenistan
     "extend": "com",
-    "domain_name": r"Domain\s*:\s*(.+)",
-    "expiration_date": r"Expiry\s*:\s*(\d+-\d+-\d+)",
-    "name_servers": r"NS\s+\d+\s+:\s*(\S+)",
-    "status": r"Status\s*:\s*(.+)",
+    "domain_name": R(r"Domain\s*:\s*(.+)"),
+    "expiration_date": R(r"Expiry\s*:\s*(\d+-\d+-\d+)"),
+    "name_servers": R(r"NS\s+\d+\s+:\s*(\S+)"),
+    "status": R(r"Status\s*:\s*(.+)"),
 }
 
 # venezuela
 ZZ["ve"] = {
     "extend": "com",
     "_server": "whois.nic.ve",
-    "domain_name": r"domain\s*:\s?(.+)",
-    "registrar": r"registrar:\s?(.+)",
-    "registrant": r"registrant:\s?(.+)",
-    "creation_date": r"created:\s?(.+)",
-    "expiration_date": r"expire:\s?(.+)",
-    "updated_date": r"changed\s*:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)\s*",
+    "domain_name": R(r"domain\s*:\s?(.+)"),
+    "registrar": R(r"registrar:\s?(.+)"),
+    # "registrant": R(r"registrant:\s?(.+)"),
+    "creation_date": R(r"created:\s?(.+)"),
+    "expiration_date": R(r"expire:\s?(.+)"),
+    "updated_date": R(r"changed\s*:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)\s*"),
     "_test": "nic.ve",
+    "registrant": findInSplitedLookForHavingFindFirst(
+        findFirst=r"registrant:\s?(.+)",
+        lookForStr=r"contact:\s*{}\n",
+        extract=r"org:\s*([^\n]*)\n",
+    ),
+    "_split": newLineSplit(),
 }
 
 ZZ["lu"] = {
     "extend": "com",
     "_server": "whois.dns.lu",
-    "domain_name": r"domainname\s*:\s?(.+)",
-    "registrar": r"registrar-name:\s?(.+)",
-    "name_servers": r"nserver:\s*(.+)\s*",
-    "status": r"domaintype\s*:\s*(.+)",
-    "registrant_country": r"org-country\s*:\s?(.+)",
+    "domain_name": R(r"domainname\s*:\s?(.+)"),
+    "registrar": R(r"registrar-name:\s?(.+)"),
+    "name_servers": R(r"nserver:\s*(.+)\s*"),
+    "status": R(r"domaintype\s*:\s*(.+)"),
+    "registrant_country": R(r"org-country\s*:\s?(.+)"),
     "_test": "dns.lu",
 }
 
 ZZ["sm"] = {
     "extend": "rs",
     "_server": "whois.nic.sm",
-    "domain_name": r"Domain Name:\s+(.+)",
-    "status": r"Status:\s(.+)",
-    "name_servers": r"DNS Servers:\s+(.+)",
+    "domain_name": R(r"Domain Name:\s+(.+)"),
+    "status": R(r"Status:\s(.+)"),
+    "name_servers": R(r"DNS Servers:\s+(.+)"),
     "_test": "nic.sm",
 }
 
 ZZ["tg"] = {
     "extend": "com",
     "_server": "whois.nic.tg",
-    "domain_name": r"domain:\.+\s?(.+)",
-    "registrar": r"registrar:\.+\s?(.+)",
-    "creation_date": r"Activation:\.+\s?(.+)",
-    "expiration_date": r"Expiration:\.+\s?(.+)",
-    "status": r"Status:\.+\s?(.+)",
-    "name_servers": r"Name Server \(DB\):\.+(.+)",
+    "domain_name": R(r"domain:\.+\s?(.+)"),
+    "registrar": R(r"registrar:\.+\s?(.+)"),
+    "creation_date": R(r"Activation:\.+\s?(.+)"),
+    "expiration_date": R(r"Expiration:\.+\s?(.+)"),
+    "status": R(r"Status:\.+\s?(.+)"),
+    "name_servers": R(r"Name Server \(DB\):\.+(.+)"),
     "_test": "nic.tg",
 }
 
 ZZ["md"] = {
     "extend": "com",
     "_server": "whois.nic.md",
-    "domain_name": r"domain\s+name:\s?(.+)",
-    "status": r"domain\s+state:\s?(.+)",
-    "name_servers": r"Nameserver:(.+)",
-    "registrar": r"Registrar:\s?(.+)",
-    "creation_date": r"Registered\s+on:\s?(.+)",
-    "expiration_date": r"Expires\s+on:\s?(.+)",
+    "domain_name": R(r"domain\s+name:\s?(.+)"),
+    "status": R(r"domain\s+state:\s?(.+)"),
+    "name_servers": R(r"Nameserver:(.+)"),
+    "registrar": R(r"Registrar:\s?(.+)"),
+    "creation_date": R(r"Registered\s+on:\s?(.+)"),
+    "expiration_date": R(r"Expires\s+on:\s?(.+)"),
     "_test": "nic.md",
 }
 
@@ -1242,12 +1351,12 @@ ZZ["tg"] = {
     "_server": "whois.nic.tg",
     "extend": "com",
     "_test": "nic.tg",
-    "domain_name": r"domain:\.+\s?(.+)",
-    "registrar": r"registrar:\.+\s?(.+)",
-    "creation_date": r"Activation:\.+\s?(.+)",
-    "expiration_date": r"Expiration:\.+\s?(.+)",
-    "status": r"Status:\.+\s?(.+)",
-    "name_servers": r"Name Server \(DB\):\.+(.+)",
+    "domain_name": R(r"domain:\.+\s?(.+)"),
+    "registrar": R(r"registrar:\.+\s?(.+)"),
+    "creation_date": R(r"Activation:\.+\s?(.+)"),
+    "expiration_date": R(r"Expiration:\.+\s?(.+)"),
+    "status": R(r"Status:\.+\s?(.+)"),
+    "name_servers": R(r"Name Server \(DB\):\.+(.+)"),
 }
 
 # ======================================
@@ -1275,13 +1384,16 @@ ZZ["ad.jp"] = {"extend": "co.jp", "_test": "nic.ad.jp"}
 ZZ["ads"] = {"_server": "whois.nic.ads", "extend": "com", "_test": "nic.ads"}
 ZZ["adult"] = {"_server": "whois.nic.adult", "extend": "com", "_test": "nic.adult"}
 ZZ["aeg"] = {"_server": "whois.nic.aeg", "extend": "com", "_test": "nic.aeg"}
-ZZ["aero"] = {"extend": "ac", "_server": "whois.aero", "registrant_country": r"Registrant\s+Country:\s+(.+)"}
+ZZ["aero"] = {"extend": "ac", "_server": "whois.aero", "registrant_country": R(r"Registrant\s+Country:\s+(.+)")}
 ZZ["af"] = {"extend": "ac"}
+ZZ["com.af"] = {"extend": "af"}
 ZZ["afl"] = {"_server": "whois.nic.afl", "extend": "com", "_test": "nic.afl"}
 ZZ["africa"] = {"extend": "com", "_server": "whois.nic.africa", "_test": "nic.africa"}
 ZZ["agakhan"] = {"_server": "whois.nic.agakhan", "extend": "com", "_test": "nic.agakhan"}
 ZZ["agency"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["ag"] = {"extend": "ac"}
+ZZ["com.ag"] = {"extend": "ac"}
+
 ZZ["ai"] = {"extend": "com", "_server": "whois.nic.ai"}  # Anguill, "_test": "nic.ai"}
 ZZ["airbus"] = {"_server": "whois.nic.airbus", "extend": "com", "_test": "nic.airbus"}
 ZZ["airforce"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -1320,13 +1432,13 @@ ZZ["auction"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["audible"] = {"_server": "whois.nic.audible", "extend": "com", "_test": "nic.audible"}
 ZZ["audio"] = {"extend": "_uniregistry", "_server": "whois.uniregistry.net"}
 ZZ["audi"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
-ZZ["au"] = {"extend": "com", "registrar": r"Registrar Name:\s?(.+)", "updated_date": r"Last Modified:([^\n]*)"}
+ZZ["au"] = {"extend": "com", "registrar": R(r"Registrar Name:\s?(.+)"), "updated_date": R(r"Last Modified:([^\n]*)")}
 ZZ["auspost"] = {"_server": "whois.nic.auspost", "extend": "com", "_test": "nic.auspost"}
 ZZ["author"] = {"_server": "whois.nic.author", "extend": "com", "_test": "nic.author"}
 ZZ["auto"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["autos"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["avianca"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
-ZZ["aw"] = {"extend": "nl", "name_servers": r"Domain nameservers.*:\n%s" % xStr(r"(?:\s+(\S+)\n)?", 4)}
+ZZ["aw"] = {"extend": "nl", "name_servers": R(r"Domain nameservers.*:\n%s" % xStr(r"(?:\s+(\S+)\n)?", 4))}
 ZZ["aws"] = {"_server": "whois.nic.aws", "extend": "com", "_test": "nic.aws"}
 ZZ["az"] = {"extend": "_privateReg"}
 ZZ["baby"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
@@ -1356,7 +1468,7 @@ ZZ["berlin"] = {"_server": "whois.nic.berlin", "extend": "com", "_test": "nic.be
 ZZ["bestbuy"] = {"_server": "whois.nic.bestbuy", "extend": "com", "_test": "nic.bestbuy"}
 ZZ["best"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["bet"] = {"extend": "ac", "_server": "whois.nic.bet", "_test": "nic.bet"}
-ZZ["bf"] = {"extend": "com", "_server": "whois.nic.bf", "registrant": r"Registrant Name:\s?(.+)", "_test": "nic.bf"}
+ZZ["bf"] = {"extend": "com", "_server": "whois.nic.bf", "registrant": R(r"Registrant Name:\s?(.+)"), "_test": "nic.bf"}
 ZZ["bible"] = {"_server": "whois.nic.bible", "extend": "com", "_test": "nic.bible"}
 ZZ["bid"] = {"extend": "ac", "_server": "whois.nic.bid", "_test": "nic.bid"}
 ZZ["bike"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -1414,7 +1526,7 @@ ZZ["careers"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["care"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["car"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["cars"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
-ZZ["casa"] = {"extend": "ac", "registrant_country": r"Registrant Country:\s+(.+)"}
+ZZ["casa"] = {"extend": "ac", "registrant_country": R(r"Registrant Country:\s+(.+)")}
 ZZ["case"] = {"_server": "whois.nic.case", "extend": "com", "_test": "nic.case"}
 ZZ["cash"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["casino"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -1427,7 +1539,7 @@ ZZ["cbs"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
 ZZ["cd"] = {
     "extend": "ac",
     "_server": "whois.nic.cd",
-    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+    "registrant_country": R(r"Registrant\s+Country:\s+(.+)"),
     "_test": "nic.cd",
 }
 ZZ["center"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -1462,7 +1574,7 @@ ZZ["clubmed"] = {"_server": "whois.nic.clubmed", "extend": "com", "_test": "nic.
 ZZ["cm"] = {"extend": "com"}
 ZZ["coach"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["codes"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
-ZZ["co"] = {"extend": "biz", "status": r"Status:\s?(.+)"}
+ZZ["co"] = {"extend": "biz", "status": R(r"Status:\s?(.+)")}
 ZZ["coffee"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["co.ke"] = {"extend": "ke"}
 ZZ["college"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
@@ -1513,7 +1625,10 @@ ZZ["cpa"] = {"_server": "whois.nic.cpa", "extend": "com", "_test": "nic.cpa"}
 ZZ["creditcard"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["credit"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["creditunion"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
+
 ZZ["cr"] = {"extend": "cz"}
+ZZ["co.cr"] = {"extend": "cr"}
+
 ZZ["cricket"] = {"extend": "com", "_server": "whois.nic.cricket", "_test": "nic.cricket"}
 ZZ["cruise"] = {"_server": "whois.nic.cruise", "extend": "com", "_test": "nic.cruise"}
 ZZ["cruises"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -1566,8 +1681,8 @@ ZZ["domains"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["dot"] = {"_server": "whois.nic.dot", "extend": "com", "_test": "nic.dot"}
 ZZ["download"] = {
     "extend": "amsterdam",
-    "name_servers": r"Name Server:[ \t]+(\S+)",
-    "status": r"Domain Status:\s*([a-zA-z]+)",
+    "name_servers": R(r"Name Server:[ \t]+(\S+)"),
+    "status": R(r"Domain Status:\s*([a-zA-z]+)"),
 }
 ZZ["drive"] = {"_server": "whois.nic.google", "extend": "com"}
 ZZ["dtv"] = {"_server": "whois.nic.dtv", "extend": "com", "_test": "nic.dtv"}
@@ -1586,7 +1701,7 @@ ZZ["edeka"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
 ZZ["ed.jp"] = {"extend": "co.jp"}
 ZZ["education"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["edu.tr"] = {"extend": "com.tr", "_server": "whois.trabis.gov.tr", "_test": "anadolu.edu.tr"}
-ZZ["edu.ua"] = {"extend": "ua", "creation_date": r"\ncreated:\s+0-UANIC\s+(.+)"}
+ZZ["edu.ua"] = {"extend": "ua", "creation_date": R(r"\ncreated:\s+0-UANIC\s+(.+)")}
 ZZ["eg"] = {"extend": "_privateReg"}  # Egipt
 ZZ["email"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["emerck"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
@@ -1602,6 +1717,7 @@ ZZ["es"] = {"extend": "_privateReg"}
 ZZ["esq"] = {"extend": "com", "_server": "whois.nic.google"}
 ZZ["estate"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["et"] = {"extend": "com", "_server": "whois.ethiotelecom.et"}
+ZZ["com.et"] = {"extend": "et", "_test": "google.com.et"}
 ZZ["etisalat"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["eurovision"] = {"_server": "whois.nic.eurovision", "extend": "com", "_test": "nic.eurovision"}
 ZZ["eus"] = {"extend": "ac"}
@@ -1678,7 +1794,13 @@ ZZ["gent"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["genting"] = {"_server": "whois.nic.genting", "extend": "com", "_test": "nic.genting"}
 ZZ["geo.jp"] = {"extend": "co.jp"}
 ZZ["george"] = {"_server": "whois.nic.george", "extend": "com", "_test": "nic.george"}
-ZZ["ge"] = {"_server": "whois.nic.ge", "extend": "ac", "updated_date": None, "_test": "nic.ge"}
+ZZ["ge"] = {
+    "_server": "whois.nic.ge",
+    "extend": "ac",
+    "updated_date": None,
+    "_test": "nic.ge",
+    "registrant": R(r"Registrant:\s*([^\n]*)\n"),
+}
 ZZ["gf"] = {"extend": "si", "_server": "whois.mediaserv.net"}
 ZZ["ggee"] = {"_server": "whois.nic.ggee", "extend": "com", "_test": "nic.ggee"}
 ZZ["gh"] = {"_privateRegistry": True}
@@ -1689,7 +1811,7 @@ ZZ["gives"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["giving"] = {"_server": "whois.nic.giving", "extend": "com", "_test": "nic.giving"}
 ZZ["glass"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["gle"] = {"_server": "whois.nic.google", "extend": "com"}
-ZZ["global"] = {"extend": "amsterdam", "name_servers": r"Name Server: (.+)"}
+ZZ["global"] = {"extend": "amsterdam", "name_servers": R(r"Name Server: (.+)")}
 ZZ["globo"] = {"_server": "whois.gtlds.nic.br", "extend": "bom"}
 ZZ["gl"] = {"_server": "whois.nic.gl", "extend": "com", "_test": "nic.gl"}
 ZZ["gmail"] = {"_server": "whois.nic.google", "extend": "com"}
@@ -1793,7 +1915,7 @@ ZZ["insure"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["international"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["in.th"] = {"extend": "co.th"}
 ZZ["investments"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
-ZZ["io"] = {"extend": "com", "expiration_date": r"\nRegistry Expiry Date:\s?(.+)"}
+ZZ["io"] = {"extend": "com", "expiration_date": R(r"\nRegistry Expiry Date:\s?(.+)")}
 ZZ["irish"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["ismaili"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
 ZZ["istanbul"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
@@ -1887,7 +2009,7 @@ ZZ["lol"] = {"extend": "amsterdam"}
 ZZ["london"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["lotte"] = {"_server": "whois.nic.lotte", "extend": "com", "_test": "nic.lotte"}
 ZZ["lotto"] = {"_server": "whois.nic.lotto", "extend": "com", "_test": "nic.lotto"}
-ZZ["love"] = {"extend": "ac", "registrant_country": r"Registrant\s+Country:\s+(.+)"}
+ZZ["love"] = {"extend": "ac", "registrant_country": R(r"Registrant\s+Country:\s+(.+)")}
 ZZ["lplfinancial"] = {"_server": "whois.nic.lplfinancial", "extend": "com", "_test": "nic.lplfinancial"}
 ZZ["lpl"] = {"_server": "whois.nic.lpl", "extend": "com", "_test": "nic.lpl"}
 ZZ["ls"] = {"extend": "cz", "_server": "whois.nic.ls", "_test": "nic.ls"}
@@ -1900,11 +2022,11 @@ ZZ["lviv.ua"] = {"extend": "com"}
 ZZ["ly"] = {
     "extend": "ac",
     "_server": "whois.nic.ly",
-    "registrant_country": r"Registrant\s+Country:\s+(.+)",
+    "registrant_country": R(r"Registrant\s+Country:\s+(.+)"),
     "_test": "nic.ly",
 }
 ZZ["madrid"] = {"_server": "whois.nic.madrid", "extend": "com", "_test": "nic.madrid"}
-ZZ["ma"] = {"extend": "ac", "_server": "whois.registre.ma", "registrar": r"Sponsoring Registrar:\s*(.+)"}
+ZZ["ma"] = {"extend": "ac", "_server": "whois.registre.ma", "registrar": R(r"Sponsoring Registrar:\s*(.+)")}
 ZZ["maison"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["makeup"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["management"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -1926,7 +2048,7 @@ ZZ["meme"] = {"_server": "whois.nic.google", "extend": "com"}
 ZZ["memorial"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["men"] = {"_server": "whois.nic.men", "extend": "com", "_test": "nic.men"}
 ZZ["menu"] = {"_server": "whois.nic.menu", "extend": "com", "_test": "nic.menu"}
-ZZ["mg"] = {"extend": "ac", "registrant_country": r"Registrant\s+Country:\s+(.+)"}
+ZZ["mg"] = {"extend": "ac", "registrant_country": R(r"Registrant\s+Country:\s+(.+)")}
 ZZ["miami"] = {"_server": "whois.nic.miami", "extend": "com", "_test": "nic.miami"}
 ZZ["mil.rw"] = {"extend": "rw"}
 ZZ["mini"] = {"_server": "whois.nic.mini", "extend": "com", "_test": "nic.mini"}
@@ -1938,13 +2060,13 @@ ZZ["mn"] = {"extend": "com"}
 ZZ["mn"] = {"extend": "com", "_server": "whois.nic.mn", "_test": "nic.mn"}
 ZZ["mobi"] = {
     "extend": "com",
-    "expiration_date": r"\nRegistry Expiry Date:\s?(.+)",
-    "updated_date": r"\nUpdated Date:\s?(.+)",
+    "expiration_date": R(r"\nRegistry Expiry Date:\s?(.+)"),
+    "updated_date": R(r"\nUpdated Date:\s?(.+)"),
 }
 ZZ["mobi.ke"] = {"extend": "ke"}
 ZZ["mobile"] = {"_server": "whois.nic.mobile", "extend": "com", "_test": "nic.mobile"}
 ZZ["moda"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
-ZZ["moe"] = {"extend": "ac", "registrant_country": r"Registrant\s+Country:\s+(.+)"}
+ZZ["moe"] = {"extend": "ac", "registrant_country": R(r"Registrant\s+Country:\s+(.+)")}
 ZZ["moi"] = {"_server": "whois.nic.moi", "extend": "com", "_test": "nic.moi"}
 ZZ["mom"] = {"_server": "whois.nic.mom", "extend": "com", "_test": "nic.mom"}
 ZZ["monash"] = {"_server": "whois.nic.monash", "extend": "com", "_test": "nic.monash"}
@@ -1972,7 +2094,7 @@ ZZ["my"] = {"extend": "_privateReg"}
 ZZ["mz"] = {"_server": "whois.nic.mz", "extend": "com", "_test": "nic.mz"}
 ZZ["nab"] = {"_server": "whois.nic.nab", "extend": "com", "_test": "nic.nab"}
 ZZ["nagoya"] = {"_server": "whois.nic.nagoya", "extend": "com", "_test": "nic.nagoya"}
-ZZ["name"] = {"extend": "com", "status": r"Domain Status:\s?(.+)"}
+ZZ["name"] = {"extend": "com", "status": R(r"Domain Status:\s?(.+)")}
 ZZ["na"] = {"_server": "whois.na-nic.com.na", "extend": "com"}
 ZZ["natura"] = {"_server": "whois.gtlds.nic.br", "extend": "bom"}
 ZZ["navy"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -1996,7 +2118,7 @@ ZZ["next"] = {"_server": "whois.nic.next", "extend": "com", "_test": "nic.next"}
 ZZ["nexus"] = {"extend": "com", "_server": "whois.nic.google"}
 ZZ["nf"] = {"_server": "whois.nic.nf", "extend": "com", "_test": "nic.nf"}
 ZZ["ngo"] = {"_server": "whois.nic.ngo", "extend": "com", "_test": "nic.ngo"}
-ZZ["ng"] = {"_server": "whois.nic.net.ng", "extend": "ac", "registrant_country": r"Registrant Country:\s+(.+)"}
+ZZ["ng"] = {"_server": "whois.nic.net.ng", "extend": "ac", "registrant_country": R(r"Registrant Country:\s+(.+)")}
 ZZ["nhk"] = {"_server": "whois.nic.nhk", "extend": "com", "_test": "nic.nhk"}
 ZZ["nico"] = {"_server": "whois.nic.nico", "extend": "com", "_test": "nic.nico"}
 ZZ["nikon"] = {"_server": "whois.nic.nikon", "extend": "com", "_test": "nic.nikon"}
@@ -2023,7 +2145,7 @@ ZZ["ollo"] = {"_server": "whois.nic.ollo", "extend": "com", "_test": "nic.ollo"}
 ZZ["omega"] = {"_server": "whois.nic.omega", "extend": "com", "_test": "nic.omega"}
 ZZ["om"] = {"_server": "whois.registry.om", "extend": "com", "_test": "registry.om"}
 ZZ["one"] = {"extend": "com", "_server": "whois.nic.one", "_test": "nic.one"}
-ZZ["ong"] = {"extend": "ac", "registrant_country": r"Registrant Country:\s+(.+)"}
+ZZ["ong"] = {"extend": "ac", "registrant_country": R(r"Registrant Country:\s+(.+)")}
 ZZ["onl"] = {"extend": "com"}
 ZZ["online"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
 ZZ["ooo"] = {"extend": "_centralnic", "_server": "whois.centralnic.com"}
@@ -2054,7 +2176,7 @@ ZZ["parts"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["party"] = {"extend": "com", "_server": "whois.nic.party", "_test": "nic.party"}
 ZZ["pay"] = {"_server": "whois.nic.pay", "extend": "com", "_test": "nic.pay"}
 ZZ["pccw"] = {"_server": "whois.nic.pccw", "extend": "com", "_test": "nic.pccw"}
-ZZ["pe"] = {"extend": "com", "registrant": r"Registrant Name:\s?(.+)", "admin": r"Admin Name:\s?(.+)"}
+ZZ["pe"] = {"extend": "com", "registrant": R(r"Registrant Name:\s?(.+)"), "admin": R(r"Admin Name:\s?(.+)")}
 ZZ["pet"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["phd"] = {"extend": "com", "_server": "whois.nic.google"}
 ZZ["ph"] = {"extend": "_privateReg"}
@@ -2232,7 +2354,7 @@ ZZ["spb.ru"] = {"extend": "com.ru", "_test": "iac.spb.ru"}
 ZZ["sport"] = {"_server": "whois.nic.sport", "extend": "com", "_test": "nic.sport"}
 ZZ["spot"] = {"_server": "whois.nic.spot", "extend": "com", "_test": "nic.spot"}
 ZZ["sr"] = {"extend": "_privateReg"}
-ZZ["srl"] = {"_server": "whois.afilias-srs.net", "extend": "ac", "registrant_country": r"Registrant Country:\s+(.+)"}
+ZZ["srl"] = {"_server": "whois.afilias-srs.net", "extend": "ac", "registrant_country": R(r"Registrant Country:\s+(.+)")}
 ZZ["ss"] = {"_server": "whois.nic.ss", "extend": "com", "_test": "nic.ss"}
 ZZ["stada"] = {"_server": "whois.afilias-srs.net", "extend": "com"}
 ZZ["star"] = {"_server": "whois.nic.star", "extend": "com", "_test": "nic.star"}
@@ -2275,7 +2397,7 @@ ZZ["tdk"] = {"_server": "whois.nic.tdk", "extend": "com", "_test": "nic.tdk"}
 ZZ["td"] = {
     "_server": "whois.nic.td",
     "extend": "ac",
-    "registrant_country": r"Registrant Country:\s+(.+)",
+    "registrant_country": R(r"Registrant Country:\s+(.+)"),
     "_test": "nic.td",
 }
 ZZ["team"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -2551,7 +2673,7 @@ ZZ["рф"] = {"extend": "ru"}
 ZZ["сайт"] = {"_server": "whois.nic.xn--80aswg", "extend": "xn--80aswg"}
 ZZ["קום"] = {"_server": "whois.nic.xn--9dbq2a", "extend": "xn--9dbq2a"}
 ZZ["ابوظبي"] = {"_server": "whois.nic.xn--mgbca7dzdo", "extend": "xn--mgbca7dzdo"}
-ZZ["اتصالات"] = {"_server": "whois.centralnic.com", "extend": "_centralnic", "_server": "whois.centralnic.com"}
+ZZ["اتصالات"] = {"_server": "whois.centralnic.com", "extend": "_centralnic"}
 ZZ["العليان"] = {"_server": "whois.nic.xn--mgba7c0bbn0a", "extend": "xn--mgba7c0bbn0a"}
 ZZ["بارت"] = {"_server": "whois.registry.in", "extend": "com"}
 ZZ["بازار"] = {"_server": "whois.nic.xn--mgbab2bd", "extend": "xn--mgbab2bd"}
@@ -2639,3 +2761,228 @@ ZZ["香格里拉"] = {"_server": "whois.nic.xn--5su34j936bgsg", "extend": "xn--5
 ZZ["香港"] = {"_server": "whois.hkirc.hk", "extend": "hk", "_test": "hkirc.hk"}
 
 # भारतम् xn--h2breg3eve ; still issues with some utf8 strings 2023-08-28 mboot
+
+ZZ["aaa"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["able"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["accenture"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ad"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["aetna"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["aig"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["americanexpress"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["amex"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["amica"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["analytics"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ao"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["aq"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["aramco"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["athleta"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["axa"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["azure"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["banamex"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bananarepublic"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["baseball"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bb"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bh"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bharti"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bing"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bloomberg"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bm"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["booking"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bs"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bt"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["bv"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["calvinklein"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["caravan"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["cbn"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["cbre"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["cg"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["chase"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["cisco"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["citadel"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["citi"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["citic"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ck"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["coupon"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["cu"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["dell"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["dhl"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["discover"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["dj"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["dupont"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["er"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["farmers"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ferrero"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["fk"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["flickr"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["flir"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["food"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ford"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["frontier"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ftr"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["gap"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["gb"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["gm"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["gn"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["grainger"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["grocery"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["gu"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["guardian"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["gw"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["hbo"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["homegoods"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["homesense"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["hotels"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["hotmail"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["hsbc"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["hyatt"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ieee"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["intuit"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ipiranga"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["itau"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["jm"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["jmp"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["jnj"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["jo"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["jpmorgan"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["jprs"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["kh"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["kinder"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["km"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["kp"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["kpmg"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["kpn"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["kw"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["lanxess"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["lifeinsurance"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["lilly"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["lincoln"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["living"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["lr"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["maif"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["marshalls"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mattel"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mc"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["merckmsd"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mh"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["microsoft"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mil"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mint"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mlb"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["moto"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["msd"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mt"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["mv"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["nba"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ne"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["netflix"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["neustar"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["nfl"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ni"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["nike"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["nr"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ntt"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["office"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["oldnavy"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["open"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["pfizer"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["pg"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["pictet"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["ping"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["pn"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["pramerica"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["praxi"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["pru"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["prudential"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["rocher"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["sakura"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["sas"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["sener"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["sj"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["skype"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["sohu"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["song"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["staples"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["statefarm"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["sz"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["target"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["tj"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["tjmaxx"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["tjx"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["tkmaxx"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["vi"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["vivo"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["weather"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["weatherchannel"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["williamhill"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["windows"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["winners"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xbox"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--1ck2e1b"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--54b7fta0cc"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--bck1b9a5dre4c"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--cck2b3b"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--czr694b"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--eckvdtc9d"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--fct429k"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--fzc2c9e2c"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--g2xx48c"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--gckr3f0f"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--gk3at1e"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--imr513n"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--jvr189m"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--l1acc"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--mgba3a3ejt"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--mgbai9azgqp6j"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--mgbayh7gpa"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--mgbc0a9azcg"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--mgbcpq6gpa1a"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--mgbpl2fh"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--nyqy26a"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--otu796d"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--qxam"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--rhqv96g"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--rovu88b"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--wgbh1c"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["xn--xkc2al3hye2a"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["yahoo"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["yandex"] = {"_privateRegistry": True}  # no whois server found in iana
+ZZ["zero"] = {"_privateRegistry": True}  # no whois server found in iana
+
+# unknown tld abb, abb, abb, abb, whois.nic.abb,
+# unknown tld arpa, arpa, arpa, arpa, whois.iana.org,
+# unknown tld bn, bn, bn, bn, whois.bnnic.bn,
+# unknown tld bw, bw, bw, bw, whois.nic.net.bw,
+# unknown tld crown, crown, crown, crown, whois.nic.crown,
+# unknown tld crs, crs, crs, crs, whois.nic.crs,
+# unknown tld fj, fj, fj, fj, www.whois.fj,
+# unknown tld gp, gp, gp, gp, whois.nic.gp,
+# unknown tld hm, hm, hm, hm, whois.registry.hm,
+# unknown tld il, il, il, il, whois.isoc.org.il,
+# unknown tld int, int, int, int, whois.iana.org,
+# unknown tld iq, iq, iq, iq, whois.cmc.iq,
+# unknown tld mm, mm, mm, mm, whois.registry.gov.mm,
+# unknown tld mw, mw, mw, mw, whois.nic.mw,
+# unknown tld pf, pf, pf, pf, whois.registry.pf,
+# unknown tld post, post, post, post, whois.dotpostregistry.net,
+# unknown tld realtor, realtor, realtor, realtor, whois.nic.realtor,
+# unknown tld weir, weir, weir, weir, whois.nic.weir,
+# unknown tld xn--4dbrk0ce, ישראל, ישראל, ישראל, whois.isoc.org.il,
+# unknown tld xn--55qw42g, 公益, 公益, 公益, whois.conac.cn,
+# unknown tld xn--80ao21a, қаз, қаз, қаз, whois.nic.kz,
+# unknown tld xn--90a3ac, срб, срб, срб, whois.rnids.rs,
+# unknown tld xn--90ae, бг, бг, бг, whois.imena.bg,
+# unknown tld xn--90ais, бел, бел, бел, whois.cctld.by,
+# unknown tld xn--d1acj3b, дети, дети, дети, whois.nic.xn--d1acj3b,
+# unknown tld xn--j1amh, укр, укр, укр, whois.dotukr.com,
+# unknown tld xn--lgbbat1ad8j, الجزائر, الجزائر, الجزائر, whois.nic.dz,
+# unknown tld xn--mgba3a4f16a, ایران, ایران, ایران, whois.nic.ir,
+# unknown tld xn--mgbaam7a8h, امارات, امارات, امارات, whois.aeda.net.ae,
+# unknown tld xn--mgberp4a5d4ar, السعودية, السعودية, السعودية, whois.nic.net.sa,
+# unknown tld xn--mgbtx2b, عراق, عراق, عراق, whois.cmc.iq,
+# unknown tld xn--mgbx4cd0ab, مليسيا, مليسيا, مليسيا, whois.mynic.my,
+# unknown tld xn--node, გე, გე, გე, whois.itdc.ge,
+# unknown tld xn--pgbs0dh, تونس, تونس, تونس, whois.ati.tn,
+# unknown tld xn--q7ce6a, ລາວ, ລາວ, ລາວ, whois.nic.la,
+# unknown tld xn--y9a3aq, հայ, հայ, հայ, whois.amnic.net,
+# unknown tld xn--ygbi2ammx, فلسطين, فلسطين, فلسطين, whois.pnina.ps,
+# unknown tld xn--zfr164b, 政务, 政务, 政务, whois.conac.cn,

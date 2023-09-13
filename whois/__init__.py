@@ -1,6 +1,8 @@
 import sys
 import os
+
 from functools import wraps
+
 from typing import (
     cast,
     Optional,
@@ -9,11 +11,6 @@ from typing import (
     Tuple,
     Any,
     Callable,
-)
-
-
-from .version import (
-    VERSION,
 )
 
 from .exceptions import (
@@ -26,21 +23,11 @@ from .exceptions import (
     WhoisCommandTimeout,
 )
 
-from ._0_init_tld import (
-    TLD_RE,
-    validTlds,
-    filterTldToSupportedPattern,
-    mergeExternalDictWithRegex,
-)
-
+from .tldInfo import TldInfo
+from .version import VERSION
 from .processWhoisDomainRequest import ProcessWhoisDomainRequest
-from .lastWhois import (
-    get_last_raw_whois_data,
-    initLastWhois,
-)
 from .doWhoisCommand import setMyCache
 from .domain import Domain
-
 from .strings.noneStrings import NoneStrings, NoneStringsAdd
 from .strings.quotaStrings import QuotaStrings, QuotaStringsAdd
 from .tldDb.tld_regexpr import ZZ
@@ -50,6 +37,24 @@ from .cache.simpleCacheBase import SimpleCacheBase
 from .cache.simpleCacheWithFile import SimpleCacheWithFile
 from .cache.dummyCache import DummyCache
 from .cache.dbmCache import DBMCache
+from .whoisParser import WhoisParser
+from .whoisCliInterface import WhoisCliInterface
+
+
+from .helpers import (
+    filterTldToSupportedPattern,
+    mergeExternalDictWithRegex,
+    validTlds,
+    get_TLD_RE,
+    getVersion,
+    getTestHint,
+    cleanupWhoisResponse,
+)
+
+from .lastWhois import (
+    get_last_raw_whois_data,
+    initLastWhois,
+)
 
 HAS_REDIS = False
 try:
@@ -89,20 +94,23 @@ __all__ = [
     "WhoisPrivateRegistry",
     "WhoisQuotaExceeded",
     "WhoisCommandTimeout",
-    # from init_tld
+    # from helpers
     "validTlds",
-    "TLD_RE",
+    "mergeExternalDictWithRegex",
+    "filterTldToSupportedPattern",
+    "get_TLD_RE",
+    "getVersion",
+    "getTestHint",
+    "cleanupWhoisResponse",  # we will drop this most likely
     # from version
     "VERSION",
     # from parameterContext
     "ParameterContext",
-    # from doQuery
+    # from this file
     "query",
     "q2",
+    # from lastWhois
     "get_last_raw_whois_data",
-    # fromm this file
-    "getVersion",
-    "getTestHint",
     # from doWhoisCommand
     "setMyCache",  # to build your own caching interface
     # from doParse
@@ -110,7 +118,6 @@ __all__ = [
     "NoneStringsAdd",
     "QuotaStrings",
     "QuotaStringsAdd",
-    "cleanupWhoisResponse",  # we will drop this most likely
     # from Cache
     "SimpleCacheBase",
     "SimpleCacheWithFile",
@@ -133,20 +140,38 @@ def q2(
     domain: str,
     pc: ParameterContext,
 ) -> Optional[Domain]:
-
     initLastWhois()
 
     dc = DataContext(
-        pc=pc,
         domain=domain,
+        hasLibTld=TLD_LIB_PRESENT,
     )
-    pwdr = ProcessWhoisDomainRequest(
-        domain=domain,
+
+    dom = Domain(
         pc=pc,
         dc=dc,
     )
 
-    return pwdr.processRequest()
+    parser = WhoisParser(
+        pc=pc,
+        dc=dc,
+    )
+
+    wci = WhoisCliInterface(
+        pc=pc,
+        dc=dc,
+    )
+
+    pwdr = ProcessWhoisDomainRequest(
+        pc=pc,
+        dc=dc,
+        dom=dom,
+        wci=wci,
+        parser=parser,
+    )
+
+    result = pwdr.processRequest()
+    return result
 
 
 def query(
@@ -168,6 +193,9 @@ def query(
     simplistic: bool = False,
     withRedacted: bool = False,
     pc: Optional[ParameterContext] = None,
+    tryInstallMissingWhoisOnWindows: bool = False,
+    shortResponseLen: int = 5,
+    withPublicSuffix: bool = False,
     # if you use pc as argument all above params (except domain are ignored)
 ) -> Optional[Domain]:
     # see documentation about paramaters in parameterContext.py
@@ -192,6 +220,9 @@ def query(
             cmd=cmd,
             simplistic=simplistic,
             withRedacted=withRedacted,
+            withPublicSuffix=withPublicSuffix,
+            shortResponseLen=shortResponseLen,
+            tryInstallMissingWhoisOnWindows=tryInstallMissingWhoisOnWindows,
         )
 
     if verbose:
@@ -202,72 +233,3 @@ def query(
 
 # Add get function to support return result in dictionary form
 get = _result2dict(query)
-
-
-def getVersion() -> str:
-    return VERSION
-
-
-def getTestHint(tldString: str) -> Optional[str]:
-    if tldString not in ZZ:
-        return None
-
-    k: str = "_test"
-    if k not in ZZ[tldString]:
-        return None
-
-    return str(ZZ[tldString][k])
-
-
-def cleanupWhoisResponse(
-    whoisStr: str,
-    verbose: bool = False,
-    with_cleanup_results: bool = False,
-    withRedacted: bool = False,
-    pc: Optional[ParameterContext] = None,
-) -> str:
-    tmp2: List[str] = []
-
-    if pc is None:
-        pc = ParameterContext(
-            verbose=verbose,
-            withRedacted=withRedacted,
-            with_cleanup_results=with_cleanup_results,
-        )
-
-    skipFromHere = False
-    tmp: List[str] = whoisStr.split("\n")
-    for line in tmp:
-        if skipFromHere is True:
-            continue
-
-        # some servers respond with: % Quota exceeded in the comment section (lines starting with %)
-        if "quota exceeded" in line.lower():
-            raise WhoisQuotaExceeded(whoisStr)
-
-        if pc.with_cleanup_results is True and line.startswith("%"):  # only remove if requested
-            continue
-
-        if pc.withRedacted is False:
-            if "REDACTED FOR PRIVACY" in line:  # these lines contibute nothing so ignore
-                continue
-
-        if (
-            "Please query the RDDS service of the Registrar of Record" in line
-        ):  # these lines contibute nothing so ignore
-            continue
-
-        # regular responses may at the end have meta info starting with a line >>> some texte <<<
-        # similar trailing info exists with lines starting with -- but we wil handle them later
-        # unfortunalery we have domains (google.st) that have this early at the top
-        if 0:
-            if line.startswith(">>>"):
-                skipFromHere = True
-                continue
-
-        if line.startswith("Terms of Use:"):  # these lines contibute nothing so ignore
-            continue
-
-        tmp2.append(line.strip("\r"))
-
-    return "\n".join(tmp2)

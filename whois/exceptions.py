@@ -1,29 +1,34 @@
-class UnknownTld(Exception):
+class WhoisException(Exception):
+    # make all other exeptions based on a generic exception
     pass
 
 
-class FailedParsingWhoisOutput(Exception):
+class UnknownTld(WhoisException):
     pass
 
 
-class WhoisQuotaExceeded(Exception):
+class FailedParsingWhoisOutput(WhoisException):
     pass
 
 
-class UnknownDateFormat(Exception):
+class WhoisQuotaExceeded(WhoisException):
     pass
 
 
-class WhoisCommandFailed(Exception):
+class UnknownDateFormat(WhoisException):
     pass
 
 
-class WhoisPrivateRegistry(Exception):
+class WhoisCommandFailed(WhoisException):
+    pass
+
+
+class WhoisPrivateRegistry(WhoisException):
     # also known as restricted : see comments at the bottom in tld_regexpr.py
     # almost no info is returned or there is no cli whois server at all:
     # see: https://www.iana.org/domains/root/db/<tld>.html
     pass
 
 
-class WhoisCommandTimeout(Exception):
+class WhoisCommandTimeout(WhoisException):
     pass

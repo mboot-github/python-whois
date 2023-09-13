@@ -7,20 +7,28 @@ from typing import (
     Optional,
 )
 
-from .parameterContext import ParameterContext
-
 
 class DataContext:
     def __init__(
         self,
         domain: str,
-        pc: ParameterContext,
+        hasLibTld: bool = False,
     ) -> None:
-        self.pc = pc
-        self.domain = domain
+        self.originalDomain: str = domain  # the requested domain before cleanup
+        self.hasLibTld = hasLibTld
 
-        self.data: Dict[str, Any] = {}
-        self.lastWhoisStr: str = ""
-        self.whoisStr: str = ""
-        self.exeptionStr: Optional[str] = None
+        # the working domain splitted on '.' ,
+        # may change as we try to find a one that gets a response from whois
         self.dList: List[str] = []
+        self.domain: str = domain  # the working domain , may change after cleanup (e.g.www)
+
+        self.tldString: Optional[str] = None  # the detected toplevel 'aaa' or 'aaa.bbb'
+        self.publicSuffixStr: Optional[str] = None  # the detected public Suffix if we can import tld
+        self.hasPublicSuffix: bool = False
+
+        self.rawWhoisStr: str = ""  # the result string from whois cli before clean
+        self.whoisStr: str = ""  # the result string from whois cli after clean
+
+        self.data: Dict[str, Any] = {}  # the data we need to build the domain object
+        self.exeptionStr: Optional[str] = None  # if we handle exceptions as result string instead of throw
+        self.thisTld: Dict[str, Any] = {}  # the dict of regex and info as defined by ZZ and parsed by TldInfo

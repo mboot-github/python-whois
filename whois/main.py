@@ -15,7 +15,7 @@ from typing import (
 )
 
 # import whoisdomain as whois  # to be compatible with dannycork
-import whois
+import whois  # to be compatible with dannycork
 
 # if we are not running as test2.py run in a simplistic way
 SIMPLISTIC: bool = False
@@ -30,6 +30,7 @@ Failures: Dict[str, Any] = {}
 IgnoreReturncode: bool = False
 TestAllTld: bool = False
 TestRunOnly: bool = False
+WithPublicSuffix: bool = False
 
 
 class ResponseCleaner:
@@ -216,6 +217,7 @@ def testItem(
 
     global TestAllTld
     global TestRunOnly
+    global WithPublicSuffix
 
     pc = whois.ParameterContext(
         ignore_returncode=IgnoreReturncode,
@@ -224,6 +226,7 @@ def testItem(
         include_raw_whois_text=PrintGetRawWhoisResult,
         simplistic=SIMPLISTIC,
         withRedacted=WithRedacted,
+        withPublicSuffix=WithPublicSuffix,
     )
 
     # use the new query (can also simply use q2()
@@ -278,7 +281,6 @@ def errorItem(d: str, e: Any, what: str = "Generic") -> None:
 
 def testDomains(aList: List[str]) -> None:
     for d in aList:
-
         # skip empty lines
         if not d:
             continue
@@ -386,7 +388,6 @@ def makeMetaAllCurrentTld(
     allHaving: Optional[str] = None,
     allRegex: Optional[str] = None,
 ) -> List[str]:
-
     rr: List[str] = []
     for tld in getAllCurrentTld():
         if allRegex is None:
@@ -400,10 +401,8 @@ def makeMetaAllCurrentTld(
 
 
 def makeTestAllCurrentTld(
-    allHaving: Optional[str] = None,
     allRegex: Optional[str] = None,
 ) -> List[str]:
-
     rr: List[str] = []
     for tld in getAllCurrentTld():
         if allRegex is None:
@@ -422,7 +421,7 @@ def showAllCurrentTld() -> None:
 
 
 def ShowRuleset(tld: str) -> None:
-    rr = whois.TLD_RE
+    rr = whois.get_TLD_RE()
     if tld in rr:
         for key in sorted(rr[tld].keys()):
             rule = f"{rr[tld][key]}"
@@ -534,6 +533,8 @@ def main() -> None:
     global WithRedacted
     global TestAllTld
     global TestRunOnly
+    global WithPublicSuffix
+
     name: str = os.path.basename(sys.argv[0])
     if name == "test2.py":
         SIMPLISTIC = False
@@ -562,6 +563,7 @@ def main() -> None:
                 "having=",
                 "Cleanup=",
                 "withRedacted",
+                "withPublicSuffix",
             ],
         )
     except getopt.GetoptError:
@@ -601,6 +603,9 @@ def main() -> None:
         if opt in ("--withRedacted"):
             WithRedacted = True
 
+        if opt in ("--withPublicSuffix"):
+            WithPublicSuffix = True
+
         if opt in ("-a", "--all"):
             TestAllTld = True
 
@@ -622,12 +627,12 @@ def main() -> None:
             PrintJson = True
 
         if opt in ("-T", "--Testing"):
-            whois.setMyCache(
-                whois.DBMCache(
-                    dbmFile="testfile.dbm",
-                    verbose=Verbose,
-                ),
-            )
+            # print out all names of tld where we have _test
+            TestAllTld = True
+            rr = makeTestAllCurrentTld(None)
+            for item in sorted(rr):
+                print(item)
+            exit(0)
 
         if opt in ("-t", "--test"):
             # collect all _test entries defined and only run those,
@@ -685,7 +690,7 @@ def main() -> None:
         if TestRunOnly is False:
             testDomains(makeMetaAllCurrentTld(allHaving, allRegex))
         else:
-            testDomains(makeTestAllCurrentTld(allHaving, allRegex))
+            testDomains(makeTestAllCurrentTld(allRegex))
 
         showFailures()
         sys.exit(0)
@@ -718,5 +723,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-
     main()
