@@ -18,7 +18,7 @@ def newLineSplit(
     ) -> List[str]:
         # split the incoming text on newlines \n\n
         what = r"\n\n"
-        return re.split(what, whoisStr, flags=re.IGNORECASE if ignoreCase else re.NOFLAG)
+        return re.split(what, whoisStr, flags=re.IGNORECASE if ignoreCase else 0) # NOFLAG is 3.11
 
     return xNewlineSplit
 
@@ -33,7 +33,7 @@ def R(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else re.NOFLAG
+        flags = re.IGNORECASE if ignoreCase else 0 # NOFLAG is 3.11
         return re.findall(reStr, textStr, flags=flags)
 
     return reFindAll
@@ -60,7 +60,7 @@ def findFromToAndLookFor(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else re.NOFLAG
+        flags = re.IGNORECASE if ignoreCase else  0 # NOFLAG is 3.11
         s1 = re.search(fromStr, textStr, flags=flags)
         if verbose:
             print(f"DEBUG s1 {s1}, {fromStr}", file=sys.stderr)
@@ -136,7 +136,7 @@ def findFromToAndLookForWithFindFirst(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else re.NOFLAG
+        flags = re.IGNORECASE if ignoreCase else  0 # NOFLAG is 3.11
 
         ff = re.findall(findFirst, textStr, flags=flags)
         if ff is None or ff == []:
@@ -197,7 +197,7 @@ def findInSplitedLookForHavingFindFirst(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else re.NOFLAG
+        flags = re.IGNORECASE if ignoreCase else  0 # NOFLAG is 3.11
 
         ff = re.findall(findFirst, textStr, flags=flags)
         if ff is None or ff == []:
