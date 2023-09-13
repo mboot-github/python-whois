@@ -3,13 +3,11 @@
 import sys
 
 from typing import (
-    List,
     Optional,
     Any,
 )
 
 from .whoisCliInterface import WhoisCliInterface
-
 from .cache.simpleCacheWithFile import SimpleCacheWithFile
 from .context.parameterContext import ParameterContext
 from .context.dataContext import DataContext
@@ -29,8 +27,6 @@ def setMyCache(myCache: Any) -> None:
     if myCache:
         CACHE_STUB = myCache
 
-    # print(f"CACHE_STUB {CACHE_STUB}", file=sys.stderr)
-
 
 def _initDefaultCache(
     pc: ParameterContext,
@@ -39,66 +35,50 @@ def _initDefaultCache(
     global CACHE_STUB
 
     if pc.verbose:
-        print(f"CACHE_STUB {CACHE_STUB}", file=sys.stderr)
+        print(f"DEBUG: CACHE_STUB {CACHE_STUB}", file=sys.stderr)
 
     # here you can override caching, if someone else already defined CACHE_STUB by this time, we use their caching
-    if CACHE_STUB is None:
+    if CACHE_STUB:
         if pc.verbose:
-            print("initializing default cache", file=sys.stderr)
+            print("DEBUG: cache already initialized", file=sys.stderr)
+        return CACHE_STUB
 
-        # if no cache defined init the default cache (optional with file storage based on pc)
-        CACHE_STUB = SimpleCacheWithFile(
-            verbose=pc.verbose,
-            cacheFilePath=pc.cache_file,
-            cacheMaxAge=pc.cache_age,
-        )
-    else:
-        if pc.verbose:
-            print("cache already initialized", file=sys.stderr)
-
-    return CACHE_STUB
-
-
-def _getNewDataForKey(
-    dList: List[str],
-    pc: ParameterContext,
-    dc: DataContext,
-) -> str:
-    wci = WhoisCliInterface(
-        pc=pc,
-        dc=dc,
+    # if no cache defined init the default cache (optional with file storage based on pc)
+    CACHE_STUB = SimpleCacheWithFile(
+        verbose=pc.verbose,
+        cacheFilePath=pc.cache_file,
+        cacheMaxAge=pc.cache_age,
     )
-    return wci.executeWhoisQueryOrReturnFileData()
+
+    if pc.verbose:
+        print("DEBUG: initializing default cache", file=sys.stderr)
+    return CACHE_STUB
 
 
 # TODO: future: can we use decorator for caching?
 def doWhoisAndReturnString(
-    dList: List[str],
     pc: ParameterContext,
     dc: DataContext,
+    wci: WhoisCliInterface,
 ) -> str:
     cache = _initDefaultCache(
         pc=pc,
         dc=dc,
     )
-    keyString = ".".join(dList)
-
-    if pc.verbose:
-        print(f"force: {pc.force}", file=sys.stderr)
+    keyString = ".".join(dc.dList)
 
     if pc.force is False:
         oldData: Optional[str] = cache.get(keyString)
-        if oldData is not None:
+        if oldData:
             return str(oldData)
 
-    newData = _getNewDataForKey(
-        dList=dList,
-        pc=pc,
-        dc=dc,
+    wci.init()
+    return str(
+        cache.put(
+            keyString,
+            wci.executeWhoisQueryOrReturnFileData(),
+        )
     )
-    cache.put(keyString, newData)
-
-    return newData
 
 
 setMyCache(None)

@@ -111,6 +111,18 @@ ParamsStringJson: str = """
     "default": false,
     "optional": true,
     "help": "allow auto install of sysinternals whois on windows if no whois found"
+  },
+  "shortResponseLen": {
+    "type": "int",
+    "optional": true,
+    "default": 5,
+    "help": "The number of lines we consider a short response."
+  },
+  "withPublicSuffix": {
+    "type": "bool",
+    "default": false,
+    "optional": true,
+    "help": "if lib 'tld' is installed add tld info based on get_tld(); fake the tld if needed"
   }
 }
 """

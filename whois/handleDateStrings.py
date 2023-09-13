@@ -1,13 +1,11 @@
 #! /usr/bin/env python3
 import re
 
-# import sys
 import datetime
 from .exceptions import UnknownDateFormat
 
-from typing import (
-    Optional,
-)
+from typing import Optional
+
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
 DATE_FORMATS = [
@@ -133,11 +131,9 @@ def str_to_date(
             return z
         except ValueError as v:
             _ = v
-            pass
 
-    raise UnknownDateFormat("Unknown date format: '%s'" % text)
+    raise UnknownDateFormat(f"Unknown date format: '{text}'")
 
 
 if __name__ == "__main__":
-
     pass
