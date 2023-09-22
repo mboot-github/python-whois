@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+# pylint: disable=duplicate-code
 
 from typing import (
     Any,
@@ -11,7 +12,10 @@ from typing import (
 )
 
 import re
-import sys
+import os
+import logging
+
+# import sys
 
 from .exceptions import (
     FailedParsingWhoisOutput,
@@ -29,6 +33,10 @@ from .context.dataContext import DataContext
 from .helpers import get_TLD_RE
 
 
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
+
+
 class WhoisParser:
     def __init__(
         self,
@@ -38,6 +46,9 @@ class WhoisParser:
         self.pc = pc
         self.dc = dc
         self.dom: Optional[Domain] = None
+        self.resultDict: Dict[str, Any] = {}
+        if self.pc.verbose:
+            logging.basicConfig(level="DEBUG")
 
     def _doExtractPattensIanaFromWhoisString(
         self,
@@ -55,8 +66,8 @@ class WhoisParser:
                 continue
 
             self.resultDict[key] = result
-            if self.pc.verbose:
-                print(f"DEBUG: parsing iana data only for tld: {self.dc.tldString}, {result}", file=sys.stderr)
+            msg = f"parsing iana data only for tld: {self.dc.tldString}, {result}"
+            log.debug(msg)
 
     def _doExtractPattensFromWhoisString_old(
         self,
@@ -72,8 +83,8 @@ class WhoisParser:
             if compiledRe:
                 # here we apply the regex patterns
                 self.resultDict[key] = compiledRe.findall(self.dc.whoisStr) or empty
-                if self.pc.verbose:
-                    print(f"{key}, {self.resultDict[key]}", file=sys.stderr)
+                msg = f"{key}, {self.resultDict[key]}"
+                log.debug(msg)
 
     def _doExtractPattensFromWhoisString(
         self,
@@ -84,9 +95,10 @@ class WhoisParser:
         splitter = self.dc.thisTld.get("_split")
         if splitter:
             sData = splitter(self.dc.whoisStr, self.pc.verbose)
-            if self.pc.verbose and sData != []:
+            if sData != []:
                 for item in sData:
-                    print("DEBUG: split data", item, file=sys.stderr)
+                    msg = f"split data: {item}"
+                    log.debug(msg)
 
         for key, val in self.dc.thisTld.items():
             if key.startswith("_"):
@@ -100,22 +112,19 @@ class WhoisParser:
             if callable(val):
                 # vcall the curry function we created in tld_regexpr.py
                 self.resultDict[key] = val(self.dc.whoisStr, sData, self.pc.verbose) or empty
-                if self.pc.verbose:
-                    print(
-                        f"DEBUG: _doExtractPattensFromWhoisString: call indirect {val} {key}, {self.resultDict[key]}",
-                        file=sys.stderr,
-                    )
+                msg = f"_doExtractPattensFromWhoisString: call indirect {val} {key}, {self.resultDict[key]}"
+                log.debug(msg)
                 continue
 
             if isinstance(val, str):
                 # we still support plain strings also
                 self.resultDict[key] = re.findall(val, self.dc.whoisStr, flags=re.IGNORECASE) or empty
-                if self.pc.verbose:
-                    print(f"DEBUG _doExtractPattensFromWhoisStringstr: {key}, {self.resultDict[key]}", file=sys.stderr)
+                msg = f"_doExtractPattensFromWhoisStringstr: {key}, {self.resultDict[key]}"
+                log.debug(msg)
                 continue
 
-            if self.pc.verbose:
-                print(f"DEBUG: UNKNOWN: _doExtractPattensFromWhoisString {key}, {val}", file=sys.stderr)
+            msg = f"UNKNOWN: _doExtractPattensFromWhoisString {key}, {val}"
+            log.debug(msg)
 
     def _doSourceIana(
         self,
@@ -125,9 +134,8 @@ class WhoisParser:
         # here we can handle the example.com and example.net permanent IANA domains
         k: str = "source:       IANA"
 
-        if self.pc.verbose:
-            msg: str = f"DEBUG: i have seen {k}"
-            print(msg, file=sys.stderr)
+        msg: str = f"i have seen {k}"
+        log.debug(msg)
 
         whois_splitted: List[str] = self.dc.whoisStr.split(k)
         z: int = len(whois_splitted)
@@ -138,9 +146,8 @@ class WhoisParser:
 
         if z == 2 and whois_splitted[1].strip() != "":
             # if we see source: IANA and the part after is not only whitespace
-            if self.pc.verbose:
-                msg = f"DEBUG: after: {k} we see not only whitespace: {whois_splitted[1]}"
-                print(msg, file=sys.stderr)
+            msg = f"after: {k} we see not only whitespace: {whois_splitted[1]}"
+            log.debug(msg)
 
             self.dc.whoisStr = whois_splitted[1]
             self.dom = None
@@ -169,9 +176,8 @@ class WhoisParser:
         if not re.findall(r"Server Name:\s?(.+)", self.dc.whoisStr, re.IGNORECASE):
             return
 
-        if self.pc.verbose:
-            msg = "DEBUG: i have seen Server Name:, looking for Domain Name:"
-            print(msg, file=sys.stderr)
+        msg = "i have seen Server Name:, looking for Domain Name:"
+        log.debug(msg)
 
         # this changes the whoisStr, we may want to keep the original as extra
         self.dc.whoisStr = self.dc.whoisStr[self.dc.whoisStr.find("Domain Name:") :]
@@ -184,9 +190,8 @@ class WhoisParser:
 
         whoisDnsSecList: List[str] = self.dc.whoisStr.split("DNSSEC:")
         if len(whoisDnsSecList) >= 2:
-            if self.pc.verbose:
-                msg = "DEGUG: i have seen dnssec: {whoisDnsSecStr}"
-                print(msg, file=sys.stderr)
+            msg = "DEGUG: i have seen dnssec: {whoisDnsSecStr}"
+            log.debug(msg)
 
             whoisDnsSecStr: str = whoisDnsSecList[1].split("\n")[0]
             if whoisDnsSecStr.strip() == "signedDelegation" or whoisDnsSecStr.strip() == "yes":
@@ -201,8 +206,8 @@ class WhoisParser:
             self.dom = None
             return self.dom
 
-        if self.pc.verbose:
-            print(f"DEBUG: shortResponse:: {self.dc.tldString} {self.dc.whoisStr}", file=sys.stderr)
+        msg = f"shortResponse:: {self.dc.tldString} {self.dc.whoisStr}"
+        log.debug(msg)
 
         # TODO: some short responses are actually valid:
         # lookfor Domain: and Status but all other fields are missing so the regexec could fail
@@ -226,8 +231,8 @@ class WhoisParser:
         # ---------------------------------
         # is there any error string in the result
         if s.count("error"):
-            if self.pc.verbose:
-                print("DEBUG: i see 'error' in the result, return: None", file=sys.stderr)
+            msg = "i see 'error' in the result, return: None"
+            log.debug(msg)
             self.dom = None
             return self.dom
 
@@ -260,6 +265,18 @@ class WhoisParser:
             return self.dom
 
         raise FailedParsingWhoisOutput(self.dc.whoisStr)
+
+    def _extractWhoisServer(self) -> List[str]:
+        # jp starts comments with [\s
+        result = re.findall(r"^Using\s+server\s+([^\n]*)\n", str(self.dc.whoisStr), flags=re.IGNORECASE)
+        if result:
+            return result
+
+        result = re.findall(r"\[(?=[^\s])([^\]]*)\]\r?\n", str(self.dc.whoisStr), flags=re.IGNORECASE)
+        if result:
+            return result
+
+        return []
 
     def _cleanupWhoisResponse(
         self,
@@ -333,25 +350,27 @@ class WhoisParser:
             if self.pc.slow_down == 0 and int(slowDown) > 0:
                 self.pc.slow_down = int(slowDown)
 
-        if self.pc.verbose and int(self.pc.slow_down):
-            print(f"DEBUG: using _slowdown hint {self.pc.slow_down} for tld: {self.dc.tldString}", file=sys.stderr)
+        if int(self.pc.slow_down):
+            msg = f"using _slowdown hint {self.pc.slow_down} for tld: {self.dc.tldString}"
+            log.debug(msg)
 
         return int(self.pc.slow_down)
 
     def getThisTld(self, tldString: str) -> None:
         self.dc.thisTld = get_TLD_RE().get(tldString, {})
-        if self.pc.verbose:
-            print(self.dc.thisTld, file=sys.stderr)
+        msg = f"{self.dc.thisTld}"
+        log.debug(msg)
 
     def init(
         self,
     ) -> None:
         self.dc.whoisStr = str(self.dc.whoisStr)
 
-        self.resultDict: Dict[str, Any] = {
+        self.resultDict = {
             "tld": str(self.dc.tldString),
             "DNSSEC": self._doDnsSec(),
         }
+        self.dc.servers = self._extractWhoisServer()
         self._cleanupWhoisResponse()
 
     def parse(

@@ -1,9 +1,14 @@
-import sys
+# import sys
 import dbm
+import os
+import logging
 
 from typing import (
     Optional,
 )
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 class DBMCache:
@@ -14,22 +19,20 @@ class DBMCache:
     ) -> None:
         self.verbose = verbose
         self.dbmFile = dbmFile
-        if self.verbose:
-            print(f"{type(self).__name__} verbose: {self.verbose}", file=sys.stderr)
 
     def get(
         self,
         keyString: str,
     ) -> Optional[str]:
-        if self.verbose:
-            print(f"{type(self).__name__} get: {keyString}", file=sys.stderr)
+        msg = f"{type(self).__name__} get: {keyString}"
+        log.debug(msg)
 
         with dbm.open(self.dbmFile, "c") as db:
             data = db.get(keyString, None)
             if data:
                 sdata: str = data.decode("utf-8")
-                if self.verbose:
-                    print(sdata, file=sys.stderr)
+                msg = f"{sdata}"
+                log.debug(msg)
                 return sdata
         return None
 
@@ -38,8 +41,8 @@ class DBMCache:
         keyString: str,
         data: str,
     ) -> str:
-        if self.verbose:
-            print(f"{type(self).__name__} put: {keyString}", file=sys.stderr)
+        msg = f"{type(self).__name__} put: {keyString}"
+        log.debug(msg)
 
         with dbm.open(self.dbmFile, "c") as db:
             db[keyString] = bytes(data, "utf-8")

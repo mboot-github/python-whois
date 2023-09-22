@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+import os
+import logging
 import json
 
 from typing import (
@@ -7,6 +9,9 @@ from typing import (
     Dict,
     Any,
 )
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 ParamsStringJson: str = """
 {
@@ -123,6 +128,18 @@ ParamsStringJson: str = """
     "default": false,
     "optional": true,
     "help": "if lib 'tld' is installed add tld info based on get_tld(); fake the tld if needed"
+  },
+  "extractServers": {
+    "type": "bool",
+    "default": false,
+    "optional": true,
+    "help": "try to extract the whois servers from the whois output (uses --verbose)"
+  },
+  "stripHttpStatus": {
+    "type": "bool",
+    "default": false,
+    "optional": true,
+    "help": "strip https://icann.org/epp# from status response"
   }
 }
 """
@@ -180,7 +197,7 @@ class ParameterContext:
     ) -> None:
         if len(mandatory) != 0:
             msg = f"missing mandatory parametrs: {sorted(mandatory)}"
-            raise Exception(msg)
+            raise ValueError(msg)
 
     def __init__(
         self,

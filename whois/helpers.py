@@ -1,3 +1,6 @@
+import os
+import logging
+
 from typing import (
     Optional,
     List,
@@ -5,14 +8,15 @@ from typing import (
     Any,
 )
 
-from .exceptions import (
-    WhoisQuotaExceeded,
-)
+from .exceptions import WhoisQuotaExceeded
 
 from .tldInfo import TldInfo
 from .version import VERSION
 from .tldDb.tld_regexpr import ZZ
 from .context.parameterContext import ParameterContext
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 def filterTldToSupportedPattern(
@@ -25,9 +29,14 @@ def filterTldToSupportedPattern(
 
 
 def mergeExternalDictWithRegex(
-    aDict: Dict[str, Any] = {},
+    aDict: Optional[Dict[str, Any]] = None,
 ) -> None:
     global tldInfo
+    if aDict is None:
+        return
+    if len(aDict) == 0:
+        return
+
     tldInfo.mergeExternalDictWithRegex(aDict)
 
 

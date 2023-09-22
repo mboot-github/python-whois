@@ -1,8 +1,13 @@
-import sys
+# import sys
+import os
+import logging
 
 from typing import (
     Optional,
 )
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 class DummyCache:
@@ -11,15 +16,11 @@ class DummyCache:
         verbose: bool = False,
     ) -> None:
         self.verbose = verbose
-        if self.verbose:
-            print(f"{type(self).__name__} verbose: {self.verbose}", file=sys.stderr)
 
     def get(
         self,
         keyString: str,
     ) -> Optional[str]:
-        if self.verbose:
-            print(f"{type(self).__name__} get: {keyString}", file=sys.stderr)
         return None
 
     def put(
@@ -27,6 +28,4 @@ class DummyCache:
         keyString: str,
         data: str,
     ) -> str:
-        if self.verbose:
-            print(f"{type(self).__name__} put: {keyString}", file=sys.stderr)
         return data

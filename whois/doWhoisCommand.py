@@ -1,6 +1,8 @@
 #!  /usr/bin/env python3
 
-import sys
+# import sys
+import os
+import logging
 
 from typing import (
     Optional,
@@ -11,6 +13,9 @@ from .whoisCliInterface import WhoisCliInterface
 from .cache.simpleCacheWithFile import SimpleCacheWithFile
 from .context.parameterContext import ParameterContext
 from .context.dataContext import DataContext
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 # actually also whois uses cache, so if you really dont want to use cache
 # you should also pass the --force-lookup flag (on linux)
@@ -34,13 +39,13 @@ def _initDefaultCache(
 ) -> Any:
     global CACHE_STUB
 
-    if pc.verbose:
-        print(f"DEBUG: CACHE_STUB {CACHE_STUB}", file=sys.stderr)
+    msg = f"CACHE_STUB {CACHE_STUB}"
+    log.debug(msg)
 
     # here you can override caching, if someone else already defined CACHE_STUB by this time, we use their caching
     if CACHE_STUB:
-        if pc.verbose:
-            print("DEBUG: cache already initialized", file=sys.stderr)
+        msg = "cache already initialized"
+        log.debug(msg)
         return CACHE_STUB
 
     # if no cache defined init the default cache (optional with file storage based on pc)
@@ -50,8 +55,8 @@ def _initDefaultCache(
         cacheMaxAge=pc.cache_age,
     )
 
-    if pc.verbose:
-        print("DEBUG: initializing default cache", file=sys.stderr)
+    msg = "initializing default cache"
+    log.debug(msg)
     return CACHE_STUB
 
 

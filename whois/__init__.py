@@ -1,5 +1,17 @@
+# pylint: disable=duplicate-code
+"""
+Module providing all public accessible functions and data for the whoisdomain package
+
+## optional modules supported:
+
+- if the tld library is installed you can use the `withPublicSuffix:bool` option
+
+All public data is vizible via the __all__ List
+"""
+
 import sys
 import os
+import logging
 
 from functools import wraps
 
@@ -56,12 +68,15 @@ from .lastWhois import (
     initLastWhois,
 )
 
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
+
 HAS_REDIS = False
 try:
     import redis
 
     HAS_REDIS = True
-except Exception as e:
+except ImportError as e:
     _ = e
 
 if HAS_REDIS:
@@ -82,7 +97,7 @@ try:
     import tld as libTld
 
     TLD_LIB_PRESENT = True
-except Exception as e:
+except ImportError as e:
     _ = e  # ignore any error
 
 __all__ = [
@@ -196,6 +211,8 @@ def query(
     tryInstallMissingWhoisOnWindows: bool = False,
     shortResponseLen: int = 5,
     withPublicSuffix: bool = False,
+    extractServers: bool = False,
+    stripHttpStatus: bool = False,
     # if you use pc as argument all above params (except domain are ignored)
 ) -> Optional[Domain]:
     # see documentation about paramaters in parameterContext.py
@@ -223,10 +240,12 @@ def query(
             withPublicSuffix=withPublicSuffix,
             shortResponseLen=shortResponseLen,
             tryInstallMissingWhoisOnWindows=tryInstallMissingWhoisOnWindows,
+            extractServers=extractServers,
+            stripHttpStatus=stripHttpStatus,
         )
 
-    if verbose:
-        print(pc, file=sys.stderr)
+    msg = f"{pc}"
+    log.debug(msg)
 
     return q2(domain=domain, pc=pc)
 
