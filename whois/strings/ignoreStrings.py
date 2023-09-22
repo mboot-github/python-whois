@@ -1,7 +1,13 @@
+import os
+import logging
+
+
 from typing import (
     List,
 )
 
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 IGNORESTRINGS: List[str] = [
     "<data not disclosed>",

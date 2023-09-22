@@ -5,6 +5,7 @@ import re
 import getopt
 import sys
 import json
+import logging
 
 from typing import (
     Optional,
@@ -14,8 +15,12 @@ from typing import (
     Dict,
 )
 
+import whois
+
 # import whoisdomain as whois  # to be compatible with dannycork
-import whois  # to be compatible with dannycork
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 # if we are not running as test2.py run in a simplistic way
 SIMPLISTIC: bool = False
@@ -30,7 +35,10 @@ Failures: Dict[str, Any] = {}
 IgnoreReturncode: bool = False
 TestAllTld: bool = False
 TestRunOnly: bool = False
+
 WithPublicSuffix: bool = False
+WithExtractServers: bool = False
+WithStripHttpStatus: bool = False
 
 
 class ResponseCleaner:
@@ -139,16 +147,14 @@ class ResponseCleaner:
                     self.rDict["Preamble"].append(line)
                     line = "PRE;" + line
                     continue
-                else:
-                    preambleSeen = True
+                preambleSeen = True
 
             if preambleSeen is True and percentSeen is False:
                 if line.startswith("%"):
                     self.rDict["Percent"].append(line)
                     line = "PERCENT;" + line
                     continue
-                else:
-                    percentSeen = True
+                percentSeen = True
 
             if postambleSeen is False:
                 if line.startswith("-- ") or line.startswith(">>> ") or line.startswith("Copyright notice"):
@@ -183,7 +189,7 @@ class ResponseCleaner:
                 print(k, cr, tab, lines)
 
         k = "Body"
-        if len(self.rDict[k]):
+        if self.rDict[k]:
             n = 0
             for lines in self.rDict[k]:
                 ws = " [WHITESPACE AT END] " if re.search(r"[ \t]+\r?\n", lines) else ""
@@ -212,12 +218,15 @@ def testItem(
     global IgnoreReturncode
     global Verbose
     global PrintGetRawWhoisResult
-    global SIMPLISTIC
-    global WithRedacted
 
+    global SIMPLISTIC
     global TestAllTld
     global TestRunOnly
+
+    global WithRedacted
     global WithPublicSuffix
+    global WithExtractServers
+    global WithStripHttpStatus
 
     pc = whois.ParameterContext(
         ignore_returncode=IgnoreReturncode,
@@ -227,6 +236,8 @@ def testItem(
         simplistic=SIMPLISTIC,
         withRedacted=WithRedacted,
         withPublicSuffix=WithPublicSuffix,
+        extractServers=WithExtractServers,
+        stripHttpStatus=WithStripHttpStatus,
     )
 
     # use the new query (can also simply use q2()
@@ -328,7 +339,7 @@ def getTestFileOne(fPath: str, fileData: Dict[str, Any]) -> None:
     fileData[bName] = []
     xx = fileData[bName]
 
-    with open(fPath) as f:
+    with open(fPath, encoding="utf-8") as f:
         for index, line in enumerate(f):
             line = line.strip()
             if len(line) == 0 or line.startswith("#"):
@@ -534,6 +545,8 @@ def main() -> None:
     global TestAllTld
     global TestRunOnly
     global WithPublicSuffix
+    global WithExtractServers
+    global WithStripHttpStatus
 
     name: str = os.path.basename(sys.argv[0])
     if name == "test2.py":
@@ -564,6 +577,8 @@ def main() -> None:
                 "Cleanup=",
                 "withRedacted",
                 "withPublicSuffix",
+                "extractServers",
+                "stripHttpStatus",
             ],
         )
     except getopt.GetoptError:
@@ -600,12 +615,6 @@ def main() -> None:
             usage()
             sys.exit(0)
 
-        if opt in ("--withRedacted"):
-            WithRedacted = True
-
-        if opt in ("--withPublicSuffix"):
-            WithPublicSuffix = True
-
         if opt in ("-a", "--all"):
             TestAllTld = True
 
@@ -619,6 +628,7 @@ def main() -> None:
 
         if opt in ("-v", "--verbose"):
             Verbose = True
+            logging.basicConfig(level="DEBUG")
 
         if opt in ("-p", "--print"):
             PrintGetRawWhoisResult = True
@@ -632,7 +642,7 @@ def main() -> None:
             rr = makeTestAllCurrentTld(None)
             for item in sorted(rr):
                 print(item)
-            exit(0)
+            sys.exit(0)
 
         if opt in ("-t", "--test"):
             # collect all _test entries defined and only run those,
@@ -678,10 +688,22 @@ def main() -> None:
             if domain not in domains:
                 domains.append(domain)
 
-    if Verbose:
-        print(f"{name} SIMPLISTIC: {SIMPLISTIC}", file=sys.stderr)
+        if opt in ("--extractServers"):
+            WithExtractServers = True
 
-    if Ruleset is True and len(domains):
+        if opt in ("--stripHttpStatus"):
+            WithStripHttpStatus = True
+
+        if opt in ("--withRedacted"):
+            WithRedacted = True
+
+        if opt in ("--withPublicSuffix"):
+            WithPublicSuffix = True
+
+    msg = f"{name} SIMPLISTIC: {SIMPLISTIC}"
+    log.debug(msg)
+
+    if Ruleset is True and domains:
         for domain in domains:
             ShowRuleset(domain)
         sys.exit(0)
@@ -695,25 +717,25 @@ def main() -> None:
         showFailures()
         sys.exit(0)
 
-    if len(dirs):
+    if dirs:
         fileData = {}
         for dName in dirs:
             getTestFilesAll(dName, fileData)
-        for testFile in fileData:
-            testDomains(fileData[testFile])
+        for testFile, x in fileData.items():
+            testDomains(x)
         showFailures()
         sys.exit(0)
 
-    if len(files):
+    if files:
         fileData = {}
         for testFile in files:
             getTestFileOne(testFile, fileData)
-        for testFile in fileData:
-            testDomains(fileData[testFile])
+        for testFile, x in fileData.items():
+            testDomains(x)
         showFailures()
         sys.exit(0)
 
-    if len(domains):
+    if domains:
         testDomains(domains)
         showFailures()
         sys.exit(0)

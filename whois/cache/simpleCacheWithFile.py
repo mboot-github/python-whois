@@ -1,18 +1,19 @@
 #! /usr/bin/env python3
 
-import sys
 import os
 import json
-
+import logging
 
 from typing import (
     Optional,
-    # Tuple,
 )
 
 from .simpleCacheBase import (
     SimpleCacheBase,
 )
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 class SimpleCacheWithFile(SimpleCacheBase):
@@ -26,8 +27,6 @@ class SimpleCacheWithFile(SimpleCacheBase):
     ) -> None:
         super().__init__(verbose=verbose, cacheMaxAge=cacheMaxAge)
         self.cacheFilePath = cacheFilePath
-        if self.verbose:
-            print("init SimpleCacheWithFile", file=sys.stderr)
 
     def _fileLoad(
         self,
@@ -38,14 +37,12 @@ class SimpleCacheWithFile(SimpleCacheBase):
         if not os.path.isfile(self.cacheFilePath):
             return
 
-        if self.verbose:
-            print(f"fileLoad: {self.cacheFilePath}", file=sys.stderr)
-
-        with open(self.cacheFilePath, "r") as f:
+        with open(self.cacheFilePath, "r", encoding="utf-8") as f:
             try:
                 self.memCache = json.load(f)
-            except Exception as e:
-                print(f"ignore json load err: {e}", file=sys.stderr)
+            except ValueError as e:
+                msg = f"ignore json load err: {e}"
+                log.error(msg)
 
     def _fileSave(
         self,
@@ -53,10 +50,7 @@ class SimpleCacheWithFile(SimpleCacheBase):
         if self.cacheFilePath is None:
             return
 
-        if self.verbose:
-            print(f"_fileSave: {self.cacheFilePath}", file=sys.stderr)
-
-        with open(self.cacheFilePath, "w") as f:
+        with open(self.cacheFilePath, "w", encoding="utf-8") as f:
             json.dump(self.memCache, f)
 
     def put(

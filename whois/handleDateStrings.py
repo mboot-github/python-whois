@@ -1,14 +1,24 @@
 #! /usr/bin/env python3
-import re
+"""
+This module isolates all date parsing in one place
 
+str_to_date() is the only entry point
+"""
+import re
+import os
+import logging
 import datetime
-from .exceptions import UnknownDateFormat
 
 from typing import Optional
 
+from .exceptions import UnknownDateFormat
+
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
-DATE_FORMATS = [
+_DATE_FORMATS = [
     "%d-%b-%Y",  # 02-jan-2000
     "%d-%m-%Y",  # 02-01-2000
     "%d.%m.%Y",  # 02.02.2000
@@ -67,7 +77,7 @@ DATE_FORMATS = [
     "%m-%d-%Y",  # 03-28-2013 # is ambivalent for all days <=12
 ]
 
-CUSTOM_DATE_FORMATS = {
+_CUSTOM_DATE_FORMATS = {
     "ml": "%m/%d/%Y",
 }
 
@@ -113,17 +123,17 @@ def str_to_date(
 
     # 07 january 2020 at 23:38:30.772
     # %d %B %Y at %H:%M %S.%f
-    if tld and tld in CUSTOM_DATE_FORMATS:
+    if tld and tld in _CUSTOM_DATE_FORMATS:
         return (
             datetime.datetime.strptime(
                 text,
-                CUSTOM_DATE_FORMATS[tld],
+                _CUSTOM_DATE_FORMATS[tld],
             )
             .astimezone()
             .replace(tzinfo=None)
         )
 
-    for f in DATE_FORMATS:
+    for f in _DATE_FORMATS:
         try:
             z = datetime.datetime.strptime(text, f)
             z = z.astimezone()

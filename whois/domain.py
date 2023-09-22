@@ -1,6 +1,9 @@
 #! /usr/bin/env python3
 
-import sys
+# import sys
+import os
+import re
+import logging
 
 from typing import (
     Any,
@@ -9,43 +12,45 @@ from typing import (
 )
 
 from .handleDateStrings import str_to_date
-
 from .context.parameterContext import ParameterContext
 from .context.dataContext import DataContext
 
-"""
-whoisdomain/domain.py:17:0: R0902: Too many instance attributes (20/7) (too-many-instance-attributes)
-whoisdomain/domain.py:66:16: R1718: Consider using a set comprehension (consider-using-set-comprehension)
-whoisdomain/domain.py:104:20: R1718: Consider using a set comprehension (consider-using-set-comprehension)
-whoisdomain/domain.py:41:8: W0201: Attribute 'name_servers' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:53:8: W0201: Attribute 'name_servers' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:59:8: W0201: Attribute 'status' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:64:8: W0201: Attribute 'statuses' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:72:12: W0201: Attribute 'statuses' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:81:12: W0201: Attribute 'owner' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:84:12: W0201: Attribute 'abuse_contact' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:87:12: W0201: Attribute 'reseller' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:91:16: W0201: Attribute 'registrant' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:93:16: W0201: Attribute 'registrant' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:96:12: W0201: Attribute 'admin' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:102:12: W0201: Attribute 'emails' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:110:16: W0201: Attribute 'emails' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:118:8: W0201: Attribute 'registrar' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:119:8: W0201: Attribute 'registrant_country' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:122:8: W0201: Attribute 'creation_date' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:123:8: W0201: Attribute 'expiration_date' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:124:8: W0201: Attribute 'last_updated' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:126:8: W0201: Attribute 'dnssec' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:147:12: W0201: Attribute 'text' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:150:12: W0201: Attribute '_exception' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:161:12: W0201: Attribute 'name' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:165:12: W0201: Attribute 'tld' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:168:12: W0201: Attribute 'public_suffix' defined outside __init__ (attribute-defined-outside-init)
-whoisdomain/domain.py:17:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-"""
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 class Domain:
+    # The docstrings for classes should summarize its behavior
+    # and list the public methods and instance variables.
+    """
+    A class to represent a standarized result of a whois lookup
+
+    # Attributes
+    * Attributes are created dynamically,
+    not all domains have currently the same amount.
+
+    - name: str, the domain name
+    - tld: str, the detected top level domain
+    - name_servers: List, a list of detected name servers
+    - DNSSEC: boolean
+
+    - status: List
+    - registrar: str
+    - registrant: str
+    - registrant_country:
+    - emails: List
+
+    - updated_date: datetime
+    - expiration_date: datetime
+    - creation_date: datetime
+
+    Methods
+    -------
+    def init(pc: ParameterContext,dc: DataContext) -> None:
+        initialize the object with the current data from dc.data: Dict[str, Any]
+        the init is separated from creating an instance as we want to use dependency injection as much as possible.
+    """
+
     def _cleanupArray(
         self,
         data: List[str],
@@ -57,10 +62,11 @@ class Domain:
 
     def _doNameservers(
         self,
-        data: Dict[str, Any],
+        pc: ParameterContext,
+        dc: DataContext,
     ) -> None:
         tmp: List[str] = []
-        for x in data["name_servers"]:
+        for x in dc.data["name_servers"]:
             if isinstance(x, str):
                 tmp.append(x.strip().lower())
                 continue
@@ -83,24 +89,44 @@ class Domain:
 
         self.name_servers = sorted(self.name_servers)
 
+    def cleanStatus(self, item: str) -> str:
+        if "icann.org/epp#" in item:
+            res = re.split(r"\s*\(?https?://(www\.)?icann\.org/epp#\s*", item)
+            if res and res[0]:
+                return res[0].strip()
+
+        if "identitydigital.au/get-au/whois-status-codes#" in item:
+            res = re.split(r"\s*https://identitydigital\.au/get-au/whois-status-codes#\s*", item)
+            if res and res[0]:
+                return res[0].strip()
+
+        return item
+
     def _doStatus(
         self,
-        data: Dict[str, Any],
+        pc: ParameterContext,
+        dc: DataContext,
     ) -> None:
-        self.status = data["status"][0].strip()
+        self.status = dc.data["status"][0].strip()
+
+        if pc.stripHttpStatus:
+            self.status = self.cleanStatus(self.status)
 
         # sorted added to get predictable output during test
-        # list(set(...))) to deduplicate results
+        # deduplicate results with set comprehension {}
 
         self.statuses = sorted(
-            list(
-                set(
-                    [s.strip() for s in data["status"]],
-                ),
-            ),
+            list({s.strip() for s in dc.data["status"]}),
         )
         if "" in self.statuses:
             self.statuses = self._cleanupArray(self.statuses)
+
+        if pc.stripHttpStatus:
+            z = []
+            for item in self.statuses:
+                item = self.cleanStatus(item)
+                z.append(item)
+            self.statuses = z
 
     def _doOptionalFields(
         self,
@@ -131,17 +157,14 @@ class Domain:
             # list(set(...))) to deduplicate results
 
             self.emails = sorted(
-                list(
-                    set(
-                        [s.strip() for s in data["emails"]],
-                    ),
-                ),
+                list({s.strip() for s in data["emails"]}),
             )
             if "" in self.emails:
                 self.emails = self._cleanupArray(self.emails)
 
     def _parseData(
         self,
+        pc: ParameterContext,
         dc: DataContext,
     ) -> None:
         # process mandatory fields that we expect always to be present
@@ -155,8 +178,8 @@ class Domain:
         self.last_updated = str_to_date(dc.data["updated_date"][0], self.tld)
 
         self.dnssec = dc.data["DNSSEC"]
-        self._doStatus(dc.data)
-        self._doNameservers(dc.data)
+        self._doStatus(pc, dc)
+        self._doNameservers(pc, dc)
 
         # optional fields
         self._doOptionalFields(dc.data)
@@ -167,7 +190,6 @@ class Domain:
         dc: DataContext,
     ) -> None:
         pass
-        # self.init(pc=pc, dc=dc)
 
     def init(
         self,
@@ -184,8 +206,8 @@ class Domain:
         if dc.data == {}:
             return
 
-        if pc.verbose:
-            print(dc.data, file=sys.stderr)
+        msg = f"{dc.data}"
+        log.debug(msg)
 
         k = "domain_name"
         if k in dc.data:
@@ -198,7 +220,13 @@ class Domain:
         if pc.withPublicSuffix and dc.hasPublicSuffix:
             self.public_suffix: str = str(dc.publicSuffixStr)
 
+        if pc.extractServers:
+            self.servers = dc.servers
+            self.server = ""
+            if self.servers:
+                self.server = self.servers[-1]
+
         if pc.return_raw_text_for_unsupported_tld is True:
             return
 
-        self._parseData(dc)
+        self._parseData(pc, dc)

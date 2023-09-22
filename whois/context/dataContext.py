@@ -1,11 +1,17 @@
 #! /usr/bin/env python3
 
+import os
+import logging
+
 from typing import (
     List,
     Dict,
     Any,
     Optional,
 )
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 class DataContext:
@@ -32,3 +38,4 @@ class DataContext:
         self.data: Dict[str, Any] = {}  # the data we need to build the domain object
         self.exeptionStr: Optional[str] = None  # if we handle exceptions as result string instead of throw
         self.thisTld: Dict[str, Any] = {}  # the dict of regex and info as defined by ZZ and parsed by TldInfo
+        self.servers: List[str] = []  # extract whois servers from the whois output (may need --verbose on rfc1036/whois)

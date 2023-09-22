@@ -1,3 +1,10 @@
+import os
+import logging
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
+
+
 class WhoisException(Exception):
     # make all other exeptions based on a generic exception
     pass

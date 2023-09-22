@@ -2,22 +2,27 @@
 
 import subprocess
 import time
-import sys
+
+# import sys
 import os
 import platform
 import shutil
+import logging
+
+from typing import (
+    List,
+)
 
 from .exceptions import (
     WhoisCommandFailed,
     WhoisCommandTimeout,
 )
 
-from typing import (
-    List,
-)
-
 from .context.parameterContext import ParameterContext
 from .context.dataContext import DataContext
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 class WhoisCliInterface:
@@ -42,8 +47,8 @@ class WhoisCliInterface:
         """
         folder = os.getcwd()
         copy_command = r"copy \\live.sysinternals.com\tools\whois.exe " + folder
-        if self.pc.verbose:
-            print("DEBUG: downloading dependencies: {copy_command}", file=sys.stderr)
+        msg = "downloading dependencies: {copy_command}"
+        log.debug(msg)
 
         subprocess.call(
             copy_command,
@@ -90,13 +95,17 @@ class WhoisCliInterface:
                 whoisCommandList=whoisCommandList,
             )
 
+        if self.pc.extractServers:
+            whoisCommandList = whoisCommandList + ["--verbose"]
+
         if self.pc.server:
-            return whoisCommandList + [self.domain, "-h", self.pc.server]
+            whoisCommandList = whoisCommandList + ["-h", self.pc.server]
+
         return whoisCommandList + [self.domain]
 
     def _postProcessingResult(self) -> str:
-        if self.pc.verbose:
-            print(f"DEBUG: {self.rawWhoisResultString}", file=sys.stderr)
+        msg = f"{self.rawWhoisResultString}"
+        log.debug(msg)
 
         if self.pc.ignore_returncode is False and self.processHandle.returncode not in [0, 1]:
             if "fgets: Connection reset by peer" in self.rawWhoisResultString:
@@ -123,14 +132,14 @@ class WhoisCliInterface:
             env={"LANG": "en"} if self.domain.endswith(".jp") else None,
         ) as self.processHandle:
 
-            if self.pc.verbose:
-                print(f"DEBUG: timout: {self.pc.timeout}", file=sys.stderr)
+            msg = f"timout: {self.pc.timeout}"
+            log.debug(msg)
 
             try:
                 self.rawWhoisResultString = self.processHandle.communicate(timeout=self.pc.timeout,)[
                     0
                 ].decode(errors="ignore")
-            except subprocess.TimeoutExpired:
+            except subprocess.TimeoutExpired as ex:
                 # Kill the child process & flush any output buffers
                 self.processHandle.kill()
                 self.rawWhoisResultString = self.processHandle.communicate()[0].decode(errors="ignore")
@@ -139,7 +148,7 @@ class WhoisCliInterface:
                 # Add this option to cover those cases
                 if not self.pc.parse_partial_response or not self.rawWhoisResultString:
                     msg = f"timeout: query took more then {self.pc.timeout} seconds"
-                    raise WhoisCommandTimeout(msg)
+                    raise WhoisCommandTimeout(msg) from ex
 
             return self._postProcessingResult()
 

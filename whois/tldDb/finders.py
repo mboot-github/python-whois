@@ -1,5 +1,8 @@
+import os
 import re
-import sys
+import logging
+
+# pylint: disable=unused-argument
 
 from typing import (
     # Dict,
@@ -7,6 +10,9 @@ from typing import (
     List,
     Callable,
 )
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 def newLineSplit(
@@ -18,7 +24,7 @@ def newLineSplit(
     ) -> List[str]:
         # split the incoming text on newlines \n\n
         what = r"\n\n"
-        return re.split(what, whoisStr, flags=re.IGNORECASE if ignoreCase else 0) # NOFLAG is 3.11
+        return re.split(what, whoisStr, flags=re.IGNORECASE if ignoreCase else 0)  # NOFLAG is 3.11
 
     return xNewlineSplit
 
@@ -33,7 +39,7 @@ def R(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else 0 # NOFLAG is 3.11
+        flags = re.IGNORECASE if ignoreCase else 0  # NOFLAG is 3.11
         return re.findall(reStr, textStr, flags=flags)
 
     return reFindAll
@@ -60,18 +66,19 @@ def findFromToAndLookFor(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else  0 # NOFLAG is 3.11
+        flags = re.IGNORECASE if ignoreCase else 0  # NOFLAG is 3.11
         s1 = re.search(fromStr, textStr, flags=flags)
-        if verbose:
-            print(f"DEBUG s1 {s1}, {fromStr}", file=sys.stderr)
+
+        msg = f"s1 {s1}, {fromStr}"
+        log.debug(msg)
 
         if s1 is None:
             return []
 
         start = s1.start()
         t2 = textStr[start:]
-        if verbose:
-            print(f"DEBUG: fromStr {t2}", file=sys.stderr)
+        msg = f"fromStr {t2}"
+        log.debug(msg)
 
         s2 = re.search(toStr, t2, flags=flags)
         if s2 is None:
@@ -79,14 +86,15 @@ def findFromToAndLookFor(
 
         end = s2.end()
         t3 = t2[:end]
-        if verbose:
-            print(f"DEBUG: toStr {t3}", file=sys.stderr)
+        msg = f"toStr {t3}"
+        log.debug(msg)
 
         return re.findall(lookForStr, t3, flags=flags)
 
     return xFindFromToAndLookFor
 
 
+# pylint disable=pointless-string-statement
 r"""
 example look for in context: google.sk
 look for Organization:\s*([^\n]*)\n
@@ -114,7 +122,7 @@ Updated:                      2019-06-07
         lookForStr=r"Organization:\s*([^\n]*)\n"
     )
 test with: ./test2.py -v -d google.sk 2>2
-"""
+"""  # pylint disable=pointless-string-statement
 
 
 def findFromToAndLookForWithFindFirst(
@@ -136,7 +144,7 @@ def findFromToAndLookForWithFindFirst(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else  0 # NOFLAG is 3.11
+        flags = re.IGNORECASE if ignoreCase else 0  # NOFLAG is 3.11
 
         ff = re.findall(findFirst, textStr, flags=flags)
         if ff is None or ff == []:
@@ -146,22 +154,22 @@ def findFromToAndLookForWithFindFirst(
         if ff2 == "":
             return []
 
-        if verbose:
-            print(f"DEBUG: we found: {ff2}, now combine with {fromStr}", file=sys.stderr)
+        msg = f"we found: {ff2}, now combine with {fromStr}"
+        log.debug(msg)
 
         fromStr2 = fromStr.replace(r"{}", ff2)
         s1 = re.search(fromStr2, textStr, flags=flags)
 
-        if verbose:
-            print(f"DEBUG s1 {s1}, {fromStr}", file=sys.stderr)
+        msg = f"s1 {s1}, {fromStr}"
+        log.debug(msg)
 
         if s1 is None:
             return []
 
         start = s1.start()
         t2 = textStr[start:]
-        if verbose:
-            print(f"DEBUG: fromStr {t2}", file=sys.stderr)
+        msg = f"fromStr {t2}"
+        log.debug(msg)
 
         s2 = re.search(toStr, t2, flags=flags)
         if s2 is None:
@@ -169,8 +177,8 @@ def findFromToAndLookForWithFindFirst(
 
         end = s2.end()
         t3 = t2[:end]
-        if verbose:
-            print(f"DEBUG: toStr {t3}", file=sys.stderr)
+        msg = f"toStr {t3}"
+        log.debug(msg)
 
         return re.findall(lookForStr, t3, flags=flags)
 
@@ -197,7 +205,7 @@ def findInSplitedLookForHavingFindFirst(
         sData: List[str],
         verbose: bool = False,
     ) -> List[str]:
-        flags = re.IGNORECASE if ignoreCase else  0 # NOFLAG is 3.11
+        flags = re.IGNORECASE if ignoreCase else 0  # NOFLAG is 3.11
 
         ff = re.findall(findFirst, textStr, flags=flags)
         if ff is None or ff == []:

@@ -1,4 +1,6 @@
 # import re
+import os
+import logging
 
 from typing import (
     Dict,
@@ -6,6 +8,9 @@ from typing import (
     Any,
     Optional,
 )
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 
 class TldInfo:
@@ -15,6 +20,8 @@ class TldInfo:
         verbose: bool = False,
     ) -> None:
         self.verbose = verbose
+        if verbose:
+            logging.basicConfig(level="DEBUG")
 
         # a reference to the external ZZ database of all TLD info
         self.zzDictRef = zzDict
@@ -111,8 +118,14 @@ class TldInfo:
 
     def mergeExternalDictWithRegex(
         self,
-        aDict: Dict[str, Any] = {},
+        aDict: Optional[Dict[str, Any]] = None,
     ) -> None:
+        if aDict is None:
+            return
+
+        if len(aDict) == 0:
+            return
+
         # merge in ZZ, this extends ZZ with new tld's and overrides existing tld's
         for tld in aDict.keys():
             self.zzDictRef[tld] = aDict[tld]
