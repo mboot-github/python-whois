@@ -735,7 +735,6 @@ ZZ["pl"] = {
     "registrar": R(r"\nREGISTRAR:\s*(.+)\n"),
     "creation_date": R(r"\ncreated:\s*(.+)\n"),
     "updated_date": R(r"\nlast modified:\s*(.+)\n"),
-    # "expiration_date": R(r"\noption expiration date:\s*(.+)\n"),
     # If no "option expiration date:" is present, use "renewal date:", but only
     # if it's not not followed by "option expiration date:". google.pl is the test case here
     "expiration_date": R(r"(?:\noption expiration date:|renewal date:(?!(?:.|\n)*\noption expiration date:))\s*(.+)\n"),
