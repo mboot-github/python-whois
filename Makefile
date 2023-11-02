@@ -6,7 +6,7 @@ reformat:
 	./reformat-code.sh
 
 test:
-	./test2.py -d google.com
+	./test2.py -t 2>2 | tee 1
 
 build:
 	python -m build
