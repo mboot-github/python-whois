@@ -31,7 +31,6 @@ class SimpleCacheBase:
         keyString: str,
         data: str,
     ) -> str:
-
         # store the currentTime and data tuple (time, data)
         self.memCache[keyString] = (
             int(time.time()),
@@ -43,7 +42,6 @@ class SimpleCacheBase:
         self,
         keyString: str,
     ) -> Optional[str]:
-
         cData = self.memCache.get(keyString)
         if cData is None:
             return None

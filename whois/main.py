@@ -17,8 +17,6 @@ from typing import (
 
 import whois
 
-# import whoisdomain as whois  # to be compatible with dannycork
-
 log = logging.getLogger(__name__)
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 

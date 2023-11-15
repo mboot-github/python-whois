@@ -131,12 +131,13 @@ class WhoisCliInterface:
             stderr=subprocess.STDOUT,
             env={"LANG": "en"} if self.domain.endswith(".jp") else None,
         ) as self.processHandle:
-
             msg = f"timout: {self.pc.timeout}"
             log.debug(msg)
 
             try:
-                self.rawWhoisResultString = self.processHandle.communicate(timeout=self.pc.timeout,)[
+                self.rawWhoisResultString = self.processHandle.communicate(
+                    timeout=self.pc.timeout,
+                )[
                     0
                 ].decode(errors="ignore")
             except subprocess.TimeoutExpired as ex:

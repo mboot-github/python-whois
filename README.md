@@ -1,141 +1,106 @@
-# whois
-* A Python package for retrieving WHOIS information of domains.
-* This package will not support querying ip CIDR ranges or AS information
-* It requires the whois cli component of your os to be installed: e.g. `/usr/bin/whois` on Linux
+# whoisdomain
 
-## NOTE
-* 2023-04-25: mboot
-    * when DannyCork returns he can decide on the future of this repo.
-    * in his absence future development will take place in: https://github.com/mboot-github/WhoisDomain
-    * and new pypi releases will come from: https://pypi.org/project/whoisdomain/
-    * efforts will be made to keep the v1.x.y version of whoisdomain compatible with this repo
-    * changes will be verified and back copied also here for the time being
-    * starting 2024-02, this repo will be abandon-ware
+  * A Python package for retrieving WHOIS information of DOMAIN'S ONLY.
+  * Python 2.x IS NOT supported.
+  * Currently no additional python packages need to be installed.
+
+---
+
+## Notes
+
+  * This package will not support querying ip CIDR ranges or AS information
+  * This was a copy of the original DanyCork 'whois'.
+      * Significantly refactored in 2023.
+      * The output is still compatible with DanyCork 'whois'
+
+## Versioning
+
+  * I will start versioning at 1.x.x
+     * the second item will be YYYYMMDD,
+     * the third item will start from 1 and be only used if more than one update will have to be done in one day.
+
+Versions `1.x.x` will keep the output compatible with Danny Cork until 2024-02-03 (February 2024)
+
+## Releases
+
+  * Releases are avalable at: [Pypi](https://pypi.org/project/whoisdomain/)
+
+Pypi releases can be installed with:
+
+  * `pip install whoisdomain`
+
+## Features
+  * See: [Features](docs/Features.md)
+
+## Dependencies
+  * please install also the command line "whois" of your distribution as this library parses the output of the "whois" cli command of your operating system
+
+### Notes for Mac users
+  * it has been observed that the default cli whois on Mac is showing each forward step in its output, this makes parsing the result very unreliable.
+  * using a brew install whois will give in general better results.
+
+## Docker release
+  * See [Docker](docs/Docker.md)
+
+## Usage example
+  * See [Usage](docs/Usage.md)
+
+## whoisdomain
+  * the cli `whoisdomain` is  documented in [whoisdomain-cli](docs/whoisdomain-cli.md)
+
+## ccTLD & TLD support
+
+Most `tld's` are now autodetected via IANA root db, see the Analizer directory
+and `make suggest`.
+
+  * see the file: [tld_regexpr](./whoisdomain/tldDb/tld_regexpr.py)
+  * for python use:  `whoisdomain.validTlds()`
+  * for cli use `whoisdomain -S`
+
+---
 
 ## Support
  * Python 3.x is supported for x >= 9
  * Python 2.x IS NOT supported.
 
+## Author's
+  * See: [Authors](docs/Authors.md)
 
-## Features
- * Python wrapper for the "whois" cli command of your operating system.
- * Simple interface to access parsed WHOIS data for a given domain.
- * Able to extract data for all the popular TLDs (com, org, net, biz, info, pl, jp, uk, nz,  ...).
- * Query a WHOIS server directly instead of going through an intermediate web service like many others do.
- * Works with Python >= 3.9
- * All dates as datetime objects.
- * Possibility to cache results.
- * Verbose output on stderr during debugging to see how the internal functions are doing their work
- * raise a exception on Quota ecceeded type responses
- * raise a exception on PrivateRegistry tld's where we know the tld and know we don't know anything
- * allow for optional cleaning the whois response before extracting information
- * optionally allow IDN's to be translated to Punycode
- * optional specify the whois command on query(...,cmd="whois") as in: https://github.com/gen1us2k/python-whois/
+---
 
-## Dependencies
-  * please install also the command line "whois" of your distribution
-  * this library parses the output of the "whois" cli command of your operating system
+## Updates
+  * see [Updates](docs/Updates.md) for a full history of changes.
+  * Only the latest update is mentioned here
 
-## Docker
- * docker pull mbootgithub/whoisdomain:latest
+### 1.20230906.1
+  * introduce parsing based on functions
+  * allow contextual search in splitted data and plain data
+  * allow contextual search based on earlier result
+  * fix a few tld to return the proper registrant string (not nic handle)
 
-## Help Wanted
-Your contributions are welcome, look for the Help wanted tag https://github.com/DannyCork/python-whois/labels/help%20wanted
+### 1.20230913.1
+  * if you have installed `tld` (pip install tld) you can enable withPublicSuffix=True to process untill you reach the pseudo tld.
+  * the public_suffix info is added if available (and if requested)
+  * example case is: ./test2.py -d www.dublin.airport.aero --withPublicSuffix
 
-## Usage example
+### 1.20230913.3
+  * fix re.NOFLAGS, it is not compatible with 3.9, it appears in 3.11
 
-Install the cli `whois` of your operating system if it is not present already
+## 1.20230917.1
+  * prepare work on pylint
+  * switch to logging: all verbose is currently log.debug(); to show set LOGLEVEL=DEBUG before calling, see Makefile: make test
+  * experimental: add extractServers: bool default False; when true we will try to extract the "redirect info chain" on rcf1036/whois and jwhois for linux/darwin
+  * add missing option to query(), test in production environment done
 
-Install `whois` package from your distribution (e.g apt install whois)
+## 1.20231102.1
+  * fix from kazet for .pl tld.
 
+## 1.20231115.1
+ New tld's and removal of a few tlds no longer supported at iana
 
-        $pip install whois
+ * abb, bw, bn, crown, crs, fj (does not work), gp (does not work), weir, realtor, post, mw, pf (a strange one), iq (gives timout), mm, int, hm (does not work)
 
-        >>> import whois
-        >>> domain = whois.query('google.com')
+---
 
-        >>> print(domain.__dict__)
-        {
-                'expiration_date': datetime.datetime(2020, 9, 14, 0, 0),
-                'last_updated': datetime.datetime(2011, 7, 20, 0, 0),
-                'registrar': 'MARKMONITOR INC.',
-                'name': 'google.com',
-                'creation_date': datetime.datetime(1997, 9, 15, 0, 0)
-        }
+## in progress
 
-        >>> print(domain.name)
-        google.com
-
-        >>> print(domain.expiration_date)
-        2020-09-14 00:00:00
-
-## ccTLD & TLD support
-see the file: ./whois/tld_regexpr.py
-or call whois.validTlds()
-
-## Issues
- * Raise an issue https://github.com/DannyCork/python-whois/issues/new
-
-## Changes: 2022-06-09: maarten_boot:
- * the returned list of name_servers is now a sorted unique list and not a set
- * the help function whois.validTlds() now outputs the true tld with dots
-
-## 2022-09-27: maarten_boot
- * add test2.py to replace test.py
- * ./test2.py -h will show the possible usage
- * all tests from the original program are now files in the ./tests directory
- * test can be done on all supported tld's with -a or --all and limitest by regex with -r <pattern> or --reg=<pattern>
-
-## 2022-11-04: maarten_boot
- * add support for Iana example.com, example.net
-
-## 2022-11-07: maarten_boot
- * add testing against static known data in dir: ./testdata/<domain>/output
- * test.sh will test all domains in testdata without actually calling whois, the input data is instead read from testdata/<domain>/input
-
-## 2022-11-11: maarten_boot
-
- * add support for returning the raw data from the whois command: flag include_raw_whois_text
- * add support for handling unsupported domains via whois raw text only: flag return_raw_text_for_unsupported_tld
-
-## 2023-01-18: sorrowless
-
- * add an opportunity to specify maximum cache age
-
-## 2023-01-25: maarten_boot
-
- * convert the tld file to a Dict, we now no longer need a mappper for python keywords or second level domains.
- * utf8 level domains also need no mapper anymore an can be added as is with a translation to xn--<something>
- * added xn-- tlds for all known utf-8 domains we currently have
- * we can now add new domains on the fly or change them:  whois.mergeExternalDictWithRegex(aDictToOverride) see example exampleExtend.py
-
-## 2023-01-27: maarten_boot
-
- * add autodetect via iana tld file (this has only tld's)
- * add a central collection of all compiled regexes and reuse them: REG_COLLECTION_BY_KEY in _0_init_tld.py
- * refresh testdata now that tld has dot instead of _ if more then one level
- * add additional strings meaning domain does not exist
-
-## 2023-02-02: maarten_boot
-
- * whois.QuotaStringsAdd(str) to add additional strings for over quota detection. whois.QuotaStrings() lists the current configured strings
- * whois.NoneStringsAdd(str) to add additional string for NoSuchDomainExists detection (whois.query() retuning None). whois.NoneStrings() lsts the current configured strings
- * suppress messages to stderr if not verbose=True
-
-## 2023-07-20: maarten_boot
-
- * sync with https://github.com/mboot-github/WhoisDomain; 1.20230720.1; (gov.tr), (com.ru, msk.ru, spb.ru), (option to preserve partial output after timeout)
- * sync with https://github.com/mboot-github/WhoisDomain; 1.20230720.2; add t_test hint support; fix some server hints
-
-## 2023-08-21: mboot-github (maarten_boot)
-
- * abandon any python below 3.9 (mypy compatibilities)
- * major refactor into more object based approch and parameterContext
- * allow custom caching backends (e.g. redis, dbm, ...)
-
-## 2023-09-22 see new paramaters in whois/context/parameterContext.oy
-
- * Sync with latest whoisdomain
- * Allow cleaning up the http(s) info in the status response.
- * Allow correlation with tld (pip install tld) public_suffix.
- * Allow display of what whois-servers were used until we reach the final item.
