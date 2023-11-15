@@ -1,9 +1,11 @@
 #! /bin/bash
 
+LL=160
+
 doIt()
 {
-    black --line-length 160 whois
-    pylama --max-line-length 160 whois/
+    black --line-length $LL whois
+    pylama --max-line-length $LL whois/
 }
 
 main()

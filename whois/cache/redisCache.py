@@ -39,7 +39,6 @@ if HAS_REDIS:
             self,
             keyString: str,
         ) -> Optional[str]:
-
             data = self.redis.get(keyString)
             if data:
                 sdata: str = data.decode("utf-8")
@@ -51,7 +50,6 @@ if HAS_REDIS:
             keyString: str,
             data: str,
         ) -> str:
-
             self.redis.set(
                 keyString,
                 bytes(data, "utf-8"),

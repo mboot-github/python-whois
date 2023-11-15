@@ -133,7 +133,6 @@ def findFromToAndLookForWithFindFirst(
     ignoreCase: bool = True,
     verbose: bool = False,
 ) -> Callable[[str, List[str], bool], List[str]]:
-
     # look for a particular string like R() with find first
     #   then build a from ,to context using the result from findFirst (google.fr is a example)
     #     but limit the context we look in
@@ -198,7 +197,6 @@ def findInSplitedLookForHavingFindFirst(
     ignoreCase: bool = True,
     verbose: bool = False,
 ) -> Callable[[str, List[str], bool], List[str]]:
-
     # requires splitted data
     def xfindInSplitedLookForHavingFindFirst(
         textStr: str,
