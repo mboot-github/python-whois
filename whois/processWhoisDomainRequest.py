@@ -80,7 +80,8 @@ class ProcessWhoisDomainRequest:
             return
 
         if self.dc.dList[0] == "www":
-            self.dc.dList = self.dc.dList[1:]
+            if self.pc.noIgnoreWww is False:
+                self.dc.dList = self.dc.dList[1:]
 
         if len(self.dc.dList) == 0:
             self.dc.tldString = None

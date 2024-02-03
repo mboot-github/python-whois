@@ -15,7 +15,8 @@ from typing import (
     Dict,
 )
 
-import whois
+# import whoisdomain as whois  # to be compatible with dannycork
+import whois  # to be compatible with dannycork
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
@@ -37,6 +38,7 @@ TestRunOnly: bool = False
 WithPublicSuffix: bool = False
 WithExtractServers: bool = False
 WithStripHttpStatus: bool = False
+WithNoIgnoreWww: bool = False
 
 
 class ResponseCleaner:
@@ -225,6 +227,7 @@ def testItem(
     global WithPublicSuffix
     global WithExtractServers
     global WithStripHttpStatus
+    global WithNoIgnoreWww
 
     pc = whois.ParameterContext(
         ignore_returncode=IgnoreReturncode,
@@ -236,6 +239,7 @@ def testItem(
         withPublicSuffix=WithPublicSuffix,
         extractServers=WithExtractServers,
         stripHttpStatus=WithStripHttpStatus,
+        noIgnoreWww=WithNoIgnoreWww,
     )
 
     # use the new query (can also simply use q2()
@@ -545,6 +549,7 @@ def main() -> None:
     global WithPublicSuffix
     global WithExtractServers
     global WithStripHttpStatus
+    global WithNoIgnoreWww
 
     name: str = os.path.basename(sys.argv[0])
     if name == "test2.py":
@@ -577,6 +582,7 @@ def main() -> None:
                 "withPublicSuffix",
                 "extractServers",
                 "stripHttpStatus",
+                "withNoIgnoreWww",
             ],
         )
     except getopt.GetoptError:
@@ -697,6 +703,9 @@ def main() -> None:
 
         if opt in ("--withPublicSuffix"):
             WithPublicSuffix = True
+
+        if opt in ("--withNoIgnoreWww"):
+            WithNoIgnoreWww = True
 
     msg = f"{name} SIMPLISTIC: {SIMPLISTIC}"
     log.debug(msg)

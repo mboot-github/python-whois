@@ -106,32 +106,73 @@ ZZ["com"] = {
     "_test": "google.com",
 }
 
-# United Kingdom - academic sub-domain
+ZZ["uk"] = {
+    "extend": "com",
+    "_server": "whois.nic.uk",
+    "registrant": R(r"Registrant:\n\s*(.+)"),
+    "creation_date": R(r"Registered on:\s*(.+)"),
+    "expiration_date": R(r"Expiry date:\s*(.+)"),
+    "updated_date": R(r"Last updated:\s*(.+)"),
+    "name_servers": R(r"Name servers:%s\n\n" % xStr(r"(?:\n[ \t]+(\S+).*)?", 10)),  # capture up to 10
+    "status": R(r"Registration status:\n\s*(.+)"),
+}
+
 ZZ["ac.uk"] = {
     "extend": "uk",
-    "domain_name": R(r"Domain:\n\s?(.+)"),
+    "_server": "whois.nic.ac.uk",
+    "domain_name": R(r"Domain:\n([^\n]*)"),
     "owner": R(r"Domain Owner:\n\s?(.+)"),
     "registrar": R(r"Registered By:\n\s?(.+)"),
-    "registrant": R(r"Registered Contact:\n\s*(.+)"),
+    "registrant": R(r"Registrant Contact:\n([^\n]*)"),
+    "name_servers": R(r"Servers:%s\n\n" % xStr(r"(?:\n[ \t]+(\S+).*)?", 10)),
     "expiration_date": R(r"Renewal date:\n\s*(.+)"),
     "updated_date": R(r"Entry updated:\n\s*(.+)"),
     "creation_date": R(r"Entry created:\n\s?(.+)"),
-    "name_servers": R(r"Servers:\s*(.+)\t\n\s*(.+)\t\n"),
     "_test": "imperial.ac.uk",
 }
 
 ZZ["co.uk"] = {
     "extend": "uk",
+    "_server": "whois.nic.uk",
     "domain_name": R(r"Domain name:\s+(.+)"),
+    "owner": R(r"Domain Owner:\s+(.+)"),
     "registrar": R(r"Registrar:\s+(.+)"),
+    "registrant": R(r"Registrant:\n\s+(.+)"),
     "status": R(r"Registration status:\s*(.+)"),
     "creation_date": R(r"Registered on:(.+)"),
     "expiration_date": R(r"Expiry date:(.+)"),
     "updated_date": R(r"Last updated:(.+)"),
-    "owner": R(r"Domain Owner:\s+(.+)"),
-    "registrant": R(r"Registrant:\n\s+(.+)"),
     "_test": "livedns.co.uk",
 }
+
+ZZ["gov.uk"] = {
+    "extend": "ac.uk",
+    "_server": "whois.gov.uk",
+    "_test": "service.gov.uk",
+}
+
+ZZ["org.uk"] = {
+    "extend": "co.uk",
+    "_test": "greenpeace.org.uk",
+}
+
+# ltd.uk: no example to test with
+
+ZZ["me.uk"] = {
+    "extend": "co.uk",
+    "_server": "whois.nic.uk",
+    "_test": "xxx.me.uk",
+}
+
+ZZ["net.uk"] = {
+    "extend": "co.uk",
+    "_server": "whois.nic.uk",
+    "_test": "nic.net.uk",  # is actually a expired record it seems
+}
+
+# nhs.uk: may not have a whois server example is scot.nhs.uk or digital.nhs.uk
+# plc.uk: no example to test with
+# police.uk: no example to test; may not actually have a public whois server
 
 # Armenia
 ZZ["am"] = {
@@ -924,16 +965,6 @@ ZZ["ua"] = {
     "updated_date": R(r"\nmodified:\s*(.+)"),
     "name_servers": R(r"\nnserver:\s*(.+)"),
     "status": R(r"\nstatus:\s*(.+)"),
-}
-
-ZZ["uk"] = {
-    "extend": "com",
-    "registrant": R(r"Registrant:\n\s*(.+)"),
-    "creation_date": R(r"Registered on:\s*(.+)"),
-    "expiration_date": R(r"Expiry date:\s*(.+)"),
-    "updated_date": R(r"Last updated:\s*(.+)"),
-    "name_servers": R(r"Name servers:%s\n\n" % xStr(r"(?:\n[ \t]+(\S+).*)?", 10)),  # capture up to 10
-    "status": R(r"Registration status:\n\s*(.+)"),
 }
 
 ZZ["uz"] = {
@@ -1859,7 +1890,6 @@ ZZ["gov.bd"] = {"extend": "bd"}
 ZZ["gov"] = {"extend": "com"}
 ZZ["gov.rw"] = {"extend": "rw"}
 ZZ["gov.tr"] = {"extend": "com.tr", "_server": "whois.trabis.gov.tr", "_test": "www.turkiye.gov.tr"}
-ZZ["gov.uk"] = {"extend": "ac.uk"}
 ZZ["gq"] = {"extend": "ml", "_server": "whois.domino.gq"}
 ZZ["graphics"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
 ZZ["gratis"] = {"extend": "_donuts", "_server": "whois.donuts.co"}
@@ -2165,7 +2195,6 @@ ZZ["organic"] = {"_server": "whois.nic.organic", "extend": "com", "_test": "nic.
 ZZ["org.ph"] = {"extend": "ph"}
 ZZ["org.rw"] = {"extend": "rw"}
 ZZ["org.tr"] = {"extend": "com.tr", "_server": "whois.trabis.gov.tr", "_test": "dergipark.org.tr"}
-ZZ["org.uk"] = {"extend": "co.uk"}
 ZZ["org.ve"] = {"extend": "ve"}
 ZZ["org.za"] = {"extend": "za", "_server": "org-whois.registry.net.za"}
 ZZ["org.zw"] = {"extend": "zw"}

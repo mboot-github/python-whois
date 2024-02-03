@@ -140,6 +140,12 @@ ParamsStringJson: str = """
     "default": false,
     "optional": true,
     "help": "strip https://icann.org/epp# from status response"
+  },
+  "noIgnoreWww": {
+    "type": "bool",
+    "default": false,
+    "optional": true,
+    "help": "if set to true we skip the strip www action"
   }
 }
 """
